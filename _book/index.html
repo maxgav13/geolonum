@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Geologia Numerica: Ciencia de Datos para Geociencias</title>
+  <meta name="description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Geologia Numerica: Ciencia de Datos para Geociencias" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Geologia Numerica: Ciencia de Datos para Geociencias" />
+  
+  <meta name="twitter:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  
+
+<meta name="author" content="Maximiliano Garnier Villarreal" />
+
+
+<meta name="date" content="2020-03-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="intro.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">G-4101  Geologia Numerica</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="part"><span><b>R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduccion</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalacion-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalacion de R y RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#paquetes"><i class="fa fa-check"></i><b>1.2</b> Paquetes</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#ayuda-en-r"><i class="fa fa-check"></i><b>1.3</b> Ayuda en R</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rmarkdown"><i class="fa fa-check"></i><b>1.4</b> RMarkdown</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#tipos-de-resultados"><i class="fa fa-check"></i><b>1.4.1</b> Tipos de resultados</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#formulas"><i class="fa fa-check"></i><b>1.4.2</b> Formulas</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#importando-datos"><i class="fa fa-check"></i><b>1.4.3</b> Importando datos</a></li>
+<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#calculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Calculos en linea</a></li>
+<li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
+<li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento basico de R</a><ul>
+<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#operaciones-basicas"><i class="fa fa-check"></i><b>2.1</b> Operaciones basicas</a></li>
+<li class="chapter" data-level="2.2" data-path="basico.html"><a href="basico.html#crear-objetos"><i class="fa fa-check"></i><b>2.2</b> Crear objetos</a></li>
+<li class="chapter" data-level="2.3" data-path="basico.html"><a href="basico.html#vectores"><i class="fa fa-check"></i><b>2.3</b> Vectores</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="basico.html"><a href="basico.html#numericos"><i class="fa fa-check"></i><b>2.3.1</b> Numericos</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basico.html"><a href="basico.html#texto-string-character"><i class="fa fa-check"></i><b>2.3.2</b> Texto (string, character)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="basico.html"><a href="basico.html#categoricos-factores"><i class="fa fa-check"></i><b>2.3.3</b> Categoricos (factores)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="basico.html"><a href="basico.html#matrices"><i class="fa fa-check"></i><b>2.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.5" data-path="basico.html"><a href="basico.html#dataframes-listas-y-tibbles"><i class="fa fa-check"></i><b>2.5</b> DataFrames, listas y tibbles</a></li>
+<li class="chapter" data-level="2.6" data-path="basico.html"><a href="basico.html#verificando-objetos"><i class="fa fa-check"></i><b>2.6</b> Verificando objetos</a></li>
+<li class="chapter" data-level="2.7" data-path="basico.html"><a href="basico.html#guardando-el-espacio-de-trabajo"><i class="fa fa-check"></i><b>2.7</b> Guardando el espacio de trabajo</a></li>
+<li class="chapter" data-level="2.8" data-path="basico.html"><a href="basico.html#importandocargando-datos"><i class="fa fa-check"></i><b>2.8</b> Importando/cargando datos</a></li>
+<li class="chapter" data-level="2.9" data-path="basico.html"><a href="basico.html#exportando-datos"><i class="fa fa-check"></i><b>2.9</b> Exportando datos</a></li>
+<li class="chapter" data-level="2.10" data-path="basico.html"><a href="basico.html#inspeccionando-los-datos"><i class="fa fa-check"></i><b>2.10</b> Inspeccionando los datos</a></li>
+<li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.11</b> Descripciones generales (globales)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
+<li class="chapter" data-level="3.1" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#operadores-logicos"><i class="fa fa-check"></i><b>3.1</b> Operadores logicos</a></li>
+<li class="chapter" data-level="3.2" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#operador-de-secuencia-pipe-operator"><i class="fa fa-check"></i><b>3.2</b> Operador de secuencia (Pipe operator)</a></li>
+<li class="chapter" data-level="3.3" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#resumen-de-variables"><i class="fa fa-check"></i><b>3.3</b> Resumen de variables</a></li>
+<li class="chapter" data-level="3.4" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#seleccion-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.4</b> Seleccion y renombre de variables</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#select-helpers"><i class="fa fa-check"></i><b>3.4.1</b> <code>select</code> helpers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#filtrado-de-observaciones"><i class="fa fa-check"></i><b>3.5</b> Filtrado de observaciones</a></li>
+<li class="chapter" data-level="3.6" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#orden-de-acuerdo-a-variables"><i class="fa fa-check"></i><b>3.6</b> Orden de acuerdo a variables</a></li>
+<li class="chapter" data-level="3.7" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#creacion-de-variables"><i class="fa fa-check"></i><b>3.7</b> Creacion de variables</a></li>
+<li class="chapter" data-level="3.8" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#conteo-de-variables-cualitativas"><i class="fa fa-check"></i><b>3.8</b> Conteo de variables cualitativas</a></li>
+<li class="chapter" data-level="3.9" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#tabla-interactiva"><i class="fa fa-check"></i><b>3.9</b> Tabla interactiva</a></li>
+<li class="chapter" data-level="3.10" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#datos-relacionales"><i class="fa fa-check"></i><b>3.10</b> Datos relacionales</a><ul>
+<li class="chapter" data-level="3.10.1" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#uniones-de-transformacion"><i class="fa fa-check"></i><b>3.10.1</b> Uniones de transformacion</a></li>
+<li class="chapter" data-level="3.10.2" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#uniones-de-filtro"><i class="fa fa-check"></i><b>3.10.2</b> Uniones de filtro</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#datos-ordenados-tidy-data"><i class="fa fa-check"></i><b>3.11</b> Datos ordenados (Tidy data)</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#formatos-largo-y-ancho"><i class="fa fa-check"></i><b>3.11.1</b> Formatos largo y ancho</a></li>
+<li class="chapter" data-level="3.11.2" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#separar-y-unir"><i class="fa fa-check"></i><b>3.11.2</b> Separar y unir</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#datos-anidados-nesting"><i class="fa fa-check"></i><b>3.12</b> Datos anidados (Nesting)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="graficos-1.html"><a href="graficos-1.html"><i class="fa fa-check"></i><b>4</b> Graficos</a><ul>
+<li class="chapter" data-level="4.1" data-path="graficos-1.html"><a href="graficos-1.html#estaticos"><i class="fa fa-check"></i><b>4.1</b> Estaticos</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="graficos-1.html"><a href="graficos-1.html#histograma"><i class="fa fa-check"></i><b>4.1.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.1.2" data-path="graficos-1.html"><a href="graficos-1.html#barras"><i class="fa fa-check"></i><b>4.1.2</b> Barras</a></li>
+<li class="chapter" data-level="4.1.3" data-path="graficos-1.html"><a href="graficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.1.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.4" data-path="graficos-1.html"><a href="graficos-1.html#dispersion"><i class="fa fa-check"></i><b>4.1.4</b> Dispersion</a></li>
+<li class="chapter" data-level="4.1.5" data-path="graficos-1.html"><a href="graficos-1.html#lineas"><i class="fa fa-check"></i><b>4.1.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.1.6" data-path="graficos-1.html"><a href="graficos-1.html#graficos-estadisticos"><i class="fa fa-check"></i><b>4.1.6</b> Graficos estadisticos</a></li>
+<li class="chapter" data-level="4.1.7" data-path="graficos-1.html"><a href="graficos-1.html#salvando-graficos"><i class="fa fa-check"></i><b>4.1.7</b> Salvando graficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="graficos-1.html"><a href="graficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.2</b> Interactivos</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="graficos-1.html"><a href="graficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.2.2" data-path="graficos-1.html"><a href="graficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
+<li class="chapter" data-level="4.2.3" data-path="graficos-1.html"><a href="graficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.4" data-path="graficos-1.html"><a href="graficos-1.html#dispersion-1"><i class="fa fa-check"></i><b>4.2.4</b> Dispersion</a></li>
+<li class="chapter" data-level="4.2.5" data-path="graficos-1.html"><a href="graficos-1.html#lineas-1"><i class="fa fa-check"></i><b>4.2.5</b> Lineas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html"><i class="fa fa-check"></i><b>5</b> Iteracion con <code>purrr</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#operaciones-basicas-1"><i class="fa fa-check"></i><b>5.1</b> Operaciones basicas</a></li>
+<li class="chapter" data-level="5.2" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#leyendo-archivos-y-combinandolos"><i class="fa fa-check"></i><b>5.2</b> Leyendo archivos y combinandolos</a></li>
+<li class="chapter" data-level="5.3" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.3</b> Datos anidados, caso 1</a></li>
+<li class="chapter" data-level="5.4" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.4</b> Datos anidados, caso 2</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a></li>
+<li class="part"><span><b>Analisis de datos</b></span></li>
+<li class="chapter" data-level="7" data-path="algebra-lineal.html"><a href="algebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Algebra lineal</a></li>
+<li class="chapter" data-level="8" data-path="estadistica-descriptiva-univariable.html"><a href="estadistica-descriptiva-univariable.html"><i class="fa fa-check"></i><b>8</b> Estadistica Descriptiva Univariable</a></li>
+<li class="chapter" data-level="9" data-path="estadistica-descriptiva-bivariable.html"><a href="estadistica-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>9</b> Estadistica Descriptiva Bivariable</a></li>
+<li class="chapter" data-level="10" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>10</b> Probabilidad</a></li>
+<li class="chapter" data-level="11" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>11</b> Distribuciones de Probabilidad</a></li>
+<li class="chapter" data-level="12" data-path="introduccion-a-estadistica-inferencial.html"><a href="introduccion-a-estadistica-inferencial.html"><i class="fa fa-check"></i><b>12</b> Introduccion a Estadistica Inferencial</a></li>
+<li class="chapter" data-level="13" data-path="estimacion.html"><a href="estimacion.html"><i class="fa fa-check"></i><b>13</b> Estimacion</a></li>
+<li class="chapter" data-level="14" data-path="pruebas-estadisticas.html"><a href="pruebas-estadisticas.html"><i class="fa fa-check"></i><b>14</b> Pruebas Estadisticas</a></li>
+<li class="chapter" data-level="15" data-path="estadistica-no-parametrica.html"><a href="estadistica-no-parametrica.html"><i class="fa fa-check"></i><b>15</b> Estadistica No Parametrica</a></li>
+<li class="chapter" data-level="16" data-path="estadistica-direccional.html"><a href="estadistica-direccional.html"><i class="fa fa-check"></i><b>16</b> Estadistica Direccional</a></li>
+<li class="chapter" data-level="17" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>17</b> Secuencias de Datos</a></li>
+<li class="chapter" data-level="18" data-path="geoestadistica.html"><a href="geoestadistica.html"><i class="fa fa-check"></i><b>18</b> Geoestadistica</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geologia Numerica: Ciencia de Datos para Geociencias</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Geologia Numerica: Ciencia de Datos para Geociencias</h1>
+<p class="author"><em>Maximiliano Garnier Villarreal</em></p>
+<p class="date"><em>2020-03-26</em></p>
+</div>
+<div id="prefacio" class="section level1 unnumbered">
+<h1>Prefacio</h1>
+<p>Este libro es producido en <strong>Markdown</strong> <span class="citation">(Xie, Allaire, &amp; Grolemund, <a href="#ref-rmarkdown2018">2018</a>)</span>, usando <strong>bookdown</strong> <span class="citation">(Xie, <a href="#ref-bookdown2016">2016</a>)</span>.</p>
+<p>El paquete <strong>bookdown</strong> puede ser instalado desde CRAN o Github:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;bookdown&quot;</span>)
+<span class="co"># version en desarrollo</span>
+<span class="co"># devtools::install_github(&quot;rstudio/bookdown&quot;)</span></code></pre>
+<p>Este documento se basa en el material creado para el curso <strong>G-4101 Geologia Numerica</strong>, de la <a href="geologia.ucr.ac.cr">Escuela Centroamericana de Geologia</a>, <a href="ucr.ac.cr">Universidad de Costa Rica</a>. El curso hace uso del software estadistico y de programacion <strong>R</strong> <span class="citation">(R Core Team, <a href="#ref-R-base">2019</a>)</span> para desarrollar la parte practica de los temas cubiertos en la teoria.</p>
+<p>Adicionalmente, se ha creado un paquete que ofrece funciones adicionales que seran usadas en algunos de los temas que se van a tratar. Para instalar el paquete se puede ir a <a href="https://github.com/maxgav13/GMisc">GMisc</a> y seguir las instrucciones de la instalacion (el paquete no esta en CRAN, esta en Github, por lo que no se puede instalar de la forma convencional).</p>
+<p>El curso cubre un poco de algebra lineal, para luego caer en la parte gruesa del curso que es estadistica. En esta parte se ve lo que es estadistica descriptiva (univariable y bivariable), principios de probabilidad, estadistica inferencial (pruebas de hipotesis, estimacion). La parte final del curso cubre temas relacionados con geociencias (datos direccionales, secuencias, y geoestadistica), donde se aplican conceptos anteriormente adquiridos en la seccion de estadistica.</p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Este obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">licencia de Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional</a>.</p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+
+</div>
+
+
+
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-R-base">
+<p>R Core Team. (2019). <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. Recuperado a partir de <a href="https://www.R-project.org/">https://www.R-project.org/</a></p>
+</div>
+<div id="ref-bookdown2016">
+<p>Xie, Y. (2016). <em>bookdown: Authoring Books and Technical Documents with R Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. Recuperado a partir de <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a></p>
+</div>
+<div id="ref-rmarkdown2018">
+<p>Xie, Y., Allaire, J., &amp; Grolemund, G. (2018). <em>R Markdown: The Definitive Guide</em>. Boca Raton, Florida: Chapman; Hall/CRC. Recuperado a partir de <a href="https://bookdown.org/yihui/rmarkdown">https://bookdown.org/yihui/rmarkdown</a></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

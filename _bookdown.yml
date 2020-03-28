@@ -1,0 +1,29 @@
+book_filename: "geolonum"
+rmd_files: ["index.Rmd", "01-intro.Rmd", "02-basico.Rmd", 
+"03-avanzado.Rmd", "04-graficos.Rmd", "05-iteracion.Rmd", 
+"06-espacial.Rmd", "07-algebra.Rmd", "08-univariable.Rmd", 
+"09-bivariable.Rmd", "10-probabilidad.Rmd", "11-distribuciones.Rmd",
+"12-inferencial.Rmd", "13-estimacion.Rmd", "14-pruebas.Rmd",
+"15-noparam.Rmd", "16-direccional.Rmd", "17-secuencias.Rmd",
+"18-geoestadistica.Rmd", "19-referencias.Rmd"]
+delete_merged_file: true
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuacion '
+    thm: 'Teorema '
+    lem: 'Lema '
+    cor: 'Corolario '
+    prp: 'Proposicion '
+    cnj: 'Conjetura '
+    def: 'Definicion '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Prueba '
+    remark: 'Remarca '
+    solution: 'Solucion. '
+  ui:
+    edit: Edit
+    appendix_name: ''
+    chapter_name: "Capitulo "

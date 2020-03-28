@@ -1,0 +1,367 @@
+# Datos espaciales
+
+```{r setup, include=FALSE}
+library(sp)
+library(sf)
+library(ggspatial)
+library(raster)
+library(stars)
+library(viridis)
+library(rgeos)
+library(rgdal)
+library(mapview)
+library(RColorBrewer)
+library(ggrepel)
+library(rio)
+library(tmap)
+library(tidymodels)
+library(tidyverse)
+library(rayshader)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE,
+  # fig.path = "figs/",
+  fig.retina = 3,
+  fig.width = 8,
+  fig.asp = 0.618,
+  fig.align = "center",
+  out.width = "90%"
+)
+
+```
+
+# Sistemas de Referencias de Coordenadas (CRS)
+
+Los datos espaciales tienen por lo general un sistema de coordenadas asociado (geograficas, lambert, UTM, etc.). Estos sistemas se pueden identificar por medio de cordigos EPSG que han sido estandarizados para uso general.
+
+Como ejemplo, las coordenadas geograficas en grados (WGS84) tiene el codigo 4326, las coordenadas geograficas en metros (WGS84/pseudo-mercator; son las utilizadas por GoogleMaps y otros) tiene el codigo 3857. Las coordenadas para Costa Rica con la proyeccion CRTM05 tienen el codigo 5367, mientras que para la proyeccion Lambert Norte tienen el codigo 5456. Todos estos se pueden obtener por medio del sitio web [epsg.io](http://epsg.io/) o en QGIS a la hora de buscar sistemas de coordenadas ahi aparece el codigo.
+
+# Paquetes para datos espaciales
+
+La comunidad de **R** ha desarrolado una gran variedad de paquetes para datos espaciales, algunos de los cuales han ido evolucionando y facilitando la manipulacion y presentacion de los mismos. 
+
+Dentro de los paquetes mas usados estan:
+
+* sf: Para datos vectoriales dentro de la filosofia *tidyverse*
+* sp: El predecesor de *sf* para datos vectorales y en grilla (no exactamente raster)
+* raster: Para datos raster
+* stars: El candidato a susceder a *raster*
+* rgeos y rgdal: Interfaces para librerias basicas de manipulacion de datos espaciale
+* ggplot y tmap: Creacion de mapas estaticos (*tmap* puede crear mapas interactivos)
+* mapview y leaflet: Creacion de mapas interactivos
+
+Otro monton de paquetes brindad funciones adicionales y funciones para tareas especificas.
+
+# Importar datos
+
+## Desde archivos de texto
+
+Datos en archivos de texto (`.txt`, `.csv`, etc. y principalmente para dtos puntuales) se pueden importar de manera convencional con `rio::import`. Posteriormente pueden convertirse a datos espaciales (`st_as_sf`), indicando la posicion o el nombre de las columnas con las coordenadas X,Y y asignndole un CRS.
+
+La venataja de *sf* es que permite manipular los dato asociados al objeto espacial haciendo uso de los vervos del *tidyverse*.
+
+```{r datos}
+datos <- rio::import("data/BroomsBarn.txt", setclass = 'tibble') %>% 
+  mutate(x = x*40, y = y*40, logK = log(K), logP = log(P))
+```
+
+```{r datos-sf}
+datos_sf = st_as_sf(datos, coords = 1:2, crs = NA, remove = F) 
+```
+
+```{r}
+datos_sf %>% 
+  filter(pH > 8)
+```
+
+
+Para algunas funciones todavia es necesario usar objetos *sp* por lo que se pueden crear estos a partir de los objetos *sf*.
+
+```{r datos-sp}
+datos_sp = as(datos_sf, 'Spatial')
+coordnames(datos_sp) = c('X','Y')
+```
+
+## Desde archivos espaciales
+
+### Shapefiles
+
+De igual manera se pueden importar/leer directamente datos en muchos formatos espaciales (ejemplo: shapefiles, geopackage, raster, etc.). Las funciones para leer datos son: `st_read` y `read_sf`; la primera importa los datos como DataFrame, la segunda como tibble.
+
+```{r shapefiles}
+fallas = read_sf('data/fallas.shp')
+geomorfo = read_sf('data/geomorfo.shp')
+```
+
+En este caso no reconocen los metadatos de la proyeccion por lo que se les puede asignar por medio de `st_set_crs`
+
+```{r}
+fallas_ln = fallas %>% 
+  st_set_crs(5456)
+geomorfo_ln = geomorfo %>% 
+  st_set_crs(5456)
+```
+
+Si se desean transformar a otro sistema se usa `st_transform`
+
+```{r}
+fallas_geog = fallas_ln %>% 
+  st_transform(4326)
+geomorfo_geog = geomorfo_ln %>% 
+  st_transform(4326)
+```
+
+### Geopackage
+
+Si se tiene un archivo `.gpkg` es necesario explorar primero las capas disponibles para luego importar los datos deseados.
+
+```{r}
+st_layers(dsn = 'data/espaciales.gpkg')
+```
+
+```{r}
+fallas2 = read_sf('data/espaciales.gpkg', layer = 'fallas')
+geomorfo2 = read_sf('data/espaciales.gpkg', layer = 'geomorfo')
+```
+
+### Raster
+
+Para leer rasters de una banda se usa la funcion `raster`, para rasters multi-banda se puede usar `brick`. Para objetos `stars` es indiferente y se pueden leer por medio de `read_stars`.
+
+```{r raster}
+pacifico = raster('data/pacifico.tif')
+pacifico_stars = read_stars('data/pacifico.tif')
+pacifico_stars = st_as_stars(pacifico)
+```
+
+```{r}
+sat_ras = brick(system.file('tif/L7_ETMs.tif', package = 'stars'))
+sat_df = as.data.frame(sat_ras,xy=T)
+sat_stars = read_stars(system.file('tif/L7_ETMs.tif', package = 'stars'))
+```
+
+# Exportar datos
+
+## Vectoriales
+
+Para exporta datos vectoriales se puede usar `st_write`, donde se define el objeto espacial a exportar y el tipo de archivo a generar (`.shp`, `.gpkg`, etc.)
+
+```{r}
+st_write(fallas_geog, dsn = 'data/espaciales_geog.gpkg', 
+         layer = 'fallas', layer_options = 'OVERWRITE=YES', quiet = T)
+st_write(geomorfo_geog, dsn = 'data/espaciales_geog.gpkg', 
+         layer = 'geomorfo', layer_options = 'OVERWRITE=YES', quiet = T)
+```
+
+Se puede revisar que el objeto haya sido creado apropiadamente.
+
+```{r}
+st_layers(dsn = 'data/espaciales_geog.gpkg')
+```
+
+## Raster
+
+Dependiendo de si el objeto es `raster` o `stars`, se debera usar la funcion respectiva.
+
+```{r}
+writeRaster(sat_ras, 'data/imagen_satelite.tif', 
+            format="GTiff", overwrite=TRUE)
+write_stars(sat_stars, 'data/imagen_satelite_stars.tif')
+```
+
+# Mapas
+
+## `plot`
+
+Todos los objetos espaciales tienen un metodo de ploteo basico. Si el objeto tiene mas de 1 atributo va a plotear todos o los que pueda. Para evitar esto se puede especificar cual atributo se quiere plotear. En general esto se puede usar mas para una visualizacion rapida pero no para mapas finales.
+
+```{r mapas-plot}
+plot(fallas_ln)
+
+plot(datos_sf[,'K'])
+
+plot(geomorfo_ln[,'CODIGO'])
+
+plot(pacifico)
+
+plot(pacifico_stars)
+```
+
+## `ggplot`
+
+El paquete *ggplot* tiene geometrias especificas para objetos `sf` y `stars`, por lo que facilita la creacion de mapas en un ambiente ya conocido. Para que el mapa se despliegue en las coordenadas del archivo y no geograficas, hay que cambiar el `datum` en `coord_sf` al CRS del archivo deseado.
+
+```{r mapas-ggplot}
+ggplot() + 
+  geom_sf(data = fallas_ln)
+
+ggplot() + 
+  geom_sf(data = fallas_ln) + 
+  coord_sf(datum = st_crs(fallas_ln))
+  
+ggplot() + 
+  annotation_map_tile(zoom = 8) +
+  geom_sf(data = fallas_ln) + 
+  coord_sf(datum = st_crs(fallas_ln)) + 
+  annotation_scale(location = 'bl') + 
+  annotation_north_arrow(location = 'tr',
+                         height = unit(.75, "cm"), 
+                         width = unit(.75, "cm"))
+
+ggplot() + 
+  geom_sf(data = datos_sf, aes(col = K), size = 3, alpha = 0.6) + 
+  scale_color_viridis_c()
+
+ggplot() + 
+  geom_sf(aes(fill = as_factor(FORMA)), data = geomorfo_ln) + 
+  coord_sf(datum = st_crs(geomorfo_ln)) + 
+  scale_fill_brewer(palette = 'Set3')
+
+ggplot() + 
+  geom_stars(data = pacifico_stars) + 
+  scale_fill_gradient(low = 'black', high = 'white', na.value = 'white') +
+  coord_equal()
+
+ggplot(sat_df, aes(x, y, 
+                   fill=rgb(red = L7_ETMs.3, 
+                            green = L7_ETMs.2, 
+                            blue = L7_ETMs.1, 
+                            maxColorValue = 255))) + 
+  geom_tile() + 
+  scale_fill_identity() + 
+  coord_equal() + 
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  theme(axis.text.y = element_text(angle = 90, hjust = .5))
+```
+
+## `tmap`
+
+El paquete *tmap* es una opcion especifica para datos espaciales y sigue la misma ideologia de *ggplot* al trabajar en capas. Por defecto no despliega la grilla de coordenadas, hay que agregarselas con `tm_grid`. Para revertir los colores en la paleta se le agrega un menos (`-`) antes del nombre.
+
+La estructura basica de cualquier graficos es
+
+```{r eval = FALSE}
+tm_shape(shp = <DATA>) +
+  <tm_function>(col = <'VARIABLE'>, palette = '', 
+                style = '', n = 5) +
+  <tm_layout> +
+  <tm_xlab> + 
+  <tm_ylab> + 
+  <tm_grid> +
+  <tm_scale_bar> + 
+  <tm_compass> + 
+```
+
+```{r mapas-tmap}
+# tmap_options(legend.outside = T)
+
+tm_shape(fallas_ln) + 
+  tm_lines()
+
+tm_shape(datos_sf) +
+  tm_dots('K', size = .3, palette = 'viridis')
+
+tm_shape(datos_sf) +
+  tm_dots('K', size = .3, palette = 'viridis', style = 'cont') + 
+  tm_layout(legend.outside = T)
+
+geomorfo_ln %>% 
+  mutate(FORMA = as_factor(FORMA)) %>% 
+tm_shape() + 
+  tm_polygons('FORMA') + 
+  tm_grid(lines = F)
+
+tm_shape(pacifico) + 
+  tm_raster(palette = '-Greys', style = 'cont')
+
+tm_shape(pacifico) + 
+    tm_raster(palette = '-Greys', n = 10, style = 'order')
+
+tm_shape(sat_ras) + 
+  tm_rgb(r = 3, g = 2, b = 1)
+
+tm_shape(fallas_ln) + 
+  tm_lines() + 
+  tm_scale_bar(width = .2,position = c('left','bottom')) + 
+  tm_compass(position = c('right','top'))
+```
+
+Para ver las opciones de las paletas de color
+
+```{r}
+tmaptools::palette_explorer()
+```
+
+## `mapview`
+
+Este paquete permite generar mapas interactivos de manera eficiente y rapida, pero no brinda la personalizacion de `leaflet`, el cual es mucho mas complejo y para generar un mapa similar se requiere aproximadamente de 4 a 5 veces mas lineas de codigo.
+
+```{r basemaps}
+mybasemaps = c('CartoDB.Positron', 'OpenStreetMap', 'OpenTopoMap',
+               'Esri.WorldImagery', 'Esri.WorldTopoMap', 'Esri.OceanBasemap')
+
+# mapviewOptions(basemaps = mybasemaps)
+```
+
+
+```{r}
+mapview(fallas_ln, layer.name = 'Fallas', color = 'red') +
+  mapview(geomorfo_ln, layer.name = 'Geomorfologia')
+
+mapview(datos_sf, zcol = 'logK', layer.name = 'logK')
+
+mapview(pacifico)
+
+viewRGB(sat_stars, r = 3, g = 2, b = 1)
+```
+
+Con mapview se pueden crear diferentes mapas y sincronizarlos por medio de `sync`.
+
+```{r}
+m1 = mapview(franconia, zcol = 'district', 
+             layer.name = 'Distrito', burst = T)
+m2 = mapview(breweries, legend = F)
+
+sync(m1, m2)
+```
+
+
+## `rayshader`
+
+Permite generar modelos de sombras en 2D y 3D a partir de raster. Primero hay que pasar el raster a matriz.
+
+```{r}
+pacifico_mat = raster_to_matrix(pacifico)
+```
+
+```{r cache=TRUE}
+zscale = 200
+elmat = pacifico_mat
+raymat = ray_shade(elmat, zscale = zscale)
+ambmat = ambient_shade(elmat, zscale = zscale)
+lambmat = lamb_shade(elmat, zscale = zscale)
+```
+
+```{r}
+elmat %>%
+  sphere_shade(texture = "bw") %>%
+  add_shadow(raymat, 0.5) %>%
+  add_shadow(lambmat, 0.5) %>%
+  add_shadow(ambmat, 0.5) %>%
+  plot_map()
+```
+
+```{r}
+elmat %>%
+  sphere_shade(texture = "imhof1") %>%
+  add_shadow(raymat, 0.5) %>%
+  add_shadow(lambmat, 0.5) %>%
+  add_shadow(ambmat, 0.5) %>%
+  plot_3d(elmat, zscale = zscale, water = T, 
+          theta = 0, phi = 40, zoom = .5,
+          windowsize = c(1000,600))
+```

@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capitulo 2 Funcionamiento basico de R | Geologia Numerica: Ciencia de Datos para Geociencias</title>
+  <meta name="description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capitulo 2 Funcionamiento basico de R | Geologia Numerica: Ciencia de Datos para Geociencias" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capitulo 2 Funcionamiento basico de R | Geologia Numerica: Ciencia de Datos para Geociencias" />
+  
+  <meta name="twitter:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  
+
+<meta name="author" content="Maximiliano Garnier Villarreal" />
+
+
+<meta name="date" content="2020-03-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html">
+<link rel="next" href="funcionamiento-avanzado-de-r.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">G-4101  Geologia Numerica</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="part"><span><b>R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduccion</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalacion-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalacion de R y RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#paquetes"><i class="fa fa-check"></i><b>1.2</b> Paquetes</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#ayuda-en-r"><i class="fa fa-check"></i><b>1.3</b> Ayuda en R</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rmarkdown"><i class="fa fa-check"></i><b>1.4</b> RMarkdown</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#tipos-de-resultados"><i class="fa fa-check"></i><b>1.4.1</b> Tipos de resultados</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#formulas"><i class="fa fa-check"></i><b>1.4.2</b> Formulas</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#importando-datos"><i class="fa fa-check"></i><b>1.4.3</b> Importando datos</a></li>
+<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#calculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Calculos en linea</a></li>
+<li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
+<li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento basico de R</a><ul>
+<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#operaciones-basicas"><i class="fa fa-check"></i><b>2.1</b> Operaciones basicas</a></li>
+<li class="chapter" data-level="2.2" data-path="basico.html"><a href="basico.html#crear-objetos"><i class="fa fa-check"></i><b>2.2</b> Crear objetos</a></li>
+<li class="chapter" data-level="2.3" data-path="basico.html"><a href="basico.html#vectores"><i class="fa fa-check"></i><b>2.3</b> Vectores</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="basico.html"><a href="basico.html#numericos"><i class="fa fa-check"></i><b>2.3.1</b> Numericos</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basico.html"><a href="basico.html#texto-string-character"><i class="fa fa-check"></i><b>2.3.2</b> Texto (string, character)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="basico.html"><a href="basico.html#categoricos-factores"><i class="fa fa-check"></i><b>2.3.3</b> Categoricos (factores)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="basico.html"><a href="basico.html#matrices"><i class="fa fa-check"></i><b>2.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.5" data-path="basico.html"><a href="basico.html#dataframes-listas-y-tibbles"><i class="fa fa-check"></i><b>2.5</b> DataFrames, listas y tibbles</a></li>
+<li class="chapter" data-level="2.6" data-path="basico.html"><a href="basico.html#verificando-objetos"><i class="fa fa-check"></i><b>2.6</b> Verificando objetos</a></li>
+<li class="chapter" data-level="2.7" data-path="basico.html"><a href="basico.html#guardando-el-espacio-de-trabajo"><i class="fa fa-check"></i><b>2.7</b> Guardando el espacio de trabajo</a></li>
+<li class="chapter" data-level="2.8" data-path="basico.html"><a href="basico.html#importandocargando-datos"><i class="fa fa-check"></i><b>2.8</b> Importando/cargando datos</a></li>
+<li class="chapter" data-level="2.9" data-path="basico.html"><a href="basico.html#exportando-datos"><i class="fa fa-check"></i><b>2.9</b> Exportando datos</a></li>
+<li class="chapter" data-level="2.10" data-path="basico.html"><a href="basico.html#inspeccionando-los-datos"><i class="fa fa-check"></i><b>2.10</b> Inspeccionando los datos</a></li>
+<li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.11</b> Descripciones generales (globales)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
+<li class="chapter" data-level="3.1" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#operadores-logicos"><i class="fa fa-check"></i><b>3.1</b> Operadores logicos</a></li>
+<li class="chapter" data-level="3.2" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#operador-de-secuencia-pipe-operator"><i class="fa fa-check"></i><b>3.2</b> Operador de secuencia (Pipe operator)</a></li>
+<li class="chapter" data-level="3.3" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#resumen-de-variables"><i class="fa fa-check"></i><b>3.3</b> Resumen de variables</a></li>
+<li class="chapter" data-level="3.4" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#seleccion-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.4</b> Seleccion y renombre de variables</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#select-helpers"><i class="fa fa-check"></i><b>3.4.1</b> <code>select</code> helpers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#filtrado-de-observaciones"><i class="fa fa-check"></i><b>3.5</b> Filtrado de observaciones</a></li>
+<li class="chapter" data-level="3.6" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#orden-de-acuerdo-a-variables"><i class="fa fa-check"></i><b>3.6</b> Orden de acuerdo a variables</a></li>
+<li class="chapter" data-level="3.7" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#creacion-de-variables"><i class="fa fa-check"></i><b>3.7</b> Creacion de variables</a></li>
+<li class="chapter" data-level="3.8" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#conteo-de-variables-cualitativas"><i class="fa fa-check"></i><b>3.8</b> Conteo de variables cualitativas</a></li>
+<li class="chapter" data-level="3.9" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#tabla-interactiva"><i class="fa fa-check"></i><b>3.9</b> Tabla interactiva</a></li>
+<li class="chapter" data-level="3.10" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#datos-relacionales"><i class="fa fa-check"></i><b>3.10</b> Datos relacionales</a><ul>
+<li class="chapter" data-level="3.10.1" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#uniones-de-transformacion"><i class="fa fa-check"></i><b>3.10.1</b> Uniones de transformacion</a></li>
+<li class="chapter" data-level="3.10.2" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#uniones-de-filtro"><i class="fa fa-check"></i><b>3.10.2</b> Uniones de filtro</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#datos-ordenados-tidy-data"><i class="fa fa-check"></i><b>3.11</b> Datos ordenados (Tidy data)</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#formatos-largo-y-ancho"><i class="fa fa-check"></i><b>3.11.1</b> Formatos largo y ancho</a></li>
+<li class="chapter" data-level="3.11.2" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#separar-y-unir"><i class="fa fa-check"></i><b>3.11.2</b> Separar y unir</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="funcionamiento-avanzado-de-r.html"><a href="funcionamiento-avanzado-de-r.html#datos-anidados-nesting"><i class="fa fa-check"></i><b>3.12</b> Datos anidados (Nesting)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="graficos-1.html"><a href="graficos-1.html"><i class="fa fa-check"></i><b>4</b> Graficos</a><ul>
+<li class="chapter" data-level="4.1" data-path="graficos-1.html"><a href="graficos-1.html#estaticos"><i class="fa fa-check"></i><b>4.1</b> Estaticos</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="graficos-1.html"><a href="graficos-1.html#histograma"><i class="fa fa-check"></i><b>4.1.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.1.2" data-path="graficos-1.html"><a href="graficos-1.html#barras"><i class="fa fa-check"></i><b>4.1.2</b> Barras</a></li>
+<li class="chapter" data-level="4.1.3" data-path="graficos-1.html"><a href="graficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.1.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.4" data-path="graficos-1.html"><a href="graficos-1.html#dispersion"><i class="fa fa-check"></i><b>4.1.4</b> Dispersion</a></li>
+<li class="chapter" data-level="4.1.5" data-path="graficos-1.html"><a href="graficos-1.html#lineas"><i class="fa fa-check"></i><b>4.1.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.1.6" data-path="graficos-1.html"><a href="graficos-1.html#graficos-estadisticos"><i class="fa fa-check"></i><b>4.1.6</b> Graficos estadisticos</a></li>
+<li class="chapter" data-level="4.1.7" data-path="graficos-1.html"><a href="graficos-1.html#salvando-graficos"><i class="fa fa-check"></i><b>4.1.7</b> Salvando graficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="graficos-1.html"><a href="graficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.2</b> Interactivos</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="graficos-1.html"><a href="graficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.2.2" data-path="graficos-1.html"><a href="graficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
+<li class="chapter" data-level="4.2.3" data-path="graficos-1.html"><a href="graficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.4" data-path="graficos-1.html"><a href="graficos-1.html#dispersion-1"><i class="fa fa-check"></i><b>4.2.4</b> Dispersion</a></li>
+<li class="chapter" data-level="4.2.5" data-path="graficos-1.html"><a href="graficos-1.html#lineas-1"><i class="fa fa-check"></i><b>4.2.5</b> Lineas</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html"><i class="fa fa-check"></i><b>5</b> Iteracion con <code>purrr</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#operaciones-basicas-1"><i class="fa fa-check"></i><b>5.1</b> Operaciones basicas</a></li>
+<li class="chapter" data-level="5.2" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#leyendo-archivos-y-combinandolos"><i class="fa fa-check"></i><b>5.2</b> Leyendo archivos y combinandolos</a></li>
+<li class="chapter" data-level="5.3" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.3</b> Datos anidados, caso 1</a></li>
+<li class="chapter" data-level="5.4" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.4</b> Datos anidados, caso 2</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a></li>
+<li class="part"><span><b>Analisis de datos</b></span></li>
+<li class="chapter" data-level="7" data-path="algebra-lineal.html"><a href="algebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Algebra lineal</a></li>
+<li class="chapter" data-level="8" data-path="estadistica-descriptiva-univariable.html"><a href="estadistica-descriptiva-univariable.html"><i class="fa fa-check"></i><b>8</b> Estadistica Descriptiva Univariable</a></li>
+<li class="chapter" data-level="9" data-path="estadistica-descriptiva-bivariable.html"><a href="estadistica-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>9</b> Estadistica Descriptiva Bivariable</a></li>
+<li class="chapter" data-level="10" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>10</b> Probabilidad</a></li>
+<li class="chapter" data-level="11" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>11</b> Distribuciones de Probabilidad</a></li>
+<li class="chapter" data-level="12" data-path="introduccion-a-estadistica-inferencial.html"><a href="introduccion-a-estadistica-inferencial.html"><i class="fa fa-check"></i><b>12</b> Introduccion a Estadistica Inferencial</a></li>
+<li class="chapter" data-level="13" data-path="estimacion.html"><a href="estimacion.html"><i class="fa fa-check"></i><b>13</b> Estimacion</a></li>
+<li class="chapter" data-level="14" data-path="pruebas-estadisticas.html"><a href="pruebas-estadisticas.html"><i class="fa fa-check"></i><b>14</b> Pruebas Estadisticas</a></li>
+<li class="chapter" data-level="15" data-path="estadistica-no-parametrica.html"><a href="estadistica-no-parametrica.html"><i class="fa fa-check"></i><b>15</b> Estadistica No Parametrica</a></li>
+<li class="chapter" data-level="16" data-path="estadistica-direccional.html"><a href="estadistica-direccional.html"><i class="fa fa-check"></i><b>16</b> Estadistica Direccional</a></li>
+<li class="chapter" data-level="17" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>17</b> Secuencias de Datos</a></li>
+<li class="chapter" data-level="18" data-path="geoestadistica.html"><a href="geoestadistica.html"><i class="fa fa-check"></i><b>18</b> Geoestadistica</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geologia Numerica: Ciencia de Datos para Geociencias</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="basico" class="section level1">
+<h1><span class="header-section-number">Capitulo 2</span> Funcionamiento basico de R</h1>
+<p>En este capitulo se va a dar una introduccion al funcionamiento basico de <strong>R</strong> <span class="citation">(R Core Team, <a href="#ref-R-base">2019</a>)</span>, incluyendo el uso de <strong>R</strong> como una calculadora (consola), creacion de objetos, y los tipos principales objetos que se utilizan en <strong>R</strong>, asi como importar y exportar datos, y unas inspecciones generales de los datos.</p>
+<p>Se van a usar, aunque poco en este capitulo, funciones de los paquetes:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rio)
+<span class="kw">library</span>(skimr)
+<span class="kw">library</span>(psych)
+<span class="kw">library</span>(DescTools)
+<span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(summarytools)</code></pre>
+<div id="operaciones-basicas" class="section level2">
+<h2><span class="header-section-number">2.1</span> Operaciones basicas</h2>
+<p><strong>R</strong> puede funcionar como una calculadora basica, donde es posible relizar operaciones aritmeticas sencillas. Los nombres de las funciones estan en ingles (ej: <code>sqrt</code> para raiz cuadrada, <code>round</code> para redondeo, etc.).</p>
+<p>Como cualquier otro programa, si se va a utilizar operaciones con angulos (ej: <code>cos</code>, <code>tan</code>, etc.), los angulos tienen que darse en radianes, y el resultado va a estar en radianes.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span><span class="op">+</span><span class="dv">2</span></code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1-2</span></code></pre>
+<pre><code>## [1] -1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span><span class="op">*</span><span class="dv">2</span></code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span><span class="op">/</span><span class="dv">2</span></code></pre>
+<pre><code>## [1] 0.5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="dv">125</span>)</code></pre>
+<pre><code>## [1] 11.18034</code></pre>
+</div>
+<div id="crear-objetos" class="section level2">
+<h2><span class="header-section-number">2.2</span> Crear objetos</h2>
+<p>Objetos se pueden crear usando los operadores <code>&lt;-</code> o <code>=</code>. Al crear un objeto este no se despliega en la consola a menos que uno lo llame directamente o que a la hora de crealo sea encerrado con parentesis redondos <code>()</code>.</p>
+<p>La idea de generar objetos es basica para los lenguages de programacion. Los objetos que se crean pueden ser reutilizados despues de ser creados. Si se desean actualizar las operaciones o funciones que dependen de un objeto, solo se cambia el objeto una vez, y el resto se actualiza cuando se vuelve a correr.</p>
+<p>Aqui se estan generando los objetos <code>x</code>, <code>y</code>, y <code>z</code>, donde <code>x</code> se imprime hasta llamarlo, <code>y</code> se imprime al guardarlo por estar encerrado en parentesis, y <code>z</code> es funcion de <code>x</code> y <code>y</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>
+(<span class="dt">y =</span> <span class="dv">2</span>)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">x</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">x <span class="op">+</span><span class="st"> </span>y</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">z =<span class="st"> </span>x <span class="op">+</span><span class="st"> </span>y</code></pre>
+</div>
+<div id="vectores" class="section level2">
+<h2><span class="header-section-number">2.3</span> Vectores</h2>
+<p>Los vectores son unidimensionales y deben ser (contener elementos) del mismo tipo. Aqui se muestran los diferentes tipos, y como crearlos. Los mas importantes tipos son <em>Numericos</em>, <em>Texto</em>, y <em>Factores</em> (tipo especial en <strong>R</strong>).</p>
+<div id="numericos" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Numericos</h3>
+<p>Se pueden crear vectores numericos a partir de datos puntuales, sin ningun orden, usando la funcion <code>c()</code>, y separando las entradas (elementos) por medio de comas <code>,</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)
+y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>)</code></pre>
+<p>O se pueden crear vectores en secuencia (<code>seq(from = , to = , by =, o length.out = )</code>) o de valores repetidos (<code>rep()</code>). Crear vectores de valores repetidos no aplica unicamente para datos numericos.</p>
+<p>En <code>seq</code> se definen los argumentos <code>from</code>: valor inicial, <code>to</code>: valor final, y <code>by</code>: el intervalo, o <code>length.out</code>: la cantidad de elementos que quiero. En <code>rep</code> se define lo que se quiere repetir, y el numero de veces a repetir.</p>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">f =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">30</span>)</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+## [26] 26 27 28 29 30</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">t1 =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">20</span>, <span class="dt">by =</span> <span class="fl">.2</span>))</code></pre>
+<pre><code>##   [1]  0.0  0.2  0.4  0.6  0.8  1.0  1.2  1.4  1.6  1.8  2.0  2.2  2.4  2.6  2.8
+##  [16]  3.0  3.2  3.4  3.6  3.8  4.0  4.2  4.4  4.6  4.8  5.0  5.2  5.4  5.6  5.8
+##  [31]  6.0  6.2  6.4  6.6  6.8  7.0  7.2  7.4  7.6  7.8  8.0  8.2  8.4  8.6  8.8
+##  [46]  9.0  9.2  9.4  9.6  9.8 10.0 10.2 10.4 10.6 10.8 11.0 11.2 11.4 11.6 11.8
+##  [61] 12.0 12.2 12.4 12.6 12.8 13.0 13.2 13.4 13.6 13.8 14.0 14.2 14.4 14.6 14.8
+##  [76] 15.0 15.2 15.4 15.6 15.8 16.0 16.2 16.4 16.6 16.8 17.0 17.2 17.4 17.6 17.8
+##  [91] 18.0 18.2 18.4 18.6 18.8 19.0 19.2 19.4 19.6 19.8 20.0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">t2 =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">20</span>, <span class="dt">length.out =</span> <span class="dv">11</span>))</code></pre>
+<pre><code>##  [1]  0  2  4  6  8 10 12 14 16 18 20</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">u =</span> <span class="kw">rep</span>(<span class="dv">5</span>,<span class="dv">20</span>))</code></pre>
+<pre><code>##  [1] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>,<span class="dv">3</span>)</code></pre>
+<pre><code>## [1] 5 6 7 5 6 7 5 6 7</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">5</span><span class="op">:</span><span class="dv">7</span>,<span class="dt">each=</span><span class="dv">3</span>)</code></pre>
+<pre><code>## [1] 5 5 5 6 6 6 7 7 7</code></pre>
+</div>
+<div id="texto-string-character" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Texto (string, character)</h3>
+<p>Los vectores de texto son usualmente el precursor de vectores categoricos o factores. Se construyen de manera similar usando <code>c()</code>, pero cada entrada (elemento) va en comillas (doble &quot;&quot;, o sencilla ’’).</p>
+<pre class="sourceCode r"><code class="sourceCode r">z &lt;-<span class="st"> &quot;pura vida&quot;</span>
+z</code></pre>
+<pre><code>## [1] &quot;pura vida&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dias &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lunes&quot;</span>,<span class="st">&quot;martes&quot;</span>,<span class="st">&quot;miercoles&quot;</span>,<span class="st">&quot;jueves&quot;</span>,<span class="st">&quot;viernes&quot;</span>)
+dias</code></pre>
+<pre><code>## [1] &quot;lunes&quot;     &quot;martes&quot;    &quot;miercoles&quot; &quot;jueves&quot;    &quot;viernes&quot;</code></pre>
+</div>
+<div id="categoricos-factores" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Categoricos (factores)</h3>
+<p>Los vectores para datos categoricos en <strong>R</strong> son llamados factores, y estos factores van a contener niveles o clases (levels). Este tipo de vector es muy utilizado en diversos analisis.</p>
+<p>El primer tipo es un factor nominal (sin orden en los niveles/clases). Aqui se esta usando el vector de texto creado anteriormente, y simplemente se convierte a factor. La funcion <code>as_factor</code> es del paquete <em>forcats</em>, que se carga al cargar el <em>tidyverse</em>. Existe una funcion basica <code>as.factor</code>; los comportamientos son un poco diferentes, siendo la principal diferencia que <code>as_factor</code> ordena los niveles de acuerdo al orden de aparicion, mientras que <code>as.factor</code> ordena los niveles de manera alfabetica.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dias.f1 =<span class="st"> </span><span class="kw">as_factor</span>(dias)
+dias.f1</code></pre>
+<pre><code>## [1] lunes     martes    miercoles jueves    viernes  
+## Levels: lunes martes miercoles jueves viernes</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dias.f2 =<span class="st"> </span><span class="kw">as.factor</span>(dias)
+dias.f2</code></pre>
+<pre><code>## [1] lunes     martes    miercoles jueves    viernes  
+## Levels: jueves lunes martes miercoles viernes</code></pre>
+<p>Factores ordinales pueden crearse usando la funcion basica <code>factor</code>, primero con el vector de datos (usualmente texto), agregando el argumento <code>ordered = TRUE</code>. Ademas, hay que especificar los niveles en el orden deseado con el argumento <code>levels</code>, donde van a ir de menor a mayor.</p>
+<pre class="sourceCode r"><code class="sourceCode r">ordenado =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&#39;Bajo&#39;</span>,<span class="st">&#39;Alto&#39;</span>,<span class="st">&#39;Alto&#39;</span>,<span class="st">&#39;Medio&#39;</span>,<span class="st">&#39;Medio&#39;</span>,<span class="st">&#39;Bajo&#39;</span>,<span class="st">&#39;Alto&#39;</span>), 
+                  <span class="dt">ordered =</span> T, 
+                  <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;Bajo&#39;</span>,<span class="st">&#39;Medio&#39;</span>,<span class="st">&#39;Alto&#39;</span>))
+ordenado</code></pre>
+<pre><code>## [1] Bajo  Alto  Alto  Medio Medio Bajo  Alto 
+## Levels: Bajo &lt; Medio &lt; Alto</code></pre>
+</div>
+</div>
+<div id="matrices" class="section level2">
+<h2><span class="header-section-number">2.4</span> Matrices</h2>
+<p>Las matrices son representaciones multidimensionales de datos numericos. La funcion para construirlas es <code>matrix</code>, donde se especifican los datos y el numero de filas o columnas. Por defecto inserta los datos por columna, si se quieren meter por fila se debe usar <code>byrow = TRUE</code>. Adicionalmente se le pueden agregar nombres a las filas y columnas con el argumento <code>dimnames</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, <span class="dt">nrow =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    4    7   10   13
+## [2,]    2    5    8   11   14
+## [3,]    3    6    9   12   15</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> T)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+## [3,]   11   12   13   14   15</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> T,
+       <span class="dt">dimnames =</span> <span class="kw">list</span>(<span class="dt">Filas =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>],
+                       <span class="dt">Columnas =</span> LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]))</code></pre>
+<pre><code>##      Columnas
+## Filas  A  B  C  D  E
+##     a  1  2  3  4  5
+##     b  6  7  8  9 10
+##     c 11 12 13 14 15</code></pre>
+</div>
+<div id="dataframes-listas-y-tibbles" class="section level2">
+<h2><span class="header-section-number">2.5</span> DataFrames, listas y tibbles</h2>
+<p>Los vectores son unidimensionales y pueden almacenar datos (elementos) de un solo tipo. DataFrames, listas y tibbles son objetos que pueden almacenar mas de 1 vector y los diferentes vectores pueden ser diferentes entre ellos. Esto es similar a una hoja de calculo donde cada columna es un vector.</p>
+<p>Para DataFrames los contenidos pueden ser unicamente vectores de la misma longitud. Se crea usando la funcion <code>data.frame</code>, con los argumentos siendo los vectores, que van a pasar a ser las columnas. La funcion <code>names</code> brinda los nombres de las columnas, y a su vez se puede usar para renombrar a las columnas.</p>
+<pre class="sourceCode r"><code class="sourceCode r">DF =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Visitas =</span> x, <span class="dt">Revision =</span> y, <span class="dt">Dias =</span> dias)
+DF</code></pre>
+<pre><code>## # A tibble: 5 x 3
+##   Visitas Revision Dias     
+##     &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;    
+## 1       1        6 lunes    
+## 2       2        7 martes   
+## 3       3        8 miercoles
+## 4       4        9 jueves   
+## 5       5       10 viernes</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(DF)</code></pre>
+<pre><code>## [1] &quot;Visitas&quot;  &quot;Revision&quot; &quot;Dias&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(DF) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Experimento&quot;</span>, <span class="st">&quot;Valores&quot;</span>, <span class="st">&quot;Tiempo&quot;</span>)
+DF</code></pre>
+<pre><code>## # A tibble: 5 x 3
+##   Experimento Valores Tiempo   
+##         &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    
+## 1           1       6 lunes    
+## 2           2       7 martes   
+## 3           3       8 miercoles
+## 4           4       9 jueves   
+## 5           5      10 viernes</code></pre>
+<p>Para listas los contenidos pueden ser cualquier objeto y de cualquier dimension. Muchos de los resultados de funciones en <strong>R</strong> son listas. Estas se crean con la funcion <code>list</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">lst =<span class="st"> </span><span class="kw">list</span>(<span class="dt">Exp =</span> x, <span class="dt">Val =</span> y, <span class="dt">Dias =</span> dias, <span class="dt">Data =</span> DF)
+lst</code></pre>
+<pre><code>## $Exp
+## [1] 1 2 3 4 5
+## 
+## $Val
+## [1]  6  7  8  9 10
+## 
+## $Dias
+## [1] &quot;lunes&quot;     &quot;martes&quot;    &quot;miercoles&quot; &quot;jueves&quot;    &quot;viernes&quot;  
+## 
+## $Data
+##   Experimento Valores    Tiempo
+## 1           1       6     lunes
+## 2           2       7    martes
+## 3           3       8 miercoles
+## 4           4       9    jueves
+## 5           5      10   viernes</code></pre>
+<p>Tibbles son un tipo especial de DataFrame, donde la principal diferencia es que pueden tener un contenido (columna) que puede ser una lista y esto puede brindar muchas facilidades a la hora de manipular y analizar los datos. Ademas no fuerza a datos de texto a factores y en la consola se despliega de manera mas amigable.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tb =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Visitas =</span> x, <span class="dt">Revision =</span> y, 
+            <span class="dt">Dias =</span> dias, <span class="dt">Extra =</span> <span class="kw">map</span>(<span class="dv">6</span><span class="op">:</span><span class="dv">10</span>, <span class="op">~</span><span class="kw">rnorm</span>(.x)))
+tb</code></pre>
+<pre><code>## # A tibble: 5 x 4
+##   Visitas Revision Dias      Extra     
+##     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;list&gt;    
+## 1       1        6 lunes     &lt;dbl [6]&gt; 
+## 2       2        7 martes    &lt;dbl [7]&gt; 
+## 3       3        8 miercoles &lt;dbl [8]&gt; 
+## 4       4        9 jueves    &lt;dbl [9]&gt; 
+## 5       5       10 viernes   &lt;dbl [10]&gt;</code></pre>
+</div>
+<div id="verificando-objetos" class="section level2">
+<h2><span class="header-section-number">2.6</span> Verificando objetos</h2>
+<p>Hay funciones para verificar el tipo de objeto (<code>mode</code>, <code>is</code>, <code>class</code>), comprobar si es de un tipo en especifico (<code>is.*</code>) y cambiar de un tipo a otro (<code>as.*</code>). Con la funcione <code>methods(class = *)</code> se pueden obtener los diferentes metodos o funciones disponibles para ese tipo de objeto (va a depender de los paquetes cargados).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mode</span>(x)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is</span>(x)</code></pre>
+<pre><code>##  [1] &quot;numeric&quot;          &quot;vector&quot;           &quot;index&quot;            &quot;replValue&quot;       
+##  [5] &quot;numLike&quot;          &quot;number&quot;           &quot;atomicVector&quot;     &quot;numericVector&quot;   
+##  [9] &quot;EnumerationValue&quot; &quot;replValueSp&quot;      &quot;Mnumeric&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(x)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)
+<span class="kw">methods</span>(<span class="dt">class =</span> <span class="kw">class</span>(x))</code></pre>
+<pre><code>##  [1] [             [&lt;-           all.equal     Arith         as_factor    
+##  [6] as_mapper     as.data.frame as.Date       as.POSIXct    as.POSIXlt   
+## [11] as.raster     cbind2        coerce        coerce&lt;-      Compare      
+## [16] Desc          full_seq      get_skimmers  Logic         months       
+## [21] Ops           rbind2        recode        rescale       scale_type   
+## see &#39;?methods&#39; for accessing help and source code</code></pre>
+<p>Aqui se agrega un elemento de texto a un vector numerico, <strong>R</strong> por defecto lo va a cambiar a texto, que se revisa con <code>mode(x)</code>, y especificamente si es numerico con <code>is.numeric(x)</code>. Para cambiarlo de nuevo a numerico se usa <code>as.numeric(x)</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x[<span class="dv">6</span>]&lt;-<span class="st">&quot;NA&quot;</span>
+x</code></pre>
+<pre><code>## [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;NA&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mode</span>(x)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.numeric</span>(x)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">x2 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(x)</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">x2</code></pre>
+<pre><code>## [1]  1  2  3  4  5 NA</code></pre>
+</div>
+<div id="guardando-el-espacio-de-trabajo" class="section level2">
+<h2><span class="header-section-number">2.7</span> Guardando el espacio de trabajo</h2>
+<p>Una vez se han generado objetos estos pueden ser guardados para compartir con otra gente o cargar en otra sesion para no tener que volver a generarlos.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save.image</span>(<span class="st">&quot;introR.rdata&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;introR.rdata&quot;</span>)</code></pre>
+</div>
+<div id="importandocargando-datos" class="section level2">
+<h2><span class="header-section-number">2.8</span> Importando/cargando datos</h2>
+<p>La mejor opcion para importar datos es usar <code>import</code> del paquete <strong>rio</strong> <span class="citation">(Chan &amp; Leeper, <a href="#ref-R-rio">2018</a>)</span>. Uno simplemente ocupa darle la direccion del archivo que se quiere importar y la funcion inteligentemente escoge la forma para importarlo. Si se quiere importar un documento de Excel que contiene varias hojas, se usa <code>import_list</code>, donde el resultado es una lista con las diferentes hojas. El argumento <code>setclass = 'tibble'</code> se usa para definir que el objeto creado sea un tibble y no un DataFrame.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;airquality&quot;</span>)
+<span class="kw">head</span>(airquality)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   Ozone Solar.R  Wind  Temp Month   Day
+##   &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1    41     190   7.4    67     5     1
+## 2    36     118   8      72     5     2
+## 3    12     149  12.6    74     5     3
+## 4    18     313  11.5    62     5     4
+## 5    NA      NA  14.3    56     5     5
+## 6    28      NA  14.9    66     5     6</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dat1 &lt;- import(file.choose(), setclass = &#39;tibble&#39;)</span>
+dat1 &lt;-<span class="st"> </span><span class="kw">import</span>(<span class="st">&quot;data/LungCapData2.csv&quot;</span>, <span class="dt">setclass =</span> <span class="st">&#39;tibble&#39;</span>)
+titanic &lt;-<span class="st"> </span><span class="kw">import</span>(<span class="st">&quot;data/titanic.csv&quot;</span>, <span class="dt">setclass =</span> <span class="st">&#39;tibble&#39;</span>)
+lista_datos =<span class="st"> </span><span class="kw">import_list</span>(<span class="st">&#39;data/datasets.xlsx&#39;</span>, <span class="dt">setclass =</span> <span class="st">&#39;tibble&#39;</span>)</code></pre>
+</div>
+<div id="exportando-datos" class="section level2">
+<h2><span class="header-section-number">2.9</span> Exportando datos</h2>
+<p>Usar <code>export</code> del paquete <strong>rio</strong>. Se pueden exportar diferentes formatos. Si se exporta una lista con nombres a un Excel, cada entrada de la lista aparece en una hoja diferente.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">export</span>(airquality, <span class="st">&quot;data/airquality.csv&quot;</span>)
+<span class="kw">export</span>(<span class="kw">list</span>(<span class="dt">airquality =</span> airquality,
+            <span class="dt">mpg =</span> mpg,
+            <span class="dt">gss =</span> gss_cat), <span class="st">&quot;data/datasets.xlsx&quot;</span>)</code></pre>
+</div>
+<div id="inspeccionando-los-datos" class="section level2">
+<h2><span class="header-section-number">2.10</span> Inspeccionando los datos</h2>
+<p>Aqui se muestran funciones basicas para explorar los datos y como acceder a ciertos datos en especifico. Dentro de las funciones mas usadas estan:</p>
+<ul>
+<li><code>head</code>: Muestra las primeras 6 filas o elementos de un DataFrame o vector (no es necesario usar esto con un Tibble ya que el Tibble muestra las primeras 10 filas por defecto)</li>
+<li><code>tail</code>: Muestra las ultimas 6 filas o elementos</li>
+<li><code>dim</code>: Muestra la dimension del objeto</li>
+<li><code>summary</code>: Dependiendo del objeto esta funcion muestra diferentes cosas, en general siendo un resumen de los contenidos del objeto</li>
+<li><code>str</code>: Muestra la estructura de los datos, indicando numero de variables y observaciones, asi como el tipo de variables (de nuevo esto lo muestra un Tibble por defecto)</li>
+<li><code>names</code>: Muestra los nombres de los objetos; en el caso de DataFrames y tibbles los nombres de las columnas, en el caso de una lista los nombres de los objetos dentro de la lista</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(dat1)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##     Age LungCap Height Gender Smoke
+##   &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;
+## 1     9    3.12   57   female no   
+## 2     8    3.17   67.5 female no   
+## 3     7    3.16   54.5 female no   
+## 4     9    2.67   53   male   no   
+## 5     9    3.68   57   male   no   
+## 6     8    5.01   61   female no</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(dat1)</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##     Age LungCap Height Gender Smoke
+##   &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;
+## 1    16   12.6    72   male   yes  
+## 2    16   10.8    67   male   yes  
+## 3    15    9.18   68   male   yes  
+## 4    18    6.56   60   female no   
+## 5    16    6.38   63   female yes  
+## 6    15    7.63   66.5 female no</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(dat1)</code></pre>
+<pre><code>## [1] 654   5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(dat1)</code></pre>
+<pre><code>##       Age            LungCap           Height         Gender         
+##  Min.   : 3.000   Min.   : 0.373   Min.   :46.00   Length:654        
+##  1st Qu.: 8.000   1st Qu.: 3.943   1st Qu.:57.00   Class :character  
+##  Median :10.000   Median : 5.643   Median :61.50   Mode  :character  
+##  Mean   : 9.931   Mean   : 5.910   Mean   :61.14                     
+##  3rd Qu.:12.000   3rd Qu.: 7.356   3rd Qu.:65.50                     
+##  Max.   :19.000   Max.   :15.379   Max.   :74.00                     
+##     Smoke          
+##  Length:654        
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(dat1)</code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    654 obs. of  5 variables:
+##  $ Age    : int  9 8 7 9 9 8 6 6 8 9 ...
+##  $ LungCap: num  3.12 3.17 3.16 2.67 3.69 ...
+##  $ Height : num  57 67.5 54.5 53 57 61 58 56 58.5 60 ...
+##  $ Gender : chr  &quot;female&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot; ...
+##  $ Smoke  : chr  &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(dat1)</code></pre>
+<pre><code>## [1] &quot;Age&quot;     &quot;LungCap&quot; &quot;Height&quot;  &quot;Gender&quot;  &quot;Smoke&quot;</code></pre>
+<p>Para acceder a elementos de un vector (de cualquier tipo) se usan los corchetes cuadrados <code>[]</code>, con el numero de la posicion del elemento dentro de estos. La posicion se puede especificar por medio de un valor unico, un rango (inicio:fin), o por medio de un vector de posiciones usando <code>c()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">t1[<span class="dv">3</span><span class="op">:</span><span class="dv">5</span>]</code></pre>
+<pre><code>## [1] 0.4 0.6 0.8</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dias[<span class="dv">2</span>]</code></pre>
+<pre><code>## [1] &quot;martes&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">ordenado[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">7</span>)]</code></pre>
+<pre><code>## [1] Alto  Medio Alto 
+## Levels: Bajo &lt; Medio &lt; Alto</code></pre>
+<p>Para acceder a elementos de una lista se usa el corchete sencillo para extraer el elemento como tal, o doble corchete para extraer los contenido del elemento.</p>
+<pre class="sourceCode r"><code class="sourceCode r">lst[<span class="dv">1</span>]</code></pre>
+<pre><code>## $Exp
+## [1] 1 2 3 4 5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">lst[[<span class="dv">1</span>]]</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">lst[[<span class="dv">1</span>]][<span class="dv">3</span>]</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>Para acceder a los datos de una matriz o tabla (DataFrame o tibble) se usan los corchetes cuadrados <code>[,]</code>, donde el espacio antes de la coma se usa para seleccionar filas y el espacio despues para seleccionar columnas (de acuerdo al numero, o al nombre para tablas).</p>
+<p>En tablas, para acceder a una columna como vector se pueden usar los dobles corchetes <code>[[]]</code> o el operados <code>$</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dat1[,<span class="dv">1</span>] <span class="co"># primer columna</span></code></pre>
+<pre><code>## # A tibble: 654 x 1
+##      Age
+##    &lt;int&gt;
+##  1     9
+##  2     8
+##  3     7
+##  4     9
+##  5     9
+##  6     8
+##  7     6
+##  8     6
+##  9     8
+## 10     9
+## # … with 644 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dat1[<span class="dv">1</span>,] <span class="co"># primer fila</span></code></pre>
+<pre><code>## # A tibble: 1 x 5
+##     Age LungCap Height Gender Smoke
+##   &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;
+## 1     9    3.12     57 female no</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dat1[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># elemento en primer fila y columna</span></code></pre>
+<pre><code>## # A tibble: 1 x 1
+##     Age
+##   &lt;int&gt;
+## 1     9</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dat1[,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] <span class="co"># columnas de la 1 a la 3</span></code></pre>
+<pre><code>## # A tibble: 654 x 3
+##      Age LungCap Height
+##    &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+##  1     9    3.12   57  
+##  2     8    3.17   67.5
+##  3     7    3.16   54.5
+##  4     9    2.67   53  
+##  5     9    3.68   57  
+##  6     8    5.01   61  
+##  7     6    3.76   58  
+##  8     6    2.24   56  
+##  9     8    3.96   58.5
+## 10     9    3.83   60  
+## # … with 644 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dat1[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)] <span class="co"># columnas 1, 3, y 5</span></code></pre>
+<pre><code>## # A tibble: 654 x 3
+##      Age Height Smoke
+##    &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;
+##  1     9   57   no   
+##  2     8   67.5 no   
+##  3     7   54.5 no   
+##  4     9   53   no   
+##  5     9   57   no   
+##  6     8   61   no   
+##  7     6   58   no   
+##  8     6   56   no   
+##  9     8   58.5 no   
+## 10     9   60   no   
+## # … with 644 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dat1[,<span class="kw">c</span>(<span class="st">&quot;Age&quot;</span>,<span class="st">&quot;Height&quot;</span>)] <span class="co"># columnas por nombre</span></code></pre>
+<pre><code>## # A tibble: 654 x 2
+##      Age Height
+##    &lt;int&gt;  &lt;dbl&gt;
+##  1     9   57  
+##  2     8   67.5
+##  3     7   54.5
+##  4     9   53  
+##  5     9   57  
+##  6     8   61  
+##  7     6   58  
+##  8     6   56  
+##  9     8   58.5
+## 10     9   60  
+## # … with 644 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(dat1[[<span class="st">&quot;Age&quot;</span>]]) <span class="co"># columna como vector</span></code></pre>
+<pre><code>## [1] 9 8 7 9 9 8</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(dat1<span class="op">$</span>Age) <span class="co"># columna como vector</span></code></pre>
+<pre><code>## [1] 9 8 7 9 9 8</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dat1[<span class="st">&quot;Age&quot;</span>] <span class="co"># columna por nombre</span></code></pre>
+<pre><code>## # A tibble: 654 x 1
+##      Age
+##    &lt;int&gt;
+##  1     9
+##  2     8
+##  3     7
+##  4     9
+##  5     9
+##  6     8
+##  7     6
+##  8     6
+##  9     8
+## 10     9
+## # … with 644 more rows</code></pre>
+<p>Para columnas de tipo factor se pueden revisar los niveles con la funcion <code>levels</code>. Si una columna es de tipo texto y se quiere cambiar a factor se reescribe la columna (tabla$columna) por medio de la funcion <code>factor</code>. Ademas, si se requieren ordenar los niveles, estos se puede hacer especificando el orden deseado con el argumento <code>levels</code>, usando el nombre de los elementos en el vector.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(dat1<span class="op">$</span>Smoke)</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dat1<span class="op">$</span>Smoke =<span class="st"> </span><span class="kw">factor</span>(dat1<span class="op">$</span>Smoke,<span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;yes&quot;</span>,<span class="st">&quot;no&quot;</span>)) <span class="co"># reordenar niveles</span>
+<span class="kw">levels</span>(dat1<span class="op">$</span>Smoke)</code></pre>
+<pre><code>## [1] &quot;yes&quot; &quot;no&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(dat1)</code></pre>
+<pre><code>##       Age            LungCap           Height         Gender          Smoke    
+##  Min.   : 3.000   Min.   : 0.373   Min.   :46.00   Length:654         yes: 65  
+##  1st Qu.: 8.000   1st Qu.: 3.943   1st Qu.:57.00   Class :character   no :589  
+##  Median :10.000   Median : 5.643   Median :61.50   Mode  :character            
+##  Mean   : 9.931   Mean   : 5.910   Mean   :61.14                               
+##  3rd Qu.:12.000   3rd Qu.: 7.356   3rd Qu.:65.50                               
+##  Max.   :19.000   Max.   :15.379   Max.   :74.00</code></pre>
+</div>
+<div id="descripciones-generales-globales" class="section level2">
+<h2><span class="header-section-number">2.11</span> Descripciones generales (globales)</h2>
+<p>Se muestran varias funciones que generan un resumen general de un vector, o tabla dependiendo del tipo de variable presente. Estas funciones se encuentran en los paquetes <em>skimr</em> <span class="citation">(Waring et al., <a href="#ref-R-skimr">2019</a>)</span>, <em>psych</em> <span class="citation">(Revelle, <a href="#ref-R-psych">2020</a>)</span>, <em>DescTools</em> <span class="citation">(Signorell, <a href="#ref-R-DescTools">2020</a>)</span>, y <em>summarytools</em> <span class="citation">(Comtois, <a href="#ref-R-summarytools">2019</a>)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">101</span>)
+myvector =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">60</span>,<span class="dt">mean =</span> <span class="dv">30</span>,<span class="dt">sd =</span> <span class="dv">8</span>)
+
+<span class="kw">skim</span>(myvector)</code></pre>
+<table>
+<caption><span id="tab:basico-descvec">Tabla 2.1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">myvector</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">60</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">data</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">29.11</td>
+<td align="right">7.42</td>
+<td align="right">11.45</td>
+<td align="right">24.06</td>
+<td align="right">29.78</td>
+<td align="right">34.57</td>
+<td align="right">41.42</td>
+<td align="left">▂▅▇▇▆</td>
+</tr>
+</tbody>
+</table>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describe</span>(myvector)</code></pre>
+<pre><code>## # A tibble: 1 x 13
+##    vars     n  mean    sd median trimmed   mad   min   max range   skew kurtosis
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1    60  29.1  7.42   29.8    29.5  7.87  11.4  41.4  30.0 -0.499   -0.671
+## # … with 1 more variable: se &lt;dbl&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Desc</span>(myvector)</code></pre>
+<pre><code>## ------------------------------------------------------------------------------ 
+## myvector (numeric)
+## 
+##     length         n       NAs    unique        0s      mean    meanCI
+##         60        60         0       = n         0  29.10622  27.18840
+##               100.0%      0.0%                0.0%            31.02404
+##                                                                       
+##        .05       .10       .25    median       .75       .90       .95
+##   16.47568  18.28631  24.06407  29.78292  34.56941  37.43271  39.38988
+##                                                                       
+##      range        sd     vcoef       mad       IQR      skew      kurt
+##   29.97666   7.42400   0.25507   7.86821  10.50535  -0.49887  -0.67149
+##                                                                       
+## lowest : 11.44538, 13.41515, 13.59754, 16.62716, 18.12898
+## highest: 39.03847, 39.38978, 39.39173, 39.51883, 41.42204</code></pre>
+<p><img src="geolonum_files/figure-html/basico-descvec-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dfSummary</span>(myvector) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">view</span>(<span class="dt">method =</span> <span class="st">&#39;render&#39;</span>)</code></pre>
+<pre><code>## myvector was converted to a data frame
+## myvector was converted to a data frame</code></pre>
+<div class="container st-container">
+<h3>Data Frame Summary</h3>
+<h4>myvector</h4>
+<strong>Dimensions</strong>: 60 x 1
+  <br/><strong>Duplicates</strong>: 0
+<br/>
+<table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
+  <thead>
+    <tr>
+      <th align="center" class="no st-protect-top-border"><strong>No</strong></th>
+      <th align="center" class="variable st-protect-top-border"><strong>Variable</strong></th>
+      <th align="center" class="stats.values st-protect-top-border"><strong>Stats / Values</strong></th>
+      <th align="center" class="freqs.pct.valid st-protect-top-border"><strong>Freqs (% of Valid)</strong></th>
+      <th align="center" class="valid st-protect-top-border"><strong>Valid</strong></th>
+      <th align="center" class="missing st-protect-top-border"><strong>Missing</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">1</td>
+      <td align="left">myvector
+[numeric]</td>
+      <td align="left">Mean (sd) : 29.1 (7.4)
+min < med < max:
+11.4 < 29.8 < 41.4
+IQR (CV) : 10.5 (0.3)</td>
+      <td align="left" style="vertical-align:middle">60 distinct values</td>
+      <td align="center">60
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+  </tbody>
+</table>
+<p>Generated by <a href='https://github.com/dcomtois/summarytools'>summarytools</a> 0.9.4 (<a href='https://www.r-project.org/'>R</a> version 3.6.0)<br/>2020-03-26</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">skim</span>(airquality)</code></pre>
+<table>
+<caption><span id="tab:basico-descdf">Tabla 2.2: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">airquality</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">153</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">6</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">6</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ozone</td>
+<td align="right">37</td>
+<td align="right">0.76</td>
+<td align="right">42.13</td>
+<td align="right">32.99</td>
+<td align="right">1.0</td>
+<td align="right">18.00</td>
+<td align="right">31.5</td>
+<td align="right">63.25</td>
+<td align="right">168.0</td>
+<td align="left">▇▃▂▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">Solar.R</td>
+<td align="right">7</td>
+<td align="right">0.95</td>
+<td align="right">185.93</td>
+<td align="right">90.06</td>
+<td align="right">7.0</td>
+<td align="right">115.75</td>
+<td align="right">205.0</td>
+<td align="right">258.75</td>
+<td align="right">334.0</td>
+<td align="left">▅▃▅▇▅</td>
+</tr>
+<tr class="odd">
+<td align="left">Wind</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">9.96</td>
+<td align="right">3.52</td>
+<td align="right">1.7</td>
+<td align="right">7.40</td>
+<td align="right">9.7</td>
+<td align="right">11.50</td>
+<td align="right">20.7</td>
+<td align="left">▂▇▇▃▁</td>
+</tr>
+<tr class="even">
+<td align="left">Temp</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">77.88</td>
+<td align="right">9.47</td>
+<td align="right">56.0</td>
+<td align="right">72.00</td>
+<td align="right">79.0</td>
+<td align="right">85.00</td>
+<td align="right">97.0</td>
+<td align="left">▂▃▇▇▃</td>
+</tr>
+<tr class="odd">
+<td align="left">Month</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6.99</td>
+<td align="right">1.42</td>
+<td align="right">5.0</td>
+<td align="right">6.00</td>
+<td align="right">7.0</td>
+<td align="right">8.00</td>
+<td align="right">9.0</td>
+<td align="left">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">Day</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">15.80</td>
+<td align="right">8.86</td>
+<td align="right">1.0</td>
+<td align="right">8.00</td>
+<td align="right">16.0</td>
+<td align="right">23.00</td>
+<td align="right">31.0</td>
+<td align="left">▇▇▇▇▆</td>
+</tr>
+</tbody>
+</table>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">describe</span>(airquality)</code></pre>
+<pre><code>## # A tibble: 6 x 13
+##    vars     n   mean    sd median trimmed   mad   min   max range     skew
+##   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1   116  42.1  33.0    31.5   37.8  25.9    1   168     167  1.21   
+## 2     2   146 186.   90.1   205    190.   98.6    7   334     327 -0.419  
+## 3     3   153   9.96  3.52    9.7    9.87  3.41   1.7  20.7    19  0.341  
+## 4     4   153  77.9   9.47   79     78.3   8.90  56    97      41 -0.371  
+## 5     5   153   6.99  1.42    7      6.99  1.48   5     9       4 -0.00234
+## 6     6   153  15.8   8.86   16     15.8  11.9    1    31      30  0.00260
+## # … with 2 more variables: kurtosis &lt;dbl&gt;, se &lt;dbl&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Desc</span>(airquality)</code></pre>
+<pre><code>## ------------------------------------------------------------------------------ 
+## Describe airquality (data.frame):
+## 
+## data frame:  153 obs. of  6 variables
+##      111 complete cases (72.5%)
+## 
+##   Nr  ColName  Class    NAs         Levels
+##   1   Ozone    integer  37 (24.2%)        
+##   2   Solar.R  integer   7 (4.6%)         
+##   3   Wind     numeric   .                
+##   4   Temp     integer   .                
+##   5   Month    integer   .                
+##   6   Day      integer   .                
+## 
+## 
+## ------------------------------------------------------------------------------ 
+## 1 - Ozone (integer)
+## 
+##   length      n    NAs  unique     0s   mean  meanCI
+##      153    116     37      67      0  42.13   36.06
+##           75.8%  24.2%           0.0%          48.20
+##                                                     
+##      .05    .10    .25  median    .75    .90     .95
+##     7.75  11.00  18.00   31.50  63.25  87.00  108.50
+##                                                     
+##    range     sd  vcoef     mad    IQR   skew    kurt
+##   167.00  32.99   0.78   25.95  45.25   1.21    1.11
+##                                                     
+## lowest : 1, 4, 6, 7 (3), 8
+## highest: 115, 118, 122, 135, 168</code></pre>
+<p><img src="geolonum_files/figure-html/basico-descdf-1.png" width="672" /></p>
+<pre><code>## ------------------------------------------------------------------------------ 
+## 2 - Solar.R (integer)
+## 
+##   length      n     NAs  unique      0s    mean  meanCI
+##      153    146       7     117       0  185.93  171.20
+##           95.4%    4.6%            0.0%          200.66
+##                                                        
+##      .05    .10     .25  median     .75     .90     .95
+##    24.25  47.50  115.75  205.00  258.75  288.50  311.50
+##                                                        
+##    range     sd   vcoef     mad     IQR    skew    kurt
+##   327.00  90.06    0.48   98.59  143.00   -0.42   -1.00
+##                                                        
+## lowest : 7, 8, 13, 14, 19
+## highest: 320, 322 (2), 323, 332, 334</code></pre>
+<p><img src="geolonum_files/figure-html/basico-descdf-2.png" width="672" /></p>
+<pre><code>## ------------------------------------------------------------------------------ 
+## 3 - Wind (numeric)
+## 
+##   length       n    NAs  unique     0s   mean  meanCI
+##      153     153      0      31      0   9.96    9.39
+##           100.0%   0.0%           0.0%          10.52
+##                                                      
+##      .05     .10    .25  median    .75    .90     .95
+##     4.60    5.82   7.40    9.70  11.50  14.90   15.50
+##                                                      
+##    range      sd  vcoef     mad    IQR   skew    kurt
+##    19.00    3.52   0.35    3.41   4.10   0.34    0.03
+##                                                      
+## lowest : 1.7, 2.3, 2.8, 3.4, 4.0
+## highest: 16.1, 16.6 (3), 18.4, 20.1, 20.7
+## 
+## heap(?): remarkable frequency (9.8%) for the mode(s) (= 11.5)</code></pre>
+<p><img src="geolonum_files/figure-html/basico-descdf-3.png" width="672" /></p>
+<pre><code>## ------------------------------------------------------------------------------ 
+## 4 - Temp (integer)
+## 
+##   length       n    NAs  unique     0s   mean  meanCI
+##      153     153      0      40      0  77.88   76.37
+##           100.0%   0.0%           0.0%          79.39
+##                                                      
+##      .05     .10    .25  median    .75    .90     .95
+##    60.20   64.20  72.00   79.00  85.00  90.00   92.00
+##                                                      
+##    range      sd  vcoef     mad    IQR   skew    kurt
+##    41.00    9.47   0.12    8.90  13.00  -0.37   -0.46
+##                                                      
+## lowest : 56, 57 (3), 58 (2), 59 (2), 61 (3)
+## highest: 92 (5), 93 (3), 94 (2), 96, 97</code></pre>
+<p><img src="geolonum_files/figure-html/basico-descdf-4.png" width="672" /></p>
+<pre><code>## ------------------------------------------------------------------------------ 
+## 5 - Month (integer)
+## 
+##   length       n    NAs  unique    0s   mean  meanCI
+##      153     153      0       5     0   6.99    6.77
+##           100.0%   0.0%          0.0%           7.22
+##                                                     
+##      .05     .10    .25  median   .75    .90     .95
+##     5.00    5.00   6.00    7.00  8.00   9.00    9.00
+##                                                     
+##    range      sd  vcoef     mad   IQR   skew    kurt
+##     4.00    1.42   0.20    1.48  2.00  -0.00   -1.32
+##                                                     
+## 
+##    level  freq   perc  cumfreq  cumperc
+## 1      5    31  20.3%       31    20.3%
+## 2      6    30  19.6%       61    39.9%
+## 3      7    31  20.3%       92    60.1%
+## 4      8    31  20.3%      123    80.4%
+## 5      9    30  19.6%      153   100.0%
+## 
+## heap(?): remarkable frequency (20.3%) for the mode(s) (= 5, 7, 8)</code></pre>
+<p><img src="geolonum_files/figure-html/basico-descdf-5.png" width="672" /></p>
+<pre><code>## ------------------------------------------------------------------------------ 
+## 6 - Day (integer)
+## 
+##   length       n    NAs  unique     0s   mean  meanCI
+##      153     153      0      31      0  15.80   14.39
+##           100.0%   0.0%           0.0%          17.22
+##                                                      
+##      .05     .10    .25  median    .75    .90     .95
+##     2.00    4.00   8.00   16.00  23.00  28.00   29.40
+##                                                      
+##    range      sd  vcoef     mad    IQR   skew    kurt
+##    30.00    8.86   0.56   11.86  15.00   0.00   -1.22
+##                                                      
+## lowest : 1 (5), 2 (5), 3 (5), 4 (5), 5 (5)
+## highest: 27 (5), 28 (5), 29 (5), 30 (5), 31 (3)</code></pre>
+<p><img src="geolonum_files/figure-html/basico-descdf-6.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dfSummary</span>(airquality) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">view</span>(<span class="dt">method =</span> <span class="st">&#39;render&#39;</span>)</code></pre>
+<div class="container st-container">
+<h3>Data Frame Summary</h3>
+<h4>airquality</h4>
+<strong>Dimensions</strong>: 153 x 6
+  <br/><strong>Duplicates</strong>: 0
+<br/>
+<table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline ">
+  <thead>
+    <tr>
+      <th align="center" class="no st-protect-top-border"><strong>No</strong></th>
+      <th align="center" class="variable st-protect-top-border"><strong>Variable</strong></th>
+      <th align="center" class="stats.values st-protect-top-border"><strong>Stats / Values</strong></th>
+      <th align="center" class="freqs.pct.valid st-protect-top-border"><strong>Freqs (% of Valid)</strong></th>
+      <th align="center" class="valid st-protect-top-border"><strong>Valid</strong></th>
+      <th align="center" class="missing st-protect-top-border"><strong>Missing</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">1</td>
+      <td align="left">Ozone
+[integer]</td>
+      <td align="left">Mean (sd) : 42.1 (33)
+min < med < max:
+1 < 31.5 < 168
+IQR (CV) : 45.2 (0.8)</td>
+      <td align="left" style="vertical-align:middle">67 distinct values</td>
+      <td align="center">116
+(75.82%)</td>
+      <td align="center">37
+(24.18%)</td>
+    </tr>
+    <tr>
+      <td align="center">2</td>
+      <td align="left">Solar.R
+[integer]</td>
+      <td align="left">Mean (sd) : 185.9 (90.1)
+min < med < max:
+7 < 205 < 334
+IQR (CV) : 143 (0.5)</td>
+      <td align="left" style="vertical-align:middle">117 distinct values</td>
+      <td align="center">146
+(95.42%)</td>
+      <td align="center">7
+(4.58%)</td>
+    </tr>
+    <tr>
+      <td align="center">3</td>
+      <td align="left">Wind
+[numeric]</td>
+      <td align="left">Mean (sd) : 10 (3.5)
+min < med < max:
+1.7 < 9.7 < 20.7
+IQR (CV) : 4.1 (0.4)</td>
+      <td align="left" style="vertical-align:middle">31 distinct values</td>
+      <td align="center">153
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">4</td>
+      <td align="left">Temp
+[integer]</td>
+      <td align="left">Mean (sd) : 77.9 (9.5)
+min < med < max:
+56 < 79 < 97
+IQR (CV) : 13 (0.1)</td>
+      <td align="left" style="vertical-align:middle">40 distinct values</td>
+      <td align="center">153
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">5</td>
+      <td align="left">Month
+[integer]</td>
+      <td align="left">Mean (sd) : 7 (1.4)
+min < med < max:
+5 < 7 < 9
+IQR (CV) : 2 (0.2)</td>
+      <td align="left" style="padding:0;vertical-align:middle"><table style="border-collapse:collapse;border:none;margin:0"><tr style="background-color:transparent"><td style="padding:0 0 0 7px;margin:0;border:0" align="right">5</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">31</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">20.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 0 0 7px;margin:0;border:0" align="right">6</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">30</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">19.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 0 0 7px;margin:0;border:0" align="right">7</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">31</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">20.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 0 0 7px;margin:0;border:0" align="right">8</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">31</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">20.3%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr><tr style="background-color:transparent"><td style="padding:0 0 0 7px;margin:0;border:0" align="right">9</td><td style="padding:0 2px;border:0;" align="left">:</td><td style="padding:0 4px 0 6px;margin:0;border:0" align="right">30</td><td style="padding:0;border:0" align="left">(</td><td style="padding:0 2px;margin:0;border:0" align="right">19.6%</td><td style="padding:0 4px 0 0;border:0" align="left">)</td></tr></table></td>
+      <td align="center">153
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+    <tr>
+      <td align="center">6</td>
+      <td align="left">Day
+[integer]</td>
+      <td align="left">Mean (sd) : 15.8 (8.9)
+min < med < max:
+1 < 16 < 31
+IQR (CV) : 15 (0.6)</td>
+      <td align="left" style="vertical-align:middle">31 distinct values</td>
+      <td align="center">153
+(100%)</td>
+      <td align="center">0
+(0%)</td>
+    </tr>
+  </tbody>
+</table>
+<p>Generated by <a href='https://github.com/dcomtois/summarytools'>summarytools</a> 0.9.4 (<a href='https://www.r-project.org/'>R</a> version 3.6.0)<br/>2020-03-26</p>
+</div>
+
+</div>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-R-rio">
+<p>Chan, C.-h., &amp; Leeper, T. J. (2018). <em>rio: A Swiss-Army Knife for Data I/O</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=rio">https://CRAN.R-project.org/package=rio</a></p>
+</div>
+<div id="ref-R-summarytools">
+<p>Comtois, D. (2019). <em>summarytools: Tools to Quickly and Neatly Summarize Data</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=summarytools">https://CRAN.R-project.org/package=summarytools</a></p>
+</div>
+<div id="ref-R-base">
+<p>R Core Team. (2019). <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. Recuperado a partir de <a href="https://www.R-project.org/">https://www.R-project.org/</a></p>
+</div>
+<div id="ref-R-psych">
+<p>Revelle, W. (2020). <em>psych: Procedures for Psychological, Psychometric, and Personality Research</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=psych">https://CRAN.R-project.org/package=psych</a></p>
+</div>
+<div id="ref-R-DescTools">
+<p>Signorell, A. (2020). <em>DescTools: Tools for Descriptive Statistics</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=DescTools">https://CRAN.R-project.org/package=DescTools</a></p>
+</div>
+<div id="ref-R-skimr">
+<p>Waring, E., Quinn, M., McNamara, A., Arino de la Rubia, E., Zhu, H., &amp; Ellis, S. (2019). <em>skimr: Compact and Flexible Summaries of Data</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="funcionamiento-avanzado-de-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

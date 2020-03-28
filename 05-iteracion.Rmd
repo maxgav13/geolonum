@@ -1,0 +1,163 @@
+# Iteracion con `purrr`
+
+```{r warning=FALSE, message=FALSE}
+library(babynames)
+library(nycflights13)
+library(gapminder)
+library(dygraphs)
+library(highcharter)
+library(plotly)
+library(fs)
+library(rio)
+library(tidymodels)
+library(tidyverse)
+```
+
+```{r}
+data("airquality")
+dat1 <- import("data/LungCapData2.csv", setclass = 'tibble')
+titanic <- import("data/titanic.csv", setclass = 'tibble')
+
+airq = airquality %>% 
+  mutate(Month = factor(Month,
+                        levels = 5:9,
+                        labels = c("Mayo", "Junio", "Julio", 
+                                   "Agosto", "Setiembre")),
+         Sensation = case_when(Temp < 60 ~ 'Cold',
+                               Temp < 70 ~ 'Cool',
+                               Temp < 85 ~ 'Warm',
+                               T ~ 'Hot') %>% 
+           as.factor())
+```
+
+La funcion basica de `purrr` es `map(.x, .f, ...)`, donde `.x` es el objeto sobre el cual iterar (vector, DataFrame o lista), `.f` es la funcion o tarea a realizar durante la iteracion, y `...` son argumentos extra dependiendo de la funcion. Esta funcion siempre va a resultar en una lista; las variaciones de esta son especificas para cuando se conoce cual va a ser el tipo de dato de salida. `map_dbl`  se usa cuando el resultado de la funcion es un numero con decimales.
+
+```{r}
+set.seed(9416)
+exams <- list(
+  student1 = round(runif(10, 50, 100)),
+  student2 = round(runif(10, 50, 100)),
+  student3 = round(runif(10, 50, 100)),
+  student4 = round(runif(10, 50, 100)),
+  student5 = round(runif(10, 50, 100))
+)
+
+extra_credit <- list(0, 0, 10, 10, 15)
+```
+
+## Operaciones basicas
+
+Se muestra la funcionabilidad de varias de las funciones `map_*`.
+
+```{r}
+map(exams, mean) # media
+
+exams %>% map_dbl(max) # nota maxima
+
+airq %>% map_dbl(mean)
+
+airq %>% map_dbl(mean, na.rm = T)
+
+airq %>% 
+  select_if(is.numeric) %>% 
+  map_dbl(~ mean(.x, na.rm = T))
+
+exams %>% 
+  map2_dbl(extra_credit, ~ mean(.x) + .y)
+
+```
+
+## Leyendo archivos y combinandolos
+
+Ejemplo de como leer varios archivos de texto que tienen el mismo formato y como combinarlos en un solo tibble para posterior manipulacion.
+
+```{r}
+archivos <- dir_ls(path = 'data', glob = "*datos_*") 
+
+archivos
+
+file_info(archivos)
+```
+
+```{r}
+map(archivos, import) %>% 
+  bind_rows()
+
+archivos %>%
+  map_dfr(import, .id = "archivo")
+
+archivos %>%
+  map_dfr(import, .id = "archivo") %>% 
+  separate(archivo, into = letters[1:3], sep = '_')
+
+archivos %>%
+  map_dfr(import, .id = "archivo") %>% 
+  separate(archivo, into = c(NA, 'grado', NA), sep = '_')
+
+archivos %>%
+  map_dfr(import, .id = "archivo") %>% 
+  separate(archivo, into = c(NA, 'grado', NA), sep = '_') %>% 
+  separate(nombre, into = c('apellido', 'nombre'), sep = ',')
+```
+
+## Datos anidados, caso 1
+
+```{r}
+airq_nest = airq %>% 
+  group_by(Month) %>% 
+  nest()
+
+airq_nest = airq_nest %>% 
+  mutate(mod = map(data, ~lm(Wind ~ Temp, data = .x))) %>% 
+  mutate(slope = map_dbl(mod, ~tidy(.) %>% 
+                           filter(term == 'Temp') %>% 
+                           pull(estimate)),
+         r2 = map_dbl(mod, ~glance(.) %>% pull(r.squared)),
+         plot = map2(data,Month, ~ggplot(.x, aes(Temp, Wind)) + 
+                       geom_point() + 
+                       geom_smooth(method = 'lm') + 
+                       labs(title = .y) + 
+                       theme_bw(base_size = 12)))
+airq_nest
+
+walk(airq_nest$plot, ~print(.))
+
+airq_nest %>% pull(plot)
+
+walk2(airq_nest$plot, 
+      airq_nest$Month, 
+      ~ggsave(filename = str_glue("figs/regresion_{.y}.png"),
+       plot = .x, dpi = 300,
+       width = 7, height = 4, units = "in",
+       type = "cairo"))
+
+```
+
+## Datos anidados, caso 2
+
+```{r}
+gap_nest = gapminder %>% 
+  group_by(country) %>% 
+  nest()
+
+gap_nest = gap_nest %>% 
+  mutate(mod = map(data, ~lm(lifeExp ~ year, data = .x))) %>% 
+  mutate(r2 = map_dbl(mod, ~glance(.) %>% pull(r.squared)))
+gap_nest
+
+gap_nest %>%
+  # ungroup() %>%
+  # arrange(r2) %>%
+  # slice(1:10) %>%
+  filter(r2 < .25) %>%
+  unnest(data) %>%
+  ggplot() + 
+  geom_line(aes(year, lifeExp, col = country, group = country))
+```
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

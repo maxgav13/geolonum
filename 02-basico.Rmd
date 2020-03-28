@@ -1,0 +1,298 @@
+# Funcionamiento basico de R {#basico}
+
+En este capitulo se va a dar una introduccion al funcionamiento basico de **R** [@R-base], incluyendo el uso de **R** como una calculadora (consola), creacion de objetos, y los tipos principales objetos que se utilizan en **R**, asi como importar y exportar datos, y unas inspecciones generales de los datos.
+
+Se van a usar, aunque poco en este capitulo, funciones de los paquetes:
+
+```{r basico, warning=FALSE, message=FALSE}
+library(rio)
+library(skimr)
+library(psych)
+library(DescTools)
+library(tidyverse)
+library(summarytools)
+```
+
+## Operaciones basicas
+
+**R** puede funcionar como una calculadora basica, donde es posible relizar operaciones aritmeticas sencillas. Los nombres de las funciones estan en ingles (ej: `sqrt` para raiz cuadrada, `round` para redondeo, etc.).
+
+Como cualquier otro programa, si se va a utilizar operaciones con angulos (ej: `cos`, `tan`, etc.), los angulos tienen que darse en radianes, y el resultado va a estar en radianes.
+
+```{r basico-calc}
+1+2
+1-2
+1*2
+1/2
+sqrt(125)
+```
+
+## Crear objetos
+
+Objetos se pueden crear usando los operadores `<-` o `=`. Al crear un objeto este no se despliega en la consola a menos que uno lo llame directamente o que a la hora de crealo sea encerrado con parentesis redondos `()`.
+
+La idea de generar objetos es basica para los lenguages de programacion. Los objetos que se crean pueden ser reutilizados despues de ser creados. Si se desean actualizar las operaciones o funciones que dependen de un objeto, solo se cambia el objeto una vez, y el resto se actualiza cuando se vuelve a correr.
+
+Aqui se estan generando los objetos `x`, `y`, y `z`, donde `x` se imprime hasta llamarlo, `y` se imprime al guardarlo por estar encerrado en parentesis, y `z` es funcion de `x` y `y`.
+
+```{r basico-objetos}
+x <- 1
+(y = 2)
+x
+x + y
+z = x + y
+```
+
+## Vectores
+
+Los vectores son unidimensionales y deben ser (contener elementos) del mismo tipo. Aqui se muestran los diferentes tipos, y como crearlos. Los mas importantes tipos son *Numericos*, *Texto*, y *Factores* (tipo especial en **R**).
+
+### Numericos
+
+Se pueden crear vectores numericos a partir de datos puntuales, sin ningun orden, usando la funcion `c()`, y separando las entradas (elementos) por medio de comas `,`.
+
+```{r basico-vecnum1}
+x <- c(1,2,3,4,5)
+y <- c(6,7,8,9,10)
+```
+
+O se pueden crear vectores en secuencia (`seq(from = , to = , by =, o length.out = )`) o de valores repetidos (`rep()`). Crear vectores de valores repetidos no aplica unicamente para datos numericos.
+
+En `seq` se definen los argumentos `from`: valor inicial, `to`: valor final, y `by`: el intervalo, o `length.out`: la cantidad de elementos que quiero. En `rep` se define lo que se quiere repetir, y el numero de veces a repetir.
+
+```{r basico-vecnum2}
+(f = 1:30)
+(t1 = seq(from = 0, to = 20, by = .2))
+(t2 = seq(from = 0, to = 20, length.out = 11))
+(u = rep(5,20))
+rep(5:7,3)
+rep(5:7,each=3)
+```
+
+### Texto (string, character)
+
+Los vectores de texto son usualmente el precursor de vectores categoricos o factores. Se construyen de manera similar usando `c()`, pero cada entrada (elemento) va en comillas (doble "", o sencilla '').
+
+```{r basico-vectext}
+z <- "pura vida"
+z
+dias <- c("lunes","martes","miercoles","jueves","viernes")
+dias
+```
+
+### Categoricos (factores)
+
+Los vectores para datos categoricos en **R** son llamados factores, y estos factores van a contener niveles o clases (levels). Este tipo de vector es muy utilizado en diversos analisis. 
+
+El primer tipo es un factor nominal (sin orden en los niveles/clases). Aqui se esta usando el vector de texto creado anteriormente, y simplemente se convierte a factor. La funcion `as_factor` es del paquete *forcats*, que se carga al cargar el *tidyverse*. Existe una funcion basica `as.factor`; los comportamientos son un poco diferentes, siendo la principal diferencia que `as_factor` ordena los niveles de acuerdo al orden de aparicion, mientras que `as.factor` ordena los niveles de manera alfabetica.
+
+```{r basico-vecfct}
+dias.f1 = as_factor(dias)
+dias.f1
+
+dias.f2 = as.factor(dias)
+dias.f2
+```
+
+Factores ordinales pueden crearse usando la funcion basica `factor`, primero con el vector de datos (usualmente texto), agregando el argumento `ordered = TRUE`. Ademas, hay que especificar los niveles en el orden deseado con el argumento `levels`, donde van a ir de menor a mayor.
+
+```{r basico-vecord}
+ordenado = factor(c('Bajo','Alto','Alto','Medio','Medio','Bajo','Alto'), 
+                  ordered = T, 
+                  levels = c('Bajo','Medio','Alto'))
+ordenado
+```
+
+
+## Matrices
+
+Las matrices son representaciones multidimensionales de datos numericos. La funcion para construirlas es `matrix`, donde se especifican los datos y el numero de filas o columnas. Por defecto inserta los datos por columna, si se quieren meter por fila se debe usar `byrow = TRUE`. Adicionalmente se le pueden agregar nombres a las filas y columnas con el argumento `dimnames`.
+
+```{r basico-matriz}
+matrix(data = 1:15, nrow = 3)
+
+matrix(data = 1:15, nrow = 3, byrow = T)
+
+matrix(data = 1:15, nrow = 3, byrow = T,
+       dimnames = list(Filas = letters[1:3],
+                       Columnas = LETTERS[1:5]))
+
+```
+
+
+## DataFrames, listas y tibbles
+
+Los vectores son unidimensionales y pueden almacenar datos (elementos) de un solo tipo. DataFrames, listas y tibbles son objetos que pueden almacenar mas de 1 vector y los diferentes vectores pueden ser diferentes entre ellos. Esto es similar a una hoja de calculo donde cada columna es un vector.
+
+Para DataFrames los contenidos pueden ser unicamente vectores de la misma longitud. Se crea usando la funcion `data.frame`, con los argumentos siendo los vectores, que van a pasar a ser las columnas. La funcion `names` brinda los nombres de las columnas, y a su vez se puede usar para renombrar a las columnas.
+
+```{r basico-df}
+DF = data.frame(Visitas = x, Revision = y, Dias = dias)
+DF
+names(DF)
+names(DF) = c("Experimento", "Valores", "Tiempo")
+DF
+```
+
+Para listas los contenidos pueden ser cualquier objeto y de cualquier dimension. Muchos de los resultados de funciones en **R** son listas. Estas se crean con la funcion `list`.
+
+```{r basico-lista}
+lst = list(Exp = x, Val = y, Dias = dias, Data = DF)
+lst
+```
+
+Tibbles son un tipo especial de DataFrame, donde la principal diferencia es que pueden tener un contenido (columna) que puede ser una lista y esto puede brindar muchas facilidades a la hora de manipular y analizar los datos. Ademas no fuerza a datos de texto a factores y en la consola se despliega de manera mas amigable.
+
+```{r basico-tb}
+tb = tibble(Visitas = x, Revision = y, 
+            Dias = dias, Extra = map(6:10, ~rnorm(.x)))
+tb
+```
+
+## Verificando objetos
+
+Hay funciones para verificar el tipo de objeto (`mode`, `is`, `class`), comprobar si es de un tipo en especifico (`is.*`) y cambiar de un tipo a otro (`as.*`). Con la funcione `methods(class = *)` se pueden obtener los diferentes metodos o funciones disponibles para ese tipo de objeto (va a depender de los paquetes cargados).
+
+```{r basico-verif}
+mode(x)
+is(x)
+class(x)
+x <- c(1, 2, 3, 4, 5, 6)
+methods(class = class(x))
+```
+
+Aqui se agrega un elemento de texto a un vector numerico, **R** por defecto lo va a cambiar a texto, que se revisa con `mode(x)`, y especificamente si es numerico con `is.numeric(x)`. Para cambiarlo de nuevo a numerico se usa `as.numeric(x)`.
+
+```{r basico-convert}
+x[6]<-"NA"
+x
+mode(x)
+is.numeric(x)
+x2 <- as.numeric(x)
+x2
+```
+
+## Guardando el espacio de trabajo
+
+Una vez se han generado objetos estos pueden ser guardados para compartir con otra gente o cargar en otra sesion para no tener que volver a generarlos.
+
+```{r basico-salvar, eval=FALSE}
+save.image("introR.rdata")
+```
+
+```{r basico-cargar, eval=FALSE}
+load("introR.rdata")
+```
+
+## Importando/cargando datos
+
+La mejor opcion para importar datos es usar `import` del paquete **rio** [@R-rio]. Uno simplemente ocupa darle la direccion del archivo que se quiere importar y la funcion inteligentemente escoge la forma para importarlo. Si se quiere importar un documento de Excel que contiene varias hojas, se usa `import_list`, donde el resultado es una lista con las diferentes hojas. El argumento `setclass = 'tibble'` se usa para definir que el objeto creado sea un tibble y no un DataFrame.
+
+```{r basico-import}
+data("airquality")
+head(airquality)
+# dat1 <- import(file.choose(), setclass = 'tibble')
+dat1 <- import("data/LungCapData2.csv", setclass = 'tibble')
+titanic <- import("data/titanic.csv", setclass = 'tibble')
+lista_datos = import_list('data/datasets.xlsx', setclass = 'tibble')
+```
+
+## Exportando datos
+
+Usar `export` del paquete **rio**. Se pueden exportar diferentes formatos. Si se exporta una lista con nombres a un Excel, cada entrada de la lista aparece en una hoja diferente.
+
+```{r basico-export}
+export(airquality, "data/airquality.csv")
+export(list(airquality = airquality,
+            mpg = mpg,
+            gss = gss_cat), "data/datasets.xlsx")
+```
+
+## Inspeccionando los datos
+
+Aqui se muestran funciones basicas para explorar los datos y como acceder a ciertos datos en especifico. Dentro de las funciones mas usadas estan:
+
+* `head`: Muestra las primeras 6 filas o elementos de un DataFrame o vector (no es necesario usar esto con un Tibble ya que el Tibble muestra las primeras 10 filas por defecto)
+* `tail`: Muestra las ultimas 6 filas o elementos
+* `dim`: Muestra la dimension del objeto 
+* `summary`: Dependiendo del objeto esta funcion muestra diferentes cosas, en general siendo un resumen de los contenidos del objeto
+* `str`: Muestra la estructura de los datos, indicando numero de variables y observaciones, asi como el tipo de variables (de nuevo esto lo muestra un Tibble por defecto)
+* `names`: Muestra los nombres de los objetos; en el caso de DataFrames y tibbles los nombres de las columnas, en el caso de una lista los nombres de los objetos dentro de la lista
+
+```{r basico-eda}
+head(dat1)
+tail(dat1)
+dim(dat1)
+summary(dat1)
+str(dat1)
+names(dat1)
+```
+
+Para acceder a elementos de un vector (de cualquier tipo) se usan los corchetes cuadrados `[]`, con el numero de la posicion del elemento dentro de estos. La posicion se puede especificar por medio de un valor unico, un rango (inicio:fin), o por medio de un vector de posiciones usando `c()`.
+
+```{r basico-extraervec}
+t1[3:5]
+dias[2]
+ordenado[c(2,5,7)]
+```
+
+Para acceder a elementos de una lista se usa el corchete sencillo para extraer el elemento como tal, o doble corchete para extraer los contenido del elemento.
+
+```{r basico-extraerlista}
+lst[1]
+lst[[1]]
+lst[[1]][3]
+```
+
+Para acceder a los datos de una matriz o tabla (DataFrame o tibble) se usan los corchetes cuadrados `[,]`, donde el espacio antes de la coma se usa para seleccionar filas y el espacio despues para seleccionar columnas (de acuerdo al numero, o al nombre para tablas). 
+
+En tablas, para acceder a una columna como vector se pueden usar los dobles corchetes `[[]]` o el operados `$`.
+
+```{r basico-estraerdf}
+dat1[,1] # primer columna
+dat1[1,] # primer fila
+dat1[1,1] # elemento en primer fila y columna
+dat1[,1:3] # columnas de la 1 a la 3
+dat1[,c(1,3,5)] # columnas 1, 3, y 5
+dat1[,c("Age","Height")] # columnas por nombre
+head(dat1[["Age"]]) # columna como vector
+head(dat1$Age) # columna como vector
+dat1["Age"] # columna por nombre
+```
+
+Para columnas de tipo factor se pueden revisar los niveles con la funcion `levels`. Si una columna es de tipo texto y se quiere cambiar a factor se reescribe la columna (tabla$columna) por medio de la funcion `factor`. Ademas, si se requieren ordenar los niveles, estos se puede hacer especificando el orden deseado con el argumento `levels`, usando el nombre de los elementos en el vector.
+
+```{r basico-niveles}
+levels(dat1$Smoke)
+dat1$Smoke = factor(dat1$Smoke,levels = c("yes","no")) # reordenar niveles
+levels(dat1$Smoke)
+summary(dat1)
+```
+
+## Descripciones generales (globales)
+
+Se muestran varias funciones que generan un resumen general de un vector, o tabla dependiendo del tipo de variable presente. Estas funciones se encuentran en los paquetes *skimr* [@R-skimr], *psych* [@R-psych], *DescTools* [@R-DescTools], y *summarytools* [@R-summarytools].
+
+```{r basico-descvec}
+set.seed(101)
+myvector = rnorm(n = 60,mean = 30,sd = 8)
+
+skim(myvector)
+describe(myvector)
+Desc(myvector)
+dfSummary(myvector) %>% view(method = 'render')
+```
+
+```{r basico-descdf}
+skim(airquality)
+describe(airquality)
+Desc(airquality)
+dfSummary(airquality) %>% view(method = 'render')
+```
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
