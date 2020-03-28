@@ -100,19 +100,26 @@ ggplot(airquality,aes(x=Temp)) +
   facet_wrap(~ Month)
 ```
 
-Se venian rellenando las barras todas de un mismo color, por lo que el argumento `fill` se pone fuera del `aes()`. Si se quiere rellenar las barras de acuerdo al conteo o densidad es necesario insertar dentro del `aes()` de `geom_histogram` el `fill=stat(.)`, donde el punto (`.`) puede corresponder con el conteo (`count`) o la densidad (`density`). Asi como se modifica el eje x anteriormnte con `scale_x_*`, se puede modificar el relleno con `scale_fill_*`. En este caso (Figura \@ref(fig:graficos-hist5)) se usa `scale_fill_distiller()` para usar una de las paletas disponibles en el paquete *RColorBrewer* [@R-RColorBrewer], donde se tiene que especificar el nombre de la paleta de colores a usar, en este caso `palette = 'YlOrRd'`.
+Se venian rellenando las barras todas de un mismo color, por lo que el argumento `fill` se pone fuera del `aes()`. Si se quiere rellenar las barras de acuerdo al conteo o densidad es necesario insertar dentro del `aes()` de `geom_histogram` el `fill=after_stat(.)`, donde el punto (`.`) puede corresponder con el conteo (`count`) o la densidad (`density`). Asi como se modifica el eje x anteriormente con `scale_x_*`, se puede modificar el relleno con `scale_fill_*`. En este caso (Figura \@ref(fig:graficos-hist5)) se usa `scale_fill_distiller()` para usar una de las paletas disponibles en el paquete *RColorBrewer* [@R-RColorBrewer], donde se tiene que especificar el nombre de la paleta de colores a usar, en este caso `palette = 'YlOrRd'`.
 
 ```{r graficos-hist5, fig.cap='Histograma con relleno de acuerdo al conteo'}
 ggplot(airquality,aes(x=Temp)) +
-  geom_histogram(bins = 20,aes(fill=stat(count)),col="black") +
+  geom_histogram(bins = 20,aes(fill=after_stat(count)),col="black") +
   scale_fill_distiller(palette = 'YlOrRd')
 ```
 
-Asi como se puede modificar el relleno de las barras, se puede modificar que el eje y no corresponda con el conteo sino con la densidad (Figura \@ref(fig:graficos-hist6)), para esto es necesario insertar dentro del `aes()` de `geom_histogram` el `y=stat(density)`, y esto es necesario si se quiere agregar la curva de densidad de los datos (`geom_density`) para ver su distribucion.
+Las paletas disponibles se observan en la Figura \@ref(fig:brewer-cols), donde el primer bloque de colores corresponde con las paletas secuenciales (`seq`), el segundo bloque con las paletas cualitativas (`qual`), y el tercer bloque con las paletas divergentes (`div`).
+
+```{r brewer-cols, echo=FALSE, fig.cap='Paletas disponibles en RColorBrewer'}
+RColorBrewer::display.brewer.all()
+```
+
+Asi como se puede modificar el relleno de las barras, se puede modificar que el eje y no corresponda con el conteo sino con la densidad (Figura \@ref(fig:graficos-hist6)), para esto es necesario insertar dentro del `aes()` de `geom_histogram` el `y=after_stat(density)`, y esto es necesario si se quiere agregar la curva de densidad de los datos (`geom_density`) para ver su distribucion.
 
 ```{r graficos-hist6, fig.cap='Histograma mostrando la densidad en el eje y en vez del conteo, con la curva de densidad superpuesta'}
 ggplot(airquality,aes(x=Temp)) +
-  geom_histogram(bins = 20,aes(y=stat(density)),col="black",fill="blue") +
+  geom_histogram(bins = 20,aes(y=after_stat(density)),
+                 col="black",fill="blue") +
   geom_density(col="red")
 ```
 
@@ -121,7 +128,7 @@ Combinando lo aprendido hasta ahora se pueden modificar el relleno junto con el 
 ```{r graficos-hist7, fig.cap='Histograma mostrando la densidad en el eje y en vez del conteo, con la curva de densidad superpuesta, y relleno de acuerdo al conteo'}
 ggplot(airquality,aes(x=Temp)) +
   geom_histogram(bins = 20,
-                 aes(y=stat(density),fill=stat(count)),
+                 aes(y=after_stat(density),fill=after_stat(count)),
                  col="black") +
   geom_density(col="red")
 ```
@@ -366,7 +373,7 @@ La version interctiva de la Figura \@ref(fig:graficos-hist7) se muestra en la Fi
 ```{r graficos-inter1, fig.cap='Grafico interactivo de un histograma con plotly'}
 (ggplot(airquality,aes(x=Temp)) +
   geom_histogram(bins = 20,
-                 aes(y=stat(density),fill=stat(count)),
+                 aes(y=after_stat(density),fill=after_stat(count)),
                  col="black") +
   geom_density(col="red")) %>% 
   plotly::ggplotly()
