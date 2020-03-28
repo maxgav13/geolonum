@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-03-26" />
+<meta name="date" content="2020-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -207,7 +207,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.3</b> Datos anidados, caso 1</a></li>
 <li class="chapter" data-level="5.4" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.4</b> Datos anidados, caso 2</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a></li>
+<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a><ul>
+<li class="chapter" data-level="6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-de-texto"><i class="fa fa-check"></i><b>6.1</b> Desde archivos de texto</a></li>
+<li class="chapter" data-level="6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-espaciales"><i class="fa fa-check"></i><b>6.2</b> Desde archivos espaciales</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#shapefiles"><i class="fa fa-check"></i><b>6.2.1</b> Shapefiles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#geopackage"><i class="fa fa-check"></i><b>6.2.2</b> Geopackage</a></li>
+<li class="chapter" data-level="6.2.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#raster"><i class="fa fa-check"></i><b>6.2.3</b> Raster</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#vectoriales"><i class="fa fa-check"></i><b>6.3</b> Vectoriales</a></li>
+<li class="chapter" data-level="6.4" data-path="datos-espaciales.html"><a href="datos-espaciales.html#raster-1"><i class="fa fa-check"></i><b>6.4</b> Raster</a></li>
+<li class="chapter" data-level="6.5" data-path="datos-espaciales.html"><a href="datos-espaciales.html#plot"><i class="fa fa-check"></i><b>6.5</b> <code>plot</code></a></li>
+<li class="chapter" data-level="6.6" data-path="datos-espaciales.html"><a href="datos-espaciales.html#ggplot"><i class="fa fa-check"></i><b>6.6</b> <code>ggplot</code></a></li>
+<li class="chapter" data-level="6.7" data-path="datos-espaciales.html"><a href="datos-espaciales.html#tmap"><i class="fa fa-check"></i><b>6.7</b> <code>tmap</code></a></li>
+<li class="chapter" data-level="6.8" data-path="datos-espaciales.html"><a href="datos-espaciales.html#mapview"><i class="fa fa-check"></i><b>6.8</b> <code>mapview</code></a></li>
+<li class="chapter" data-level="6.9" data-path="datos-espaciales.html"><a href="datos-espaciales.html#rayshader"><i class="fa fa-check"></i><b>6.9</b> <code>rayshader</code></a></li>
+</ul></li>
 <li class="part"><span><b>Analisis de datos</b></span></li>
 <li class="chapter" data-level="7" data-path="algebra-lineal.html"><a href="algebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Algebra lineal</a></li>
 <li class="chapter" data-level="8" data-path="estadistica-descriptiva-univariable.html"><a href="estadistica-descriptiva-univariable.html"><i class="fa fa-check"></i><b>8</b> Estadistica Descriptiva Univariable</a></li>
@@ -245,7 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Geologia Numerica: Ciencia de Datos para Geociencias</h1>
 <p class="author"><em>Maximiliano Garnier Villarreal</em></p>
-<p class="date"><em>2020-03-26</em></p>
+<p class="date"><em>2020-03-28</em></p>
 </div>
 <div id="prefacio" class="section level1 unnumbered">
 <h1>Prefacio</h1>
@@ -255,7 +269,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="co"># version en desarrollo</span>
 <span class="co"># devtools::install_github(&quot;rstudio/bookdown&quot;)</span></code></pre>
 <p>Este documento se basa en el material creado para el curso <strong>G-4101 Geologia Numerica</strong>, de la <a href="geologia.ucr.ac.cr">Escuela Centroamericana de Geologia</a>, <a href="ucr.ac.cr">Universidad de Costa Rica</a>. El curso hace uso del software estadistico y de programacion <strong>R</strong> <span class="citation">(R Core Team, <a href="#ref-R-base">2019</a>)</span> para desarrollar la parte practica de los temas cubiertos en la teoria.</p>
-<p>Adicionalmente, se ha creado un paquete que ofrece funciones adicionales que seran usadas en algunos de los temas que se van a tratar. Para instalar el paquete se puede ir a <a href="https://github.com/maxgav13/GMisc">GMisc</a> y seguir las instrucciones de la instalacion (el paquete no esta en CRAN, esta en Github, por lo que no se puede instalar de la forma convencional).</p>
+<p>Existe un repositorio en GitHub para este proyecto (<a href="https://github.com/maxgav13/geolonum">geolonum</a>), donde se pueden acceder los documentos y datos usados en este libro. Adicionalmente, se ha creado un paquete que ofrece funciones adicionales que seran usadas en algunos de los temas que se van a tratar. Para instalar el paquete se puede ir a <a href="https://github.com/maxgav13/GMisc">GMisc</a> y seguir las instrucciones de la instalacion (el paquete no esta en CRAN, esta en Github, por lo que no se puede instalar de la forma convencional).</p>
 <p>El curso cubre un poco de algebra lineal, para luego caer en la parte gruesa del curso que es estadistica. En esta parte se ve lo que es estadistica descriptiva (univariable y bivariable), principios de probabilidad, estadistica inferencial (pruebas de hipotesis, estimacion). La parte final del curso cubre temas relacionados con geociencias (datos direccionales, secuencias, y geoestadistica), donde se aplican conceptos anteriormente adquiridos en la seccion de estadistica.</p>
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Este obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">licencia de Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional</a>.</p>
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
