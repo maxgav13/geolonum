@@ -14,6 +14,8 @@ library(plotly)
 library(RColorBrewer)
 library(viridis)
 library(rio)
+library(cowplot)
+library(patchwork)
 library(tidymodels)
 library(tidyverse)
 ```
@@ -53,7 +55,7 @@ ggplot(data = <DATA>) +
   <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>),
                   stat = <STAT>, position = <POSITION>) +
   <FACET_FUNCTION> +
-  <SCALE_FUNCTION> +
+  <SCALE_AESTHETIC_TYPE> +
   <THEME_FUNCTION>
 ```
 
@@ -92,7 +94,7 @@ ggplot(airquality,aes(x=Temp)) +
   scale_x_continuous('Temperatura', labels = label_number(suffix = ' ºC'))
 ```
 
-Otra de las capas que se puede usar son las facetas o paneles, que permiten separar un tipo de grafico, en este caso un histograma, en diferentes graficos de acuerdo a otra variable, por lo general categorica (Figura \@ref(fig:graficos-hist4)). La funcion para esto es `facet_wrap(filas ~ cols)`, que permite definir una o mas variables por las cuales crear los paneles.
+Otra de las capas que se puede usar son las facetas o paneles, que permiten separar un tipo de grafico, en este caso un histograma, en diferentes graficos de acuerdo a otra variable, por lo general categorica (Figura \@ref(fig:graficos-hist4)). La funcion para esto es `facet_wrap(~ variable)`. Esta funcion es util para una variable, para dos o mas variables es mejor usar `facet_grid(filas ~ cols)` (Ver Figuras \@ref(fig:graficos-hist8) y \@ref(fig:graficos-hist9)).
 
 ```{r graficos-hist4, fig.cap='Histograma en paneles'}
 ggplot(airquality,aes(x=Temp)) +
@@ -133,17 +135,17 @@ ggplot(airquality,aes(x=Temp)) +
   geom_density(col="red")
 ```
 
-Estos ultimos dos graficos agregan mas cosas que permiten crear graficos mas complejos e informativos sin mucho esfuerzo. El primero (Figura \@ref(fig:graficos-hist8)) agrega el relleno de acuerdo a una variable categorica, asi como un paneleo por dos variables definiendo filas y columnas. El segundo (Figura \@ref(fig:graficos-hist9)) contruye sobre el primero pero modificando las etiquetas de los paneles usando el argumento `labeller`, donde se define `labeller(variable = vector con nombres)`, ademas se cambia el relleno con `scale_fill_viridis` y se modifican las etiquetas con un vector (`c('actual' = 'nuevo')`). El vector con nombres de `labeller` y el vector de etiquetas llevan la estructura `c('actual' = 'nuevo')`, donde 'actual' es el valor que tiene la variable y 'nuevo' es el nombre que se quiere aparezca en el grafico.
+Estos ultimos dos graficos agregan mas cosas que permiten crear graficos mas complejos e informativos sin mucho esfuerzo, incluyendo paneles de acuerdo a dos variables usando `facet_grid`. El primero (Figura \@ref(fig:graficos-hist8)) agrega el relleno de acuerdo a una variable categorica, asi como un paneleo por dos variables definiendo filas y columnas. El segundo (Figura \@ref(fig:graficos-hist9)) contruye sobre el primero pero modificando las etiquetas de los paneles usando el argumento `labeller`, donde se define `labeller(variable = vector con nombres)`, ademas se cambia el relleno con `scale_fill_viridis` y se modifican las etiquetas con un vector (`c('actual' = 'nuevo')`). El vector con nombres de `labeller` y el vector de etiquetas llevan la estructura `c('actual' = 'nuevo')`, donde 'actual' es el valor que tiene la variable y 'nuevo' es el nombre que se quiere aparezca en el grafico.
 
 ```{r graficos-hist8, fig.cap='Curva de densidad haciendo uso de varias variables categoricas'}
 ggplot(titanic, aes(x = Age, fill = Survived)) +
-  facet_wrap(Sex ~ Pclass) +
+  facet_grid(Sex ~ Pclass) +
   geom_density(alpha = 0.5)
 ```
 
 ```{r graficos-hist9, fig.cap='Version mejorada del grafico anterior'}
 ggplot(titanic, aes(x = Age, fill = Survived)) +
-  facet_wrap(Sex ~ Pclass, 
+  facet_grid(Sex ~ Pclass, 
              labeller = labeller(Sex = c('male'='Masculino',
                                          'female'='Femenino'),
                                  Pclass = c('1'='1era','2'='2nda','3'='3era'))) +
@@ -333,6 +335,45 @@ ggplot(airquality, aes(Month, Temp)) +
                geom = "pointrange",
                color = "red",
                size=1) +
+  theme_bw()
+```
+
+### Transformacion de ejes
+
+En algunas ocasiones, dependiendo de la escala y rango que tenga los datos, una transformacion de uno o ambos ejes sea necesaria, siendo los mas tipico para datos numericos continuos. El ejemplo mas tipico es la tranformacion logaritmica (natural o base 10), para los casos donde los datos comprenden varios ordenes de magnitud.
+
+En *ggplot2* esto puede hacerse de dos maneras:
+
+* `scale_<eje>_<tipo>(trans = '#')`,
+* `coord_trans(<eje> = '#')`
+
+donde `#` corresponde con la tranformacion a realizar, y puede tomar los siguientes valores: "asn", "atanh", "boxcox", "date", "exp", "hms", "identity", **"log"**, **"log10"**, "log1p", "log2", "logit", "modulus", "probability", "probit", "pseudo_log", "reciprocal", **"reverse"**, "sqrt", y "time". Siendo las mas comunes las resaltadas en negrita, donde "log" se refiere al logaritmo natural, "log10" al logaritmo base 10, y "reverse" para invertir el eje.
+
+La diferencia de usar `scale_*` o `coord_trans` radica en cuando se aplica la tranformacion. Con `scale_*` la transformacion es aplicada a los datos antes de ser graficados, por lo que se grafica son los datos transformados (Figura \@ref(fig:graficos-trans1, B)); con `coord_trans` la transformacion se aplica despues de ser graficados, o sea se aplica sobre el eje, modificando la apariencia y no los datos en si (Figura \@ref(fig:graficos-trans1, C)). 
+
+La Figura \@ref(fig:graficos-trans1), es una grilla de graficos, la cual fue realizada por medio de *cowplot* [@R-cowplot]. Otro paquete para generar grillas de graficos es *patchwork* [@R-patchwork], y este ofrece mas flexibilidad con la manipulacion y posicionamiento de los graficos (Figura \@ref(fig:graficos-trans2)). 
+En ambos casos, se ve claramente en el subgrafico **A** que el eje x tiene varios ordenes de magnitud. En el subgrafico **B** se aplico `scale_x_continuous(trans = 'log10')`, lo cual aplica una transformacion logaritmica a los datos antes de plotearlos y por eso los diferentes valores. En el subgrafico **C** se aplico `coord_trans(x = 'log10')`, lo cual simplemente modifica la apriencia del eje, donde se observa esa escala logaritmica, manteniendo los valores originales; adicionalmente se cambian los valores del eje (`scale_x_continuous(breaks = c(10,100,1000,10000))`) para que no se vean tan apilados.
+
+```{r graficos-trans1, fig.cap='Ejemplo de transformacion de ejes, en este caso solo el eje x, usando *cowplot*. **A** es el grafico sin datos tranformados; **B** es el grafico usando `scale_*`; **C** es el grafico usando `coord_trans`'}
+cow1 = ggplot(msleep) + 
+  geom_point(aes(bodywt,sleep_total))
+
+cow2 = ggplot(msleep) + 
+  geom_point(aes(bodywt,sleep_total)) + 
+  scale_x_continuous(trans = 'log10')
+
+cow3 = ggplot(msleep) + 
+  geom_point(aes(bodywt,sleep_total)) + 
+  coord_trans(x = 'log10') +
+  scale_x_continuous(breaks = c(10,100,1000,10000))
+
+plot_grid(cow1, cow2, cow3, ncol = 1, labels = 'AUTO')
+```
+
+```{r graficos-trans2, fig.cap='Ejemplo de transformacion de ejes, en este caso solo el eje x, usando *patchwork*. **A** es el grafico sin datos tranformados; **B** es el grafico usando `scale_*`; **C** es el grafico usando `coord_trans`'}
+
+cow1 / (cow2 | cow3) + 
+  plot_annotation(tag_levels = 'A') & 
   theme_bw()
 ```
 
