@@ -377,6 +377,35 @@ cow1 / (cow2 | cow3) +
   theme_bw()
 ```
 
+### Limites de ejes (Zoom)
+
+Otra accion que tal vez se quiera realizar puede ser delimitar los valores minimos y maximos de los ejes, ya sea para tener control sobre estos, o para realizar una especie de acercamiento (zoom) en una region del grafico.
+
+La manera apropiada de realizar esto es por medio de `coord_cartesian(*lim)`, donde `*lim` se refiere al eje x o y. la otra forma que tal vez aparezca por ahi, pero no da los resultados deseados es usando `scale_<eje>_<tipo>(limits)`. En ambos casos se brinda un vector de minimo y maximo.
+
+La Figura \@ref(fig:graficos-zoom) muestra el grafico inicial, y como afectan las diferentes funciones. De manera similar a la transformacion, `scale_*` aplica los limites antes de graficar, por lo que los datos que caen fuera de esos limites son descartados y no ploteados (de ahi la advertencia). En cambio, `coord_cartesian` aplica los limites despues de graficados los datos, por lo que simplemente es un cambio en la representacion del eje y no en los datos.
+
+```{r graficos-zoom, fig.cap='Ejemplo de modificar los limites del eje y en este caso. **A** es el grafico original **B** es el grafico usando `scale_*`; **C** es el grafico usando `coord_cartesian`'}
+z1 = gss_cat %>% 
+  ggplot(aes(y=marital)) + 
+  geom_bar()
+
+z2 = gss_cat %>% 
+  ggplot(aes(y=marital)) + 
+  geom_bar() + 
+  scale_x_continuous(limits = c(0,5000))
+
+z3 = gss_cat %>% 
+  ggplot(aes(y=marital)) + 
+  geom_bar() + 
+  coord_cartesian(xlim = c(0,5000))
+
+z1 / (z2 | z3) + 
+  plot_annotation(tag_levels = 'A') & 
+  theme_bw()
+```
+
+
 ### Salvando graficos
 
 Se muestran funciones para salvar graficos, donde las extensiones mas usadas son `.png`, `.tiff`, y `.pdf`. Por defecto `ggsave` salva el ultimo grafico creado, a menos que se haya guardado el grafico en un objeto y se le pase dicho objeto al argumento `plot`. El resto de argumentos son claros en lo que representan. Para el caso de un `.pdf` hay que remover el argumento `type`.
