@@ -1,22 +1,21 @@
 # Iteracion con `purrr`
 
-```{r warning=FALSE, message=FALSE}
-library(babynames)
-library(nycflights13)
+En este capitulo se muestra como iterar funciones sobre diferentes objetos (vectores, tablas, listas). La idea de las iteraciones es ser mas eficiente a la hora de realizar calculos repetitivos. Se va a introducir al paquete *purrr* [@R-purrr] que brinda funciones para realizar diferentes tareas que requieren iterar sobre 1 o mas objetos.
+
+En este capitulo se van a utilizar los siguientes paquetes:
+
+```{r iter-paquetes, warning=FALSE, message=FALSE}
 library(gapminder)
-library(dygraphs)
-library(highcharter)
-library(plotly)
 library(fs)
 library(rio)
 library(tidymodels)
 library(tidyverse)
 ```
 
-```{r}
+Asi mismo se vuelven a importar y manipular los datos con que se venia trabajando:
+
+```{r iter-data}
 data("airquality")
-dat1 <- import("data/LungCapData2.csv", setclass = 'tibble')
-titanic <- import("data/titanic.csv", setclass = 'tibble')
 
 airq = airquality %>% 
   mutate(Month = factor(Month,
@@ -30,48 +29,78 @@ airq = airquality %>%
            as.factor())
 ```
 
-La funcion basica de `purrr` es `map(.x, .f, ...)`, donde `.x` es el objeto sobre el cual iterar (vector, DataFrame o lista), `.f` es la funcion o tarea a realizar durante la iteracion, y `...` son argumentos extra dependiendo de la funcion. Esta funcion siempre va a resultar en una lista; las variaciones de esta son especificas para cuando se conoce cual va a ser el tipo de dato de salida. `map_dbl`  se usa cuando el resultado de la funcion es un numero con decimales.
+## Iterando sobre un objeto
 
-```{r}
-set.seed(9416)
+La funcion basica de `purrr` es `map(.x, .f, ...)`, donde `.x` es el objeto sobre el cual iterar (vector, tabla o lista), `.f` es la funcion o tarea a realizar durante la iteracion, y `...` son argumentos extra dependiendo de la funcion. Esta funcion (`map`) siempre va a resultar en una lista; existen variantes de esta que son especificas para cuando se conoce cual va a ser el tipo de dato de salida. Por ejemplo, `map_dbl` se usa cuando el resultado de la funcion es un numero con decimales.
+
+En el siguiente bloque de codigo se generan dos listas ficticias, ambas de 7 elementos, donde la primera corresponde con notas de estudiantes en pruebas durante un semestre, y la segunda son puntos extra para cada estudiante. 
+
+```{r iter-1}
+set.seed(4101)
+n = 8
+minima = 60
+maxima = 100
 exams <- list(
-  student1 = round(runif(10, 50, 100)),
-  student2 = round(runif(10, 50, 100)),
-  student3 = round(runif(10, 50, 100)),
-  student4 = round(runif(10, 50, 100)),
-  student5 = round(runif(10, 50, 100))
+  student1 = round(runif(n, minima, maxima)),
+  student2 = round(runif(n, minima, maxima)),
+  student3 = round(runif(n, minima, maxima)),
+  student4 = round(runif(n, minima, maxima)),
+  student5 = round(runif(n, minima, maxima)),
+  student6 = round(runif(n, minima, maxima)),
+  student7 = round(runif(n, minima, maxima))
 )
 
-extra_credit <- list(0, 0, 10, 10, 15)
+extra_credit <- list(10, 5, 0, 15, 5, 0, 5)
 ```
 
-## Operaciones basicas
+Usando los datos generados anteriormente, se muestra la funcionabilidad de varias de las funciones `map_*`. Estas funciones se pueden usar con el pipe operator (`%>%`).
 
-Se muestra la funcionabilidad de varias de las funciones `map_*`.
+El primer ejemplo muestra como con `map` se obtiene una lista de la nota media de los examnes por estudiante. Se itera sobre la lista 'exams', y a cada elemento de la lista (en este caso vectores) se le calcula la media.
 
-```{r}
+```{r iter-2}
 map(exams, mean) # media
+```
 
+En el segundo ejemplo se utiliza el pipe (`%>%`) y una de las variantes de `map` (`map_dbl`), ya que lo que se va a calcular (nota maxima) se sabe es un numero con decimales.
+
+```{r iter-3}
 exams %>% map_dbl(max) # nota maxima
+```
 
+En el tercer ejemplo se itera sobre una tabla, donde en este caso la iteracion es sobre las columnas. Recordemos que una tabla es una lista donde las columnas son los elementos de la lista. Lo que se quiere hacer es obtener el valor de la media para cada columna de la tabla 'airq'. Al hacer esto encontramos dos situaciones; la primera que dice que hay un argumento no numerico o logico (en este caso se refiere a las columnas 'Month' y 'Sensation' que son factor), por lo que al ser un factor no se le puede aplicar una funcion numerica; la segunda que hay valores 'NA' aun en columnas que son numericas ('Ozone', 'Solar.R'), esto porque en esas columnas hay NAs y por defecto la funcion `mean` no los remueve a la hora de hacer el calculo.
+
+```{r iter-4}
 airq %>% map_dbl(mean)
+```
 
+Por lo anterior, hay dos soluciones dependiendo de lo que se quiera resolver. Si solo se quiere lidiar con los 'NA', se puede agregar el argumento `na.rm = T` de la funcion `mean`, pero las columnas de tipo factor van a seguir estando presentes y dar 'NA' como resultado.
+
+```{r iter-5}
 airq %>% map_dbl(mean, na.rm = T)
+```
 
+La solucion mas adecuada en este caso es primero seleccionar las columnas de tipo numerico (`select_if(is.numeric)`) y a estas aplicarle el calculo de la media removiendo los 'NA'. Esta ultima forma de aplicar la funcion es, a mi parecer, las mas practica y clara. Se tiene que escribir la funcion empezando con el simbolo `~`, esto le dice a *purrr* que lo que va a estar a al derecha va a ser una funcion, seguido de este simbolo se escribe la funcion de manera normal, con la excepcion de que en el lugar donde iria tipicamente el vector se pone `.x`, para decirle a *purrr* donde incrustar los elementos del objeto sobre el cual se esta iterando.
+
+```{r iter-6}
 airq %>% 
   select_if(is.numeric) %>% 
   map_dbl(~ mean(.x, na.rm = T))
+```
 
+## Iterando sobre dos objetos
+
+Los ejemplos anteriores se estaba iterando unicamente sobre un objeto. Para iterar sobre dos objetos (que tienen que tener la misma cantidad de elementos), existen las funciones `map2_*`, que tienen al estructura `map2(.x, .y, .f, ...)`, donde `.x` es el primer objeto, `.y` es el segundo objeto, y `.f` es al funcion a utilizar sobre los dos objetos. Un ejemplo de esto es calcular la nota final de los estudiantes por medio de la media de los examenes y agregarle el credito extra.
+
+```{r iter-7}
 exams %>% 
   map2_dbl(extra_credit, ~ mean(.x) + .y)
-
 ```
 
 ## Leyendo archivos y combinandolos
 
-Ejemplo de como leer varios archivos de texto que tienen el mismo formato y como combinarlos en un solo tibble para posterior manipulacion.
+Un caso tipico donde se desea iterar es leer varios archivos de texto que tienen el mismo formato y como combinarlos en una sola tabla para posterior manipulacion. En este caso se usa la funcion `dir_ls` del paquete *fs* [@R-fs], donde se define la carpeta donde se encuentran los archivos (`path`) y con `glob` se define un patron en el nombre de los archivos (en este caso todos los archivos empiezan con 'datos_').
 
-```{r}
+```{r iter-8}
 archivos <- dir_ls(path = 'data', glob = "*datos_*") 
 
 archivos
@@ -79,13 +108,25 @@ archivos
 file_info(archivos)
 ```
 
-```{r}
+Una vez se tiene le objeto con los nombres de los archivos ('archivos'), se puede proceder a realizar la iteracion. Como estamos importando archivos de texto (.csv) usamos la funcion `import` del paquete *rio*. 
+
+Primeramente podemos generar una lista donde iteramos sobre el objeto 'archivos' e importamos cada uno, para posteriormente "pegar" uno tras otro con la funcion `bind_rows` de *dplyr*.
+
+```{r iter-9}
 map(archivos, import) %>% 
   bind_rows()
+```
 
+Con lo anterior logramos generar una tabla con todos los datos pero no sabemos cuales datos correponden con cual archivo (y consecuentemente con que nivel). Para remediar lo anterior la funcion `bind_rows` tiene un argumento `.id`, al cual se le pasa el nombre de la columna que se quiere agregar mostrando el nombre del archivo al cual pertence cada observacion.
+
+```{r iter-10}
 archivos %>%
   map_dfr(import, .id = "archivo")
+```
 
+La siguiente situacion que podemos encontrar es que el nombre del archivo (o cualquier otra columna de la tabla) tiene mas informacion de la necesaria, por lo que hay que separar los contenidos de la columna. Para esto usamos `separate` de *tidyr* para separar la columna en varias. En el caso de la columna 'archivo' podemos esperar tres columnas si especificamos el separador (`sep = '_'`), pero hay columnas que no ofrecen ninguna informacion (de las 3, la 1 y la 3, la 2 es la que tiene el nombre del nivel); para descartar estas columnas a la hora de separarlas se puede incluir `NA` en la posicion de las columnas que se desea descartar.
+
+```{r iter-11}
 archivos %>%
   map_dfr(import, .id = "archivo") %>% 
   separate(archivo, into = letters[1:3], sep = '_')
@@ -93,20 +134,39 @@ archivos %>%
 archivos %>%
   map_dfr(import, .id = "archivo") %>% 
   separate(archivo, into = c(NA, 'grado', NA), sep = '_')
+```
 
+Por ultimo, en este caso tambien se puede separar la columna 'nombre' en 'apellido' y 'nombre', usando los mismos principios anteriores.
+
+```{r iter-12}
 archivos %>%
   map_dfr(import, .id = "archivo") %>% 
   separate(archivo, into = c(NA, 'grado', NA), sep = '_') %>% 
-  separate(nombre, into = c('apellido', 'nombre'), sep = ',')
+  separate(nombre, into = c('apellido', 'nombre'), sep = ', ')
 ```
 
 ## Datos anidados, caso 1
 
-```{r}
+Como se habia mencionado en la Seccion \@ref(nest) del Capitulo [Funcionamiento avanzado de R], una de las ventajas de los tibbles es que permiten tener columnas tipo lista, las cuales son muy utilies para iterar y realizar calculos de manera expedita.
+
+En este caso 1 se trabaja con los datos de 'airq', que era la tabla modificada de 'airquality'. Un caso tipico de datos anidados es el agrupar la tabla de acuerdo a una variable categorica y aplicar la funcion `nest` de *tidyr*. Esto genera una columna 'data', del tipo lista, donde se almacena una tabla para cada nivel de la variable agrupadora.
+
+```{r iter-13}
 airq_nest = airq %>% 
   group_by(Month) %>% 
   nest()
+```
 
+El poder de los datos anidados es la combinacion de `mutate` (*dplyr*) para generar nuevas columnas, y de las funciones `map` (*purrr*) para iterar sobre una columan tipo lista. De forma general esta combinacion se plasma de la siguiente forma: `mutate(nueva_columna = map(columna_lista, ~ .f(.x)))`, donde 'nueva_columna' es el nombre de la columna a crear, 'columna_lista' es el nombre de la columna tipo lista sobre la cual se va a iterar, y `~ .f(.x)` es la funcion o secuencia de funciones a realizar sobre cada elemento (`.x`) de la 'columna_lista'.
+
+Aplicano lo mencionado anteriormente sobre la tabla anidada 'airq_nest' se tienen los siguientes pasos, en diferentes `mutate`:
+
+* `mod = map(data, ~lm(Wind ~ Temp, data = .x))`: Crea una nueva columna 'mod', que va a ser el resultado de un modelo lineal para cada mes (iterando sobre 'data'), en funcion del viento ('Wind') y la temperatura ('Temp'). La funcion para modelos lineales es `lm` y el primer argumento es la `formula` que lleva la estructura `y ~ x`, el argumento `data` se pone de forma explicita y aqui es donde se le indica los elementos sobre los cuales iterar (`.x`). El resultado es una lista, de ahi que se usara `map` y no una de sus versiones.
+* `slope = map_dbl(mod, ~tidy(.) %>% filter(term == 'Temp') %>% pull(estimate))`: Crea una nueva columna 'slope', que va a almacenar la pendiente del modelo lineal ('mod') anteriormente calculado, como se sabe que es un numero se usa `map_dbl`.
+* `r2 = map_dbl(mod, ~glance(.) %>% pull(r.squared))`: Crea una nueva columna 'r2', donde se va a almacenar el valor del coeficiente de determinacion ($R^2$), como se sabe que es un numero se usa `map_dbl`.
+* `plot = map2(data,Month, ~ggplot(.x, aes(Temp, Wind)) + geom_point() + geom_smooth(method = 'lm') + labs(title = .y) + theme_bw(base_size = 12))`: Crea una nueva columna, donde se va a almacenar el grafico de dispersion para cada mes, y se le agrega un titulo para saber a que mes corresponde. En este caso se esta iterando sobre dos objetos, por lo que se usa `map2`: la columna tipo lista donde estan los datos a graficar ('data'), y la columna tipo factor (vector) donde esta la variable agrupadora ('Month') para poder poner el titulo correspondiente.
+
+```{r iter-14}
 airq_nest = airq_nest %>% 
   mutate(mod = map(data, ~lm(Wind ~ Temp, data = .x))) %>% 
   mutate(slope = map_dbl(mod, ~tidy(.) %>% 
@@ -119,32 +179,57 @@ airq_nest = airq_nest %>%
                        labs(title = .y) + 
                        theme_bw(base_size = 12)))
 airq_nest
+```
 
+### Efectos secundarios
+
+En algunas ocasiones el resultado de una iteracion no corresponde con un vector, tabla o lista, sino que puede ser la creacion de graficos o el exportar objetos (lo que se conoce en ingles como ''side effect); para estos casos existe la funcion `walk` y sus variantes.
+
+En el primer ejemplo se quiere imprimir cada grafico en la columna 'plot', por lo que se itera sobre la columna deseada, y se llama a la funcion `~ print(.)` para que despliegue cada uno de los elementos.
+
+```{r iter-15}
 walk(airq_nest$plot, ~print(.))
+```
 
+Un resultado similar se puede obtener usando `pull`, donde se jala como vector los elementos de la columna deseada.
+
+```{r iter-16}
 airq_nest %>% pull(plot)
+```
 
+El ultimo ejemplo hace uso de `walk2` ya que se desea iterar sobre dos objetos: la columna de graficos ('plot') y la columna agrupadora ('Month'). Lo que se desea realizar es exportar cada grafico por separado, de ahi la necesidad de usar ambos objetos, el grafico a exportar y la variable agrupadora para incluirla en el nombre del archivo. Para esto ultimo se usa la funcion `str_glue` de *stringr* que lo que ahce es crear una linea de texto donde se pueden ingresar variables usando `{variable}`. En el ejemplo especificamente, se guarda cada grafico en la carpeta 'figs', con el nombre 'regresion_{.y}.png', donde '{.y}' corresponde con el segundo objeto a iterar, en este caso el mes ('Month').
+
+```{r iter-17}
 walk2(airq_nest$plot, 
       airq_nest$Month, 
       ~ggsave(filename = str_glue("figs/regresion_{.y}.png"),
        plot = .x, dpi = 300,
        width = 7, height = 4, units = "in",
        type = "cairo"))
-
 ```
 
 ## Datos anidados, caso 2
 
-```{r}
+En este caso 2 se trabaja con los datos de 'gapminder', donde se agrupa por pais ('country'), y se crea una tabla para cada pais. Este caso es bastante ilustrativo del poder de los tibbles y la iteracion, ya que la tabla anidada cuenta con `r n_distinct(gapminder$country)` filas (1 por pais), y si se quisiera realizar una tarea por pais a pie, seria muy tedioso y poco eficiente.
+
+```{r iter-18}
 gap_nest = gapminder %>% 
   group_by(country) %>% 
   nest()
+```
 
+De manera similar al caso 1, se genera un modelo lineal para cada pais en funcion de la expectativa de vida ('lifeExp') por anho ('year'), y adicionalmente se calcula el coeficiente de determinacion ($R^2$) para cada modelo lineal.
+
+```{r iter-19}
 gap_nest = gap_nest %>% 
   mutate(mod = map(data, ~lm(lifeExp ~ year, data = .x))) %>% 
   mutate(r2 = map_dbl(mod, ~glance(.) %>% pull(r.squared)))
 gap_nest
+```
 
+Con los datos anteriores se pueden filtrar los paises que hayan tenido un $R^2$ por debajo de 0.25, lo que seria indicio de un comportamiento no lineal, lo que podria estar asociado a problemas de desarrollo en esos paises. Para poder graficar los datos es necesario desanidarlos (`unnest`) para volver a contar con las columnas a como estaban en la tabla original, pero ahora con las columnas calculadas en las iteraciones.
+
+```{r iter-20}
 gap_nest %>%
   # ungroup() %>%
   # arrange(r2) %>%

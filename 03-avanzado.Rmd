@@ -1,4 +1,4 @@
-# Funcionamiento avanzado de R
+# Funcionamiento avanzado de R {#avanzado}
 
 En el capitulo anterior se mostro de manera muy rapida las funciones basicas de **R**, esto porque de ahora en adelante se va a enfocar en el uso de funciones del *tidyverse* [@tidyverse2019]. Este meta-paquete es uno que engloba a un monton de paquetes que se rigen bajo el paradigma de datos ordenados (tidy data). Datos ordenados quiere decir una observacion por fila y cada variable en su columna. Lo que se cubre en este capitulo y mas se puede encontrar en "R for Data Science" [@grolemund2016].
 
@@ -29,6 +29,8 @@ Los paquetes mas usados e importantes del *tidyverse* son:
 * *forcats*: Manipulacion de datos categoricos (factores)
 * *stringr*: Manipulacion de datos de texto
 * *lubridate*: Manipulacion de fechas
+
+Un punto importante a destacar, es que en todas (sino la mayoria) de las funciones del *tidyverse* la tabla de datos es el primer argumento.
 
 ## Operadores logicos
 
@@ -390,7 +392,7 @@ casos_tidy %>%
 
 Otro caso de datos no ordenados es cuando una columna contiene 2 o mas datos, por lo que es necesario separar cada dato en un su propia columna.
 
-En el ejemplo la columna 'tasa' corresponde con 'casos' y 'poblacion', por lo que hay que separarla.
+En el ejemplo la columna 'tasa' corresponde con 'casos' y 'poblacion', por lo que hay que separarla. La funcion `separate` tiene el argumento `into` que corresponde con un vector de texto donse se deben definir los nombres de las columnas resultantes.
 
 ```{r not-tidy-2}
 casos2 <- tribble(
@@ -429,7 +431,7 @@ casos2_sep %>%
 ```
 
 
-## Datos anidados (Nesting)
+## Datos anidados (Nesting) {#nest}
 
 Esta es una de las ventajas de los tibbles, donde una columna puede ser una lista, y como una lista puede contener lo que sea, esto permite felxibilidad en el analisis y manipulacion de dtos, como se va a ver en el proximo capitulo.
 
