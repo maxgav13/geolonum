@@ -457,7 +457,7 @@ with(airq, hchist(Temp,color='red',name='Temp')) %>%
 
 ### Barras
 
-La version interctiva de la Figura \@ref(fig:graficos-barra6) se muestra en la Figura \@ref(fig:graficos-inter3), la version usando *highcharter* se muestra en la Figura \@ref(fig:graficos-inter4).
+La version interctiva de la Figura \@ref(fig:graficos-barra6) se muestra en la Figura \@ref(fig:graficos-inter3), la version usando *highcharter* se muestra en la Figura \@ref(fig:graficos-inter4). En la version de *highcharter*, si se cambia 'bar' por 'column', el grafico cambia orientacion.
 
 ```{r graficos-inter3, fig.cap='Grafico interactivo de barras con plotly'}
 (mpg %>% 
@@ -558,6 +558,20 @@ storms %>%
   dyAxis('y', label = 'Cantidad') %>% 
   dyRangeSelector()
 ```
+
+### Transformacion de ejes
+
+La version interctiva, usando *highcharter*, de la Figura \@ref(fig:graficos-trans1) C se muestra en la Figura \@ref(fig:graficos-inter12); la version con *ggplotly* seria igual que las anteriores.
+
+```{r graficos-inter12, fig.cap='Grafico interactivo con eje logaritmico'}
+hchart(msleep, 'scatter', hcaes(bodywt, sleep_total)) %>% 
+  hc_xAxis(title = list(text = 'Body Weight'), 
+           type = 'logarithmic') %>%
+  hc_yAxis(title = list(text = 'Sleep')) %>% 
+  hc_chart(zoomType='xy') %>% 
+  hc_add_theme(hc_theme_gridlight())
+```
+
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
