@@ -60,13 +60,13 @@ La comunidad de **R** ha desarrollado una gran variedad de paquetes para datos e
 
 Dentro de los paquetes mas usados estan:
 
-* *sf*: Para datos vectoriales dentro de la filosofia *tidyverse*
-* *sp*: El predecesor de *sf* para datos vectorales y en grilla (no exactamente raster)
-* *raster*: Para datos raster
-* *stars*: El candidato a susceder a *raster*
-* *rgeos* y *rgdal*: Interfaces para librerias basicas de manipulacion de datos espaciale
-* *ggplot* y *tmap*: Creacion de mapas estaticos (*tmap* puede crear mapas interactivos)
-* *mapview* y *leaflet*: Creacion de mapas interactivos
+* *sf* [@R-sf]: Para datos vectoriales dentro de la filosofia *tidyverse*
+* *sp* [@R-sp]: El predecesor de *sf* para datos vectorales y en grilla (no exactamente raster)
+* *raster* [@R-raster]: Para datos raster
+* *stars* [@R-stars]: El candidato a susceder a *raster*
+* *rgeos* y *rgdal* [@R-rgeos; @R-rgdal]: Interfaces para librerias basicas de manipulacion de datos espaciale
+* *ggplot2* y *tmap* [@R-tmap]: Creacion de mapas estaticos (*tmap* puede crear mapas interactivos)
+* *mapview* y *leaflet* [@R-mapview; @R-leaflet]: Creacion de mapas interactivos
 
 Otro monton de paquetes brindan funciones adicionales y funciones para tareas especificas.
 
@@ -300,7 +300,11 @@ ggplot(sat_df, aes(x, y,
 
 #### *tmap*
 
-El paquete *tmap* es una opcion especifica para datos espaciales y sigue la misma ideologia de *ggplot* al trabajar en capas. Por defecto no despliega la grilla de coordenadas, hay que agregarselas con `tm_grid`. Para revertir los colores en la paleta se le agrega un menos (`-`) antes del nombre, y para colocar la leyenda fuera del area del mapa se debe usar `tm_layout(legend.outside = T)`.
+El paquete *tmap* es una opcion especifica para datos espaciales y sigue la misma ideologia de *ggplot* al trabajar en capas. Por defecto no despliega la grilla de coordenadas, hay que agregarselas con `tm_grid`. Para revertir los colores en la paleta se le agrega un menos (`-`) antes del nombre, y para colocar la leyenda fuera del area del mapa se debe usar `tm_layout(legend.outside = T)`. Existen opciones globales para los mapas generados con *tmap*, estas se pueden modificar con `tmao_options`, y uno de los argumentos es la leyenda afuera, asi no hay que aplicarlo en cada mapa por separado.
+
+```{r sp-mapas-tmap0}
+tmap_options(legend.outside = T)
+```
 
 La estructura basica de cualquier graficos es:
 
@@ -390,6 +394,30 @@ tmap_save(mapa1, 'figs/mapa_fallas.png', dpi = 300)
 
 ### Dinamicos
 
+Una de la opciones con mapas interactivos es que se pueden definir diferentes mapas de fondo. Dentro de los mas usados estan los que se muestran acontinuacion: 
+
+```{r sp-mapas-basemaps}
+mybasemaps = c('CartoDB.Positron', 'OpenStreetMap', 'OpenTopoMap',
+               'Esri.WorldImagery', 'Esri.WorldTopoMap', 'Esri.OceanBasemap')
+```
+
+De manera general se pueden asignar mapas de fondo para todos los mapas de una sesion definiendolos en las opciones de *tmap* y *mapview*:
+
+```{r sp-mapas-tmap-opt}
+tmap_options(basemaps = mybasemaps)
+```
+
+```{r sp-mapas-mv1}
+mapviewOptions(basemaps = mybasemaps)
+```
+
+La Figura \@ref(fig:sp-mapas-mv-partes) muestra las diferentes opciones para manipular un mapa dinamico creado con *mapview*. Las mismas opciones y elementos se pueden agregar a un mapa de *leaflet* pero requieren ser especificadas explicitamente (haciendo mas largo el codigo), mientras que *mapview* ya agreaga muchos de estos por defecto.
+
+```{r sp-mapas-mv-partes, echo=F, fig.cap='Partes de un mapa dinamico creado con *mapview*'}
+knitr::include_graphics('imgs/mapview_partes.png')
+```
+
+
 #### *tmap*
 
 Este paquete ofrece la opcion de viualizar un mapa estatico como dinamico, cambiando el modo de visualizacion (`tmap_mod(mode = c('plot','view'))`), donde `plot` es para mapas estatico y `view` para mapas dinamicos y traduce el mapa a un mapa *leaflet*. 
@@ -403,15 +431,6 @@ tmap_leaflet(mapa1)
 #### *mapview*
 
 Este paquete permite generar mapas interactivos de manera eficiente y rapida, pero no brinda la personalizacion de `leaflet`, el cual es mucho mas complejo y para generar un mapa similar se requiere aproximadamente de 4 a 5 veces mas lineas de codigo.
-
-Una de la opciones con mapas interactivos es que se pueden definir diferentes mapas de fondo. Dentro de los mas usados estan los que se muestran acontinuacion, y de manera general se pueden asignar para todos los mapas de una sesion definiendolos en las opciones de *mapview*:
-
-```{r sp-mapas-mv1}
-mybasemaps = c('CartoDB.Positron', 'OpenStreetMap', 'OpenTopoMap',
-               'Esri.WorldImagery', 'Esri.WorldTopoMap', 'Esri.OceanBasemap')
-
-mapviewOptions(basemaps = mybasemaps)
-```
 
 La funcion basica es `mapview` donde se le pasa el objeto espacial. Por defecto le asigna un color unico. El argumento `layer_name` es para definir el nombre que se quiere aparezca en la leyenda. Si se desean agregar diferentes capas simplemente se agregan funciones `mapview` con el operador `+` (Figura \@ref(fig:sp-mapas-mv2)). *mapview* es inteligente en el sentido de que dependiendo del tipo de objeto (poligono, linea, punto) lo va a graficar en el orden gerarquico visual (puntos por encima de lineas, lineas por encima de poligonos).
 
