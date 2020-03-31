@@ -183,7 +183,7 @@ airq_nest
 
 ### Efectos secundarios
 
-En algunas ocasiones el resultado de una iteracion no corresponde con un vector, tabla o lista, sino que puede ser la creacion de graficos o el exportar objetos (lo que se conoce en ingles como ''side effect); para estos casos existe la funcion `walk` y sus variantes.
+En algunas ocasiones el resultado de una iteracion no corresponde con un vector, tabla o lista, sino que puede ser la creacion de graficos o el exportar objetos (lo que se conoce en ingles como 'side effect'); para estos casos existe la funcion `walk` y sus variantes.
 
 En el primer ejemplo se quiere imprimir cada grafico en la columna 'plot', por lo que se itera sobre la columna deseada, y se llama a la funcion `~ print(.)` para que despliegue cada uno de los elementos.
 

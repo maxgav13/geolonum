@@ -8,6 +8,7 @@ En este capitulo se van a utilizar los siguientes paquetes:
 library(babynames)
 library(nycflights13)
 library(gapminder)
+library(DT)
 library(rio)
 library(tidyverse)
 ```
@@ -450,7 +451,6 @@ airq %>%
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown',
-  'DT'
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
 ```
