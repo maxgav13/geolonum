@@ -1,4 +1,5 @@
 book_filename: "geolonum"
+new_session: false
 rmd_files: ["index.Rmd", "01-intro.Rmd", "02-basico.Rmd", 
 "03-avanzado.Rmd", "04-graficos.Rmd", "05-iteracion.Rmd", 
 "06-espacial.Rmd", "07-algebra.Rmd", "08-univariable.Rmd", 

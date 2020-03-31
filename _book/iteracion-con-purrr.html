@@ -589,7 +589,7 @@ airq_nest</code></pre>
 ## 5 Setiembre &lt;tibble [30 × 6]&gt; &lt;lm&gt;   -0.236  0.325  &lt;gg&gt;</code></pre>
 <div id="efectos-secundarios" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Efectos secundarios</h3>
-<p>En algunas ocasiones el resultado de una iteracion no corresponde con un vector, tabla o lista, sino que puede ser la creacion de graficos o el exportar objetos (lo que se conoce en ingles como ’’side effect); para estos casos existe la funcion <code>walk</code> y sus variantes.</p>
+<p>En algunas ocasiones el resultado de una iteracion no corresponde con un vector, tabla o lista, sino que puede ser la creacion de graficos o el exportar objetos (lo que se conoce en ingles como ‘side effect’); para estos casos existe la funcion <code>walk</code> y sus variantes.</p>
 <p>En el primer ejemplo se quiere imprimir cada grafico en la columna ‘plot’, por lo que se itera sobre la columna deseada, y se llama a la funcion <code>~ print(.)</code> para que despliegue cada uno de los elementos.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">walk</span>(airq_nest<span class="op">$</span>plot, <span class="op">~</span><span class="kw">print</span>(.))</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
