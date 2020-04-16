@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capitulo 7 Álgebra lineal | Geologia Numerica: Ciencia de Datos para Geociencias</title>
+  <meta name="description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capitulo 7 Álgebra lineal | Geologia Numerica: Ciencia de Datos para Geociencias" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capitulo 7 Álgebra lineal | Geologia Numerica: Ciencia de Datos para Geociencias" />
+  
+  <meta name="twitter:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  
+
+<meta name="author" content="Maximiliano Garnier Villarreal" />
+
+
+<meta name="date" content="2020-04-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="datos-espaciales.html">
+<link rel="next" href="datos-e-incertidumbre.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.11/datatables.js"></script>
+<link href="libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<script src="libs/proj4js-2.3.15/proj4.js"></script>
+<link href="libs/highcharts-7.0.1/css/motion.css" rel="stylesheet" />
+<link href="libs/highcharts-7.0.1/css/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highcharts-7.0.1/highcharts.js"></script>
+<script src="libs/highcharts-7.0.1/highcharts-3d.js"></script>
+<script src="libs/highcharts-7.0.1/highcharts-more.js"></script>
+<script src="libs/highcharts-7.0.1/modules/stock.js"></script>
+<script src="libs/highcharts-7.0.1/modules/map.js"></script>
+<script src="libs/highcharts-7.0.1/modules/annotations.js"></script>
+<script src="libs/highcharts-7.0.1/modules/boost.js"></script>
+<script src="libs/highcharts-7.0.1/modules/data.js"></script>
+<script src="libs/highcharts-7.0.1/modules/drag-panes.js"></script>
+<script src="libs/highcharts-7.0.1/modules/drilldown.js"></script>
+<script src="libs/highcharts-7.0.1/modules/item-series.js"></script>
+<script src="libs/highcharts-7.0.1/modules/offline-exporting.js"></script>
+<script src="libs/highcharts-7.0.1/modules/overlapping-datalabels.js"></script>
+<script src="libs/highcharts-7.0.1/modules/exporting.js"></script>
+<script src="libs/highcharts-7.0.1/modules/export-data.js"></script>
+<script src="libs/highcharts-7.0.1/modules/funnel.js"></script>
+<script src="libs/highcharts-7.0.1/modules/heatmap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/treemap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/sankey.js"></script>
+<script src="libs/highcharts-7.0.1/modules/solid-gauge.js"></script>
+<script src="libs/highcharts-7.0.1/modules/streamgraph.js"></script>
+<script src="libs/highcharts-7.0.1/modules/sunburst.js"></script>
+<script src="libs/highcharts-7.0.1/modules/vector.js"></script>
+<script src="libs/highcharts-7.0.1/modules/wordcloud.js"></script>
+<script src="libs/highcharts-7.0.1/modules/xrange.js"></script>
+<script src="libs/highcharts-7.0.1/modules/tilemap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/venn.js"></script>
+<script src="libs/highcharts-7.0.1/modules/gantt.js"></script>
+<script src="libs/highcharts-7.0.1/modules/timeline.js"></script>
+<script src="libs/highcharts-7.0.1/modules/parallel-coordinates.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/motion.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/multicolor_series.js"></script>
+<script src="libs/highcharts-7.0.1/custom/reset.js"></script>
+<script src="libs/highcharts-7.0.1/custom/symbols-extra.js"></script>
+<script src="libs/highcharts-7.0.1/custom/text-symbols.js"></script>
+<script src="libs/highchart-binding-0.7.0/highchart.js"></script>
+<script src="libs/highcharts-regression.js-7.0.1/highcharts-regression.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/PopupTable-0.0.1/popup.css" rel="stylesheet" />
+<script src="libs/pacifico-1/data_stars_pacificocdf13b.txt"></script>
+<script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">G-4101  Geologia Numerica</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="part"><span><b>R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduccion</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalacion-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalacion de R y RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#paquetes"><i class="fa fa-check"></i><b>1.2</b> Paquetes</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#ayuda-en-r"><i class="fa fa-check"></i><b>1.3</b> Ayuda en R</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rmarkdown"><i class="fa fa-check"></i><b>1.4</b> RMarkdown</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#tipos-de-resultados"><i class="fa fa-check"></i><b>1.4.1</b> Tipos de resultados</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#formulas"><i class="fa fa-check"></i><b>1.4.2</b> Formulas</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#importando-datos"><i class="fa fa-check"></i><b>1.4.3</b> Importando datos</a></li>
+<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#calculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Calculos en linea</a></li>
+<li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
+<li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento basico de R</a><ul>
+<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#operaciones-basicas"><i class="fa fa-check"></i><b>2.1</b> Operaciones basicas</a></li>
+<li class="chapter" data-level="2.2" data-path="basico.html"><a href="basico.html#crear-objetos"><i class="fa fa-check"></i><b>2.2</b> Crear objetos</a></li>
+<li class="chapter" data-level="2.3" data-path="basico.html"><a href="basico.html#vectores"><i class="fa fa-check"></i><b>2.3</b> Vectores</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="basico.html"><a href="basico.html#numericos"><i class="fa fa-check"></i><b>2.3.1</b> Numericos</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basico.html"><a href="basico.html#texto-string-character"><i class="fa fa-check"></i><b>2.3.2</b> Texto (string, character)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="basico.html"><a href="basico.html#categoricos-factores"><i class="fa fa-check"></i><b>2.3.3</b> Categoricos (factores)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="basico.html"><a href="basico.html#matrices"><i class="fa fa-check"></i><b>2.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.5" data-path="basico.html"><a href="basico.html#dataframes-listas-y-tibbles"><i class="fa fa-check"></i><b>2.5</b> DataFrames, listas y tibbles</a></li>
+<li class="chapter" data-level="2.6" data-path="basico.html"><a href="basico.html#verificando-objetos"><i class="fa fa-check"></i><b>2.6</b> Verificando objetos</a></li>
+<li class="chapter" data-level="2.7" data-path="basico.html"><a href="basico.html#guardando-el-espacio-de-trabajo"><i class="fa fa-check"></i><b>2.7</b> Guardando el espacio de trabajo</a></li>
+<li class="chapter" data-level="2.8" data-path="basico.html"><a href="basico.html#importandocargando-datos"><i class="fa fa-check"></i><b>2.8</b> Importando/cargando datos</a></li>
+<li class="chapter" data-level="2.9" data-path="basico.html"><a href="basico.html#exportando-datos"><i class="fa fa-check"></i><b>2.9</b> Exportando datos</a></li>
+<li class="chapter" data-level="2.10" data-path="basico.html"><a href="basico.html#inspeccionando-los-datos"><i class="fa fa-check"></i><b>2.10</b> Inspeccionando los datos</a></li>
+<li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.11</b> Descripciones generales (globales)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="avanzado.html"><a href="avanzado.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
+<li class="chapter" data-level="3.1" data-path="avanzado.html"><a href="avanzado.html#operadores-logicos"><i class="fa fa-check"></i><b>3.1</b> Operadores logicos</a></li>
+<li class="chapter" data-level="3.2" data-path="avanzado.html"><a href="avanzado.html#operador-de-secuencia-pipe-operator"><i class="fa fa-check"></i><b>3.2</b> Operador de secuencia (Pipe operator)</a></li>
+<li class="chapter" data-level="3.3" data-path="avanzado.html"><a href="avanzado.html#resumen-de-variables"><i class="fa fa-check"></i><b>3.3</b> Resumen de variables</a></li>
+<li class="chapter" data-level="3.4" data-path="avanzado.html"><a href="avanzado.html#seleccion-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.4</b> Seleccion y renombre de variables</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="avanzado.html"><a href="avanzado.html#select-helpers"><i class="fa fa-check"></i><b>3.4.1</b> <code>select</code> helpers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="avanzado.html"><a href="avanzado.html#filtrado-de-observaciones"><i class="fa fa-check"></i><b>3.5</b> Filtrado de observaciones</a></li>
+<li class="chapter" data-level="3.6" data-path="avanzado.html"><a href="avanzado.html#orden-de-acuerdo-a-variables"><i class="fa fa-check"></i><b>3.6</b> Orden de acuerdo a variables</a></li>
+<li class="chapter" data-level="3.7" data-path="avanzado.html"><a href="avanzado.html#creacion-de-variables"><i class="fa fa-check"></i><b>3.7</b> Creacion de variables</a></li>
+<li class="chapter" data-level="3.8" data-path="avanzado.html"><a href="avanzado.html#conteo-de-variables-cualitativas"><i class="fa fa-check"></i><b>3.8</b> Conteo de variables cualitativas</a></li>
+<li class="chapter" data-level="3.9" data-path="avanzado.html"><a href="avanzado.html#tabla-interactiva"><i class="fa fa-check"></i><b>3.9</b> Tabla interactiva</a></li>
+<li class="chapter" data-level="3.10" data-path="avanzado.html"><a href="avanzado.html#datos-relacionales"><i class="fa fa-check"></i><b>3.10</b> Datos relacionales</a><ul>
+<li class="chapter" data-level="3.10.1" data-path="avanzado.html"><a href="avanzado.html#uniones-de-transformacion"><i class="fa fa-check"></i><b>3.10.1</b> Uniones de transformacion</a></li>
+<li class="chapter" data-level="3.10.2" data-path="avanzado.html"><a href="avanzado.html#uniones-de-filtro"><i class="fa fa-check"></i><b>3.10.2</b> Uniones de filtro</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="avanzado.html"><a href="avanzado.html#datos-ordenados-tidy-data"><i class="fa fa-check"></i><b>3.11</b> Datos ordenados (Tidy data)</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="avanzado.html"><a href="avanzado.html#formatos-largo-y-ancho"><i class="fa fa-check"></i><b>3.11.1</b> Formatos largo y ancho</a></li>
+<li class="chapter" data-level="3.11.2" data-path="avanzado.html"><a href="avanzado.html#separar-y-unir"><i class="fa fa-check"></i><b>3.11.2</b> Separar y unir</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="avanzado.html"><a href="avanzado.html#nest"><i class="fa fa-check"></i><b>3.12</b> Datos anidados (Nesting)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="graficos-1.html"><a href="graficos-1.html"><i class="fa fa-check"></i><b>4</b> Graficos</a><ul>
+<li class="chapter" data-level="4.1" data-path="graficos-1.html"><a href="graficos-1.html#estaticos"><i class="fa fa-check"></i><b>4.1</b> Estaticos</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="graficos-1.html"><a href="graficos-1.html#histograma"><i class="fa fa-check"></i><b>4.1.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.1.2" data-path="graficos-1.html"><a href="graficos-1.html#barras"><i class="fa fa-check"></i><b>4.1.2</b> Barras</a></li>
+<li class="chapter" data-level="4.1.3" data-path="graficos-1.html"><a href="graficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.1.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.4" data-path="graficos-1.html"><a href="graficos-1.html#dispersion"><i class="fa fa-check"></i><b>4.1.4</b> Dispersion</a></li>
+<li class="chapter" data-level="4.1.5" data-path="graficos-1.html"><a href="graficos-1.html#lineas"><i class="fa fa-check"></i><b>4.1.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.1.6" data-path="graficos-1.html"><a href="graficos-1.html#graficos-estadisticos"><i class="fa fa-check"></i><b>4.1.6</b> Graficos estadisticos</a></li>
+<li class="chapter" data-level="4.1.7" data-path="graficos-1.html"><a href="graficos-1.html#transformacion-de-ejes"><i class="fa fa-check"></i><b>4.1.7</b> Transformacion de ejes</a></li>
+<li class="chapter" data-level="4.1.8" data-path="graficos-1.html"><a href="graficos-1.html#limites-de-ejes-zoom"><i class="fa fa-check"></i><b>4.1.8</b> Limites de ejes (Zoom)</a></li>
+<li class="chapter" data-level="4.1.9" data-path="graficos-1.html"><a href="graficos-1.html#salvando-graficos"><i class="fa fa-check"></i><b>4.1.9</b> Salvando graficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="graficos-1.html"><a href="graficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.2</b> Interactivos</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="graficos-1.html"><a href="graficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.2.2" data-path="graficos-1.html"><a href="graficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
+<li class="chapter" data-level="4.2.3" data-path="graficos-1.html"><a href="graficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.4" data-path="graficos-1.html"><a href="graficos-1.html#dispersion-1"><i class="fa fa-check"></i><b>4.2.4</b> Dispersion</a></li>
+<li class="chapter" data-level="4.2.5" data-path="graficos-1.html"><a href="graficos-1.html#lineas-1"><i class="fa fa-check"></i><b>4.2.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.2.6" data-path="graficos-1.html"><a href="graficos-1.html#transformacion-de-ejes-1"><i class="fa fa-check"></i><b>4.2.6</b> Transformacion de ejes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html"><i class="fa fa-check"></i><b>5</b> Iteracion con <code>purrr</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#iterando-sobre-un-objeto"><i class="fa fa-check"></i><b>5.1</b> Iterando sobre un objeto</a></li>
+<li class="chapter" data-level="5.2" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#iterando-sobre-dos-objetos"><i class="fa fa-check"></i><b>5.2</b> Iterando sobre dos objetos</a></li>
+<li class="chapter" data-level="5.3" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#leyendo-archivos-y-combinandolos"><i class="fa fa-check"></i><b>5.3</b> Leyendo archivos y combinandolos</a></li>
+<li class="chapter" data-level="5.4" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.4</b> Datos anidados, caso 1</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#efectos-secundarios"><i class="fa fa-check"></i><b>5.4.1</b> Efectos secundarios</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.5</b> Datos anidados, caso 2</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a><ul>
+<li class="chapter" data-level="6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#paquetes-para-datos-espaciales"><i class="fa fa-check"></i><b>6.1</b> Paquetes para datos espaciales</a></li>
+<li class="chapter" data-level="6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#sistemas-de-referencias-de-coordenadas-crs"><i class="fa fa-check"></i><b>6.2</b> Sistemas de Referencias de Coordenadas (CRS)</a></li>
+<li class="chapter" data-level="6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#importar-datos"><i class="fa fa-check"></i><b>6.3</b> Importar datos</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-de-texto"><i class="fa fa-check"></i><b>6.3.1</b> Desde archivos de texto</a></li>
+<li class="chapter" data-level="6.3.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-espaciales"><i class="fa fa-check"></i><b>6.3.2</b> Desde archivos espaciales</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="datos-espaciales.html"><a href="datos-espaciales.html#exportar-datos"><i class="fa fa-check"></i><b>6.4</b> Exportar datos</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#vectoriales"><i class="fa fa-check"></i><b>6.4.1</b> Vectoriales</a></li>
+<li class="chapter" data-level="6.4.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#raster-1"><i class="fa fa-check"></i><b>6.4.2</b> Raster</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="datos-espaciales.html"><a href="datos-espaciales.html#mapas"><i class="fa fa-check"></i><b>6.5</b> Mapas</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#estaticos-1"><i class="fa fa-check"></i><b>6.5.1</b> Estaticos</a></li>
+<li class="chapter" data-level="6.5.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#dinamicos"><i class="fa fa-check"></i><b>6.5.2</b> Dinamicos</a></li>
+<li class="chapter" data-level="6.5.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#modelos-de-sombras"><i class="fa fa-check"></i><b>6.5.3</b> Modelos de sombras</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Análisis de datos</b></span></li>
+<li class="chapter" data-level="7" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Álgebra lineal</a><ul>
+<li class="chapter" data-level="7.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#tensores"><i class="fa fa-check"></i><b>7.1</b> Tensores</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#vectores-1"><i class="fa fa-check"></i><b>7.1.1</b> Vectores</a></li>
+<li class="chapter" data-level="7.1.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#matrices-1"><i class="fa fa-check"></i><b>7.1.2</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#eigenvectors-y-eigenvalues"><i class="fa fa-check"></i><b>7.2</b> Eigenvectors y Eigenvalues</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#definición"><i class="fa fa-check"></i><b>7.2.1</b> Definición</a></li>
+<li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#calculo"><i class="fa fa-check"></i><b>7.2.2</b> Calculo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="datos-e-incertidumbre.html"><a href="datos-e-incertidumbre.html"><i class="fa fa-check"></i><b>8</b> Datos e Incertidumbre</a></li>
+<li class="chapter" data-level="9" data-path="estadistica-descriptiva-univariable.html"><a href="estadistica-descriptiva-univariable.html"><i class="fa fa-check"></i><b>9</b> Estadistica Descriptiva Univariable</a></li>
+<li class="chapter" data-level="10" data-path="estadistica-descriptiva-bivariable.html"><a href="estadistica-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>10</b> Estadistica Descriptiva Bivariable</a></li>
+<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a></li>
+<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a></li>
+<li class="chapter" data-level="13" data-path="introduccion-a-estadistica-inferencial.html"><a href="introduccion-a-estadistica-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introduccion a Estadistica Inferencial</a></li>
+<li class="chapter" data-level="14" data-path="estimacion.html"><a href="estimacion.html"><i class="fa fa-check"></i><b>14</b> Estimacion</a></li>
+<li class="chapter" data-level="15" data-path="pruebas-estadisticas.html"><a href="pruebas-estadisticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadisticas</a></li>
+<li class="chapter" data-level="16" data-path="estadistica-no-parametrica.html"><a href="estadistica-no-parametrica.html"><i class="fa fa-check"></i><b>16</b> Estadistica No Parametrica</a></li>
+<li class="chapter" data-level="17" data-path="estadistica-direccional.html"><a href="estadistica-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadistica Direccional</a></li>
+<li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a></li>
+<li class="chapter" data-level="19" data-path="geoestadistica.html"><a href="geoestadistica.html"><i class="fa fa-check"></i><b>19</b> Geoestadistica</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geologia Numerica: Ciencia de Datos para Geociencias</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="álgebra-lineal" class="section level1">
+<h1><span class="header-section-number">Capitulo 7</span> Álgebra lineal</h1>
+<p>Este capitulo hace una introducción básica a conceptos y técnicas en álgebra lineal.</p>
+<div id="tensores" class="section level2">
+<h2><span class="header-section-number">7.1</span> Tensores</h2>
+<p>En general cualquier arreglo de datos numéricos se considera un tensor de dimensión variable, dependiendo de la estructura de los datos.</p>
+<p>Un tensor es una representación matemática que cuantifica la variación de la magnitud con respecto a la dirección. Numéricamente se representa como una matriz y gráficamente como un elipsoide, en el caso de 3 dimensiones (Figura <a href="álgebra-lineal.html#fig:tensor-elipse">7.1</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:tensor-elipse"></span>
+<img src="http://www.geosci.usyd.edu.au/users/prey/Teaching/Geol-3101/Strain/ellipse.gif" alt="Tensor como elipsoide. Tomado de: http://www.geosci.usyd.edu.au/users/prey/Teaching/Geol-3101/Strain/ellipse.gif" width="70%" />
+<p class="caption">
+Figura 7.1: Tensor como elipsoide. Tomado de: <a href="http://www.geosci.usyd.edu.au/users/prey/Teaching/Geol-3101/Strain/ellipse.gif" class="uri">http://www.geosci.usyd.edu.au/users/prey/Teaching/Geol-3101/Strain/ellipse.gif</a>
+</p>
+</div>
+<p>Los tensores mas conocidos son:</p>
+<ul>
+<li>Escalar: Tensor de orden 0, cantidad que tiene magnitud pero no dirección. Ejemplos: densidad y temperatura.</li>
+<li>Vector: Tensor de orden 1, cantidad que tiene magnitud y dirección. Ejemplos: velocidad, aceleración, fuerza.</li>
+<li>Matriz: Tensor de orden 2 o mas, arreglo de vectores en 2 o más dimensiones, con magnitud y 2 o mas direcciones. Ejemplos: esfuerzo, deformación.</li>
+</ul>
+<div id="vectores-1" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Vectores</h3>
+<p>Los vectores son representaciones univariables de datos, ya que pueden almacenar únicamente un tipo de datos. En el sentido estricto de álgebra los datos tienen que ser del tipo numérico. Los vectores se denotan con letras minúsculas (ej: <span class="math inline">\(x\)</span>).</p>
+<p>La estructura y representación matemática de un vector se presenta en Ecuación <a href="álgebra-lineal.html#eq:vec-01">(7.1)</a>, mientras que la representación gráfica se presenta en la Figura <a href="álgebra-lineal.html#fig:vector">7.2</a>:</p>
+<p><span class="math display" id="eq:vec-01">\[\begin{equation}
+  x = \left( \begin{matrix} x_1\\ x_2\\ \vdots\\ x_n \end{matrix} \right)
+  \tag{7.1}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(n\)</span> corresponde con la dimensión del vector.</p>
+<div class="figure" style="text-align: center"><span id="fig:vector"></span>
+<img src="http://www.cyberphysics.co.uk/graphics/diagrams/forces/vector_components4.gif" alt="Representacion grafica de un vector. Tomado de: http://www.cyberphysics.co.uk/graphics/diagrams/forces/vector_components4.gif" width="70%" />
+<p class="caption">
+Figura 7.2: Representacion grafica de un vector. Tomado de: <a href="http://www.cyberphysics.co.uk/graphics/diagrams/forces/vector_components4.gif" class="uri">http://www.cyberphysics.co.uk/graphics/diagrams/forces/vector_components4.gif</a>
+</p>
+</div>
+<div id="operaciones-con-vectores" class="section level4">
+<h4><span class="header-section-number">7.1.1.1</span> Operaciones con vectores</h4>
+<ul>
+<li>Suma:</li>
+</ul>
+<p><span class="math display" id="eq:vec-suma">\[\begin{equation}
+  x + y = \left( \begin{matrix} x_1\\ x_2\\ \vdots\\ x_n \end{matrix} \right) + \left( \begin{matrix} y_1\\ y_2\\ \vdots\\ y_n \end{matrix} \right)
+  \tag{7.2}
+\end{equation}\]</span></p>
+<p>Se requiere que ambos vectores tengan la misma dimensión. Un ejemplo seria cuando un vector contiene la concentración de <span class="math inline">\(Fe^{2+}\)</span> y otro la de <span class="math inline">\(Fe^{3+}\)</span>, al sumarlos se obtiene la concentración total de <span class="math inline">\(Fe\)</span> en la roca.</p>
+<ul>
+<li>Multiplicación por escalar:</li>
+</ul>
+<p><span class="math display" id="eq:vec-mult">\[\begin{equation}
+  \alpha x = \left( \begin{matrix} \alpha x_1\\ \alpha x_2\\ \vdots\\ \alpha x_n \end{matrix} \right)
+  \tag{7.3}
+\end{equation}\]</span></p>
+<p>El escalar multiplica a cada uno de los elementos. Un ejemplo seria cuando se tienen mediciones (decenas o cientos) de la longitud de fósiles en pulgadas y se desean convertir a milímetros, entonces se multiplica el vector por 25.4.</p>
+<ul>
+<li>Producto punto:</li>
+</ul>
+<p><span class="math display" id="eq:vec-prod">\[\begin{equation}
+  x y = \left( \begin{matrix} x_1\\ x_2\\ \vdots\\ x_n \end{matrix} \right) \left( \begin{matrix} y_1 &amp; y_2 &amp; \dotsb &amp; y_n \end{matrix} \right) = x_1 y_1 + x_2 y_2 + \dotsb + x_n y_n
+  \tag{7.4}
+\end{equation}\]</span></p>
+<p>Se requiere que ambos vectores tengan la misma dimensión. Un ejemplo seria cuando el precio de los diferentes agregados (piedra de construcción) se encuentra en un vector y la cantidad del tipo de agregado se tiene en otro vector; el precio a ganar al vender dicha cantidad de acuerdo al precio establecido es el resultado del producto punto.</p>
+</div>
+</div>
+<div id="matrices-1" class="section level3">
+<h3><span class="header-section-number">7.1.2</span> Matrices</h3>
+<p>Una matriz es una representación bivariable (2 columnas) o multivariable (&gt; 2 columnas) de datos. Similar a los vectores, en el sentido estricto de álgebra los datos tienen que ser del tipo numérico. Las matrices se denotan con letras mayúsculas (ej: <span class="math inline">\(A\)</span>).</p>
+<p>La estructura y representación matemática de una matriz se presenta en Ecuación <a href="álgebra-lineal.html#eq:mat-01">(7.5)</a></p>
+<p><span class="math display" id="eq:mat-01">\[\begin{equation}
+  A = \left( \begin{matrix} a_{11} &amp; a_{12} &amp; a_{13}\\ a_{21} &amp; a_{22} &amp; a_{23}\\ a_{31} &amp; a_{32} &amp; a_{33} \end{matrix} \right)
+  \tag{7.5}
+\end{equation}\]</span></p>
+<p>La dimensión de una matriz es el numero de filas (por lo general denominado <span class="math inline">\(i\)</span>) por el numero de columnas (por lo general denominado <span class="math inline">\(j\)</span>), por lo que en el caso de la matriz mostrada en <a href="álgebra-lineal.html#eq:mat-01">(7.5)</a> la dimensión es 9 (<span class="math inline">\(i \times j\)</span>).</p>
+<p>Los subíndices denotan la ubicación del elemento, siendo el primer subíndice la fila y el segundo la columna; el elemento <span class="math inline">\(a_{23}\)</span> corresponde al elemento en la fila 2 y columna 3.</p>
+<div id="operaciones-con-matrices" class="section level4">
+<h4><span class="header-section-number">7.1.2.1</span> Operaciones con matrices</h4>
+<ul>
+<li>Suma:</li>
+</ul>
+<p><span class="math display" id="eq:mat-suma">\[\begin{equation}
+  A + B = \left( \begin{matrix} a_{11} &amp; a_{12} &amp; a_{13}\\ a_{21} &amp; a_{22} &amp; a_{23}\\ a_{31} &amp; a_{32} &amp; a_{33} \end{matrix} \right) + \left( \begin{matrix} b_{11} &amp; b_{12} &amp; b_{13}\\ b_{21} &amp; b_{22} &amp; b_{23}\\ b_{31} &amp; b_{32} &amp; b_{33} \end{matrix} \right)
+  \tag{7.6}
+\end{equation}\]</span></p>
+<p>Se requiere que ambas matrices tengan no solo la misma dimensión, pero la misma cantidad de filas y columnas. En este caso la operación es elemento por elemento <span class="math inline">\(a_{11} + b_{11}\)</span>. Un ejemplo seria donde una matriz contiene la producción de diversos tipos arcilla para un año dado y la otra tiene la producción para el año siguiente, la matriz resultante tiene la producción sobre esos dos años</p>
+<ul>
+<li>Multiplicación por escalar:</li>
+</ul>
+<p><span class="math display" id="eq:mat-mult">\[\begin{equation}
+  \alpha A = \left( \begin{matrix} \alpha a_{11} &amp; \alpha a_{12} &amp; \alpha a_{13}\\ \alpha a_{21} &amp; \alpha a_{22} &amp; \alpha a_{23}\\ \alpha a_{31} &amp; \alpha a_{32} &amp; \alpha a_{33} \end{matrix} \right)
+  \tag{7.7}
+\end{equation}\]</span></p>
+<p>El escalar multiplica a cada uno de los elementos. Un ejemplo seria cuando se tienen mediciones de los ejes de cantos de piedra en pulgadas para diversos especímenes y se requiere tenerlos en milímetros.</p>
+<ul>
+<li>Multiplicación:</li>
+</ul>
+<p><span class="math display" id="eq:mat-prod">\[\begin{equation}
+  A B = \left( \begin{matrix} a_{11} &amp; a_{12} &amp; a_{13}\\ a_{21} &amp; a_{22} &amp; a_{23}\\ a_{31} &amp; a_{32} &amp; a_{33} \end{matrix} \right) \left( \begin{matrix} b_{11} &amp; b_{12} &amp; b_{13}\\ b_{21} &amp; b_{22} &amp; b_{23}\\ b_{31} &amp; b_{32} &amp; b_{33} \end{matrix} \right)
+  \tag{7.8}
+\end{equation}\]</span></p>
+<p>Se requiere que la matriz izquierda tenga la misma cantidad de columnas que filas de la matriz derecha, resultando en una matriz con dimensiones de las filas de la izquierda por las columnas de la derecha (<span class="math inline">\(A(i,j)B(m,n)=C(i,n)\)</span>).</p>
+<ul>
+<li>Determinante:</li>
+</ul>
+<p><span class="math display" id="eq:mat-det">\[\begin{equation}
+  A = \left( \begin{matrix} a_{11} &amp; a_{12}\\ a_{21} &amp; a_{22} \end{matrix} \right)\\
+  det(A) = |A| = a_{11} a_{22} - a_{21} a_{12}
+  \tag{7.9}
+\end{equation}\]</span></p>
+<p>Esto aplica para matrices cuadradas, o sea que tienen la misma cantidad de filas y columnas (<span class="math inline">\(i \times i\)</span>). Aquí solo se presenta la forma manual para una matriz de <span class="math inline">\(2 \times 2\)</span> ya que es la mas sencilla, para matrices de mayor dimensión se puede hacer uso del software <strong>R</strong>, o de la herramienta preferida.</p>
+</div>
+<div id="tipos-de-matrices" class="section level4">
+<h4><span class="header-section-number">7.1.2.2</span> Tipos de matrices</h4>
+<p>Hay ciertos tipos de matrices que de acuerdo a su estructura reciben nombres especiales. Dentro de estas matrices están:</p>
+<ul>
+<li>Diagonal: Hay entradas diferentes de cero en la diagonal y el resto de los elementos son ceros. la diagonal es donde el numero de fila y columna es el mismo (ej: <span class="math inline">\(a_{22}\)</span>).</li>
+</ul>
+<p><span class="math display" id="eq:mat-diag">\[\begin{equation}
+  \left( \begin{matrix} 3 &amp; 0 &amp; 0\\ 0 &amp; 4 &amp; 0\\ 0 &amp; 0 &amp; 2 \end{matrix} \right)
+  \tag{7.10}
+\end{equation}\]</span></p>
+<ul>
+<li>Identidad: Es una matriz diagonal donde la diagonal tiene únicamente unos, y tiene una denominación especial <span class="math inline">\(I\)</span>.</li>
+</ul>
+<p><span class="math display" id="eq:mat-id">\[\begin{equation}
+  I = \left( \begin{matrix} 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 \end{matrix} \right)
+  \tag{7.11}
+\end{equation}\]</span></p>
+<ul>
+<li>Transpuesta: Se “rota” la matriz y lo que antes eran las filas ahora son las columnas y viceversa. Se denota por medio de <span class="math inline">\(A^T\)</span>. Si las dimensiones originales eran <span class="math inline">\((i,j)\)</span>, las dimensiones de la transpuesta son <span class="math inline">\((j,i)\)</span>.</li>
+</ul>
+<p><span class="math display" id="eq:mat-trans">\[\begin{equation}
+  A = \left( \begin{matrix} 3 &amp; 4 &amp; 1\\ 2 &amp; 7 &amp; 5 \end{matrix} \right)\\
+  A^T = \left( \begin{matrix} 3 &amp; 2\\ 4 &amp; 7\\ 1 &amp; 5 \end{matrix} \right)
+  \tag{7.12}
+\end{equation}\]</span></p>
+<ul>
+<li>Simétrica: Se puede pensar como un espejo en los elementos no de la diagonal, donde se pueden intercambiar los subíndices y la matriz no cambia (<span class="math inline">\(a_{21} = a_{12}\)</span>)</li>
+</ul>
+<p><span class="math display" id="eq:mat-sim">\[\begin{equation}
+  \left( \begin{matrix} 2 &amp; 5 &amp; 3\\ 5 &amp; 1 &amp; 4\\ 3 &amp; 4 &amp; 9 \end{matrix} \right)
+  \tag{7.13}
+\end{equation}\]</span></p>
+<p>Un caso típico de una matriz simétrica es el tensor de esfuerzos, presentado gráficamente en la Figura <a href="álgebra-lineal.html#fig:esfuerzos">7.3</a> y en la Ecuación <a href="álgebra-lineal.html#eq:mat-esfuerzos">(7.14)</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:esfuerzos"></span>
+<img src="https://www.efunda.com/formulae/solid_mechanics/mat_mechanics/images/StressState3D.gif" alt="Tensor de esfuerzos, un ejemplo de una matriz simetrica. Tomado de: https://www.efunda.com/formulae/solid_mechanics/mat_mechanics/images/StressState3D.gif" width="70%" />
+<p class="caption">
+Figura 7.3: Tensor de esfuerzos, un ejemplo de una matriz simetrica. Tomado de: <a href="https://www.efunda.com/formulae/solid_mechanics/mat_mechanics/images/StressState3D.gif" class="uri">https://www.efunda.com/formulae/solid_mechanics/mat_mechanics/images/StressState3D.gif</a>
+</p>
+</div>
+<p><span class="math display" id="eq:mat-esfuerzos">\[\begin{equation}
+  \sigma = \left( \begin{matrix} \sigma_{xx} &amp; \sigma_{xy} &amp; \sigma_{xz}\\ \sigma_{yx} &amp; \sigma_{yy} &amp; \sigma_{yz}\\ \sigma_{zx} &amp; \sigma_{zx} &amp; \sigma_{zz} \end{matrix} \right)
+  \tag{7.14}
+\end{equation}\]</span></p>
+<ul>
+<li>Inversa: Cuando se multiplica la matriz original por la inversa se obtiene la matriz identidad <span class="math inline">\(I\)</span>. Se denota por medio de <span class="math inline">\(A^{-1}\)</span>. Aquí no se pretende demostrar o indicar como obtener la matriz inversa, esta se puede calcular con software dedicado para ello.</li>
+</ul>
+<p><span class="math display" id="eq:mat-inv">\[\begin{equation}
+  A A^{-1} = I
+  \tag{7.15}
+\end{equation}\]</span></p>
+</div>
+<div id="usos" class="section level4">
+<h4><span class="header-section-number">7.1.2.3</span> Usos</h4>
+<p>Las matrices son usadas de forma rutinaria aun cuando uno no se de cuenta. Muchas de las operaciones que se realizan se pueden presentar en notación matricial, y de hecho así es como se procesan los datos a lo interno de muchas funciones. Aquí se presentan dos usos típicos y conocidos: resolver sistemas de ecuaciones y obtener predicciones para un modelo lineal.</p>
+<ul>
+<li>Sistemas de ecuaciones</li>
+</ul>
+<p>Se puede resolver de dos maneras: haciendo uso de la matriz inversa (Ecuación <a href="álgebra-lineal.html#eq:mat-se1">(7.16)</a>) o de la Regla de Cramer usando determinantes (Ecuación <a href="álgebra-lineal.html#eq:mat-se2">(7.18)</a>).</p>
+<p>Haciendo uso de la matriz inversa seria de la siguiente manera:</p>
+<p><span class="math display" id="eq:mat-se1">\[\begin{align*}
+  A x &amp;= b\\
+  A A^{-1} x &amp;= A^{-1} b\\
+  x &amp;= A^{-1} b
+  \tag{7.16}
+\end{align*}\]</span></p>
+<p>Se muestra en el siguiente ejemplo, donde se hace uso de operaciones anteriormente demostradas. La idea es descomponer el sistema de ecuaciones en matrices y vectores, una matriz para los coeficientes de las incógnitas, un vector para las incógnitas, y un vector para la solución de la ecuación. A partir de esto se encuentra la matriz inversa de los coeficientes, se multiplica a ambos lados de la ecuación (recordando que al multiplicar <span class="math inline">\(A A^{-1} = I\)</span>), lo que despeja a las incógnitas y se termina de resolver el problema.</p>
+<p><span class="math display" id="eq:mat-se1-ej">\[\begin{align*}
+  4 x_1 + 10 x_2 &amp;= 38\\
+  10 x_1 + 30 x_2 &amp;= 110\\
+  A x &amp;= b\\
+  \left( \begin{matrix} 4 &amp; 10\\ 10 &amp; 30 \end{matrix} \right) \left( \begin{matrix} x_1\\ x_2 \end{matrix} \right) &amp;= \left( \begin{matrix} 38\\ 110 \end{matrix} \right)\\
+  A^{-1} b &amp;= x\\
+  \left( \begin{matrix} 1.5 &amp; -0.5\\ -0.5 &amp; 2 \end{matrix} \right) \left( \begin{matrix} 38\\ 110 \end{matrix} \right) &amp;= \left( \begin{matrix} 2\\ 3 \end{matrix} \right)
+  \tag{7.17}
+\end{align*}\]</span></p>
+<p>Haciendo uso de la Regla de Cramer se muestra en el siguiente ejemplo. La idea es primero calcular el determinante de la matriz de coeficientes. Posteriormente se reemplaza la primer columna por el vector de las soluciones en la matriz de coeficientes, se calcula el determinante de esta nueva matriz y la primer incógnita (<span class="math inline">\(x_1\)</span>) seria la división entre el determinante de la matriz modificada sobre el determinante de la matriz original. Se prosigue de manera similar para el resto de incógnitas.</p>
+<p><span class="math display" id="eq:mat-se2">\[\begin{equation}
+  \left| \begin{matrix} 4 &amp; 10\\ 10 &amp; 30 \end{matrix} \right| = 4 \times 30 - 10 \times 10 = 20\\
+  \left| \begin{matrix} 30 &amp; 110\\ 10 &amp; 30 \end{matrix} \right| = 38 \times 30 - 110 \times 10 = 40\\
+  x_1 = \frac{40}{20} = 2\\
+  \left| \begin{matrix} 4 &amp; 10\\ 30 &amp; 110 \end{matrix} \right| = 4 \times 110 - 10 \times 38 = 60\\
+  x_2 = \frac{60}{20} = 3\\
+  \tag{7.18}
+\end{equation}\]</span></p>
+<ul>
+<li>Obtener predicciones para un modelo lineal</li>
+</ul>
+<p>El procedimiento se demuestra en la Ecuación <a href="álgebra-lineal.html#eq:mat-pred">(7.19)</a>, para una regresión lineal simple (<span class="math inline">\(y = b_0 + b_1 x\)</span>). Aquí la idea es que los valores a predecir no se toman como un vector o serie de vectores, sino que se ordenan en una matriz, donde se incluye una columna de unos para el intercepto (<span class="math inline">\(A\)</span>). Se cuenta con un vector de los coeficientes de la regresión lineal (<span class="math inline">\(b\)</span>). Para obtener las predicciones se realiza una multiplicación entre estas dos matrices, resultando en un vector de las predicciones deseadas (<span class="math inline">\(y\)</span>).</p>
+<p><span class="math display" id="eq:mat-pred">\[\begin{equation}
+  A = \left( \begin{matrix} 1 &amp; 3.24\\ 1 &amp; 1.37\\ 1 &amp; 4.52\\ 1 &amp; 4.63\\ 1 &amp; 4.21 \end{matrix} \right); b = \left( \begin{matrix} 0.5\\ 8.1 \end{matrix} \right)\\
+  y = b_0 + b_1 x\\
+  y = A b = \left( \begin{matrix} 1 &amp; 3.24\\ 1 &amp; 1.37\\ 1 &amp; 4.52\\ 1 &amp; 4.63\\ 1 &amp; 4.21 \end{matrix} \right) \left( \begin{matrix} 0.5\\ 8.1 \end{matrix} \right) = \left( \begin{matrix} 26.74\\ 11.59\\ 37.08\\ 38.03\\ 34.56 \end{matrix} \right)\\
+  \text{donde } y_1 = 0.5 \cdot 1 + 8.1 \cdot 3.24 = 26.74
+  \tag{7.19}
+\end{equation}\]</span></p>
+</div>
+</div>
+</div>
+<div id="eigenvectors-y-eigenvalues" class="section level2">
+<h2><span class="header-section-number">7.2</span> Eigenvectors y Eigenvalues</h2>
+<div id="definición" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Definición</h3>
+<p>Los eigenvectors (vectores característicos) son vectores especiales para una dada matriz, que al ser multiplicados por esta matriz no cambian de dirección, lo cual si ocurre con vectores no característicos. Al multiplicar la matriz por el eigenvector se obtiene un vector, el cual va a ser simplemente el eigenvector escalado (dimensionado) de acuerdo al eigenvalue (valor característico), ver Ecuación <a href="álgebra-lineal.html#eq:eigen-01">(7.20)</a>. El eigenvalue (<span class="math inline">\(\lambda\)</span>) indica si el eigenvector es estirado (<span class="math inline">\(&gt;1\)</span>), comprimido (<span class="math inline">\(&lt;1\)</span>), invertido (valor negativo), o dejado sin cambios (<span class="math inline">\(1\)</span>).</p>
+<p><span class="math display" id="eq:eigen-01">\[\begin{equation}
+  A x = \lambda x
+  \tag{7.20}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(x\)</span> es el eigenvector de <span class="math inline">\(A\)</span> y <span class="math inline">\(\lambda\)</span> es el eigenvalue de <span class="math inline">\(A\)</span> para un eigenvector dado.</p>
+</div>
+<div id="calculo" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Calculo</h3>
+<p>Primero y los mas fácil es encontrar los eigenvalues, para esto se sigue el procedimiento mostrado en la Ecuación <a href="álgebra-lineal.html#eq:eigen-val">(7.21)</a>, donde la idea es despejar pasar todo a un lado de la ecuación igualando a cero, factorizar el eigenvector <span class="math inline">\(x\)</span> y multiplicar la matriz identidad por los eigenvalues. Posteriormente a la parte factorizada se le calcula el determinante y se iguala a cero para resolver la ecuación (cuadrática en el caso de una matriz de <span class="math inline">\(2 \times 2\)</span>) y encontrar los eigenvalues.</p>
+<p><span class="math display" id="eq:eigen-val">\[\begin{equation}
+  \left( A - \lambda I \right) x = 0\\
+  \left| A - \lambda I \right| = 0
+  \tag{7.21}
+\end{equation}\]</span></p>
+<p>Se puede mostrar con el siguiente ejemplo.</p>
+<p><span class="math display" id="eq:eigen-val-ej1">\[\begin{equation}
+  A = \left( \begin{matrix} 17 &amp; -6\\ 45 &amp; -16 \end{matrix} \right)\\
+  \left( A - \lambda I \right) = \left( \begin{matrix} 17-\lambda &amp; -6\\ 45 &amp; -16-\lambda \end{matrix} \right)\\
+  \left| \begin{matrix} 17-\lambda &amp; -6\\ 45 &amp; -16-\lambda \end{matrix} \right| = 0\\
+  (17-\lambda)(-16-\lambda) - (45)(-6) = 0\\
+  \lambda^2 - \lambda - 2 = 0\\
+  (\lambda - 2)(\lambda + 1) = 0\\
+  \lambda_1 = 2, \lambda_2 = -1
+  \tag{7.22}
+\end{equation}\]</span></p>
+<p>Una vez encontrados los eigenvalues se puede corroborar que cumplan con dos criterios:</p>
+<ul>
+<li>El producto de los eigenvalues es igual al determinante de la matriz original</li>
+<li>La suma de los eigenvalues es igual a la suma de la diagonal de la matriz original</li>
+</ul>
+<p>En el caso del ejemplo mostrado en <a href="álgebra-lineal.html#eq:eigen-val-ej1">(7.22)</a>:</p>
+<p><span class="math display" id="eq:eigen-val-ej2">\[\begin{equation}
+  \left| \begin{matrix} 17 &amp; -6\\ 45 &amp; -16 \end{matrix} \right| = (17)(-16) - (45)(-6) = -2\\
+  \lambda_1 = 2, \lambda_2 = -1\\
+  \lambda_1 \times \lambda_2 = -2 \to determinante = -2\\
+  \lambda_1 + \lambda_2 = 1 \to 17 - 16 = 1
+  \tag{7.23}
+\end{equation}\]</span></p>
+<p>Aquí se va a obviar el procedimiento manual del cálculo de los eigenvectors y se deja para que se realice en software designado para ello. Se muestra el resultado de los eigenvectors del ejemplo mostrado en <a href="álgebra-lineal.html#eq:eigen-val-ej1">(7.22)</a>.</p>
+<p>Para <span class="math inline">\(\lambda_1\)</span>:</p>
+<p><span class="math display" id="eq:eigen-vec1">\[\begin{equation}
+  A x = \lambda x\\
+  \left( \begin{matrix} 17 &amp; -6\\ 45 &amp; -16 \end{matrix} \right) \left( \begin{matrix} 2\\ 5 \end{matrix} \right) = \left( \begin{matrix} 4\\ 10\\ \end{matrix} \right)\\
+  \left( \begin{matrix} 17 &amp; -6\\ 45 &amp; -16 \end{matrix} \right) \left( \begin{matrix} 2\\ 5 \end{matrix} \right) = 2 \left( \begin{matrix} 2\\ 5\\ \end{matrix} \right)
+  \tag{7.24}
+\end{equation}\]</span></p>
+<p>Para <span class="math inline">\(\lambda_2\)</span>:</p>
+<p><span class="math display" id="eq:eigen-vec2">\[\begin{equation}
+  A x = \lambda x\\
+  \left( \begin{matrix} 17 &amp; -6\\ 45 &amp; -16 \end{matrix} \right) \left( \begin{matrix} 1\\ 3 \end{matrix} \right) = \left( \begin{matrix} -1\\ -3\\ \end{matrix} \right)\\
+  \left( \begin{matrix} 17 &amp; -6\\ 45 &amp; -16 \end{matrix} \right) \left( \begin{matrix} 1\\ 3 \end{matrix} \right) = -1 \left( \begin{matrix} 1\\ 3\\ \end{matrix} \right)
+  \tag{7.25}
+\end{equation}\]</span></p>
+<p>En términos generales:</p>
+<ul>
+<li>Los eigenvectors apuntan en la dirección que se esparcen los datos, y lo que importa es la proporción de la relación entre los elementos del vector, no sus magnitudes.</li>
+<li>Los eigenvalues es cuanto se esparcen los datos.</li>
+<li>En matrices simétricas los eigenvectors van a ser ortogonales.</li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="datos-espaciales.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="datos-e-incertidumbre.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capitulo 12 Introduccion a Estadistica Inferencial | Geologia Numerica: Ciencia de Datos para Geociencias</title>
+  <title>Capitulo 13 Introduccion a Estadistica Inferencial | Geologia Numerica: Ciencia de Datos para Geociencias</title>
   <meta name="description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
   <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capitulo 12 Introduccion a Estadistica Inferencial | Geologia Numerica: Ciencia de Datos para Geociencias" />
+  <meta property="og:title" content="Capitulo 13 Introduccion a Estadistica Inferencial | Geologia Numerica: Ciencia de Datos para Geociencias" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capitulo 12 Introduccion a Estadistica Inferencial | Geologia Numerica: Ciencia de Datos para Geociencias" />
+  <meta name="twitter:title" content="Capitulo 13 Introduccion a Estadistica Inferencial | Geologia Numerica: Ciencia de Datos para Geociencias" />
   
   <meta name="twitter:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-03-31" />
+<meta name="date" content="2020-04-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -123,9 +123,11 @@
 <link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
 <script src="libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
 <link href="libs/PopupTable-0.0.1/popup.css" rel="stylesheet" />
 <script src="libs/pacifico-1/data_stars_pacificocdf13b.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 
 
 <style type="text/css">
@@ -309,19 +311,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#modelos-de-sombras"><i class="fa fa-check"></i><b>6.5.3</b> Modelos de sombras</a></li>
 </ul></li>
 </ul></li>
-<li class="part"><span><b>Analisis de datos</b></span></li>
-<li class="chapter" data-level="7" data-path="algebra-lineal.html"><a href="algebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Algebra lineal</a></li>
-<li class="chapter" data-level="8" data-path="estadistica-descriptiva-univariable.html"><a href="estadistica-descriptiva-univariable.html"><i class="fa fa-check"></i><b>8</b> Estadistica Descriptiva Univariable</a></li>
-<li class="chapter" data-level="9" data-path="estadistica-descriptiva-bivariable.html"><a href="estadistica-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>9</b> Estadistica Descriptiva Bivariable</a></li>
-<li class="chapter" data-level="10" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>10</b> Probabilidad</a></li>
-<li class="chapter" data-level="11" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>11</b> Distribuciones de Probabilidad</a></li>
-<li class="chapter" data-level="12" data-path="introduccion-a-estadistica-inferencial.html"><a href="introduccion-a-estadistica-inferencial.html"><i class="fa fa-check"></i><b>12</b> Introduccion a Estadistica Inferencial</a></li>
-<li class="chapter" data-level="13" data-path="estimacion.html"><a href="estimacion.html"><i class="fa fa-check"></i><b>13</b> Estimacion</a></li>
-<li class="chapter" data-level="14" data-path="pruebas-estadisticas.html"><a href="pruebas-estadisticas.html"><i class="fa fa-check"></i><b>14</b> Pruebas Estadisticas</a></li>
-<li class="chapter" data-level="15" data-path="estadistica-no-parametrica.html"><a href="estadistica-no-parametrica.html"><i class="fa fa-check"></i><b>15</b> Estadistica No Parametrica</a></li>
-<li class="chapter" data-level="16" data-path="estadistica-direccional.html"><a href="estadistica-direccional.html"><i class="fa fa-check"></i><b>16</b> Estadistica Direccional</a></li>
-<li class="chapter" data-level="17" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>17</b> Secuencias de Datos</a></li>
-<li class="chapter" data-level="18" data-path="geoestadistica.html"><a href="geoestadistica.html"><i class="fa fa-check"></i><b>18</b> Geoestadistica</a></li>
+<li class="part"><span><b>Análisis de datos</b></span></li>
+<li class="chapter" data-level="7" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Álgebra lineal</a><ul>
+<li class="chapter" data-level="7.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#tensores"><i class="fa fa-check"></i><b>7.1</b> Tensores</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#vectores-1"><i class="fa fa-check"></i><b>7.1.1</b> Vectores</a></li>
+<li class="chapter" data-level="7.1.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#matrices-1"><i class="fa fa-check"></i><b>7.1.2</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#eigenvectors-y-eigenvalues"><i class="fa fa-check"></i><b>7.2</b> Eigenvectors y Eigenvalues</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#definición"><i class="fa fa-check"></i><b>7.2.1</b> Definición</a></li>
+<li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#calculo"><i class="fa fa-check"></i><b>7.2.2</b> Calculo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="datos-e-incertidumbre.html"><a href="datos-e-incertidumbre.html"><i class="fa fa-check"></i><b>8</b> Datos e Incertidumbre</a></li>
+<li class="chapter" data-level="9" data-path="estadistica-descriptiva-univariable.html"><a href="estadistica-descriptiva-univariable.html"><i class="fa fa-check"></i><b>9</b> Estadistica Descriptiva Univariable</a></li>
+<li class="chapter" data-level="10" data-path="estadistica-descriptiva-bivariable.html"><a href="estadistica-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>10</b> Estadistica Descriptiva Bivariable</a></li>
+<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a></li>
+<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a></li>
+<li class="chapter" data-level="13" data-path="introduccion-a-estadistica-inferencial.html"><a href="introduccion-a-estadistica-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introduccion a Estadistica Inferencial</a></li>
+<li class="chapter" data-level="14" data-path="estimacion.html"><a href="estimacion.html"><i class="fa fa-check"></i><b>14</b> Estimacion</a></li>
+<li class="chapter" data-level="15" data-path="pruebas-estadisticas.html"><a href="pruebas-estadisticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadisticas</a></li>
+<li class="chapter" data-level="16" data-path="estadistica-no-parametrica.html"><a href="estadistica-no-parametrica.html"><i class="fa fa-check"></i><b>16</b> Estadistica No Parametrica</a></li>
+<li class="chapter" data-level="17" data-path="estadistica-direccional.html"><a href="estadistica-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadistica Direccional</a></li>
+<li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a></li>
+<li class="chapter" data-level="19" data-path="geoestadistica.html"><a href="geoestadistica.html"><i class="fa fa-check"></i><b>19</b> Geoestadistica</a></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
@@ -344,7 +356,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="introduccion-a-estadistica-inferencial" class="section level1">
-<h1><span class="header-section-number">Capitulo 12</span> Introduccion a Estadistica Inferencial</h1>
+<h1><span class="header-section-number">Capitulo 13</span> Introduccion a Estadistica Inferencial</h1>
 
 </div>
             </section>

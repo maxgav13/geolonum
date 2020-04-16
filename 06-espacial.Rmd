@@ -184,9 +184,11 @@ Para exportar datos vectoriales se puede usar `st_write`, donde se define el obj
 
 ```{r}
 st_write(fallas_geog, dsn = 'data/espaciales_geog.gpkg', 
-         layer = 'fallas', layer_options = 'OVERWRITE=YES', quiet = T)
+         layer = 'fallas', layer_options = 'OVERWRITE=YES', 
+         quiet = T, delete_layer = T)
 st_write(geomorfo_geog, dsn = 'data/espaciales_geog.gpkg', 
-         layer = 'geomorfo', layer_options = 'OVERWRITE=YES', quiet = T)
+         layer = 'geomorfo', layer_options = 'OVERWRITE=YES', 
+         quiet = T, delete_layer = T)
 ```
 
 Se puede revisar que el objeto haya sido creado apropiadamente, de nuevo usando `st_layers`.
@@ -469,11 +471,11 @@ mv3@map
 ```
 
 ```{r sp-mapas-mv5-code, eval=FALSE}
-viewRGB(sat_stars, r = 3, g = 2, b = 1)
+viewRGB(sat_ras, r = 3, g = 2, b = 1)
 ```
 
 ```{r sp-mapas-mv5, echo=FALSE, fig.cap='Mapa de color verdradero con *mapview*'}
-mv4 = viewRGB(sat_stars, r = 3, g = 2, b = 1)
+mv4 = viewRGB(sat_ras, r = 3, g = 2, b = 1)
 mv4@map
 ```
 
@@ -481,7 +483,7 @@ Con mapview se pueden crear diferentes mapas y sincronizarlos por medio de `sync
 
 ```{r sp-mapas-mv6, eval=FALSE}
 m1 = mapview(franconia, zcol = 'district', 
-             layer.name = 'Distrito', burst = T)
+             layer.name = 'Distrito')
 m2 = mapview(breweries, legend = F)
 
 leafsync::sync(m1, m2)
