@@ -4,27 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capitulo 8 Datos e Incertidumbre | Geologia Numerica: Ciencia de Datos para Geociencias</title>
-  <meta name="description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  <title>Capitulo 8 Datos e Incertidumbre | Geología Numérica: Ciencia de Datos para Geociencias</title>
+  <meta name="description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
   <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capitulo 8 Datos e Incertidumbre | Geologia Numerica: Ciencia de Datos para Geociencias" />
+  <meta property="og:title" content="Capitulo 8 Datos e Incertidumbre | Geología Numérica: Ciencia de Datos para Geociencias" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  <meta property="og:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capitulo 8 Datos e Incertidumbre | Geologia Numerica: Ciencia de Datos para Geociencias" />
+  <meta name="twitter:title" content="Capitulo 8 Datos e Incertidumbre | Geología Numérica: Ciencia de Datos para Geociencias" />
   
-  <meta name="twitter:description" content="Este documento compila el funcionamiento basico del software estadistico y de programacion R, asi como rutinas y/o comandos especificos para resolver problemas de analisis de datos en geociencias." />
+  <meta name="twitter:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
   
 
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-04-16" />
+<meta name="date" content="2020-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -212,26 +212,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
 <li class="part"><span><b>R</b></span></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduccion</a><ul>
-<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalacion-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalacion de R y RStudio</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalación-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalación de R y RStudio</a></li>
 <li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#paquetes"><i class="fa fa-check"></i><b>1.2</b> Paquetes</a></li>
 <li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#ayuda-en-r"><i class="fa fa-check"></i><b>1.3</b> Ayuda en R</a></li>
 <li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rmarkdown"><i class="fa fa-check"></i><b>1.4</b> RMarkdown</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#tipos-de-resultados"><i class="fa fa-check"></i><b>1.4.1</b> Tipos de resultados</a></li>
 <li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#formulas"><i class="fa fa-check"></i><b>1.4.2</b> Formulas</a></li>
 <li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#importando-datos"><i class="fa fa-check"></i><b>1.4.3</b> Importando datos</a></li>
-<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#calculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Calculos en linea</a></li>
+<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#cálculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Cálculos en linea</a></li>
 <li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
 <li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento basico de R</a><ul>
-<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#operaciones-basicas"><i class="fa fa-check"></i><b>2.1</b> Operaciones basicas</a></li>
+<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento básico de R</a><ul>
+<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.1</b> Operaciones básicas</a></li>
 <li class="chapter" data-level="2.2" data-path="basico.html"><a href="basico.html#crear-objetos"><i class="fa fa-check"></i><b>2.2</b> Crear objetos</a></li>
 <li class="chapter" data-level="2.3" data-path="basico.html"><a href="basico.html#vectores"><i class="fa fa-check"></i><b>2.3</b> Vectores</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="basico.html"><a href="basico.html#numericos"><i class="fa fa-check"></i><b>2.3.1</b> Numericos</a></li>
+<li class="chapter" data-level="2.3.1" data-path="basico.html"><a href="basico.html#numéricos"><i class="fa fa-check"></i><b>2.3.1</b> Numéricos</a></li>
 <li class="chapter" data-level="2.3.2" data-path="basico.html"><a href="basico.html#texto-string-character"><i class="fa fa-check"></i><b>2.3.2</b> Texto (string, character)</a></li>
-<li class="chapter" data-level="2.3.3" data-path="basico.html"><a href="basico.html#categoricos-factores"><i class="fa fa-check"></i><b>2.3.3</b> Categoricos (factores)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="basico.html"><a href="basico.html#categóricos-factores"><i class="fa fa-check"></i><b>2.3.3</b> Categóricos (factores)</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="basico.html"><a href="basico.html#matrices"><i class="fa fa-check"></i><b>2.4</b> Matrices</a></li>
 <li class="chapter" data-level="2.5" data-path="basico.html"><a href="basico.html#dataframes-listas-y-tibbles"><i class="fa fa-check"></i><b>2.5</b> DataFrames, listas y tibbles</a></li>
@@ -243,19 +243,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.11</b> Descripciones generales (globales)</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="avanzado.html"><a href="avanzado.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
-<li class="chapter" data-level="3.1" data-path="avanzado.html"><a href="avanzado.html#operadores-logicos"><i class="fa fa-check"></i><b>3.1</b> Operadores logicos</a></li>
+<li class="chapter" data-level="3.1" data-path="avanzado.html"><a href="avanzado.html#operadores-lógicos"><i class="fa fa-check"></i><b>3.1</b> Operadores lógicos</a></li>
 <li class="chapter" data-level="3.2" data-path="avanzado.html"><a href="avanzado.html#operador-de-secuencia-pipe-operator"><i class="fa fa-check"></i><b>3.2</b> Operador de secuencia (Pipe operator)</a></li>
 <li class="chapter" data-level="3.3" data-path="avanzado.html"><a href="avanzado.html#resumen-de-variables"><i class="fa fa-check"></i><b>3.3</b> Resumen de variables</a></li>
-<li class="chapter" data-level="3.4" data-path="avanzado.html"><a href="avanzado.html#seleccion-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.4</b> Seleccion y renombre de variables</a><ul>
+<li class="chapter" data-level="3.4" data-path="avanzado.html"><a href="avanzado.html#selección-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.4</b> Selección y renombre de variables</a><ul>
 <li class="chapter" data-level="3.4.1" data-path="avanzado.html"><a href="avanzado.html#select-helpers"><i class="fa fa-check"></i><b>3.4.1</b> <code>select</code> helpers</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="avanzado.html"><a href="avanzado.html#filtrado-de-observaciones"><i class="fa fa-check"></i><b>3.5</b> Filtrado de observaciones</a></li>
 <li class="chapter" data-level="3.6" data-path="avanzado.html"><a href="avanzado.html#orden-de-acuerdo-a-variables"><i class="fa fa-check"></i><b>3.6</b> Orden de acuerdo a variables</a></li>
-<li class="chapter" data-level="3.7" data-path="avanzado.html"><a href="avanzado.html#creacion-de-variables"><i class="fa fa-check"></i><b>3.7</b> Creacion de variables</a></li>
+<li class="chapter" data-level="3.7" data-path="avanzado.html"><a href="avanzado.html#creación-de-variables"><i class="fa fa-check"></i><b>3.7</b> Creación de variables</a></li>
 <li class="chapter" data-level="3.8" data-path="avanzado.html"><a href="avanzado.html#conteo-de-variables-cualitativas"><i class="fa fa-check"></i><b>3.8</b> Conteo de variables cualitativas</a></li>
 <li class="chapter" data-level="3.9" data-path="avanzado.html"><a href="avanzado.html#tabla-interactiva"><i class="fa fa-check"></i><b>3.9</b> Tabla interactiva</a></li>
 <li class="chapter" data-level="3.10" data-path="avanzado.html"><a href="avanzado.html#datos-relacionales"><i class="fa fa-check"></i><b>3.10</b> Datos relacionales</a><ul>
-<li class="chapter" data-level="3.10.1" data-path="avanzado.html"><a href="avanzado.html#uniones-de-transformacion"><i class="fa fa-check"></i><b>3.10.1</b> Uniones de transformacion</a></li>
+<li class="chapter" data-level="3.10.1" data-path="avanzado.html"><a href="avanzado.html#uniones-de-transformación"><i class="fa fa-check"></i><b>3.10.1</b> Uniones de transformación</a></li>
 <li class="chapter" data-level="3.10.2" data-path="avanzado.html"><a href="avanzado.html#uniones-de-filtro"><i class="fa fa-check"></i><b>3.10.2</b> Uniones de filtro</a></li>
 </ul></li>
 <li class="chapter" data-level="3.11" data-path="avanzado.html"><a href="avanzado.html#datos-ordenados-tidy-data"><i class="fa fa-check"></i><b>3.11</b> Datos ordenados (Tidy data)</a><ul>
@@ -264,35 +264,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.12" data-path="avanzado.html"><a href="avanzado.html#nest"><i class="fa fa-check"></i><b>3.12</b> Datos anidados (Nesting)</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="graficos-1.html"><a href="graficos-1.html"><i class="fa fa-check"></i><b>4</b> Graficos</a><ul>
-<li class="chapter" data-level="4.1" data-path="graficos-1.html"><a href="graficos-1.html#estaticos"><i class="fa fa-check"></i><b>4.1</b> Estaticos</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="graficos-1.html"><a href="graficos-1.html#histograma"><i class="fa fa-check"></i><b>4.1.1</b> Histograma</a></li>
-<li class="chapter" data-level="4.1.2" data-path="graficos-1.html"><a href="graficos-1.html#barras"><i class="fa fa-check"></i><b>4.1.2</b> Barras</a></li>
-<li class="chapter" data-level="4.1.3" data-path="graficos-1.html"><a href="graficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.1.3</b> Boxplot</a></li>
-<li class="chapter" data-level="4.1.4" data-path="graficos-1.html"><a href="graficos-1.html#dispersion"><i class="fa fa-check"></i><b>4.1.4</b> Dispersion</a></li>
-<li class="chapter" data-level="4.1.5" data-path="graficos-1.html"><a href="graficos-1.html#lineas"><i class="fa fa-check"></i><b>4.1.5</b> Lineas</a></li>
-<li class="chapter" data-level="4.1.6" data-path="graficos-1.html"><a href="graficos-1.html#graficos-estadisticos"><i class="fa fa-check"></i><b>4.1.6</b> Graficos estadisticos</a></li>
-<li class="chapter" data-level="4.1.7" data-path="graficos-1.html"><a href="graficos-1.html#transformacion-de-ejes"><i class="fa fa-check"></i><b>4.1.7</b> Transformacion de ejes</a></li>
-<li class="chapter" data-level="4.1.8" data-path="graficos-1.html"><a href="graficos-1.html#limites-de-ejes-zoom"><i class="fa fa-check"></i><b>4.1.8</b> Limites de ejes (Zoom)</a></li>
-<li class="chapter" data-level="4.1.9" data-path="graficos-1.html"><a href="graficos-1.html#salvando-graficos"><i class="fa fa-check"></i><b>4.1.9</b> Salvando graficos</a></li>
+<li class="chapter" data-level="4" data-path="gráficos-1.html"><a href="gráficos-1.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a><ul>
+<li class="chapter" data-level="4.1" data-path="gráficos-1.html"><a href="gráficos-1.html#estáticos"><i class="fa fa-check"></i><b>4.1</b> Estáticos</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma"><i class="fa fa-check"></i><b>4.1.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras"><i class="fa fa-check"></i><b>4.1.2</b> Barras</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.1.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión"><i class="fa fa-check"></i><b>4.1.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos-1.html"><a href="gráficos-1.html#lineas"><i class="fa fa-check"></i><b>4.1.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.1.6" data-path="gráficos-1.html"><a href="gráficos-1.html#gráficos-estadísticos"><i class="fa fa-check"></i><b>4.1.6</b> Gráficos estadísticos</a></li>
+<li class="chapter" data-level="4.1.7" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes"><i class="fa fa-check"></i><b>4.1.7</b> Transformación de ejes</a></li>
+<li class="chapter" data-level="4.1.8" data-path="gráficos-1.html"><a href="gráficos-1.html#limites-de-ejes-zoom"><i class="fa fa-check"></i><b>4.1.8</b> Limites de ejes (Zoom)</a></li>
+<li class="chapter" data-level="4.1.9" data-path="gráficos-1.html"><a href="gráficos-1.html#salvando-gráficos"><i class="fa fa-check"></i><b>4.1.9</b> Salvando gráficos</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="graficos-1.html"><a href="graficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.2</b> Interactivos</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="graficos-1.html"><a href="graficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
-<li class="chapter" data-level="4.2.2" data-path="graficos-1.html"><a href="graficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
-<li class="chapter" data-level="4.2.3" data-path="graficos-1.html"><a href="graficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
-<li class="chapter" data-level="4.2.4" data-path="graficos-1.html"><a href="graficos-1.html#dispersion-1"><i class="fa fa-check"></i><b>4.2.4</b> Dispersion</a></li>
-<li class="chapter" data-level="4.2.5" data-path="graficos-1.html"><a href="graficos-1.html#lineas-1"><i class="fa fa-check"></i><b>4.2.5</b> Lineas</a></li>
-<li class="chapter" data-level="4.2.6" data-path="graficos-1.html"><a href="graficos-1.html#transformacion-de-ejes-1"><i class="fa fa-check"></i><b>4.2.6</b> Transformacion de ejes</a></li>
+<li class="chapter" data-level="4.2" data-path="gráficos-1.html"><a href="gráficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.2</b> Interactivos</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión-1"><i class="fa fa-check"></i><b>4.2.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos-1.html"><a href="gráficos-1.html#lineas-1"><i class="fa fa-check"></i><b>4.2.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes-1"><i class="fa fa-check"></i><b>4.2.6</b> Transformación de ejes</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html"><i class="fa fa-check"></i><b>5</b> Iteracion con <code>purrr</code></a><ul>
-<li class="chapter" data-level="5.1" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#iterando-sobre-un-objeto"><i class="fa fa-check"></i><b>5.1</b> Iterando sobre un objeto</a></li>
-<li class="chapter" data-level="5.2" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#iterando-sobre-dos-objetos"><i class="fa fa-check"></i><b>5.2</b> Iterando sobre dos objetos</a></li>
-<li class="chapter" data-level="5.3" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#leyendo-archivos-y-combinandolos"><i class="fa fa-check"></i><b>5.3</b> Leyendo archivos y combinandolos</a></li>
-<li class="chapter" data-level="5.4" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.4</b> Datos anidados, caso 1</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#efectos-secundarios"><i class="fa fa-check"></i><b>5.4.1</b> Efectos secundarios</a></li>
+<li class="chapter" data-level="5" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html"><i class="fa fa-check"></i><b>5</b> Iteración con <code>purrr</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#iterando-sobre-un-objeto"><i class="fa fa-check"></i><b>5.1</b> Iterando sobre un objeto</a></li>
+<li class="chapter" data-level="5.2" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#iterando-sobre-dos-objetos"><i class="fa fa-check"></i><b>5.2</b> Iterando sobre dos objetos</a></li>
+<li class="chapter" data-level="5.3" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#leyendo-archivos-y-combinándolos"><i class="fa fa-check"></i><b>5.3</b> Leyendo archivos y combinándolos</a></li>
+<li class="chapter" data-level="5.4" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.4</b> Datos anidados, caso 1</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#efectos-secundarios"><i class="fa fa-check"></i><b>5.4.1</b> Efectos secundarios</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="iteracion-con-purrr.html"><a href="iteracion-con-purrr.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.5</b> Datos anidados, caso 2</a></li>
+<li class="chapter" data-level="5.5" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.5</b> Datos anidados, caso 2</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a><ul>
 <li class="chapter" data-level="6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#paquetes-para-datos-espaciales"><i class="fa fa-check"></i><b>6.1</b> Paquetes para datos espaciales</a></li>
@@ -306,8 +306,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#raster-1"><i class="fa fa-check"></i><b>6.4.2</b> Raster</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="datos-espaciales.html"><a href="datos-espaciales.html#mapas"><i class="fa fa-check"></i><b>6.5</b> Mapas</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#estaticos-1"><i class="fa fa-check"></i><b>6.5.1</b> Estaticos</a></li>
-<li class="chapter" data-level="6.5.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#dinamicos"><i class="fa fa-check"></i><b>6.5.2</b> Dinamicos</a></li>
+<li class="chapter" data-level="6.5.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#estáticos-1"><i class="fa fa-check"></i><b>6.5.1</b> Estáticos</a></li>
+<li class="chapter" data-level="6.5.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#dinámicos"><i class="fa fa-check"></i><b>6.5.2</b> Dinámicos</a></li>
 <li class="chapter" data-level="6.5.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#modelos-de-sombras"><i class="fa fa-check"></i><b>6.5.3</b> Modelos de sombras</a></li>
 </ul></li>
 </ul></li>
@@ -319,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#eigenvectors-y-eigenvalues"><i class="fa fa-check"></i><b>7.2</b> Eigenvectors y Eigenvalues</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#definición"><i class="fa fa-check"></i><b>7.2.1</b> Definición</a></li>
-<li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#calculo"><i class="fa fa-check"></i><b>7.2.2</b> Calculo</a></li>
+<li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#cálculo"><i class="fa fa-check"></i><b>7.2.2</b> Cálculo</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="datos-e-incertidumbre.html"><a href="datos-e-incertidumbre.html"><i class="fa fa-check"></i><b>8</b> Datos e Incertidumbre</a></li>
@@ -347,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geologia Numerica: Ciencia de Datos para Geociencias</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geología Numérica: Ciencia de Datos para Geociencias</a>
           </h1>
         </div>
 

@@ -63,6 +63,17 @@ knitr::include_graphics('http://www.cyberphysics.co.uk/graphics/diagrams/forces/
 
 Se requiere que ambos vectores tengan la misma dimensión. Un ejemplo seria cuando un vector contiene la concentración de $Fe^{2+}$ y otro la de $Fe^{3+}$, al sumarlos se obtiene la concentración total de $Fe$ en la roca.
 
+En **R** esto se realiza simplemente creando los vectores respectivos y sumandolos, porque por defecto hace la suma elemento por elemento.
+
+```{r vec-suma}
+Fe2 = c(2,5,4,7,10)
+Fe3 = c(4,8,3,5,9)
+
+Fe = Fe2 + Fe3
+Fe
+```
+
+
 * Multiplicación por escalar:
 
 \begin{equation}
@@ -72,6 +83,17 @@ Se requiere que ambos vectores tengan la misma dimensión. Un ejemplo seria cuan
 
 El escalar multiplica a cada uno de los elementos. Un ejemplo seria cuando se tienen mediciones (decenas o cientos) de la longitud de fósiles en pulgadas y se desean convertir a milímetros, entonces se multiplica el vector por 25.4.
 
+Para demostralo en **R** primero estoy creando un vector aleatorio de 20 datos con limite inferior de 10 y limite superior de 30. Imprimo los resultados para ver los valores, y posteriormente multiplico el vector por el escalar respectivo, de nuevo donde la operacion es elemento por elemento.
+
+```{r vec-mult}
+set.seed(4101)
+longitud = runif(n = 20, min = 10, max = 30)
+longitud
+
+25.4 * longitud
+```
+
+
 * Producto punto:
 
 \begin{equation}
@@ -80,6 +102,16 @@ El escalar multiplica a cada uno de los elementos. Un ejemplo seria cuando se ti
 \end{equation}
 
 Se requiere que ambos vectores tengan la misma dimensión. Un ejemplo seria cuando el precio de los diferentes agregados (piedra de construcción) se encuentra en un vector y la cantidad del tipo de agregado se tiene en otro vector; el precio a ganar al vender dicha cantidad de acuerdo al precio establecido es el resultado del producto punto.
+
+En **R** la forma de calcular el producto punto es haciendo uso del multiplicador matricial `%*%`, lo que arroja un resultado de una matriz de $1 \times 1$. Lo anterior es lo mismo a hacer la suma del producto entre los vectores. Estos procedimientos se muestran a continuación.
+
+```{r vec-prod}
+precio = c(500, 700, 1200, 400)
+cantidad = c(30, 15, 12, 23)
+
+precio %*% cantidad
+sum(precio * cantidad)
+```
 
 ### Matrices
 
@@ -107,6 +139,16 @@ Los subíndices denotan la ubicación del elemento, siendo el primer subíndice 
 
 Se requiere que ambas matrices tengan no solo la misma dimensión, pero la misma cantidad de filas y columnas. En este caso la operación es elemento por elemento $a_{11} + b_{11}$. Un ejemplo seria donde una matriz contiene la producción de diversos tipos arcilla para un año dado y la otra tiene la producción para el año siguiente, la matriz resultante tiene la producción sobre esos dos años 
 
+En **R** simplemente se hace la suma (o resta) de las matrices, ya que hace la operación elemento por elmento.
+
+```{r mat-suma}
+A1 = matrix(data = c(105,218,220,63,80,76,5,2,1), nrow = 3)
+A2 = matrix(data = c(84,240,302,102,121,28,4,1,0), nrow = 3)
+
+A1 + A2
+```
+
+
 * Multiplicación por escalar:
 
 \begin{equation}
@@ -114,7 +156,13 @@ Se requiere que ambas matrices tengan no solo la misma dimensión, pero la misma
   (\#eq:mat-mult)
 \end{equation}
 
-El escalar multiplica a cada uno de los elementos. Un ejemplo seria cuando se tienen mediciones de los ejes de cantos de piedra en pulgadas para diversos especímenes y se requiere tenerlos en milímetros.
+El escalar multiplica a cada uno de los elementos. Un ejemplo seria cuando se tienen mediciones de los ejes de cantos de piedra en pulgadas para diversos especímenes y se requiere tenerlos en milímetros, como se muestra en el siguiente ejemplo.
+
+```{r mat-mult}
+cantos = matrix(data = c(3.4,4.6,5.4,2.2,4.3,4.7,1.8,4.3,4.7), nrow = 3)
+
+25.4 * cantos
+```
 
 * Multiplicación:
 
@@ -125,6 +173,15 @@ El escalar multiplica a cada uno de los elementos. Un ejemplo seria cuando se ti
 
 Se requiere que la matriz izquierda tenga la misma cantidad de columnas que filas de la matriz derecha, resultando en una matriz con dimensiones de las filas de la izquierda por las columnas de la derecha ($A(i,j)B(m,n)=C(i,n)$).
 
+Se demuestra con un ejemplo trivial, pero retomando el operador de multipliación matricial `%*%` presentado anteriormente. Si se utiliza solo `*` el resultado es elemento por elemento y las matrices debieran ser de exactamente el mismo tamaño.
+
+```{r mat-prod}
+A1 = matrix(data = 1:9, nrow = 3)
+A2 = matrix(data = 1:9, nrow = 3, byrow = T)
+
+A1 %*% A2
+```
+
 * Determinante:
 
 \begin{equation}
@@ -133,7 +190,13 @@ Se requiere que la matriz izquierda tenga la misma cantidad de columnas que fila
   (\#eq:mat-det)
 \end{equation}
 
-Esto aplica para matrices cuadradas, o sea que tienen la misma cantidad de filas y columnas ($i \times i$). Aquí solo se presenta la forma manual para una matriz de $2 \times 2$ ya que es la mas sencilla, para matrices de mayor dimensión se puede hacer uso del software **R**, o de la herramienta preferida.
+Esto aplica para matrices cuadradas, o sea que tienen la misma cantidad de filas y columnas ($i \times i$). Aquí se presenta la forma manual para una matriz de $2 \times 2$ ya que es la mas sencilla, para matrices de mayor dimensión se puede hacer uso del software **R**, como se realiza en el siguiente ejemplo. El comando para calcular el determinante es `det()`.
+
+```{r mat-det}
+A = matrix(data = c(4,10,10,30), nrow = 2)
+
+det(A)
+```
 
 #### Tipos de matrices
 
@@ -203,7 +266,7 @@ Haciendo uso de la matriz inversa seria de la siguiente manera:
   (\#eq:mat-se1)
 \end{align*}
 
-Se muestra en el siguiente ejemplo, donde se hace uso de operaciones anteriormente demostradas. La idea es descomponer el sistema de ecuaciones en matrices y vectores, una matriz para los coeficientes de las incógnitas, un vector para las incógnitas, y un vector para la solución de la ecuación. A partir de esto se encuentra la matriz inversa de los coeficientes, se multiplica a ambos lados de la ecuación (recordando que al multiplicar $A A^{-1} = I$), lo que despeja a las incógnitas y se termina de resolver el problema.
+Se muestra en el siguiente ejemplo, donde se hace uso de operaciones anteriormente demostradas, primero de forma manual y seguido en **R**. La idea es descomponer el sistema de ecuaciones en matrices y vectores, una matriz para los coeficientes de las incógnitas, un vector para las incógnitas, y un vector para la solución de la ecuación. A partir de esto se encuentra la matriz inversa de los coeficientes, se multiplica a ambos lados de la ecuación (recordando que al multiplicar $A A^{-1} = I$), lo que despeja a las incógnitas y se termina de resolver el problema.
 
 \begin{align*}
   4 x_1 + 10 x_2 &= 38\\
@@ -214,6 +277,19 @@ Se muestra en el siguiente ejemplo, donde se hace uso de operaciones anteriormen
   \left( \begin{matrix} 1.5 & -0.5\\ -0.5 & 2 \end{matrix} \right) \left( \begin{matrix} 38\\ 110 \end{matrix} \right) &= \left( \begin{matrix} 2\\ 3 \end{matrix} \right)
   (\#eq:mat-se1-ej)
 \end{align*}
+
+En **R** la inversa de una matriz se obtiene por medio de `solve()`.
+
+```{r mat-se1-ej}
+A = matrix(data = c(4,10,10,30), nrow = 2)
+b = c(38,110)
+
+Ainv = solve(A)
+Ainv
+
+Ainv %*% b
+```
+
 
 Haciendo uso de la Regla de Cramer se muestra en el siguiente ejemplo. La idea es primero calcular el determinante de la matriz de coeficientes. Posteriormente se reemplaza la primer columna por el vector de las soluciones en la matriz de coeficientes, se calcula el determinante de esta nueva matriz y la primer incógnita ($x_1$) seria la división entre el determinante de la matriz modificada sobre el determinante de la matriz original. Se prosigue de manera similar para el resto de incógnitas.
 
@@ -238,6 +314,19 @@ El procedimiento se demuestra en la Ecuación \@ref(eq:mat-pred), para una regre
   (\#eq:mat-pred)
 \end{equation}
 
+En **R** se hace uso de las operaciones matriciales convencionales.
+
+```{r mat-pred}
+A = matrix(data = c(rep(1,5), 3.24, 1.37, 4.52, 4.63, 4.21), ncol = 2)
+A
+a = c(0.5,8.1)
+a
+
+y = A %*% a
+y
+```
+
+
 ## Eigenvectors y Eigenvalues
 
 ### Definición
@@ -251,7 +340,7 @@ Los eigenvectors (vectores característicos) son vectores especiales para una da
 
 donde $x$ es el eigenvector de $A$ y $\lambda$ es el eigenvalue de $A$ para un eigenvector dado.
 
-### Calculo
+### Cálculo
 
 Primero y los mas fácil es encontrar los eigenvalues, para esto se sigue el procedimiento mostrado en la Ecuación \@ref(eq:eigen-val), donde la idea es despejar pasar todo a un lado de la ecuación igualando a cero, factorizar el eigenvector $x$ y multiplicar la matriz identidad por los eigenvalues. Posteriormente a la parte factorizada se le calcula el determinante y se iguala a cero para resolver la ecuación (cuadrática en el caso de una matriz de $2 \times 2$) y encontrar los eigenvalues.
 
@@ -289,7 +378,7 @@ En el caso del ejemplo mostrado en \@ref(eq:eigen-val-ej1):
   (\#eq:eigen-val-ej2)
 \end{equation}
 
-Aquí se va a obviar el procedimiento manual del cálculo de los eigenvectors y se deja para que se realice en software designado para ello. Se muestra el resultado de los eigenvectors del ejemplo mostrado en \@ref(eq:eigen-val-ej1).
+Aquí se va a obviar el procedimiento manual del cálculo de los eigenvectors, pero e muestra el resultado de los eigenvectors del ejemplo mostrado en \@ref(eq:eigen-val-ej1).
 
 Para $\lambda_1$:
 
@@ -309,10 +398,20 @@ Para $\lambda_2$:
   (\#eq:eigen-vec2)
 \end{equation}
 
+En el siguiente ejemplo se muestra como obtener en **R** tanto los eigenvectors como eigenvalues, lo que se realiza mediante la función `eigen()`.
+
+```{r}
+A = matrix(data = c(17,45,-6,-16), nrow = 2)
+
+eigen(A)
+```
+
+Como se menciona en los términos generales a continuación, y se ve comparando el resultado de \@ref(eq:eigen-vec1) y \@ref(eq:eigen-vec2) con el resultado de **R**, los valores de los elementos de los eigenvectors no son de importancia, sino la relación entre esos elementos. En \@ref(eq:eigen-vec1) se muestra que el eigenvector es $x_1=(2,5)$, pero en el ejemplo anterior es $x_1=(0.371,0.928)$; si se hace la relación del segundo elemento por el primer elemento se obtiene $2.5$ en ambos casos, lo mismo pasa para $x_2$ donde la relación es de $3$.
+
 En términos generales:
 
-* Los eigenvectors apuntan en la dirección que se esparcen los datos, y lo que importa es la proporción de la relación entre los elementos del vector, no sus magnitudes.
-* Los eigenvalues es cuanto se esparcen los datos.
+* Los eigenvectors apuntan en la dirección que se esparcen los datos, y lo que importa es la relación entre los elementos del vector, no sus magnitudes.
+* Los eigenvalues es cuaánto se esparcen los datos.
 * En matrices simétricas los eigenvectors van a ser ortogonales.
 
 

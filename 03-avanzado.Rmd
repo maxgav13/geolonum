@@ -1,6 +1,21 @@
 # Funcionamiento avanzado de R {#avanzado}
 
-En el capitulo anterior se mostro de manera muy rapida las funciones basicas de **R**, esto porque de ahora en adelante se va a enfocar en el uso de funciones del *tidyverse* [@tidyverse2019]. Este meta-paquete es uno que engloba a un monton de paquetes que se rigen bajo el paradigma de datos ordenados (tidy data). Datos ordenados quiere decir una observacion por fila y cada variable en su columna. Lo que se cubre en este capitulo y mas se puede encontrar en "R for Data Science" [@grolemund2016].
+```{r avanzado-setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE,
+  # fig.path = "figs/",
+  fig.retina = 3,
+  fig.width = 8,
+  fig.asp = 0.618,
+  fig.align = "center",
+  out.width = "90%"
+)
+```
+
+En el capitulo anterior se mostraron de manera muy rápida las funciones básicas de **R**, esto porque de ahora en adelante se va a enfocar en el uso de funciones del *tidyverse* [@tidyverse2019]. Este meta-paquete es uno que engloba a un montón de paquetes que se rigen bajo el paradigma de datos ordenados (tidy data). Datos ordenados quiere decir una observación por fila y cada variable en su columna. Lo que se cubre en este capitulo y mas se puede encontrar en "R for Data Science" [@grolemund2016].
 
 En este capitulo se van a utilizar los siguientes paquetes:
 
@@ -13,7 +28,7 @@ library(rio)
 library(tidyverse)
 ```
 
-Los tres primeros corresponden con conjuntos de datos. Asi mismo se vuelven a importar los datos con que se venia trabajando:
+Los tres primeros corresponden con conjuntos de datos. Así mismo se vuelven a importar los datos con que se venia trabajando:
 
 ```{r}
 data("airquality")
@@ -23,19 +38,19 @@ titanic <- import("data/titanic.csv", setclass = 'tibble')
 
 Los paquetes mas usados e importantes del *tidyverse* son:
 
-* *dplyr*: Manipulacion de datos mediante seleccion, filtrado, creacion, agrupamiento, arreglo y resumen de tablas
+* *dplyr*: Manipulación de datos mediante selección, filtrado, creación, agrupamiento, arreglo y resumen de tablas
 * *tidyr*: Convierte datos a ordenados y viceversa
-* *ggplot2*: Paquete para crear graficos de alta calidad y personalizables
-* *purrr*: Brinda funciones para la iteracion sobre vectores, listas y tablas
-* *forcats*: Manipulacion de datos categoricos (factores)
-* *stringr*: Manipulacion de datos de texto
-* *lubridate*: Manipulacion de fechas
+* *ggplot2*: Paquete para crear gráficos de alta calidad y personalizables
+* *purrr*: Brinda funciones para la racionero sobre vectores, listas y tablas
+* *forcats*: Manipulación de datos categóricos (factores)
+* *stringr*: Manipulación de datos de texto
+* *lubridate*: Manipulación de fechas
 
-Un punto importante a destacar, es que en todas (sino la mayoria) de las funciones del *tidyverse* la tabla de datos es el primer argumento.
+Un punto importante a destacar, es que en todas (sino la mayoría) de las funciones del *tidyverse* la tabla de datos es el primer argumento.
 
-## Operadores logicos
+## Operadores lógicos
 
-Operadores logicos permiten hacer comparaciones o pruebas, donde usualmente el resultado es `TRUE` o `FALSE`. En terminos numericos `TRUE` equivale a 1 y `FALSE` a 0. Los operadores logicos mas usados son:
+Operadores lógicos permiten hacer comparaciones o pruebas, donde usualmente el resultado es `TRUE` o `FALSE`. En términos numéricos `TRUE` equivale a 1 y `FALSE` a 0. Los operadores lógicos mas usados son:
 
 * `<`, menor que
 * `<=`, menor o igual que
@@ -45,7 +60,7 @@ Operadores logicos permiten hacer comparaciones o pruebas, donde usualmente el r
 * `>=`, mayor o igual que
 * `%in%`, pertenencia
 
-Aqui se asigna 4 a `x` y se aplican varios de los operadores logicos para cuestionar el contenido de el objeto `x`.
+Aquí se asigna 4 a `x` y se aplican varios de los operadores lógicos para cuestionar el contenido de el objeto `x`.
 
 ```{r}
 x <- 4
@@ -55,9 +70,9 @@ x < 4
 x <= 5
 ```
 
-Estos operdores se pueden usar igualmente en vectores. Recordando que el resultado de una operacion logica es `TRUE` o `FALSE`, el vector resultante es del tipo logico. Si se desea acceder a los elementos que cumplen la condicion hay que aplicar el vector logico sobre el vector, donde va a extrear los elementos que coinciden con `TRUE`. 
+Estos operadores se pueden usar igualmente en vectores. Recordando que el resultado de una operación lógica es `TRUE` o `FALSE`, el vector resultante es del tipo lógico. Si se desea acceder a los elementos que cumplen la condición hay que aplicar el vector lógico sobre el vector, donde va a extraer los elementos que coinciden con `TRUE`. 
 
-Aqui se crea un vector numerico, y se tratan de extraer los valores menores a 70. Se muestra la forma basica de **R** (`vector[condicion]`) y una forma mas directa e intuitiva que ofrece *purrr*.
+Aquí se crea un vector numérico, y se tratan de extraer los valores menores a 70. Se muestra la forma básica de **R** (`vector[condicion]`) y una forma mas directa e intuitiva que ofrece *purrr*.
 
 ```{r}
 y <- c(95, 90, 58, 87, 62, 75)
@@ -68,14 +83,14 @@ keep(y, ~.x < 70) # purrr
 
 ## Operador de secuencia (Pipe operator)
 
-Uno de los operadores basicos en el *tidyverse* es el pipe operator (`%>%`). Este permite que el resultado antes del operador sea la (primer) entrada de lo que se va a hacer despues del operador (`x %>% f(y)` es lo mismo que `f(x,y)`). 
+Uno de los operadores básicos en el *tidyverse* es el pipe operator (`%>%`). Este permite que el resultado antes del operador sea la (primer) entrada de lo que se va a hacer después del operador (`x %>% f(y)` es lo mismo que `f(x,y)`). 
 
 El shortcut para escribirlo es:
 
 * Mac: *Cmd + Shift + M*
 * Windows: *Ctrl + Shift + M*
 
-La ventaja es que permite encadenar operaciones sin necesidad de salvar objetos intermedios y es mas facil de leer que encerrar operaciones una dentro de la otra. Se ejemplifica con un caso sencillo, donde se tiene un vector de errores y se quiere calcular el error cuadratico medio (RMSE por sus isglas en ingles).
+La ventaja es que permite encadenar operaciones sin necesidad de salvar objetos intermedios y es mas fácil de leer que encerrar operaciones una dentro de la otra. Se ejemplifica con un caso sencillo, donde se tiene un vector de errores y se quiere calcular el error cuadrático medio (RMSE por sus siglas en ingles).
 
 ```{r}
 set.seed(26)
@@ -84,11 +99,11 @@ round(sqrt(mean(e^2)),3) # forma clasica
 e %>% .^2 %>% mean() %>% sqrt() %>% round(3) # usando el operador
 ```
 
-Lo anterior se lee: agarre el vector `e`, eleve sus valores al cuadrado, despues calcule la media, despues saquele la raiz y por ultimo redondeelo a 3 cifras.
+Lo anterior se lee: agarre el vector `e`, eleve sus valores al cuadrado, después calcule la media, después sáquele la raíz y por ultimo redondeélo a 3 cifras.
 
 ## Resumen de variables
 
-Para resumir datos la funcion principal es `summarise`, que colapsa una o varias columnas a un dato resumen. Muchas veces se tiene una variable agrupadora (factor) en los datos y se requiere calcular estadisticas por grupo, para esto se usa `group_by` junto con `summarise`. En `group_by` se pueden incluir mas de una variable agrupadora.
+Para resumir datos la función principal es `summarise`, que colapsa una o varias columnas a un dato resumen. Muchas veces se tiene una variable agrupadora (factor) en los datos y se requiere calcular estadísticas por grupo, para esto se usa `group_by` junto con `summarise`. En `group_by` se pueden incluir mas de una variable agrupadora.
 
 Funciones que ayudan a resumir datos son:
 
@@ -96,7 +111,7 @@ Funciones que ayudan a resumir datos son:
 * `last(x)`, el ultimo elemento del vector `x`
 * `nth(x, n)`, el elemento `n` del vector `x`
 * `n()`, el numero de filas en una tabla u observaciones en un grupo
-* `n_distinct(x)`, el numero de valores unicos en el vector `x`
+* `n_distinct(x)`, el numero de valores únicos en el vector `x`
 
 ```{r}
 dat1 %>% 
@@ -115,9 +130,9 @@ dat1 %>%
             mean(LungCap))
 ```
 
-## Seleccion y renombre de variables
+## Selección y renombre de variables
 
-Para seleccionar columnas la funcion es `select`, la cual puede usar numeros o nombres y los nombres no tienen que llevar comillas. Esto tambien permite reordenar las columans de una tabla. Para el caso de obtener una columna como vector se usa `pull` con el numero o nombre de la columna a jalar. Durante la seleccion se puede cambiar el nombre de la variable, o usando `rename`.
+Para seleccionar columnas la función es `select`, la cual puede usar números o nombres y los nombres no tienen que llevar comillas. Esto también permite reordenar las columnas de una tabla. Para el caso de obtener una columna como vector se usa `pull` con el numero o nombre de la columna a jalar. Durante la selección se puede cambiar el nombre de la variable, o usando `rename`.
 
 Funciones que ayudan a seleccionar variables son:
 
@@ -126,7 +141,7 @@ Funciones que ayudan a seleccionar variables son:
 * `contains('X')`, todas las columnas que contienen 'X',
 * `matches('X')`, todas las columnas que coinciden con 'X'
 
-Aqui se mezcla funciones de resumen y seleccion para crear resumen de las variables seleccionadas.
+Aquí se mezcla funciones de resumen y selección para crear resumen de las variables seleccionadas.
 
 ```{r}
 dat1 %>% 
@@ -141,7 +156,7 @@ dat1 %>%
                              ~sd(.)))
 ```
 
-Aqui se muestra la seleccion de variables, que resulta en un reordenamiento de las mismas. Asi mismo se puede deseleccionar lo que no se quiere, usando `-` para indicar las columans que no se quieren.
+Aquí se muestra la selección de variables, que resulta en un reordenamiento de las mismas. Así mismo se puede deseleccionar lo que no se quiere, usando `-` para indicar las columnas que no se quieren.
 
 ```{r}
 airquality %>% 
@@ -156,7 +171,7 @@ dat1 %>%
 
 ### `select` helpers
 
-Se muestran diferentes usos y resultados de usar `select` helpers para facilidad de seleccion de columnas que cumplan con ciertos criterios. A su vez, se ejemplifica el renombrar las columnas durante la seleccion o usando `rename` (nuevo_nombre = nombre_actual). Un operador especial es `everything()` que selecciona todo; esto es util cuando se quiere reordenar y poner una o varias columnas de primero y despues el resto sin tener que escribir todos los nombres.
+Se muestran diferentes usos y resultados de usar `select` helpers para facilidad de selección de columnas que cumplan con ciertos criterios. A su vez, se ejemplifica el renombrar las columnas durante la selección o usando `rename` (nuevo_nombre = nombre_actual). Un operador especial es `everything()` que selecciona todo; esto es útil cuando se quiere reordenar y poner una o varias columnas de primero y después el resto sin tener que escribir todos los nombres.
 
 ```{r}
 select(storms, name:pressure) # columnas desde name hasta pressure
@@ -182,16 +197,16 @@ iris %>%
 
 ## Filtrado de observaciones
 
-Para filtrar observaciones de acuerdo a uno a varios criterios se usa la funcion `filter`, asi como operadores logicos y funciones auxiliares. 
+Para filtrar observaciones de acuerdo a uno a varios criterios se usa la función `filter`, así como operadores lógicos y funciones auxiliares. 
 
-Funciones que ayudan a filtrar observaciones son las mismas de los [Operadores logicos].
+Funciones que ayudan a filtrar observaciones son las mismas de los [Operadores lógicos].
 
-Dos de las funciones auxiliares mas utiles son:
+Dos de las funciones auxiliares mas útiles son:
 
-* `between(x,left,right)` que filtra observaciones para la variable `x` que se encuentren entre `left` (limite inferior) y `right` (limite superior); esta es mas util para variables numericas,
-* `x %in% c(a,b,c)` que filtra observaciones para la variable `x` que se encuentren en el vector `c(a,b,c)`; esta es mas util para variables de texto o factor
+* `between(x,left,right)` que filtra observaciones para la variable `x` que se encuentren entre `left` (limite inferior) y `right` (limite superior); esta es mas útil para variables numéricas,
+* `x %in% c(a,b,c)` que filtra observaciones para la variable `x` que se encuentren en el vector `c(a,b,c)`; esta es mas útil para variables de texto o factor
 
-Se muestran diferentes ejemplos de como filtrar observaciones. Cuando se requiere que una observacion cumpla varios criterios, estas condiciones se pueden separar por medio de comas (`,`), que es lo mismo que usar el operador logico `&`. Si se requiere una u otra condicion se puede usar el operador logico `|`, pero en ese caso y dependiendo de lo deseado es mejor usar `between()` o `%in%`.
+Se muestran diferentes ejemplos de como filtrar observaciones. Cuando se requiere que una observación cumpla varios criterios, estas condiciones se pueden separar por medio de comas (`,`), que es lo mismo que usar el operador lógico `&`. Si se requiere una u otra condición se puede usar el operador lógico `|`, pero en ese caso y dependiendo de lo deseado es mejor usar `between()` o `%in%`.
 
 ```{r}
 filter(airquality,Temp > 85)
@@ -215,7 +230,7 @@ babynames %>%
 
 ## Orden de acuerdo a variables
 
-`arrange` se usa para ordenar los datos de acuerdo a una o mas variables, donde por defecto lo hace de manera ascendente, para ordenarlos de manera descendente se encierra la variable dentro de `desc(var)`. Si se ordena por una variable numerica se hara de menor a mayor o viceversa, si se ordena por una variable factor se hara de acuerdo al orden de los niveles del factor, y si se ordena por una variable de texto se hara por orden alfabetico.
+`arrange` se usa para ordenar los datos de acuerdo a una o mas variables, donde por defecto lo hace de manera ascendente, para ordenarlos de manera descendente se encierra la variable dentro de `desc(var)`. Si se ordena por una variable numérica se hará de menor a mayor o viceversa, si se ordena por una variable factor se hará de acuerdo al orden de los niveles del factor, y si se ordena por una variable de texto se hará por orden alfabético.
 
 ```{r}
 airquality %>% 
@@ -228,11 +243,11 @@ gss_cat %>%
   arrange(marital)
 ```
 
-## Creacion de variables
+## Creación de variables
 
-Para crear o modificar variables se usa `mutate`. Algunas veces se requiere o desea categorizar una variable continua de acuerdo a ciertos criterios o puntos de quiebre; lo anterior puede realizarse por medio de lo que se conoce como *if statements*, donde una funcion que realiza la misma tarea pero de forma mas eficiente es `case_when`.
+Para crear o modificar variables se usa `mutate`. Algunas veces se requiere o desea categorizar una variable continua de acuerdo a ciertos criterios o puntos de quiebre; lo anterior puede realizarse por medio de lo que se conoce como *if statements*, donde una función que realiza la misma tarea pero de forma mas eficiente es `case_when`.
 
-En el primer ejemplo se trabaja con la tabla del `titanic`, donde se tienen varias variables como texto ('Pclass', 'Survived', 'Sex') y se quieren convertir a factor, por lo que simplemente se re-definen estas variables. Este cambio se puede ver con `glimpse` para el antes y despues, donde el tipo de variable cambia.
+En el primer ejemplo se trabaja con la tabla del `titanic`, donde se tienen varias variables como texto ('Pclass', 'Survived', 'Sex') y se quieren convertir a factor, por lo que simplemente se re-definen estas variables. Este cambio se puede ver con `glimpse` para el antes y después, donde el tipo de variable cambia.
 
 ```{r}
 glimpse(titanic)
@@ -243,14 +258,14 @@ titanic = titanic %>%
 glimpse(titanic)
 ```
 
-Se pueden crear variables nuevas que dependen de otra en la tabla. En el ejemplo se calcula la altura en centimetros a partir de la altura en pulgadas (1 pulgada = 2.54 cm)
+Se pueden crear variables nuevas que dependen de otra en la tabla. En el ejemplo se calcula la altura en centímetros a partir de la altura en pulgadas (1 pulgada = 2.54 cm)
 
 ```{r}
 dat1 %>% 
   mutate(Altura = Height*2.54)
 ```
 
-En el tercer ejemplo se re define la variable 'Month' pasandola a factor donde se le cambian las etiquetas a algo mas explicito. A su vez, se define una nueva variable condicionada en los valores de otra (sensacion dependiendo del valor de la temperatura). Aqui se ejemplifica `case_when`, donde la estructura es:
+En el tercer ejemplo se re define la variable 'Month' pasándola a factor donde se le cambian las etiquetas a algo mas explicito. A su vez, se define una nueva variable condicionada en los valores de otra (sensación dependiendo del valor de la temperatura). Aquí se ejemplifica `case_when`, donde la estructura es:
 
 ```{r eval=FALSE}
 case_when(condicion1 ~ resultado1,
@@ -278,7 +293,7 @@ airquality %>%
 
 ## Conteo de variables cualitativas
 
-Para contar casos de variables discretas de una manera mas expedita se puede usar `count`. Esta funcion realiza un agrupamiento (`group_by`) y resumen (`summarise`) a la vez.
+Para contar casos de variables discretas de una manera mas expedita se puede usar `count`. Esta función realiza un agrupamiento (`group_by`) y resumen (`summarise`) a la vez.
 
 ```{r}
 mpg %>% 
@@ -287,7 +302,7 @@ mpg %>%
 
 ## Tabla interactiva
 
-Este es un ejemplo de como convertir una tabla estatica a interactiva. Se usa el paquete *DT* [@R-DT] y la funcion `datatable`, donde se pueden definir otra serie de argumentos. Tiene la ventaja de que para columnas numericas puedo filtrar por medio de sliders, y para columnas de facto puedo seleccionar los niveles.
+Este es un ejemplo de como convertir una tabla estática a interactiva. Se usa el paquete *DT* [@R-DT] y la función `datatable`, donde se pueden definir otra serie de argumentos. Tiene la ventaja de que para columnas numéricas puedo filtrar por medio de sliders, y para columnas de facto puedo seleccionar los niveles.
 
 ```{r}
 airq %>% 
@@ -296,15 +311,15 @@ airq %>%
 
 ## Datos relacionales
 
-En caso de tener datos de observaciones en diferentes tablas, estas se pueden unir para juntar los datos en una unica tabla (uniones de transformacion), o relacionar para filtrar los datos de una tabla con respecto a otra (uniones de filtro).
+En caso de tener datos de observaciones en diferentes tablas, estas se pueden unir para juntar los datos en una única tabla (uniones de transformación), o relacionar para filtrar los datos de una tabla con respecto a otra (uniones de filtro).
 
-De manera general las uniones se van a realizar de acuerdo a las columnas que tengan el mismo nombre en ambas tablas. Si se desea especificar una columna en especifico se usa el argumento `by = 'col'`. Si el nombre difiere entre las tablas se define la union de acuerdo a `by = c('a' = 'b')`, donde `'a'` corresponde con el nombre de la columna en la primer tabla, y `'b'` corresponde con el nombre de la columna en la segunda tabla. Esto aplica para todas las funciones de union (`*_join`).
+De manera general las uniones se van a realizar de acuerdo a las columnas que tengan el mismo nombre en ambas tablas. Si se desea especificar una columna en especifico se usa el argumento `by = 'col'`. Si el nombre difiere entre las tablas se define la unión de acuerdo a `by = c('a' = 'b')`, donde `'a'` corresponde con el nombre de la columna en la primer tabla, y `'b'` corresponde con el nombre de la columna en la segunda tabla. Esto aplica para todas las funciones de unión (`*_join`).
 
-### Uniones de transformacion
+### Uniones de transformación
 
 Estas uniones agregan columnas de una tabla a otra. 
 
-Un tipo de union es `left_join(x, y)`, donde se unen los datos de la tabla de la derecha (`y`) a la de la izquierda (`x`) de acuerdo a una columna en comun, y manteniendo todas las observaciones de `x`.
+Un tipo de unión es `left_join(x, y)`, donde se unen los datos de la tabla de la derecha (`y`) a la de la izquierda (`x`) de acuerdo a una columna en común, y manteniendo todas las observaciones de `x`.
 
 ```{r}
 flights %>% 
@@ -314,7 +329,7 @@ flights %>%
   left_join(airports, c("dest" = "faa"))
 ```
 
-Otro tipo de union es `inner_join(x, y)`, donde se mantienen observaciones que se encuentran en ambas tablas.
+Otro tipo de unión es `inner_join(x, y)`, donde se mantienen observaciones que se encuentran en ambas tablas.
 
 ```{r}
 df1 <- tibble(x = c(1, 2), y = 2:1)
@@ -324,7 +339,7 @@ df1 %>%
   inner_join(df2)
 ```
 
-Otro tripo de union es `full_join(x, y)`, donde se mantienen todas las observaciones de ambas tablas.
+Otro tipo de unión es `full_join(x, y)`, donde se mantienen todas las observaciones de ambas tablas.
 
 ```{r}
 df1 %>% 
@@ -333,7 +348,7 @@ df1 %>%
 
 ### Uniones de filtro
 
-Se filtran las observaciones de una tabla de acuerdo a si coniciden o no con las de otra tabla.
+Se filtran las observaciones de una tabla de acuerdo a si coinciden o no con las de otra tabla.
 
 Un tipo es `semi_join(x, y)`, donde se mantienen todas las observaciones de `x` que coinciden con observaciones en `y`, pero sin agregar columnas de `y`. El opuesto seria `anti_join(x, y)`, donde se eliminan todas las observaciones de `x` que coinciden con observaciones en `y`, pero sin agregar columnas de `y`.
 
@@ -353,15 +368,15 @@ df1 %>%
 
 ### Formatos largo y ancho
 
-Los datos ordenados corresponden con cada variable en su columna, cada fila corresponde con una observacion, y en las celdas van los valores correspondientes. Esto corresponde con un formato largo (Figura \@ref(fig:tidy-data)).
+Los datos ordenados corresponden con cada variable en su columna, cada fila corresponde con una observación, y en las celdas van los valores correspondientes. Esto corresponde con un formato largo (Figura \@ref(fig:tidy-data)).
 
-(ref:tidy-data) Estructura e ideologia de datos ordenados [@grolemund2016].
+(ref:tidy-data) Estructura e ideología de datos ordenados [@grolemund2016].
 
 ```{r tidy-data, echo=FALSE, fig.cap = '(ref:tidy-data)'}
 knitr::include_graphics('imgs/tidy-data.png')
 ```
 
-El ejemplo que se muestra acontinuacion no esta ordenado. La tabla tiene 3 variables pero no definidas correctamente. Una variable seria el pais, otra seria el anho (las columnas), y la tercera seria el numero de casos (las celdas). Esto se conoce como datos en formato ancho (En algunos casos puede ser necesario este formato, pero en la mayoria de ocasiones se prefiere el formato largo).
+El ejemplo que se muestra a continuación no esta ordenado. La tabla tiene 3 variables pero no definidas correctamente. Una variable seria el país, otra seria el año (las columnas), y la tercera seria el numero de casos (las celdas). Esto se conoce como datos en formato ancho (En algunos casos puede ser necesario este formato, pero en la mayoría de ocasiones se prefiere el formato largo).
 
 ```{r not-tidy}
 casos <- tribble(
@@ -372,9 +387,9 @@ casos <- tribble(
 )
 ```
 
-Para pasar de un formato ancho a largo, se usa la funcion `pivot_longer(cols, names_to, values_to)`, donde `cols` son las columnas a agrupar en una sola, `names_to` es el nombre que se le va a dar a la columna que va a contener las columnas a agrupar, y `values_to` es el nombre que se le va a dar a la columna que va a contener los valores de las celdas y que corresponden con una variable.
+Para pasar de un formato ancho a largo, se usa la función `pivot_longer(cols, names_to, values_to)`, donde `cols` son las columnas a agrupar en una sola, `names_to` es el nombre que se le va a dar a la columna que va a contener las columnas a agrupar, y `values_to` es el nombre que se le va a dar a la columna que va a contener los valores de las celdas y que corresponden con una variable.
 
-En este caso se van a agrupar todas las columnas menos el pais, se le va a llamar 'anho' y lo que estaba en las celdas pasa a ser la columna 'casos'.
+En este caso se van a agrupar todas las columnas menos el país, se le va a llamar 'anho' y lo que estaba en las celdas pasa a ser la columna 'casos'.
 
 ```{r}
 casos_tidy = casos %>% 
@@ -382,7 +397,7 @@ casos_tidy = casos %>%
 casos_tidy
 ```
 
-De igual manera se puede volver al formato ancho con `pivot_wider(id_cols, names_from, values_from)`, donde `id_cols` es una columna que identifica a cada observacion, `names_from` es la columna a usar para nuevas columnas, y `values_from` es la columna donde estan los valores a poner en las celdas.
+De igual manera se puede volver al formato ancho con `pivot_wider(id_cols, names_from, values_from)`, donde `id_cols` es una columna que identifica a cada observación, `names_from` es la columna a usar para nuevas columnas, y `values_from` es la columna donde están los valores a poner en las celdas.
 
 ```{r}
 casos_tidy %>% 
@@ -393,7 +408,7 @@ casos_tidy %>%
 
 Otro caso de datos no ordenados es cuando una columna contiene 2 o mas datos, por lo que es necesario separar cada dato en un su propia columna.
 
-En el ejemplo la columna 'tasa' corresponde con 'casos' y 'poblacion', por lo que hay que separarla. La funcion `separate` tiene el argumento `into` que corresponde con un vector de texto donse se deben definir los nombres de las columnas resultantes.
+En el ejemplo la columna 'tasa' corresponde con 'casos' y 'poblacion', por lo que hay que separarla. La función `separate` tiene el argumento `into` que corresponde con un vector de texto donde se deben definir los nombres de las columnas resultantes.
 
 ```{r not-tidy-2}
 casos2 <- tribble(
@@ -409,14 +424,14 @@ casos2 %>%
   separate(tasa, into = c('casos', 'poblacion'))
 ```
 
-Por defecto `separate` va a separar la columna en cualquier caracter especial que encuentre. Si se quiere especificar se puede usar el argumento `sep`.
+Por defecto `separate` va a separar la columna en cualquier carácter especial que encuentre. Si se quiere especificar se puede usar el argumento `sep`.
 
 ```{r}
 casos2 %>% 
   separate(tasa, into = c('casos', 'poblacion'), sep = '/')
 ```
 
-El tipo de columna resultante de `separate` es de texto, pero en algunos casos ese no es el tipo deseado, por lo que se le puede pedir a la funcion que trate de adivinar y convertir las columnas al tipo correcto por medio del argumento `convert = TRUE`.
+El tipo de columna resultante de `separate` es de texto, pero en algunos casos ese no es el tipo deseado, por lo que se le puede pedir a la función que trate de adivinar y convertir las columnas al tipo correcto por medio del argumento `convert = TRUE`.
 
 ```{r}
 casos2_sep = casos2 %>% 
@@ -424,7 +439,7 @@ casos2_sep = casos2 %>%
 casos2_sep
 ```
 
-El unir columnas se hace por medio de `unite`, donde se le pasan, primero, el nombre de la nueva columna, y segundo los nombres de las columnas a unir, asi como el caracter a usar para separar los datos.
+El unir columnas se hace por medio de `unite`, donde se le pasan, primero, el nombre de la nueva columna, y segundo los nombres de las columnas a unir, así como el carácter a usar para separar los datos.
 
 ```{r}
 casos2_sep %>% 
@@ -434,9 +449,9 @@ casos2_sep %>%
 
 ## Datos anidados (Nesting) {#nest}
 
-Esta es una de las ventajas de los tibbles, donde una columna puede ser una lista, y como una lista puede contener lo que sea, esto permite felxibilidad en el analisis y manipulacion de dtos, como se va a ver en el proximo capitulo.
+Esta es una de las ventajas de los tibbles, donde una columna puede ser una lista, y como una lista puede contener lo que sea, esto permite flexibilidad en el análisis y manipulación de datos, como se va a ver en el próximo capitulo.
 
-Esto es muy usado junto con `group_by`, donde primero se agrupa la tabla y luego se crea una columna donde para cada grupo se va a tener su tabla unica (las observaciones que corresponden con ese grupo) y diferente al resto.
+Esto es muy usado junto con `group_by`, donde primero se agrupa la tabla y luego se crea una columna donde para cada grupo se va a tener su tabla única (las observaciones que corresponden con ese grupo) y diferente al resto.
 
 ```{r}
 iris %>% 
