@@ -6,6 +6,7 @@ date: "`r Sys.Date()`"
 output: 
   bookdown::gitbook:
     df_print: tibble
+    css: css/style.css
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib, references.bib]
@@ -27,9 +28,9 @@ install.packages("bookdown")
 # devtools::install_github("rstudio/bookdown")
 ```
 
-Este documento se basa en el material creado para el curso **G-4101 Geología Numérica**, de la [Escuela Centroamericana de Geologia](geologia.ucr.ac.cr), [Universidad de Costa Rica](ucr.ac.cr), pero la idea es ir expandiendo los temas mas allá del curso. El curso hace uso del software estadístico y de programación **R** [@R-base] para desarrollar la parte practica de los temas cubiertos en la teoría.
+Este documento se basa en el material creado para el curso **G-4101 Geología Numérica**, de la [Escuela Centroamericana de Geologia](geologia.ucr.ac.cr), [Universidad de Costa Rica](ucr.ac.cr), pero la idea es ir expandiendo los temas más allá del curso. El curso hace uso del software estadístico y de programación **R** [@R-base] para desarrollar la parte practica de los temas cubiertos en la teoría.
 
-Existe un repositorio en GitHub para este proyecto ([geolonum](https://github.com/maxgav13/geolonum)), donde se pueden acceder los documentos y datos usados en este libro. Adicionalmente, se ha creado un paquete que ofrece funciones adicionales que serán usadas en algunos de los temas que se van a tratar. Para instalar el paquete se puede ir a [GMisc](https://github.com/maxgav13/GMisc) y seguir las instrucciones de la instalación (el paquete no esta en CRAN, esta en GitHub, por lo que no se puede instalar de la forma convencional).
+Existe un repositorio en GitHub para este proyecto ([geolonum](https://github.com/maxgav13/geolonum)), donde se pueden acceder los documentos y datos usados en este libro. Adicionalmente, se ha creado un paquete que ofrece funciones adicionales que serán usadas en algunos de los temas que se van a tratar. Para instalar y ver la documentación del paquete se puede ir a [GMisc](https://maxgav13.github.io/GMisc/) y seguir las instrucciones de la instalación (el paquete no esta en CRAN, esta en GitHub, por lo que no se puede instalar de la forma convencional).
 
 El libro se divide en 2 partes principales:
 
@@ -37,6 +38,8 @@ El libro se divide en 2 partes principales:
 * Análisis de datos (Capítulos 7-19)
 
 En la parte de análisis de datos se cubre lo básico de álgebra lineal, para luego caer en la parte gruesa del curso que es estadística. En esta parte se ve lo que es estadística descriptiva (univariable y bivariable), principios de probabilidad, distribuciones de probabilidad, estadística inferencial (pruebas de hipótesis, estimación), y estadística no paramétrica. La parte final del curso cubre temas relacionados con geociencias (datos direccionales, secuencias, y geoestadística), donde se aplican conceptos anteriormente adquiridos en la sección de estadística.
+
+<a href="https://www.netlify.com"><img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg"/></a>
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Este obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">licencia de Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional</a>.
 

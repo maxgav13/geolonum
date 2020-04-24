@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE,
   error = FALSE,
-  # fig.path = "figs/",
+  # fig.path = "figures/",
   fig.retina = 3,
   fig.width = 8,
   fig.asp = 0.618,
@@ -29,11 +29,11 @@ Un tensor es una representación matemática que cuantifica la variación de la 
 knitr::include_graphics('http://www.geosci.usyd.edu.au/users/prey/Teaching/Geol-3101/Strain/ellipse.gif')
 ```
 
-Los tensores mas conocidos son:
+Los tensores más conocidos son:
 
 * Escalar: Tensor de orden 0, cantidad que tiene magnitud pero no dirección. Ejemplos: densidad y temperatura.
 * Vector: Tensor de orden 1, cantidad que tiene magnitud y dirección. Ejemplos: velocidad, aceleración, fuerza.
-* Matriz: Tensor de orden 2 o mas, arreglo de vectores en 2 o más dimensiones, con magnitud y 2 o mas direcciones. Ejemplos: esfuerzo, deformación.
+* Matriz: Tensor de orden 2 o mas, arreglo de vectores en 2 o más dimensiones, con magnitud y 2 o más direcciones. Ejemplos: esfuerzo, deformación.
 
 ### Vectores
 
@@ -190,7 +190,7 @@ A1 %*% A2
   (\#eq:mat-det)
 \end{equation}
 
-Esto aplica para matrices cuadradas, o sea que tienen la misma cantidad de filas y columnas ($i \times i$). Aquí se presenta la forma manual para una matriz de $2 \times 2$ ya que es la mas sencilla, para matrices de mayor dimensión se puede hacer uso del software **R**, como se realiza en el siguiente ejemplo. El comando para calcular el determinante es `det()`.
+Esto aplica para matrices cuadradas, o sea que tienen la misma cantidad de filas y columnas ($i \times i$). Aquí se presenta la forma manual para una matriz de $2 \times 2$ ya que es la más sencilla, para matrices de mayor dimensión se puede hacer uso del software **R**, como se realiza en el siguiente ejemplo. El comando para calcular el determinante es `det()`.
 
 ```{r mat-det}
 A = matrix(data = c(4,10,10,30), nrow = 2)
@@ -342,7 +342,7 @@ donde $x$ es el eigenvector de $A$ y $\lambda$ es el eigenvalue de $A$ para un e
 
 ### Cálculo
 
-Primero y los mas fácil es encontrar los eigenvalues, para esto se sigue el procedimiento mostrado en la Ecuación \@ref(eq:eigen-val), donde la idea es despejar pasar todo a un lado de la ecuación igualando a cero, factorizar el eigenvector $x$ y multiplicar la matriz identidad por los eigenvalues. Posteriormente a la parte factorizada se le calcula el determinante y se iguala a cero para resolver la ecuación (cuadrática en el caso de una matriz de $2 \times 2$) y encontrar los eigenvalues.
+Primero y los más fácil es encontrar los eigenvalues, para esto se sigue el procedimiento mostrado en la Ecuación \@ref(eq:eigen-val), donde la idea es despejar pasar todo a un lado de la ecuación igualando a cero, factorizar el eigenvector $x$ y multiplicar la matriz identidad por los eigenvalues. Posteriormente a la parte factorizada se le calcula el determinante y se iguala a cero para resolver la ecuación (cuadrática en el caso de una matriz de $2 \times 2$) y encontrar los eigenvalues.
 
 \begin{equation}
   \left( A - \lambda I \right) x = 0\\

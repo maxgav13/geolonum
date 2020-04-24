@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE,
   error = FALSE,
-  # fig.path = "figs/",
+  # fig.path = "figures/",
   fig.retina = 3,
   fig.width = 8,
   fig.asp = 0.618,
@@ -88,7 +88,7 @@ Dentro de `geom_histogram` hay 3 opciones para definir la discretizacion:
 
 El primer gráfico (Figura \@ref(fig:graficos-hist1)) muestra el resultado de `geom_histogram` por defecto. Aquí se esta graficando la temperatura ('Temp') de la tabla 'airquality' en el eje x, es el eje que hay que usar en los histogramas.
 
-```{r graficos-hist1, fig.cap='Histograma basico'}
+```{r graficos-hist1, fig.cap='Histograma básico'}
 p = ggplot(data = airquality, mapping = aes(x=Temp)) +
   geom_histogram()
 p
@@ -101,7 +101,7 @@ ggplot(airquality,aes(x=Temp)) +
   geom_histogram(bins = 20,col="black",fill="blue")
 ```
 
-El eje x, sobre el cual estamos graficando los datos, se puede modificar con mas detalle usando las funciones `scale_x_*`, donde en este caso usamos `scale_x_continuous()` por estar trabajando con datos continuos (Figura \@ref(fig:graficos-hist3)). El primer argumento de estas funciones es el nombre que se le quiere dar al eje, y en el caso siguiente, se modifican las etiquetas del eje con el argumento `labels`, donde se puede usar una de tantas funciones que se encuentran en el paquete *scales*.
+El eje x, sobre el cual estamos graficando los datos, se puede modificar con más detalle usando las funciones `scale_x_*`, donde en este caso usamos `scale_x_continuous()` por estar trabajando con datos continuos (Figura \@ref(fig:graficos-hist3)). El primer argumento de estas funciones es el nombre que se le quiere dar al eje, y en el caso siguiente, se modifican las etiquetas del eje con el argumento `labels`, donde se puede usar una de tantas funciones que se encuentran en el paquete *scales*.
 
 ```{r graficos-hist3, fig.cap='Histograma modificando la apariencia del eje x'}
 ggplot(airquality,aes(x=Temp)) +
@@ -109,7 +109,7 @@ ggplot(airquality,aes(x=Temp)) +
   scale_x_continuous('Temperatura', labels = label_number(suffix = ' ºC'))
 ```
 
-Otra de las capas que se puede usar son las facetas o paneles, que permiten separar un tipo de gráfico, en este caso un histograma, en diferentes gráficos de acuerdo a otra variable, por lo general categórica (Figura \@ref(fig:graficos-hist4)). La función para esto es `facet_wrap(~ variable)`. Esta función es útil para una variable, para dos o mas variables es mejor usar `facet_grid(filas ~ cols)` (Ver Figuras \@ref(fig:graficos-hist8) y \@ref(fig:graficos-hist9)).
+Otra de las capas que se puede usar son las facetas o paneles, que permiten separar un tipo de gráfico, en este caso un histograma, en diferentes gráficos de acuerdo a otra variable, por lo general categórica (Figura \@ref(fig:graficos-hist4)). La función para esto es `facet_wrap(~ variable)`. Esta función es útil para una variable, para dos o más variables es mejor usar `facet_grid(filas ~ cols)` (Ver Figuras \@ref(fig:graficos-hist8) y \@ref(fig:graficos-hist9)).
 
 ```{r graficos-hist4, fig.cap='Histograma en paneles'}
 ggplot(airquality,aes(x=Temp)) +
@@ -127,7 +127,7 @@ ggplot(airquality,aes(x=Temp)) +
 
 Las paletas disponibles se observan en la Figura \@ref(fig:brewer-cols), donde el primer bloque de colores corresponde con las paletas secuenciales (`seq`), el segundo bloque con las paletas cualitativas (`qual`), y el tercer bloque con las paletas divergentes (`div`).
 
-```{r brewer-cols, echo=FALSE, fig.cap='Paletas disponibles en RColorBrewer'}
+```{r brewer-cols, echo=FALSE, fig.cap='Paletas disponibles en *RColorBrewer*'}
 RColorBrewer::display.brewer.all()
 ```
 
@@ -140,7 +140,7 @@ ggplot(airquality,aes(x=Temp)) +
   geom_density(col="red")
 ```
 
-Combinando lo aprendido hasta ahora se pueden modificar el relleno junto con el eje y, así como agregar la curva de densidad, para generar un gráfico que brinda mas información (Figura \@ref(fig:graficos-hist7)).
+Combinando lo aprendido hasta ahora se pueden modificar el relleno junto con el eje y, así como agregar la curva de densidad, para generar un gráfico que brinda más información (Figura \@ref(fig:graficos-hist7)).
 
 ```{r graficos-hist7, fig.cap='Histograma mostrando la densidad en el eje y en vez del conteo, con la curva de densidad superpuesta, y relleno de acuerdo al conteo'}
 ggplot(airquality,aes(x=Temp)) +
@@ -150,15 +150,15 @@ ggplot(airquality,aes(x=Temp)) +
   geom_density(col="red")
 ```
 
-Estos últimos dos gráficos agregan mas cosas que permiten crear gráficos mas complejos e informativos sin mucho esfuerzo, incluyendo paneles de acuerdo a dos variables usando `facet_grid`. El primero (Figura \@ref(fig:graficos-hist8)) agrega el relleno de acuerdo a una variable categórica, así como un paneleo por dos variables definiendo filas y columnas. El segundo (Figura \@ref(fig:graficos-hist9)) construye sobre el primero pero modificando las etiquetas de los paneles usando el argumento `labeller`, donde se define `labeller(variable = vector con nombres)`, ademas se cambia el relleno con `scale_fill_viridis` y se modifican las etiquetas con un vector (`c('actual' = 'nuevo')`). El vector con nombres de `labeller` y el vector de etiquetas llevan la estructura `c('actual' = 'nuevo')`, donde 'actual' es el valor que tiene la variable y 'nuevo' es el nombre que se quiere aparezca en el gráfico.
+Estos últimos dos gráficos agregan más cosas que permiten crear gráficos más complejos e informativos sin mucho esfuerzo, incluyendo paneles de acuerdo a dos variables usando `facet_grid`. El primero (Figura \@ref(fig:graficos-hist8)) agrega el relleno de acuerdo a una variable categórica, así como un paneleo por dos variables definiendo filas y columnas. El segundo (Figura \@ref(fig:graficos-hist9)) construye sobre el primero pero modificando las etiquetas de los paneles usando el argumento `labeller`, donde se define `labeller(variable = vector con nombres)`, ademas se cambia el relleno con `scale_fill_viridis` y se modifican las etiquetas con un vector (`c('actual' = 'nuevo')`). El vector con nombres de `labeller` y el vector de etiquetas llevan la estructura `c('actual' = 'nuevo')`, donde 'actual' es el valor que tiene la variable y 'nuevo' es el nombre que se quiere aparezca en el gráfico.
 
-```{r graficos-hist8, fig.cap='Curva de densidad haciendo uso de varias variables categoricas'}
+```{r graficos-hist8, fig.cap='Curva de densidad haciendo uso de varias variables categóricas'}
 ggplot(titanic, aes(x = Age, fill = Survived)) +
   facet_grid(Sex ~ Pclass) +
   geom_density(alpha = 0.5)
 ```
 
-```{r graficos-hist9, fig.cap='Version mejorada del grafico anterior'}
+```{r graficos-hist9, fig.cap='Versión mejorada del gráfico anterior'}
 ggplot(titanic, aes(x = Age, fill = Survived)) +
   facet_grid(Sex ~ Pclass, 
              labeller = labeller(Sex = c('male'='Masculino',
@@ -180,11 +180,11 @@ Dentro de `geom_bar` el argumento *position* puede tener cualquiera de estos tre
 
 `geom_bar` hace el conteo de clases, en caso de tener ya el conteo hecho se usa `geom_col`.
 
-De manera general se puede pasar solo una variable para realizar el conteo, pero este tipo de gráficos es mas útil cuando se pueden agregar otras variables categóricas. 
+De manera general se puede pasar solo una variable para realizar el conteo, pero este tipo de gráficos es más útil cuando se pueden agregar otras variables categóricas. 
 
 En el primer ejemplo (Figura \@ref(fig:graficos-barra1)) se hace el conteo por genero, y se rellena por si fuman o no, lo que brinda una visión de la cantidad (o proporción) de hombres y mujeres que fuman o no. En este ejemplo se utiliza `position = "fill"`, lo que hace que todas las barras tengan las misma altura y comprendan el rango de 0 a 1 en el eje y, lo que asemeja a una visión de proporciones. Adicionalmente, se modifica el eje y (`scale_y_continuous`) asignándole un nombre y cambiando las etiquetas a porcentaje (`labels = label_percent()`).
 
-```{r graficos-barra1, fig.cap='Grafico de barras con el argumento de posicion `fill`, para mostrar proporciones entre categorias'}
+```{r graficos-barra1, fig.cap='Gráfico de barras con el argumento de posición `fill`, para mostrar proporciones entre categorias'}
 ggplot(dat1, aes(Gender,fill=Smoke)) + 
   geom_bar(position = "fill") + 
   scale_y_continuous('Proporción',labels = label_percent())
@@ -192,7 +192,7 @@ ggplot(dat1, aes(Gender,fill=Smoke)) +
 
 El siguiente gráfico (Figura \@ref(fig:graficos-barra2)) es similar al primero, en que se grafican los mismos datos, pero de otra manera. Se usa `position = "dodge"`, lo que pone una barra a la par de la otra (esto para la categoría usada en el relleno); adicionalmente, se modifica el eje x (`scale_x_discrete`) asignándole un nombre y modificando los nombres de las etiquetas (`labels`); por ultimo, se modifica de forma manual el relleno (`scale_fill_manual`) asignándole un nombre, que es el que aparecer en la leyenda, las etiquetas (que deben tener el mismo orden de los niveles de la variable), y los valores (`values`) son los colores a usar para cada nivel.
 
-```{r graficos-barra2, fig.cap='Grafico de barras con apariencia modificada y posisicon de las barras una a la par de la otra'}
+```{r graficos-barra2, fig.cap='Gráfico de barras con apariencia modificada y posición de las barras una a la par de la otra'}
 ggplot(dat1, aes(Gender,fill=Smoke)) + 
   geom_bar(position = "dodge") + 
   scale_x_discrete('Genero', labels = c('Femenino','Masculino')) + 
@@ -202,21 +202,21 @@ ggplot(dat1, aes(Gender,fill=Smoke)) +
 
 De igual manera se pueden generar paneles de acuerdo a una variable categórica (Figura \@ref(fig:graficos-barra3)).
 
-```{r graficos-barra3, fig.cap='Grafico de barras en paneles'}
+```{r graficos-barra3, fig.cap='Gráfico de barras en paneles'}
 ggplot(titanic, aes(x = Sex, fill = Survived)) + 
   facet_wrap(~ Pclass) + 
   geom_bar()
 ```
 
-Cuando se gráfica una variable únicamente el orden de las barras va a estar en función del orden de los niveles (Figura \@ref(fig:graficos-barra4)), pero esta representación puede que no sea la mas clara visualmente. Para corregir lo anterior se pueden reordenar los niveles de la variable (únicamente para el gráfico) de acuerdo a la frecuencia (de mayor a menor), usando `fct_infreq` del paquete *forcats* (Figura \@ref(fig:graficos-barra5)).
+Cuando se gráfica una variable únicamente el orden de las barras va a estar en función del orden de los niveles (Figura \@ref(fig:graficos-barra4)), pero esta representación puede que no sea la más clara visualmente. Para corregir lo anterior se pueden reordenar los niveles de la variable (únicamente para el gráfico) de acuerdo a la frecuencia (de mayor a menor), usando `fct_infreq` del paquete *forcats* (Figura \@ref(fig:graficos-barra5)).
 
-```{r graficos-barra4, fig.cap='Grafico de barras basico con orden de barras de acuerdo al orden de los niveles'}
+```{r graficos-barra4, fig.cap='Gráfico de barras básico con orden de barras de acuerdo al orden de los niveles'}
 gss_cat %>% 
   ggplot(aes(marital)) + 
   geom_bar()
 ```
 
-```{r graficos-barra5, fig.cap='Grafico de barras ordenado de acuerdo a la frecuencia de los niveles'}
+```{r graficos-barra5, fig.cap='Gráfico de barras ordenado de acuerdo a la frecuencia de los niveles'}
 gss_cat %>% 
   ggplot(aes(fct_infreq(marital))) + 
   geom_bar()
@@ -224,7 +224,7 @@ gss_cat %>%
 
 Los ejemplos anteriores usaban `geom_bar`, pero en el caso de que ya se tenga el conteo se puede usar `geom_col`. En este caso hay que especificar la variable a graficar en `x` y el conteo en `y`, el resto de modificaciones se pueden aplicar de igual manera a como se venia mostrando. En este ejemplo (Figura \@ref(fig:graficos-barra6)) debido a que los niveles corresponden con nombres largos y hay muchos, se usa el cambiar los ejes por medio de `coord_flip`, lo que va a poner en 'y' lo que estaba en 'x' y viceversa.
 
-```{r graficos-barra6, fig.cap='Grafico de barras precontado y cambiando ejes para mayor claridad'}
+```{r graficos-barra6, fig.cap='Gráfico de barras precontado y cambiando ejes para mayor claridad'}
 mpg %>% 
   count(manufacturer, year) %>% 
   mutate(year = as.factor(year)) %>% 
@@ -238,19 +238,19 @@ mpg %>%
 
 Este tipo se usa para datos numéricos continuos que normalmente se separan por una variable categórica. Los datos continuos se grafican en el eje y, por lo que hay que especificar esto explícitamente en el `aes()` (Figura \@ref(fig:graficos-box1)), y si se quiere separar por una variable categórica, esta se asigna al eje x (Figura \@ref(fig:graficos-box2)).
 
-```{r graficos-box1, fig.cap='Grafico boxplot basico'}
+```{r graficos-box1, fig.cap='Gráfico boxplot básico'}
 ggplot(airq,aes(y=Temp)) +
   geom_boxplot()
 ```
 
-```{r graficos-box2, fig.cap='Grafico boxplot separado por variable categorica'}
+```{r graficos-box2, fig.cap='Gráfico boxplot separado por variable categórica'}
 ggplot(airq,aes(x = Month,y = Temp)) +
   geom_boxplot()
 ```
 
 En el tercer ejemplo (Figura \@ref(fig:graficos-box3)) se agregan un par de funciones que no se habían visto: `labs` y `theme_bw`. `labs` permite modificar los nombres de los ejes y estéticas (`col`, `fill`, etc.) sin tener que usar las funciones `scale_*_*`. `theme_bw` es uno de los tantos temas que vienen definidos y cambia la apariencia a un gráfico en blanco y negro, removiendo el fondo gris que en muchos casos no es lo mejor.
 
-```{r graficos-box3, fig.cap='Grafico boxplot con apariencia modificada'}
+```{r graficos-box3, fig.cap='Gráfico boxplot con apariencia modificada'}
 ggplot(airq,aes(x = Month,y = Temp)) +
   geom_boxplot(fill="white",col="red") +
   labs(x="Mes",y="Temperatura") +
@@ -261,48 +261,48 @@ ggplot(airq,aes(x = Month,y = Temp)) +
 
 Estos aplican para datos numéricos continuos en ambos ejes. Un gráfico básico se muestra en el primer ejemplo (Figura \@ref(fig:graficos-disper1)).
 
-```{r graficos-disper1, fig.cap='Grafico de dispersion basico'}
+```{r graficos-disper1, fig.cap='Gráfico de dispersión básico'}
 ggplot(airquality, aes(Ozone,Temp)) + 
   geom_point()
 ```
 
 Para el caso de puntos se puede cambiar el tipo de icono con el argumento `shape`, este puede definirse de manera global para todos los puntos o de acuerdo a una variable categórica (Figura \@ref(fig:graficos-disper2)).
 
-```{r graficos-disper2, fig.cap='Grafico de dispersion con la forma de los puntos de acuerdo a una variable categorica'}
+```{r graficos-disper2, fig.cap='Gráfico de dispersión con la forma de los puntos de acuerdo a una variable categórica'}
 ggplot(airq, aes(Ozone,Temp,shape=Month)) + 
   geom_point()
 ```
 
-Una tarea común en gráficos de dispersión es agregar lineas de tendencia. Para agregar lineas de tendencia en *ggplot2* se usa la función `geom_smooth`. Por defecto ajusta una curva loess, pero para cambiarlo se usa el argumento `method = 'lm'` (Figura \@ref(fig:graficos-disper3)), y para especificar una ecuación diferente a la regresión simple (`y ~ x`) se usa `formula`, donde `y` y `x` son genéricos (Figura \@ref(fig:graficos-disper4)), **NO** hay que poner el nombre de las variables que se esta graficando.
+Una tarea común en gráficos de dispersión es agregar líneas de tendencia. Para agregar líneas de tendencia en *ggplot2* se usa la función `geom_smooth`. Por defecto ajusta una curva loess, pero para cambiarlo se usa el argumento `method = 'lm'` (Figura \@ref(fig:graficos-disper3)), y para especificar una ecuación diferente a la regresión simple (`y ~ x`) se usa `formula`, donde `y` y `x` son genéricos (Figura \@ref(fig:graficos-disper4)), **NO** hay que poner el nombre de las variables que se esta graficando.
 
-```{r graficos-disper3, fig.cap='Grafico de dispersion con linea de tendencia lineal'}
+```{r graficos-disper3, fig.cap='Gráfico de dispersión con línea de tendencia lineal'}
 ggplot(airquality, aes(Wind,Temp)) + 
   geom_point() + 
   geom_smooth(method = "lm")
 ```
 
-```{r graficos-disper4, fig.cap='Grafico de dispersion con linea de tendencia polinomial'}
+```{r graficos-disper4, fig.cap='Gráfico de dispersión con línea de tendencia polinomial'}
 ggplot(airquality, aes(Ozone,Temp)) + 
   geom_point() + 
   geom_smooth(method = "lm", formula = y~poly(x,2))
 ```
 
-En este caso (Figura \@ref(fig:graficos-disper5)) cuando se aplica el paneleo (`facet_wrap`) se obtiene una gráfico de dispersión con su respectiva linea de tendencia para cada uno de los niveles de la variable categórica.
+En este caso (Figura \@ref(fig:graficos-disper5)) cuando se aplica el paneleo (`facet_wrap`) se obtiene una gráfico de dispersión con su respectiva línea de tendencia para cada uno de los niveles de la variable categórica.
 
-```{r graficos-disper5, fig.cap='Grafico de dispersion en paneles con linea de tendencia para cada panel'}
+```{r graficos-disper5, fig.cap='Gráfico de dispersión en paneles con línea de tendencia para cada panel'}
 ggplot(airquality, aes(Wind,Temp)) + 
   geom_point() + 
   geom_smooth(method = "lm") + 
   facet_wrap(~ Month)
 ```
 
-### Lineas
+### líneas
 
 Estos gráficos son una versión del gráfico de dispersión, donde el eje x corresponde con una variable continua que tiene cierta secuencia o patrón, por lo general tiempo o espacio.
 
 El primer gráfico (Figura \@ref(fig:graficos-linea1)) muestra como ha cambiado el uso del nombre 'Max' a lo largo del tiempo. Primero se filtran los datos para el nombre de interés, y se seleccionan las variables a usar en el gráfico. Como el eje y corresponde con proporción, se modifica para que muestre el porcentaje.
 
-```{r graficos-linea1, fig.cap='Grafico de linea basico'}
+```{r graficos-linea1, fig.cap='Gráfico de línea básico'}
 babynames %>% 
   filter(name == "Max") %>% 
   select(year, prop, sex) %>% 
@@ -311,9 +311,9 @@ babynames %>%
   scale_y_continuous(labels = label_percent())
 ```
 
-En el segundo gráfico de lineas (Figura \@ref(fig:graficos-linea2)) se grafica el numero de tormentas por año, de nuevo, realizando una manipulación de los datos para obtener la información que se desea desplegar. El ultimo gráfico (Figura \@ref(fig:graficos-linea3)) simplemente hace la separación de diferentes lineas de acuerdo a una variable categórica.
+En el segundo gráfico de líneas (Figura \@ref(fig:graficos-linea2)) se grafica el numero de tormentas por año, de nuevo, realizando una manipulación de los datos para obtener la información que se desea desplegar. El ultimo gráfico (Figura \@ref(fig:graficos-linea3)) simplemente hace la separación de diferentes líneas de acuerdo a una variable categórica.
 
-```{r graficos-linea2, fig.cap='Grafico de linea basico con otros datos'}
+```{r graficos-linea2, fig.cap='Gráfico de línea básico con otros datos'}
 storms %>%
   group_by(year) %>% 
   summarize(n_storm = n_distinct(name)) %>% 
@@ -321,7 +321,7 @@ storms %>%
   geom_line(mapping = aes(x = year, y = n_storm))
 ```
 
-```{r graficos-linea3, fig.cap='Grafico de linea basico, con diferentes lineas de acuerdo a una variable categorica'}
+```{r graficos-linea3, fig.cap='Gráfico de línea básico, con diferentes líneas de acuerdo a una variable categórica'}
 storms %>%
   group_by(year,status) %>% 
   summarize(n_storm = n_distinct(name)) %>% 
@@ -333,7 +333,7 @@ storms %>%
 
 Estos sirven para resumir los datos. Los ejemplos que aquí se muestran corresponden con el despliegue de intervalos de confianza de una variable numérica para diferentes niveles de una variable categórica.
 
-```{r graficos-stat1, fig.cap='Grafico estadistico mostrando intervalo de confianza como barras de error'}
+```{r graficos-stat1, fig.cap='Gráfico estadístico mostrando intervalo de confianza como barras de error'}
 ggplot(airquality, aes(Month, Temp)) +
   stat_summary(fun.y = mean,
                geom = "point",
@@ -344,7 +344,7 @@ ggplot(airquality, aes(Month, Temp)) +
   theme_bw()
 ```
 
-```{r graficos-stat2, fig.cap='Grafico estadistico mostrando intervalo de confianza como punto y rango'}
+```{r graficos-stat2, fig.cap='Gráfico estadístico mostrando intervalo de confianza como punto y rango'}
 ggplot(airquality, aes(Month, Temp)) +
   stat_summary(fun.data = mean_cl_normal,
                geom = "pointrange",
@@ -355,21 +355,21 @@ ggplot(airquality, aes(Month, Temp)) +
 
 ### Transformación de ejes
 
-En algunas ocasiones, dependiendo de la escala y rango que tenga los datos, una transformación de uno o ambos ejes sea necesaria, siendo los mas típico para datos numéricos continuos. El ejemplo mas típico es la transformacional logarítmica (natural o base 10), para los casos donde los datos comprenden varios ordenes de magnitud.
+En algunas ocasiones, dependiendo de la escala y rango que tenga los datos, una transformación de uno o ambos ejes sea necesaria, siendo los más típico para datos numéricos continuos. El ejemplo más típico es la transformacional logarítmica (natural o base 10), para los casos donde los datos comprenden varios ordenes de magnitud.
 
 En *ggplot2* esto puede hacerse de dos maneras:
 
 * `scale_<eje>_<tipo>(trans = '#')`,
 * `coord_trans(<eje> = '#')`
 
-donde `#` corresponde con la transformacional a realizar, y puede tomar los siguientes valores: "asn", "atanh", "boxcox", "date", "exp", "hms", "identity", **"log"**, **"log10"**, "log1p", "log2", "logit", "modulus", "probability", "probit", "pseudo_log", "reciprocal", **"reverse"**, "sqrt", y "time". Siendo las mas comunes las resaltadas en negrita, donde "log" se refiere al logaritmo natural, "log10" al logaritmo base 10, y "reverse" para invertir el eje.
+donde `#` corresponde con la transformacional a realizar, y puede tomar los siguientes valores: "asn", "atanh", "boxcox", "date", "exp", "hms", "identity", **"log"**, **"log10"**, "log1p", "log2", "logit", "modulus", "probability", "probit", "pseudo_log", "reciprocal", **"reverse"**, "sqrt", y "time". Siendo las más comunes las resaltadas en negrita, donde "log" se refiere al logaritmo natural, "log10" al logaritmo base 10, y "reverse" para invertir el eje.
 
 La diferencia de usar `scale_*` o `coord_trans` radica en cuando se aplica la transformacional. Con `scale_*` la transformación es aplicada a los datos antes de ser graficados, por lo que se grafica son los datos transformados (Figura \@ref(fig:graficos-trans1), B); con `coord_trans` la transformación se aplica después de ser graficados, o sea se aplica sobre el eje, modificando la apariencia y no los datos en si (Figura \@ref(fig:graficos-trans1), C). 
 
-La Figura \@ref(fig:graficos-trans1), es una grilla de gráficos, la cual fue realizada por medio de *cowplot* [@R-cowplot]. Otro paquete para generar grillas de gráficos es *patchwork* [@R-patchwork], y este ofrece mas flexibilidad con la manipulación y posicionamiento de los gráficos (Figura \@ref(fig:graficos-trans2)). 
+La Figura \@ref(fig:graficos-trans1), es una grilla de gráficos, la cual fue realizada por medio de *cowplot* [@R-cowplot]. Otro paquete para generar grillas de gráficos es *patchwork* [@R-patchwork], y este ofrece más flexibilidad con la manipulación y posicionamiento de los gráficos (Figura \@ref(fig:graficos-trans2)). 
 En ambos casos, se ve claramente en el subgráfico **A** que el eje x tiene varios ordenes de magnitud. En el subgráfico **B** se aplico `scale_x_continuous(trans = 'log10')`, lo cual aplica una transformación logarítmica a los datos antes de plotearlos y por eso los diferentes valores. En el subgráfico **C** se aplico `coord_trans(x = 'log10')`, lo cual simplemente modifica la apariencia del eje, donde se observa esa escala logarítmica, manteniendo los valores originales; adicionalmente se cambian los valores del eje (`scale_x_continuous(breaks = c(10,100,1000,10000))`) para que no se vean tan apilados.
 
-```{r graficos-trans1, fig.cap='Ejemplo de transformacion de ejes, en este caso solo el eje x, usando *cowplot*. **A** es el grafico sin datos tranformados; **B** es el grafico usando `scale_*`; **C** es el grafico usando `coord_trans`'}
+```{r graficos-trans1, fig.cap='Ejemplo de transformación de ejes, en este caso solo el eje x, usando *cowplot*. **A** es el gráfico sin datos tranformados; **B** es el gráfico usando `scale_*`; **C** es el gráfico usando `coord_trans`'}
 cow1 = ggplot(msleep) + 
   geom_point(aes(bodywt,sleep_total))
 
@@ -385,7 +385,7 @@ cow3 = ggplot(msleep) +
 plot_grid(cow1, cow2, cow3, ncol = 1, labels = 'AUTO')
 ```
 
-```{r graficos-trans2, fig.cap='Ejemplo de transformacion de ejes, en este caso solo el eje x, usando *patchwork*. **A** es el grafico sin datos tranformados; **B** es el grafico usando `scale_*`; **C** es el grafico usando `coord_trans`'}
+```{r graficos-trans2, fig.cap='Ejemplo de transformación de ejes, en este caso solo el eje x, usando *patchwork*. **A** es el gráfico sin datos tranformados; **B** es el gráfico usando `scale_*`; **C** es el gráfico usando `coord_trans`'}
 
 cow1 / (cow2 | cow3) + 
   plot_annotation(tag_levels = 'A') & 
@@ -400,7 +400,7 @@ La manera apropiada de realizar esto es por medio de `coord_cartesian(*lim)`, do
 
 La Figura \@ref(fig:graficos-zoom) muestra el gráfico inicial, y como afectan las diferentes funciones. De manera similar a la transformación, `scale_*` aplica los limites antes de graficar, por lo que los datos que caen fuera de esos limites son descartados y no ploteados (de ahí la advertencia). En cambio, `coord_cartesian` aplica los limites después de graficados los datos, por lo que simplemente es un cambio en la representación del eje y no en los datos.
 
-```{r graficos-zoom, fig.cap='Ejemplo de modificar los limites del eje y en este caso. **A** es el grafico original **B** es el grafico usando `scale_*`; **C** es el grafico usando `coord_cartesian`'}
+```{r graficos-zoom, fig.cap='Ejemplo de modificar los límites del eje y en este caso. **A** es el gráfico original **B** es el gráfico usando `scale_*`; **C** es el gráfico usando `coord_cartesian`'}
 z1 = gss_cat %>% 
   ggplot(aes(y=marital)) + 
   geom_bar()
@@ -423,22 +423,22 @@ z1 / (z2 | z3) +
 
 ### Salvando gráficos
 
-Se muestran funciones para salvar gráficos, donde las extensiones mas usadas son `.png`, `.tiff`, y `.pdf`. Por defecto `ggsave` salva el ultimo gráfico creado, a menos que se haya guardado el gráfico en un objeto y se le pase dicho objeto al argumento `plot`. El resto de argumentos son claros en lo que representan. Para el caso de un `.pdf` hay que remover el argumento `type`.
+Se muestran funciones para salvar gráficos, donde las extensiones más usadas son `.png`, `.tiff`, y `.pdf`. Por defecto `ggsave` salva el ultimo gráfico creado, a menos que se haya guardado el gráfico en un objeto y se le pase dicho objeto al argumento `plot`. El resto de argumentos son claros en lo que representan. Para el caso de un `.pdf` hay que remover el argumento `type`.
 
 ```{r eval=F}
-ggsave(filename = "figs/Testgg.png",
+ggsave(filename = "figures/Testgg.png",
        plot = p, dpi = 300,
        width = 7, height = 4, units = "in",
        type = "cairo")
 
-ggsave(filename = "figs/Testgg.pdf",
+ggsave(filename = "figures/Testgg.pdf",
        plot = p, dpi = 300,
        width = 7, height = 4, units = "in")
 ```
 
 ## Interactivos
 
-Una vez sabiendo utilizar *ggplot2* la forma mas sencilla de hacer un gráfico interactivo es mediante `plotly::ggplotly()`. El paquete *plotly* [@R-plotly] se usa para gráficos interactivos y tiene una sintaxis un poco diferente a *ggplot2*, por lo que hay ciertos gráficos que no van a ser convertidos apropiadamente, pero la mayoría de gráficos debieran funcionar.
+Una vez sabiendo utilizar *ggplot2* la forma más sencilla de hacer un gráfico interactivo es mediante `plotly::ggplotly()`. El paquete *plotly* [@R-plotly] se usa para gráficos interactivos y tiene una sintaxis un poco diferente a *ggplot2*, por lo que hay ciertos gráficos que no van a ser convertidos apropiadamente, pero la mayoría de gráficos debieran funcionar.
 
 Otros paquetes para gráficos interactivos son:
 
@@ -455,7 +455,7 @@ Una característica de estos gráficos interactivos, cuando tienen leyenda, es q
 
 La versión interactiva de la Figura \@ref(fig:graficos-hist7) se muestra en la Figura \@ref(fig:graficos-inter1), la versión usando *highcharter* se muestra en la Figura \@ref(fig:graficos-inter2).
 
-```{r graficos-inter1, fig.cap='Grafico interactivo de un histograma con plotly'}
+```{r graficos-inter1, fig.cap='Gráfico interactivo de un histograma con *plotly*'}
 (ggplot(airquality,aes(x=Temp)) +
   geom_histogram(bins = 20,
                  aes(y=after_stat(density),fill=after_stat(count)),
@@ -464,7 +464,7 @@ La versión interactiva de la Figura \@ref(fig:graficos-hist7) se muestra en la 
   plotly::ggplotly()
 ```
 
-```{r graficos-inter2, fig.cap='Grafico interactivo de un histograma con highcharter'}
+```{r graficos-inter2, fig.cap='Gráfico interactivo de un histograma con *highcharter*'}
 with(airq, hchist(Temp,color='red',name='Temp')) %>% 
   hc_xAxis(title = list(text = 'Temperatura')) %>% 
   hc_exporting(enabled=T)
@@ -474,7 +474,7 @@ with(airq, hchist(Temp,color='red',name='Temp')) %>%
 
 La versión interactiva de la Figura \@ref(fig:graficos-barra6) se muestra en la Figura \@ref(fig:graficos-inter3), la versión usando *highcharter* se muestra en la Figura \@ref(fig:graficos-inter4). En la versión de *highcharter*, si se cambia 'bar' por 'column', el gráfico cambia orientación.
 
-```{r graficos-inter3, fig.cap='Grafico interactivo de barras con plotly'}
+```{r graficos-inter3, fig.cap='Gráfico interactivo de barras con *plotly*'}
 (mpg %>% 
   count(manufacturer, year) %>% 
   mutate(year = as.factor(year)) %>% 
@@ -485,7 +485,7 @@ La versión interactiva de la Figura \@ref(fig:graficos-barra6) se muestra en la
   plotly::ggplotly()
 ```
 
-```{r graficos-inter4, fig.cap='Grafico interactivo de barras con highcharter'}
+```{r graficos-inter4, fig.cap='Gráfico interactivo de barras con *highcharter*'}
 mpg %>% 
   count(manufacturer, year) %>% 
   hchart('bar', hcaes(x = manufacturer, y = n, group = year)) %>% 
@@ -498,13 +498,13 @@ mpg %>%
 
 La versión interactiva de la Figura \@ref(fig:graficos-box2) se muestra en la Figura \@ref(fig:graficos-inter5), la versión usando *highcharter* se muestra en la Figura \@ref(fig:graficos-inter6).
 
-```{r graficos-inter5, fig.cap='Grafico interactivo boxplot con plotly'}
+```{r graficos-inter5, fig.cap='Gráfico interactivo boxplot con *plotly*'}
 (ggplot(airq,aes(x = Month,y = Temp)) +
   geom_boxplot()) %>% 
   plotly::ggplotly()
 ```
 
-```{r graficos-inter6, fig.cap='Grafico interactivo boxplot con highcharter'}
+```{r graficos-inter6, fig.cap='Gráfico interactivo boxplot con *highcharter*'}
 with(airq, hcboxplot(x = Temp, var = Month)) %>% 
   hc_yAxis(title = list(text = 'Temperatura')) %>%
   hc_xAxis(title = list(text = 'Mes')) %>%
@@ -513,16 +513,16 @@ with(airq, hcboxplot(x = Temp, var = Month)) %>%
 
 ### Dispersión
 
-La versión interactiva de la Figura \@ref(fig:graficos-disper3) se muestra en la Figura \@ref(fig:graficos-inter7), la versión usando *highcharter* se muestra en la Figura \@ref(fig:graficos-inter8), con el agregado de que muestra la ecuación de cada linea de tendencia.
+La versión interactiva de la Figura \@ref(fig:graficos-disper3) se muestra en la Figura \@ref(fig:graficos-inter7), la versión usando *highcharter* se muestra en la Figura \@ref(fig:graficos-inter8), con el agregado de que muestra la ecuación de cada línea de tendencia.
 
-```{r graficos-inter7, fig.cap='Grafico interactivo de dispersion con plotly'}
+```{r graficos-inter7, fig.cap='Gráfico interactivo de dispersión con *plotly*'}
 (ggplot(airquality, aes(Wind,Temp)) + 
   geom_point() + 
   geom_smooth(method = "lm")) %>% 
   plotly::ggplotly()
 ```
 
-```{r graficos-inter8, fig.cap='Grafico interactivo de dispersion con highcharter'}
+```{r graficos-inter8, fig.cap='Gráfico interactivo de dispersión con *highcharter*'}
 hchart(airq, 'scatter', hcaes(Wind, Temp, group=Month), regression = T) %>% 
   hc_xAxis(title = list(text = 'Viento')) %>%
   hc_yAxis(title = list(text = 'Temperatura')) %>%
@@ -531,11 +531,11 @@ hchart(airq, 'scatter', hcaes(Wind, Temp, group=Month), regression = T) %>%
   hc_exporting(enabled=T)
 ```
 
-### Lineas
+### líneas
 
 La versión interactiva de la Figura \@ref(fig:graficos-linea3) se muestra en la Figura \@ref(fig:graficos-inter9), la versión usando *highcharter* se muestra en la Figura \@ref(fig:graficos-inter10), y la versión usando *dygraphs* se muestra en la Figura \@ref(fig:graficos-inter11). En este ultimo caso es necesario que los datos estén en formato ancho, donde la primer columna corresponde con el eje x, y el resto de columnas corresponden con las series temporales/espaciales a graficar por separado.
 
-```{r graficos-inter9, fig.cap='Grafico interactivo de lineas con plotly'}
+```{r graficos-inter9, fig.cap='Gráfico interactivo de líneas con *plotly*'}
 (storms %>%
   group_by(year,status) %>% 
   summarize(n_storm = n_distinct(name)) %>% 
@@ -544,7 +544,7 @@ La versión interactiva de la Figura \@ref(fig:graficos-linea3) se muestra en la
   plotly::ggplotly()
 ```
 
-```{r graficos-inter10, fig.cap='Grafico interactivo de lineas con highcharter'}
+```{r graficos-inter10, fig.cap='Gráfico interactivo de líneas con *highcharter*'}
 storms %>%
   group_by(year,status) %>% 
   summarize(n_storm = n_distinct(name)) %>% 
@@ -563,7 +563,7 @@ storms %>%
   ))
 ```
 
-```{r graficos-inter11, fig.cap='Grafico interactivo de lineas con dygraphs'}
+```{r graficos-inter11, fig.cap='Gráfico interactivo de líneas con *dygraphs*'}
 storms %>%
   group_by(year,status) %>% 
   summarize(n_storm = n_distinct(name)) %>% 
@@ -578,7 +578,7 @@ storms %>%
 
 La versión interactiva, usando *highcharter*, de la Figura \@ref(fig:graficos-trans1) C se muestra en la Figura \@ref(fig:graficos-inter12); la versión con *ggplotly* seria igual que las anteriores.
 
-```{r graficos-inter12, fig.cap='Grafico interactivo con eje logaritmico'}
+```{r graficos-inter12, fig.cap='Gráfico interactivo con eje logarítmico'}
 hchart(msleep, 'scatter', hcaes(bodywt, sleep_total)) %>% 
   hc_xAxis(title = list(text = 'Body Weight'), 
            type = 'logarithmic') %>%
@@ -587,6 +587,19 @@ hchart(msleep, 'scatter', hcaes(bodywt, sleep_total)) %>%
   hc_add_theme(hc_theme_gridlight())
 ```
 
+## Recursos
+
+Se presentan recursos a consultar para ahondar más en los temas presentados.
+
+[tidyverse](https://www.tidyverse.org)
+
+[ggplot2](https://ggplot2-book.org) Libro de *ggplot2*.
+
+[highcharter](jkunst.com/highcharter/index.html)
+
+[rbokeh](hafen.github.io/rbokeh/rd.html#rbokeh)
+
+[dygraphs](rstudio.github.io/dygraphs/index.html)
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

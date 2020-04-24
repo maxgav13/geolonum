@@ -14,7 +14,7 @@ Primero hay que instalar **R**:
 2. Descargar la versión dependiendo del sistema operativo (Figura \@ref(fig:cran))
 
 ```{r cran, echo=FALSE, fig.cap='Repositorio CRAN para descargar R'}
-knitr::include_graphics('imgs/CRAN.png')
+knitr::include_graphics('images/CRAN.png')
 ```
 
 Después de instalar **R** hay que instalar **RStudio**:
@@ -29,10 +29,10 @@ La instalación de **R** básica trae una serie de paquetes (librerías) instala
 Para instalar paquetes de forma interactiva se va a la sección de paquetes (packages), se hace click en instalar (install), como se muestra en la Figura \@ref(fig:instalar), y se escribe el o los nombres de los paquetes a instalar, separados por espacios.
 
 ```{r instalar, echo=FALSE, fig.cap='Como instalar paquetes de forma manual'}
-knitr::include_graphics('imgs/packages install.png')
+knitr::include_graphics('images/packages install.png')
 ```
 
-La forma mas practica de instalar (actualizar) paquetes es por medio de código, usando `install.packages("paquete")`.
+La forma más práctica de instalar (actualizar) paquetes es por medio de código, usando `install.packages("paquete")`.
 
 Para cargar paquetes y sus funciones durante una sesión de **R** se usa la función `library(paquete)`. Cabe mencionar que en el orden que se carguen los paquetes así se habilitaran las funciones, y si hay funciones con el mismo nombre en diferentes paquetes, la que se va a habilitar por defecto es la del ultimo paquete cargado. Una forma de solucionar un conflicto de este tipo o llamar una función de un paquete sin cargarlo es por medio de `paquete::funcion`, donde se usa del paquete deseado la función correspondiente (Ejemplo `dplyr::select`).
 
@@ -55,7 +55,7 @@ Para buscar ayuda sobre funciones y cuales argumentos requiere se puede usar `?f
 Un documento [R Markdown](http://rmarkdown.rstudio.com) es un tipo de documento que permite mezclar texto con código, manteniendo el análisis y los resultados en un mismo lugar. La interfaz y estructura típica se muestran en la Figura \@ref(fig:rmarkdown). Cuando ejecuta el código dentro del documento el resultado aparece por debajo del código.
 
 ```{r rmarkdown, echo=FALSE, fig.cap='Estructura de un documento RMarkdown'}
-knitr::include_graphics('imgs/rmarkdown.png')
+knitr::include_graphics('images/rmarkdown.png')
 ```
 
 Todo documento empieza con el encabezado YAML, que se define entre guiones consecutivos (`---`). Aquí se definen las características generales del documento:
@@ -148,7 +148,7 @@ Siempre que un valor exista dentro de un objeto guardado, este se puede acceder 
 La mejor manera es usando el paquete `knitr`. Aquí se ajusta no el ancho de la figura directamente sino que se le dice que se ajuste a un 50% del ancho disponible. Existen otras opciones que empiezan con `out.`. En la Figura \@ref(fig:r-rocks) se ajusta el ancho de salida con `out.width='50%'`.
 
 ```{r r-rocks, fig.cap='R Rocks', out.width='50%'}
-knitr::include_graphics('imgs/r_rocks.jpg')
+knitr::include_graphics('images/r_rocks.jpg')
 ```
 
 
@@ -161,6 +161,14 @@ Para previsualizar el cuaderno renderizado (`.nb.html`) haga click en *Preview*.
 #### Otros formatos
 
 El cuaderno es un documento R Markdown. Se puede cambiar el formato de salida cambiando el orden en el encabezado YAML. En ese caso el *Preview* es reemplazado por *Knit* y genera un documento HTML corriente. También se puede generar desplegando el menú contextual haciendo click en la flecha junto a *Preview*. También se pueden crear documentos PDF o Word.
+
+## Recursos
+
+Se presentan recursos a consultar para ahondar más en los temas presentados.
+
+La guía definitiva de RMarkdown [RMarkdown Definitive Guide](https://bookdown.org/yihui/rmarkdown/), para consultas sobre documentos rmakrdown y sus opciones y configuraciones.
+
+La guía definitiva de Bookdown [Bookdown Guide](https://bookdown.org/yihui/bookdown/). Este recurso cubre más sobre rmarkdown y expande sus funciones para la creación de libros.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE,
   error = FALSE,
-  # fig.path = "figs/",
+  # fig.path = "figures/",
   fig.retina = 3,
   fig.width = 8,
   fig.asp = 0.618,
@@ -59,7 +59,7 @@ library(rayshader)
 
 La comunidad de **R** ha desarrollado una gran variedad de paquetes para datos espaciales, algunos de los cuales han ido evolucionando y facilitando la manipulación y presentación de los mismos. 
 
-Dentro de los paquetes mas usados están:
+Dentro de los paquetes más usados están:
 
 * *sf* [@R-sf]: Para datos vectoriales dentro de la filosofía *tidyverse*
 * *sp* [@R-sp]: El predecesor de *sf* para datos vectoriales y en grilla (no exactamente raster)
@@ -209,13 +209,13 @@ write_stars(sat_stars, 'data/imagen_satelite_stars.tif')
 
 ## Mapas
 
-Existen diferentes formas de graficar datos espaciales, aquí se presentan las mas usadas, donde se recomienda *ggplot2* o *tmap*. El primero ya que se esta familiarizado con el funcionamiento del mismo y es nada mas agregar un par de funciones especificas para datos espaciales; el segundo ya que es especifico para datos espaciales siguiendo una idea similar a *ggplot2*.
+Existen diferentes formas de graficar datos espaciales, aquí se presentan las más usadas, donde se recomienda *ggplot2* o *tmap*. El primero ya que se esta familiarizado con el funcionamiento del mismo y es nada más agregar un par de funciones especificas para datos espaciales; el segundo ya que es especifico para datos espaciales siguiendo una idea similar a *ggplot2*.
 
 ### Estáticos
 
 #### *básico*
 
-Todos los objetos espaciales tienen un método de ploteo básico (`plot`). Si el objeto tiene mas de 1 atributo va a plotear todos o los que pueda. Para evitar esto se puede especificar cual atributo se quiere plotear. En general esto se puede usar mas para una visualización rápida pero no para mapas finales. Se muestran diferentes opciones para visualizar los diferentes tipos de datos, pero no se muestra el mapa final por ser muy básico.
+Todos los objetos espaciales tienen un método de ploteo básico (`plot`). Si el objeto tiene más de 1 atributo va a plotear todos o los que pueda. Para evitar esto se puede especificar cual atributo se quiere plotear. En general esto se puede usar más para una visualización rápida pero no para mapas finales. Se muestran diferentes opciones para visualizar los diferentes tipos de datos, pero no se muestra el mapa final por ser muy básico.
 
 ```{r sp-mapas-plot, eval=FALSE}
 plot(fallas_ln)
@@ -233,9 +233,9 @@ plot(pacifico_stars)
 
 El paquete *ggplot* tiene geometrías especificas para objetos `sf` (vector) y `stars` (raster o grillas), por lo que facilita la creación de mapas en un ambiente ya conocido.
 
-La forma mas básica de crear un mapa vectorial usando *ggplot* es usando `geom_sf` y especificando el argumento `data` que corresponde con el objeto espacial, pero por defecto despliega coordenadas geográficas (Figura \@ref(fig:sp-mapas-ggplot1)).
+La forma más básica de crear un mapa vectorial usando *ggplot* es usando `geom_sf` y especificando el argumento `data` que corresponde con el objeto espacial, pero por defecto despliega coordenadas geográficas (Figura \@ref(fig:sp-mapas-ggplot1)).
 
-```{r sp-mapas-ggplot1, fig.cap='Mapa basico en *ggplot2*'}
+```{r sp-mapas-ggplot1, fig.cap='Mapa básico en *ggplot2*'}
 ggplot() + 
   geom_sf(data = fallas_ln)
 ```
@@ -250,7 +250,7 @@ ggplot() +
 
 El paquete *ggspatial* [@R-ggspatial] ofrece algunas capas adicionales especificas (elementos cartográficos) para datos espaciales, con las cuales se pueden agregar una escala (`annotation_scale`) y el norte (`annotation_north_arrow`), ademas de poder agregar un mapa de fondo (`annotation_map_tile`), donde `zoom` define el nivel de detalle, a menor `zoom` menor detalle (Figura \@ref(fig:sp-mapas-ggplot3)).
 
-```{r sp-mapas-ggplot3, fig.cap='Mapa en *ggplot* con elementos cartograficos (escla y norte)'}
+```{r sp-mapas-ggplot3, fig.cap='Mapa en *ggplot* con elementos cartográficos (escala y norte)'}
 ggplot() + 
   annotation_map_tile(zoom = 8) +
   geom_sf(data = fallas_ln) + 
@@ -269,7 +269,7 @@ ggplot() +
   scale_color_viridis_c()
 ```
 
-```{r sp-mapas-ggplot5, fig.cap='Mapa de poligonos en *ggplot* coloreados por la variable "FORMA"'}
+```{r sp-mapas-ggplot5, fig.cap='Mapa de polígonos en *ggplot* coloreados por la variable "FORMA"'}
 ggplot() + 
   geom_sf(aes(fill = as_factor(FORMA)), data = geomorfo_ln) + 
   coord_sf(datum = st_crs(geomorfo_ln)) + 
@@ -278,7 +278,7 @@ ggplot() +
 
 La forma de crear un mapa a partir de un objeto `stars` (grilla de una banda) es por medio de `geom_stars`, donde, de nuevo, se especifica el objeto espacial en el argumento `data`. En este caso automáticamente se aplica al relleno (`fill`) la variable del objeto. Ademas, es necesario agregar `coord_equal` para que los ejes de coordenadas tengan las misma escala (Figura \@ref(fig:sp-mapas-ggplot6)).
 
-```{r sp-mapas-ggplot6, fig.cap='Mapa de objeto `stars` en *ggplot*. Se especifica el relleno como un gradiente y se aplica la misma escala a ambos ejes'}
+```{r sp-mapas-ggplot6, fig.cap='Mapa de objeto `stars` en *ggplot*. Se especifica el relleno como un gradiente y se aplica la misma escala a ámbos ejes'}
 ggplot() + 
   geom_stars(data = pacifico_stars) + 
   scale_fill_gradient(low = 'black', high = 'white', na.value = 'white') +
@@ -325,9 +325,9 @@ tm_shape(shp = <DATA>) +
 
 Se pueden agregar diferentes objetos espaciales agregando diferentes `tm_shape`. A diferencia de *ggplot* y `geom_sf` que era una función para todo objeto vectorial, es necesario definir el tipo de objeto con las diferentes funciones `tm_*`. Lo que se va a hacer es recrear los mapas de la sección anterior pero con *tmap*.
 
-Un mapa básico se observa en la Figura \@ref(fig:sp-mapas-tmap2), donde se grafican las lineas de falla.
+Un mapa básico se observa en la Figura \@ref(fig:sp-mapas-tmap2), donde se grafican las líneass de falla.
 
-```{r sp-mapas-tmap2, fig.cap='Mapa basico con *tmap*'}
+```{r sp-mapas-tmap2, fig.cap='Mapa básico con *tmap*'}
 tm_shape(fallas_ln) + 
   tm_lines()
 ```
@@ -345,9 +345,9 @@ tm_shape(datos_sf) +
   tm_layout(legend.outside = T)
 ```
 
-En la Figura \@ref(fig:sp-mapas-tmap5) se observa un mapa de polígonos, donde ademas se agrega la grilla de coordenadas pero sin las lineas.
+En la Figura \@ref(fig:sp-mapas-tmap5) se observa un mapa de polígonos, donde ademas se agrega la grilla de coordenadas pero sin las líneas.
 
-```{r sp-mapas-tmap5, fig.cap='Mapa de poligonos con *tmap*, agregando la grilla de coordenadas sin la lineas internas'}
+```{r sp-mapas-tmap5, fig.cap='Mapa de poligonos con *tmap*, agregando la grilla de coordenadas sin la líneas internas'}
 geomorfo_ln %>% 
   mutate(FORMA = as_factor(FORMA)) %>% 
 tm_shape() + 
@@ -392,12 +392,12 @@ mapa1 = tm_shape(fallas_ln) +
   tm_scale_bar(width = .2,position = c('left','bottom')) + 
   tm_compass(position = c('right','top'))
 
-tmap_save(mapa1, 'figs/mapa_fallas.png', dpi = 300)
+tmap_save(mapa1, 'figures/mapa_fallas.png', dpi = 300)
 ```
 
 ### Dinámicos
 
-Una de la opciones con mapas interactivos es que se pueden definir diferentes mapas de fondo. Dentro de los mas usados están los que se muestran a continuación: 
+Una de la opciones con mapas interactivos es que se pueden definir diferentes mapas de fondo. Dentro de los más usados están los que se muestran a continuación: 
 
 ```{r sp-mapas-basemaps}
 mybasemaps = c('CartoDB.Positron', 'OpenStreetMap', 'OpenTopoMap',
@@ -414,10 +414,10 @@ tmap_options(basemaps = mybasemaps)
 mapviewOptions(basemaps = mybasemaps)
 ```
 
-La Figura \@ref(fig:sp-mapas-mv-partes) muestra las diferentes opciones para manipular un mapa dinámico creado con *mapview*. Las mismas opciones y elementos se pueden agregar a un mapa de *leaflet* pero requieren ser especificadas explícitamente (haciendo mas largo el codigo), mientras que *mapview* ya agrega muchos de estos por defecto.
+La Figura \@ref(fig:sp-mapas-mv-partes) muestra las diferentes opciones para manipular un mapa dinámico creado con *mapview*. Las mismas opciones y elementos se pueden agregar a un mapa de *leaflet* pero requieren ser especificadas explícitamente (haciendo más largo el codigo), mientras que *mapview* ya agrega muchos de estos por defecto.
 
-```{r sp-mapas-mv-partes, echo=F, fig.cap='Partes de un mapa dinamico creado con *mapview*'}
-knitr::include_graphics('imgs/mapview_partes.png')
+```{r sp-mapas-mv-partes, echo=F, fig.cap='Partes de un mapa dinámico creado con *mapview*'}
+knitr::include_graphics('images/mapview_partes.png')
 ```
 
 
@@ -427,15 +427,15 @@ Este paquete ofrece la opción de visualizar un mapa estático como dinámico, c
 
 Lo anterior cambia el modo para todos los mapas que se creen a partir de que esto se modifica. Para visualizar de manera dinámica un mapa guardado en un objeto se puede usar `tmap_leaflet`, que genera un mapa *leaflet* a partir de uno de *tmap*, pero solo para el mapa que se quiere (Figura \@ref(fig:sp-mapas-tmap11)). Para demostrar esto se genera el mapa dinámico a partir del mapa que se salvo anteriormente (`mapa1`), que corresponde con la Figura \@ref(fig:sp-mapas-tmap2).
 
-```{r sp-mapas-tmap11, fig.cap='Mapa interactivo *leaflet* a partir de un mapa estatico *tmap*'}
+```{r sp-mapas-tmap11, fig.cap='Mapa interactivo *leaflet* a partir de un mapa estático *tmap*'}
 tmap_leaflet(mapa1)
 ```
 
 #### *mapview*
 
-Este paquete permite generar mapas interactivos de manera eficiente y rápida, pero no brinda la personalización de `leaflet`, el cual es mucho mas complejo y para generar un mapa similar se requiere aproximadamente de 4 a 5 veces mas lineas de codigo.
+Este paquete permite generar mapas interactivos de manera eficiente y rápida, pero no brinda la personalización de `leaflet`, el cual es mucho más complejo y para generar un mapa similar se requiere aproximadamente de 4 a 5 veces mas líneass de codigo.
 
-La función básica es `mapview` donde se le pasa el objeto espacial. Por defecto le asigna un color único. El argumento `layer_name` es para definir el nombre que se quiere aparezca en la leyenda. Si se desean agregar diferentes capas simplemente se agregan funciones `mapview` con el operador `+` (Figura \@ref(fig:sp-mapas-mv2)). *mapview* es inteligente en el sentido de que dependiendo del tipo de objeto (polígono, linea, punto) lo va a graficar en el orden jerarquico visual (puntos por encima de lineas, lineas por encima de polígonos).
+La función básica es `mapview` donde se le pasa el objeto espacial. Por defecto le asigna un color único. El argumento `layer_name` es para definir el nombre que se quiere aparezca en la leyenda. Si se desean agregar diferentes capas simplemente se agregan funciones `mapview` con el operador `+` (Figura \@ref(fig:sp-mapas-mv2)). *mapview* es inteligente en el sentido de que dependiendo del tipo de objeto (polígono, líneas, punto) lo va a graficar en el orden jerarquico visual (puntos por encima de líneass, líneass por encima de polígonos).
 
 ```{r sp-mapas-mv2-code, eval=FALSE}
 mapview(fallas_ln, layer.name = 'Fallas', color = 'red') +
@@ -549,6 +549,35 @@ render_movie(filename = 'modelo3D')
 rgl::rgl.close()
 ```
 
+## Recursos
+
+Se presentan recursos a consultar para ahondar más en los temas presentados.
+
+[Geocomputatio with R](https://geocompr.robinlovelace.net) Es un libro virtual donde se introducen conceptos de como usar **R** para análisis espacial y creación de mapas.
+
+[Spatial Data Sience](https://keen-swartz-3146c4.netlify.com)
+
+[Intro to GIS and Spatial Analysis](https://mgimond.github.io/Spatial/index.html)
+
+[RSpatial](https://rspatial.org/raster/index.html)
+
+[Geoestadistica con R](https://bookdown.org/nowosad/Geostatystyka/) (El sitio web está en polaco, pero se puede traducir en Chrome)
+
+[Introducción a estadística con R](https://bookdown.org/matiasandina/R-intro/) (Capítulo 7)
+
+[Spatial workshop notes](https://spatialanalysis.github.io/workshop-notes/index.html)
+
+[sf](https://r-spatial.github.io/sf/articles/sf1.html)
+
+[tmap](https://github.com/mtennekes/tmap)
+
+[stars](https://r-spatial.github.io/stars/)
+
+[mapview](https://r-spatial.github.io/mapview/)
+
+[leaflet](https://rstudio.github.io/leaflet/)
+
+[rayshader](https://www.rayshader.com/)
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

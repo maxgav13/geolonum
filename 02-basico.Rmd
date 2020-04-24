@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE,
   error = FALSE,
-  # fig.path = "figs/",
+  # fig.path = "figures/",
   fig.retina = 3,
   fig.width = 8,
   fig.asp = 0.618,
@@ -60,7 +60,7 @@ z = x + y
 
 ## Vectores
 
-Los vectores son unidimensionales y deben ser (contener elementos) del mismo tipo. Aquí se muestran los diferentes tipos, y como crearlos. Los mas importantes tipos son *Numéricos*, *Texto*, y *Factores* (tipo especial en **R**).
+Los vectores son unidimensionales y deben ser (contener elementos) del mismo tipo. Aquí se muestran los diferentes tipos, y como crearlos. Los más importantes tipos son *Numéricos*, *Texto*, y *Factores* (tipo especial en **R**).
 
 ### Numéricos
 
@@ -137,7 +137,7 @@ matrix(data = 1:15, nrow = 3, byrow = T,
 
 ## DataFrames, listas y tibbles
 
-Los vectores son unidimensionales y pueden almacenar datos (elementos) de un solo tipo. DataFrames, listas y tibbles son objetos que pueden almacenar mas de 1 vector y los diferentes vectores pueden ser diferentes entre ellos. Esto es similar a una hoja de calculo donde cada columna es un vector.
+Los vectores son unidimensionales y pueden almacenar datos (elementos) de un solo tipo. DataFrames, listas y tibbles son objetos que pueden almacenar más de 1 vector y los diferentes vectores pueden ser diferentes entre ellos. Esto es similar a una hoja de calculo donde cada columna es un vector.
 
 Para DataFrames los contenidos pueden ser únicamente vectores de la misma longitud. Se crea usando la función `data.frame`, con los argumentos siendo los vectores, que van a pasar a ser las columnas. La función `names` brinda los nombres de las columnas, y a su vez se puede usar para renombrar a las columnas.
 
@@ -156,7 +156,7 @@ lst = list(Exp = x, Val = y, Dias = dias, Data = DF)
 lst
 ```
 
-Tibbles son un tipo especial de DataFrame, donde la principal diferencia es que pueden tener un contenido (columna) que puede ser una lista y esto puede brindar muchas facilidades a la hora de manipular y analizar los datos. Ademas no fuerza a datos de texto a factores y en la consola se despliega de manera mas amigable.
+Tibbles son un tipo especial de DataFrame, donde la principal diferencia es que pueden tener un contenido (columna) que puede ser una lista y esto puede brindar muchas facilidades a la hora de manipular y analizar los datos. Ademas no fuerza a datos de texto a factores y en la consola se despliega de manera más amigable.
 
 ```{r basico-tb}
 tb = tibble(Visitas = x, Revision = y, 
@@ -225,7 +225,7 @@ export(list(airquality = airquality,
 
 ## Inspeccionando los datos
 
-Aquí se muestran funciones básicas para explorar los datos y como acceder a ciertos datos en especifico. Dentro de las funciones mas usadas están:
+Aquí se muestran funciones básicas para explorar los datos y como acceder a ciertos datos en especifico. Dentro de las funciones más usadas están:
 
 * `head`: Muestra las primeras 6 filas o elementos de un DataFrame o vector (no es necesario usar esto con un Tibble ya que el Tibble muestra las primeras 10 filas por defecto)
 * `tail`: Muestra las ultimas 6 filas o elementos
@@ -304,6 +304,14 @@ describe(airquality)
 Desc(airquality)
 dfSummary(airquality) %>% view(method = 'render')
 ```
+
+## Recursos
+
+Se presentan recursos a consultar para ahondar más en los temas presentados.
+
+[Introducción a estadística con R](https://bookdown.org/matiasandina/R-intro/)
+
+[Foundations of Statistics with R](https://bookdown.org/speegled/foundations-of-statistics/)
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

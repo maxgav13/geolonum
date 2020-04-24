@@ -1,6 +1,6 @@
 # Iteración con `purrr`
 
-En este capitulo se muestra como iterar funciones sobre diferentes objetos (vectores, tablas, listas). La idea de las iteraciones es ser mas eficiente a la hora de realizar cálculos repetitivos. Se va a introducir al paquete *purrr* [@R-purrr] que brinda funciones para realizar diferentes tareas que requieren iterar sobre 1 o mas objetos.
+En este capitulo se muestra como iterar funciones sobre diferentes objetos (vectores, tablas, listas). La idea de las iteraciones es ser más eficiente a la hora de realizar cálculos repetitivos. Se va a introducir al paquete *purrr* [@R-purrr] que brinda funciones para realizar diferentes tareas que requieren iterar sobre 1 o más objetos.
 
 En este capitulo se van a utilizar los siguientes paquetes:
 
@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE,
   error = FALSE,
-  # fig.path = "figs/",
+  # fig.path = "figures/",
   fig.retina = 3,
   fig.width = 8,
   fig.asp = 0.618,
@@ -94,7 +94,7 @@ Por lo anterior, hay dos soluciones dependiendo de lo que se quiera resolver. Si
 airq %>% map_dbl(mean, na.rm = T)
 ```
 
-La solución mas adecuada en este caso es primero seleccionar las columnas de tipo numérico (`select_if(is.numeric)`) y a estas aplicarle el calculo de la media removiendo los 'NA'. Esta ultima forma de aplicar la función es, a mi parecer, las mas practica y clara. Se tiene que escribir la función empezando con el símbolo `~`, esto le dice a *purrr* que lo que va a estar a al derecha va a ser una función, seguido de este símbolo se escribe la función de manera normal, con la excepción de que en el lugar donde iría típicamente el vector se pone `.x`, para decirle a *purrr* donde incrustar los elementos del objeto sobre el cual se esta iterando.
+La solución más adecuada en este caso es primero seleccionar las columnas de tipo numérico (`select_if(is.numeric)`) y a estas aplicarle el calculo de la media removiendo los 'NA'. Esta ultima forma de aplicar la función es, a mi parecer, la más practica y clara. Se tiene que escribir la función empezando con el símbolo `~`, esto le dice a *purrr* que lo que va a estar a al derecha va a ser una función, seguido de este símbolo se escribe la función de manera normal, con la excepción de que en el lugar donde iría típicamente el vector se pone `.x`, para decirle a *purrr* donde incrustar los elementos del objeto sobre el cual se esta iterando.
 
 ```{r iter-6}
 airq %>% 
@@ -139,7 +139,7 @@ archivos %>%
   map_dfr(import, .id = "archivo")
 ```
 
-La siguiente situación que podemos encontrar es que el nombre del archivo (o cualquier otra columna de la tabla) tiene mas información de la necesaria, por lo que hay que separar los contenidos de la columna. Para esto usamos `separate` de *tidyr* para separar la columna en varias. En el caso de la columna 'archivo' podemos esperar tres columnas si especificamos el separador (`sep = '_'`), pero hay columnas que no ofrecen ninguna información (de las 3, la 1 y la 3, la 2 es la que tiene el nombre del nivel); para descartar estas columnas a la hora de separarlas se puede incluir `NA` en la posición de las columnas que se desea descartar.
+La siguiente situación que podemos encontrar es que el nombre del archivo (o cualquier otra columna de la tabla) tiene más información de la necesaria, por lo que hay que separar los contenidos de la columna. Para esto usamos `separate` de *tidyr* para separar la columna en varias. En el caso de la columna 'archivo' podemos esperar tres columnas si especificamos el separador (`sep = '_'`), pero hay columnas que no ofrecen ninguna información (de las 3, la 1 y la 3, la 2 es la que tiene el nombre del nivel); para descartar estas columnas a la hora de separarlas se puede incluir `NA` en la posición de las columnas que se desea descartar.
 
 ```{r iter-11}
 archivos %>%
@@ -212,12 +212,12 @@ Un resultado similar se puede obtener usando `pull`, donde se jala como vector l
 airq_nest %>% pull(plot)
 ```
 
-El ultimo ejemplo hace uso de `walk2` ya que se desea iterar sobre dos objetos: la columna de gráficos ('plot') y la columna agrupadora ('Month'). Lo que se desea realizar es exportar cada gráfico por separado, de ahí la necesidad de usar ambos objetos, el gráfico a exportar y la variable agrupadora para incluirla en el nombre del archivo. Para esto ultimo se usa la función `str_glue` de *stringr* que lo que hace es crear una linea de texto donde se pueden ingresar variables usando `{variable}`. En el ejemplo específicamente, se guarda cada gráfico en la carpeta 'figs', con el nombre 'regresion_{.y}.png', donde '{.y}' corresponde con el segundo objeto a iterar, en este caso el mes ('Month').
+El ultimo ejemplo hace uso de `walk2` ya que se desea iterar sobre dos objetos: la columna de gráficos ('plot') y la columna agrupadora ('Month'). Lo que se desea realizar es exportar cada gráfico por separado, de ahí la necesidad de usar ambos objetos, el gráfico a exportar y la variable agrupadora para incluirla en el nombre del archivo. Para esto ultimo se usa la función `str_glue` de *stringr* que lo que hace es crear una linea de texto donde se pueden ingresar variables usando `{variable}`. En el ejemplo específicamente, se guarda cada gráfico en la carpeta 'figures', con el nombre 'regresion_{.y}.png', donde '{.y}' corresponde con el segundo objeto a iterar, en este caso el mes ('Month').
 
 ```{r iter-17}
 walk2(airq_nest$plot, 
       airq_nest$Month, 
-      ~ggsave(filename = str_glue("figs/regresion_{.y}.png"),
+      ~ggsave(filename = str_glue("figures/regresion_{.y}.png"),
        plot = .x, dpi = 300,
        width = 7, height = 4, units = "in",
        type = "cairo"))
@@ -254,6 +254,14 @@ gap_nest %>%
   ggplot() + 
   geom_line(aes(year, lifeExp, col = country, group = country))
 ```
+
+## Recursos
+
+Se presentan recursos a consultar para ahondar más en los temas presentados.
+
+[tidyverse](https://www.tidyverse.org)
+
+[Modern R with the tidyverse](https://b-rodrigues.github.io/modern_R/) (Capítulo 8)
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

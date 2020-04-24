@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capitulo 5 Iteración con purrr | Geología Numérica: Ciencia de Datos para Geociencias</title>
+  <title>Capítulo 5 Iteración con purrr | Geología Numérica: Ciencia de Datos para Geociencias</title>
   <meta name="description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
   <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capitulo 5 Iteración con purrr | Geología Numérica: Ciencia de Datos para Geociencias" />
+  <meta property="og:title" content="Capítulo 5 Iteración con purrr | Geología Numérica: Ciencia de Datos para Geociencias" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capitulo 5 Iteración con purrr | Geología Numérica: Ciencia de Datos para Geociencias" />
+  <meta name="twitter:title" content="Capítulo 5 Iteración con purrr | Geología Numérica: Ciencia de Datos para Geociencias" />
   
   <meta name="twitter:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-04-17" />
+<meta name="date" content="2020-04-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -194,7 +194,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -224,6 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
 <li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
 </ul></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#recursos"><i class="fa fa-check"></i><b>1.5</b> Recursos</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento básico de R</a><ul>
 <li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.1</b> Operaciones básicas</a></li>
@@ -241,6 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.9" data-path="basico.html"><a href="basico.html#exportando-datos"><i class="fa fa-check"></i><b>2.9</b> Exportando datos</a></li>
 <li class="chapter" data-level="2.10" data-path="basico.html"><a href="basico.html#inspeccionando-los-datos"><i class="fa fa-check"></i><b>2.10</b> Inspeccionando los datos</a></li>
 <li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.11</b> Descripciones generales (globales)</a></li>
+<li class="chapter" data-level="2.12" data-path="basico.html"><a href="basico.html#recursos-1"><i class="fa fa-check"></i><b>2.12</b> Recursos</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="avanzado.html"><a href="avanzado.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
 <li class="chapter" data-level="3.1" data-path="avanzado.html"><a href="avanzado.html#operadores-lógicos"><i class="fa fa-check"></i><b>3.1</b> Operadores lógicos</a></li>
@@ -263,6 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.11.2" data-path="avanzado.html"><a href="avanzado.html#separar-y-unir"><i class="fa fa-check"></i><b>3.11.2</b> Separar y unir</a></li>
 </ul></li>
 <li class="chapter" data-level="3.12" data-path="avanzado.html"><a href="avanzado.html#nest"><i class="fa fa-check"></i><b>3.12</b> Datos anidados (Nesting)</a></li>
+<li class="chapter" data-level="3.13" data-path="avanzado.html"><a href="avanzado.html#recursos-2"><i class="fa fa-check"></i><b>3.13</b> Recursos</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="gráficos-1.html"><a href="gráficos-1.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a><ul>
 <li class="chapter" data-level="4.1" data-path="gráficos-1.html"><a href="gráficos-1.html#estáticos"><i class="fa fa-check"></i><b>4.1</b> Estáticos</a><ul>
@@ -270,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras"><i class="fa fa-check"></i><b>4.1.2</b> Barras</a></li>
 <li class="chapter" data-level="4.1.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.1.3</b> Boxplot</a></li>
 <li class="chapter" data-level="4.1.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión"><i class="fa fa-check"></i><b>4.1.4</b> Dispersión</a></li>
-<li class="chapter" data-level="4.1.5" data-path="gráficos-1.html"><a href="gráficos-1.html#lineas"><i class="fa fa-check"></i><b>4.1.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos-1.html"><a href="gráficos-1.html#líneas"><i class="fa fa-check"></i><b>4.1.5</b> líneas</a></li>
 <li class="chapter" data-level="4.1.6" data-path="gráficos-1.html"><a href="gráficos-1.html#gráficos-estadísticos"><i class="fa fa-check"></i><b>4.1.6</b> Gráficos estadísticos</a></li>
 <li class="chapter" data-level="4.1.7" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes"><i class="fa fa-check"></i><b>4.1.7</b> Transformación de ejes</a></li>
 <li class="chapter" data-level="4.1.8" data-path="gráficos-1.html"><a href="gráficos-1.html#limites-de-ejes-zoom"><i class="fa fa-check"></i><b>4.1.8</b> Limites de ejes (Zoom)</a></li>
@@ -281,9 +284,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
 <li class="chapter" data-level="4.2.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
 <li class="chapter" data-level="4.2.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión-1"><i class="fa fa-check"></i><b>4.2.4</b> Dispersión</a></li>
-<li class="chapter" data-level="4.2.5" data-path="gráficos-1.html"><a href="gráficos-1.html#lineas-1"><i class="fa fa-check"></i><b>4.2.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos-1.html"><a href="gráficos-1.html#líneas-1"><i class="fa fa-check"></i><b>4.2.5</b> líneas</a></li>
 <li class="chapter" data-level="4.2.6" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes-1"><i class="fa fa-check"></i><b>4.2.6</b> Transformación de ejes</a></li>
 </ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos-1.html"><a href="gráficos-1.html#recursos-3"><i class="fa fa-check"></i><b>4.3</b> Recursos</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html"><i class="fa fa-check"></i><b>5</b> Iteración con <code>purrr</code></a><ul>
 <li class="chapter" data-level="5.1" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#iterando-sobre-un-objeto"><i class="fa fa-check"></i><b>5.1</b> Iterando sobre un objeto</a></li>
@@ -293,6 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.1" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#efectos-secundarios"><i class="fa fa-check"></i><b>5.4.1</b> Efectos secundarios</a></li>
 </ul></li>
 <li class="chapter" data-level="5.5" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.5</b> Datos anidados, caso 2</a></li>
+<li class="chapter" data-level="5.6" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#recursos-4"><i class="fa fa-check"></i><b>5.6</b> Recursos</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a><ul>
 <li class="chapter" data-level="6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#paquetes-para-datos-espaciales"><i class="fa fa-check"></i><b>6.1</b> Paquetes para datos espaciales</a></li>
@@ -310,6 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#dinámicos"><i class="fa fa-check"></i><b>6.5.2</b> Dinámicos</a></li>
 <li class="chapter" data-level="6.5.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#modelos-de-sombras"><i class="fa fa-check"></i><b>6.5.3</b> Modelos de sombras</a></li>
 </ul></li>
+<li class="chapter" data-level="6.6" data-path="datos-espaciales.html"><a href="datos-espaciales.html#recursos-5"><i class="fa fa-check"></i><b>6.6</b> Recursos</a></li>
 </ul></li>
 <li class="part"><span><b>Análisis de datos</b></span></li>
 <li class="chapter" data-level="7" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Álgebra lineal</a><ul>
@@ -322,7 +328,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#cálculo"><i class="fa fa-check"></i><b>7.2.2</b> Cálculo</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="datos-e-incertidumbre.html"><a href="datos-e-incertidumbre.html"><i class="fa fa-check"></i><b>8</b> Datos e Incertidumbre</a></li>
+<li class="chapter" data-level="8" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html"><i class="fa fa-check"></i><b>8</b> Introducción a estadística</a><ul>
+<li class="chapter" data-level="8.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#tipos"><i class="fa fa-check"></i><b>8.1</b> Tipos</a></li>
+<li class="chapter" data-level="8.2" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#modelos"><i class="fa fa-check"></i><b>8.2</b> Modelos</a></li>
+<li class="chapter" data-level="8.3" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#nomenclatura"><i class="fa fa-check"></i><b>8.3</b> Nomenclatura</a></li>
+<li class="chapter" data-level="8.4" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#variables"><i class="fa fa-check"></i><b>8.4</b> Variables</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#cualitativa"><i class="fa fa-check"></i><b>8.4.1</b> Cualitativa</a></li>
+<li class="chapter" data-level="8.4.2" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#cuantitativa"><i class="fa fa-check"></i><b>8.4.2</b> Cuantitativa</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#métodos-de-análisis"><i class="fa fa-check"></i><b>8.5</b> Métodos de análisis</a></li>
+<li class="chapter" data-level="8.6" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#muestreo"><i class="fa fa-check"></i><b>8.6</b> Muestreo</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#tipos-1"><i class="fa fa-check"></i><b>8.6.1</b> Tipos</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#incertidumbre"><i class="fa fa-check"></i><b>8.7</b> Incertidumbre</a></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="estadistica-descriptiva-univariable.html"><a href="estadistica-descriptiva-univariable.html"><i class="fa fa-check"></i><b>9</b> Estadistica Descriptiva Univariable</a></li>
 <li class="chapter" data-level="10" data-path="estadistica-descriptiva-bivariable.html"><a href="estadistica-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>10</b> Estadistica Descriptiva Bivariable</a></li>
 <li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a></li>
@@ -356,8 +375,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="iteración-con-purrr" class="section level1">
-<h1><span class="header-section-number">Capitulo 5</span> Iteración con <code>purrr</code></h1>
-<p>En este capitulo se muestra como iterar funciones sobre diferentes objetos (vectores, tablas, listas). La idea de las iteraciones es ser mas eficiente a la hora de realizar cálculos repetitivos. Se va a introducir al paquete <em>purrr</em> <span class="citation">(Henry &amp; Wickham, <a href="#ref-R-purrr">2019</a>)</span> que brinda funciones para realizar diferentes tareas que requieren iterar sobre 1 o mas objetos.</p>
+<h1><span class="header-section-number">Capítulo 5</span> Iteración con <code>purrr</code></h1>
+<p>En este capitulo se muestra como iterar funciones sobre diferentes objetos (vectores, tablas, listas). La idea de las iteraciones es ser más eficiente a la hora de realizar cálculos repetitivos. Se va a introducir al paquete <em>purrr</em> <span class="citation">(Henry &amp; Wickham, <a href="#ref-R-purrr">2019</a>)</span> que brinda funciones para realizar diferentes tareas que requieren iterar sobre 1 o más objetos.</p>
 <p>En este capitulo se van a utilizar los siguientes paquetes:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)
 <span class="kw">library</span>(fs)
@@ -431,7 +450,7 @@ extra_credit &lt;-<span class="st"> </span><span class="kw">list</span>(<span cl
 <pre class="sourceCode r"><code class="sourceCode r">airq <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_dbl</span>(mean, <span class="dt">na.rm =</span> T)</code></pre>
 <pre><code>##      Ozone    Solar.R       Wind       Temp      Month        Day  Sensation 
 ##  42.129310 185.931507   9.957516  77.882353         NA  15.803922         NA</code></pre>
-<p>La solución mas adecuada en este caso es primero seleccionar las columnas de tipo numérico (<code>select_if(is.numeric)</code>) y a estas aplicarle el calculo de la media removiendo los ‘NA’. Esta ultima forma de aplicar la función es, a mi parecer, las mas practica y clara. Se tiene que escribir la función empezando con el símbolo <code>~</code>, esto le dice a <em>purrr</em> que lo que va a estar a al derecha va a ser una función, seguido de este símbolo se escribe la función de manera normal, con la excepción de que en el lugar donde iría típicamente el vector se pone <code>.x</code>, para decirle a <em>purrr</em> donde incrustar los elementos del objeto sobre el cual se esta iterando.</p>
+<p>La solución más adecuada en este caso es primero seleccionar las columnas de tipo numérico (<code>select_if(is.numeric)</code>) y a estas aplicarle el calculo de la media removiendo los ‘NA’. Esta ultima forma de aplicar la función es, a mi parecer, la más practica y clara. Se tiene que escribir la función empezando con el símbolo <code>~</code>, esto le dice a <em>purrr</em> que lo que va a estar a al derecha va a ser una función, seguido de este símbolo se escribe la función de manera normal, con la excepción de que en el lugar donde iría típicamente el vector se pone <code>.x</code>, para decirle a <em>purrr</em> donde incrustar los elementos del objeto sobre el cual se esta iterando.</p>
 <pre class="sourceCode r"><code class="sourceCode r">airq <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select_if</span>(is.numeric) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">map_dbl</span>(<span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(.x, <span class="dt">na.rm =</span> T))</code></pre>
@@ -499,7 +518,7 @@ archivos</code></pre>
 ##  9 data/datos_cuarto_grado… 1/3/2015 Sanchez, Juan           80     90       102
 ## 10 data/datos_cuarto_grado… 1/4/2015 Sanchez, Juan           85     85       102
 ## # … with 134 more rows</code></pre>
-<p>La siguiente situación que podemos encontrar es que el nombre del archivo (o cualquier otra columna de la tabla) tiene mas información de la necesaria, por lo que hay que separar los contenidos de la columna. Para esto usamos <code>separate</code> de <em>tidyr</em> para separar la columna en varias. En el caso de la columna ‘archivo’ podemos esperar tres columnas si especificamos el separador (<code>sep = '_'</code>), pero hay columnas que no ofrecen ninguna información (de las 3, la 1 y la 3, la 2 es la que tiene el nombre del nivel); para descartar estas columnas a la hora de separarlas se puede incluir <code>NA</code> en la posición de las columnas que se desea descartar.</p>
+<p>La siguiente situación que podemos encontrar es que el nombre del archivo (o cualquier otra columna de la tabla) tiene más información de la necesaria, por lo que hay que separar los contenidos de la columna. Para esto usamos <code>separate</code> de <em>tidyr</em> para separar la columna en varias. En el caso de la columna ‘archivo’ podemos esperar tres columnas si especificamos el separador (<code>sep = '_'</code>), pero hay columnas que no ofrecen ninguna información (de las 3, la 1 y la 3, la 2 es la que tiene el nombre del nivel); para descartar estas columnas a la hora de separarlas se puede incluir <code>NA</code> en la posición de las columnas que se desea descartar.</p>
 <pre class="sourceCode r"><code class="sourceCode r">archivos <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">map_dfr</span>(import, <span class="dt">.id =</span> <span class="st">&quot;archivo&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">separate</span>(archivo, <span class="dt">into =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">sep =</span> <span class="st">&#39;_&#39;</span>)</code></pre>
@@ -611,10 +630,10 @@ airq_nest</code></pre>
 <pre><code>## 
 ## [[5]]</code></pre>
 <p><img src="geolonum_files/figure-html/iter-16-5.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>El ultimo ejemplo hace uso de <code>walk2</code> ya que se desea iterar sobre dos objetos: la columna de gráficos (‘plot’) y la columna agrupadora (‘Month’). Lo que se desea realizar es exportar cada gráfico por separado, de ahí la necesidad de usar ambos objetos, el gráfico a exportar y la variable agrupadora para incluirla en el nombre del archivo. Para esto ultimo se usa la función <code>str_glue</code> de <em>stringr</em> que lo que hace es crear una linea de texto donde se pueden ingresar variables usando <code>{variable}</code>. En el ejemplo específicamente, se guarda cada gráfico en la carpeta ‘figs’, con el nombre ‘regresion_{.y}.png’, donde ‘{.y}’ corresponde con el segundo objeto a iterar, en este caso el mes (‘Month’).</p>
+<p>El ultimo ejemplo hace uso de <code>walk2</code> ya que se desea iterar sobre dos objetos: la columna de gráficos (‘plot’) y la columna agrupadora (‘Month’). Lo que se desea realizar es exportar cada gráfico por separado, de ahí la necesidad de usar ambos objetos, el gráfico a exportar y la variable agrupadora para incluirla en el nombre del archivo. Para esto ultimo se usa la función <code>str_glue</code> de <em>stringr</em> que lo que hace es crear una linea de texto donde se pueden ingresar variables usando <code>{variable}</code>. En el ejemplo específicamente, se guarda cada gráfico en la carpeta ‘figures’, con el nombre ‘regresion_{.y}.png’, donde ‘{.y}’ corresponde con el segundo objeto a iterar, en este caso el mes (‘Month’).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">walk2</span>(airq_nest<span class="op">$</span>plot, 
       airq_nest<span class="op">$</span>Month, 
-      <span class="op">~</span><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="kw">str_glue</span>(<span class="st">&quot;figs/regresion_{.y}.png&quot;</span>),
+      <span class="op">~</span><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="kw">str_glue</span>(<span class="st">&quot;figures/regresion_{.y}.png&quot;</span>),
        <span class="dt">plot =</span> .x, <span class="dt">dpi =</span> <span class="dv">300</span>,
        <span class="dt">width =</span> <span class="dv">7</span>, <span class="dt">height =</span> <span class="dv">4</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>,
        <span class="dt">type =</span> <span class="st">&quot;cairo&quot;</span>))</code></pre>
@@ -655,6 +674,12 @@ gap_nest</code></pre>
 <span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(year, lifeExp, <span class="dt">col =</span> country, <span class="dt">group =</span> country))</code></pre>
 <p><img src="geolonum_files/figure-html/iter-20-1.png" width="90%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="recursos-4" class="section level2">
+<h2><span class="header-section-number">5.6</span> Recursos</h2>
+<p>Se presentan recursos a consultar para ahondar más en los temas presentados.</p>
+<p><a href="https://www.tidyverse.org">tidyverse</a></p>
+<p><a href="https://b-rodrigues.github.io/modern_R/">Modern R with the tidyverse</a> (Capítulo 8)</p>
 
 </div>
 </div>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 8 Introduccion a estadistica | Geología Numérica: Ciencia de Datos para Geociencias</title>
+  <meta name="description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 8 Introduccion a estadistica | Geología Numérica: Ciencia de Datos para Geociencias" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 8 Introduccion a estadistica | Geología Numérica: Ciencia de Datos para Geociencias" />
+  
+  <meta name="twitter:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  
+
+<meta name="author" content="Maximiliano Garnier Villarreal" />
+
+
+<meta name="date" content="2020-04-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="álgebra-lineal.html">
+<link rel="next" href="estadistica-descriptiva-univariable.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">G-4101  Geologia Numerica</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="part"><span><b>R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalación-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalación de R y RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#paquetes"><i class="fa fa-check"></i><b>1.2</b> Paquetes</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#ayuda-en-r"><i class="fa fa-check"></i><b>1.3</b> Ayuda en R</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rmarkdown"><i class="fa fa-check"></i><b>1.4</b> RMarkdown</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#tipos-de-resultados"><i class="fa fa-check"></i><b>1.4.1</b> Tipos de resultados</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#formulas"><i class="fa fa-check"></i><b>1.4.2</b> Formulas</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#importando-datos"><i class="fa fa-check"></i><b>1.4.3</b> Importando datos</a></li>
+<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#cálculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Cálculos en linea</a></li>
+<li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
+<li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento básico de R</a><ul>
+<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.1</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.2" data-path="basico.html"><a href="basico.html#crear-objetos"><i class="fa fa-check"></i><b>2.2</b> Crear objetos</a></li>
+<li class="chapter" data-level="2.3" data-path="basico.html"><a href="basico.html#vectores"><i class="fa fa-check"></i><b>2.3</b> Vectores</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="basico.html"><a href="basico.html#numéricos"><i class="fa fa-check"></i><b>2.3.1</b> Numéricos</a></li>
+<li class="chapter" data-level="2.3.2" data-path="basico.html"><a href="basico.html#texto-string-character"><i class="fa fa-check"></i><b>2.3.2</b> Texto (string, character)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="basico.html"><a href="basico.html#categóricos-factores"><i class="fa fa-check"></i><b>2.3.3</b> Categóricos (factores)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="basico.html"><a href="basico.html#matrices"><i class="fa fa-check"></i><b>2.4</b> Matrices</a></li>
+<li class="chapter" data-level="2.5" data-path="basico.html"><a href="basico.html#dataframes-listas-y-tibbles"><i class="fa fa-check"></i><b>2.5</b> DataFrames, listas y tibbles</a></li>
+<li class="chapter" data-level="2.6" data-path="basico.html"><a href="basico.html#verificando-objetos"><i class="fa fa-check"></i><b>2.6</b> Verificando objetos</a></li>
+<li class="chapter" data-level="2.7" data-path="basico.html"><a href="basico.html#guardando-el-espacio-de-trabajo"><i class="fa fa-check"></i><b>2.7</b> Guardando el espacio de trabajo</a></li>
+<li class="chapter" data-level="2.8" data-path="basico.html"><a href="basico.html#importandocargando-datos"><i class="fa fa-check"></i><b>2.8</b> Importando/cargando datos</a></li>
+<li class="chapter" data-level="2.9" data-path="basico.html"><a href="basico.html#exportando-datos"><i class="fa fa-check"></i><b>2.9</b> Exportando datos</a></li>
+<li class="chapter" data-level="2.10" data-path="basico.html"><a href="basico.html#inspeccionando-los-datos"><i class="fa fa-check"></i><b>2.10</b> Inspeccionando los datos</a></li>
+<li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.11</b> Descripciones generales (globales)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="avanzado.html"><a href="avanzado.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
+<li class="chapter" data-level="3.1" data-path="avanzado.html"><a href="avanzado.html#operadores-lógicos"><i class="fa fa-check"></i><b>3.1</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="3.2" data-path="avanzado.html"><a href="avanzado.html#operador-de-secuencia-pipe-operator"><i class="fa fa-check"></i><b>3.2</b> Operador de secuencia (Pipe operator)</a></li>
+<li class="chapter" data-level="3.3" data-path="avanzado.html"><a href="avanzado.html#resumen-de-variables"><i class="fa fa-check"></i><b>3.3</b> Resumen de variables</a></li>
+<li class="chapter" data-level="3.4" data-path="avanzado.html"><a href="avanzado.html#selección-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.4</b> Selección y renombre de variables</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="avanzado.html"><a href="avanzado.html#select-helpers"><i class="fa fa-check"></i><b>3.4.1</b> <code>select</code> helpers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="avanzado.html"><a href="avanzado.html#filtrado-de-observaciones"><i class="fa fa-check"></i><b>3.5</b> Filtrado de observaciones</a></li>
+<li class="chapter" data-level="3.6" data-path="avanzado.html"><a href="avanzado.html#orden-de-acuerdo-a-variables"><i class="fa fa-check"></i><b>3.6</b> Orden de acuerdo a variables</a></li>
+<li class="chapter" data-level="3.7" data-path="avanzado.html"><a href="avanzado.html#creación-de-variables"><i class="fa fa-check"></i><b>3.7</b> Creación de variables</a></li>
+<li class="chapter" data-level="3.8" data-path="avanzado.html"><a href="avanzado.html#conteo-de-variables-cualitativas"><i class="fa fa-check"></i><b>3.8</b> Conteo de variables cualitativas</a></li>
+<li class="chapter" data-level="3.9" data-path="avanzado.html"><a href="avanzado.html#tabla-interactiva"><i class="fa fa-check"></i><b>3.9</b> Tabla interactiva</a></li>
+<li class="chapter" data-level="3.10" data-path="avanzado.html"><a href="avanzado.html#datos-relacionales"><i class="fa fa-check"></i><b>3.10</b> Datos relacionales</a><ul>
+<li class="chapter" data-level="3.10.1" data-path="avanzado.html"><a href="avanzado.html#uniones-de-transformación"><i class="fa fa-check"></i><b>3.10.1</b> Uniones de transformación</a></li>
+<li class="chapter" data-level="3.10.2" data-path="avanzado.html"><a href="avanzado.html#uniones-de-filtro"><i class="fa fa-check"></i><b>3.10.2</b> Uniones de filtro</a></li>
+</ul></li>
+<li class="chapter" data-level="3.11" data-path="avanzado.html"><a href="avanzado.html#datos-ordenados-tidy-data"><i class="fa fa-check"></i><b>3.11</b> Datos ordenados (Tidy data)</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="avanzado.html"><a href="avanzado.html#formatos-largo-y-ancho"><i class="fa fa-check"></i><b>3.11.1</b> Formatos largo y ancho</a></li>
+<li class="chapter" data-level="3.11.2" data-path="avanzado.html"><a href="avanzado.html#separar-y-unir"><i class="fa fa-check"></i><b>3.11.2</b> Separar y unir</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="avanzado.html"><a href="avanzado.html#nest"><i class="fa fa-check"></i><b>3.12</b> Datos anidados (Nesting)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos-1.html"><a href="gráficos-1.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a><ul>
+<li class="chapter" data-level="4.1" data-path="gráficos-1.html"><a href="gráficos-1.html#estáticos"><i class="fa fa-check"></i><b>4.1</b> Estáticos</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma"><i class="fa fa-check"></i><b>4.1.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras"><i class="fa fa-check"></i><b>4.1.2</b> Barras</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.1.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión"><i class="fa fa-check"></i><b>4.1.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos-1.html"><a href="gráficos-1.html#lineas"><i class="fa fa-check"></i><b>4.1.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.1.6" data-path="gráficos-1.html"><a href="gráficos-1.html#gráficos-estadísticos"><i class="fa fa-check"></i><b>4.1.6</b> Gráficos estadísticos</a></li>
+<li class="chapter" data-level="4.1.7" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes"><i class="fa fa-check"></i><b>4.1.7</b> Transformación de ejes</a></li>
+<li class="chapter" data-level="4.1.8" data-path="gráficos-1.html"><a href="gráficos-1.html#limites-de-ejes-zoom"><i class="fa fa-check"></i><b>4.1.8</b> Limites de ejes (Zoom)</a></li>
+<li class="chapter" data-level="4.1.9" data-path="gráficos-1.html"><a href="gráficos-1.html#salvando-gráficos"><i class="fa fa-check"></i><b>4.1.9</b> Salvando gráficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos-1.html"><a href="gráficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.2</b> Interactivos</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión-1"><i class="fa fa-check"></i><b>4.2.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos-1.html"><a href="gráficos-1.html#lineas-1"><i class="fa fa-check"></i><b>4.2.5</b> Lineas</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes-1"><i class="fa fa-check"></i><b>4.2.6</b> Transformación de ejes</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html"><i class="fa fa-check"></i><b>5</b> Iteración con <code>purrr</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#iterando-sobre-un-objeto"><i class="fa fa-check"></i><b>5.1</b> Iterando sobre un objeto</a></li>
+<li class="chapter" data-level="5.2" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#iterando-sobre-dos-objetos"><i class="fa fa-check"></i><b>5.2</b> Iterando sobre dos objetos</a></li>
+<li class="chapter" data-level="5.3" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#leyendo-archivos-y-combinándolos"><i class="fa fa-check"></i><b>5.3</b> Leyendo archivos y combinándolos</a></li>
+<li class="chapter" data-level="5.4" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.4</b> Datos anidados, caso 1</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#efectos-secundarios"><i class="fa fa-check"></i><b>5.4.1</b> Efectos secundarios</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="iteración-con-purrr.html"><a href="iteración-con-purrr.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.5</b> Datos anidados, caso 2</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a><ul>
+<li class="chapter" data-level="6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#paquetes-para-datos-espaciales"><i class="fa fa-check"></i><b>6.1</b> Paquetes para datos espaciales</a></li>
+<li class="chapter" data-level="6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#sistemas-de-referencias-de-coordenadas-crs"><i class="fa fa-check"></i><b>6.2</b> Sistemas de Referencias de Coordenadas (CRS)</a></li>
+<li class="chapter" data-level="6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#importar-datos"><i class="fa fa-check"></i><b>6.3</b> Importar datos</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-de-texto"><i class="fa fa-check"></i><b>6.3.1</b> Desde archivos de texto</a></li>
+<li class="chapter" data-level="6.3.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-espaciales"><i class="fa fa-check"></i><b>6.3.2</b> Desde archivos espaciales</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="datos-espaciales.html"><a href="datos-espaciales.html#exportar-datos"><i class="fa fa-check"></i><b>6.4</b> Exportar datos</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#vectoriales"><i class="fa fa-check"></i><b>6.4.1</b> Vectoriales</a></li>
+<li class="chapter" data-level="6.4.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#raster-1"><i class="fa fa-check"></i><b>6.4.2</b> Raster</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="datos-espaciales.html"><a href="datos-espaciales.html#mapas"><i class="fa fa-check"></i><b>6.5</b> Mapas</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#estáticos-1"><i class="fa fa-check"></i><b>6.5.1</b> Estáticos</a></li>
+<li class="chapter" data-level="6.5.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#dinámicos"><i class="fa fa-check"></i><b>6.5.2</b> Dinámicos</a></li>
+<li class="chapter" data-level="6.5.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#modelos-de-sombras"><i class="fa fa-check"></i><b>6.5.3</b> Modelos de sombras</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>Análisis de datos</b></span></li>
+<li class="chapter" data-level="7" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Álgebra lineal</a><ul>
+<li class="chapter" data-level="7.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#tensores"><i class="fa fa-check"></i><b>7.1</b> Tensores</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#vectores-1"><i class="fa fa-check"></i><b>7.1.1</b> Vectores</a></li>
+<li class="chapter" data-level="7.1.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#matrices-1"><i class="fa fa-check"></i><b>7.1.2</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#eigenvectors-y-eigenvalues"><i class="fa fa-check"></i><b>7.2</b> Eigenvectors y Eigenvalues</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#definición"><i class="fa fa-check"></i><b>7.2.1</b> Definición</a></li>
+<li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#cálculo"><i class="fa fa-check"></i><b>7.2.2</b> Cálculo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html"><i class="fa fa-check"></i><b>8</b> Introduccion a estadistica</a><ul>
+<li class="chapter" data-level="8.1" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#tipos"><i class="fa fa-check"></i><b>8.1</b> Tipos</a></li>
+<li class="chapter" data-level="8.2" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#modelos"><i class="fa fa-check"></i><b>8.2</b> Modelos</a></li>
+<li class="chapter" data-level="8.3" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#nomenclatura"><i class="fa fa-check"></i><b>8.3</b> Nomenclatura</a></li>
+<li class="chapter" data-level="8.4" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#variables"><i class="fa fa-check"></i><b>8.4</b> Variables</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#cualitativa"><i class="fa fa-check"></i><b>8.4.1</b> Cualitativa</a></li>
+<li class="chapter" data-level="8.4.2" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#cuantitativa"><i class="fa fa-check"></i><b>8.4.2</b> Cuantitativa</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#metodos-de-analisis"><i class="fa fa-check"></i><b>8.5</b> Metodos de analisis</a></li>
+<li class="chapter" data-level="8.6" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#muestreo"><i class="fa fa-check"></i><b>8.6</b> Muestreo</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#tipos-1"><i class="fa fa-check"></i><b>8.6.1</b> Tipos</a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="introduccion-a-estadistica.html"><a href="introduccion-a-estadistica.html#incertidumbre"><i class="fa fa-check"></i><b>8.7</b> Incertidumbre</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="estadistica-descriptiva-univariable.html"><a href="estadistica-descriptiva-univariable.html"><i class="fa fa-check"></i><b>9</b> Estadistica Descriptiva Univariable</a></li>
+<li class="chapter" data-level="10" data-path="estadistica-descriptiva-bivariable.html"><a href="estadistica-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>10</b> Estadistica Descriptiva Bivariable</a></li>
+<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a></li>
+<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a></li>
+<li class="chapter" data-level="13" data-path="introduccion-a-estadistica-inferencial.html"><a href="introduccion-a-estadistica-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introduccion a Estadistica Inferencial</a></li>
+<li class="chapter" data-level="14" data-path="estimacion.html"><a href="estimacion.html"><i class="fa fa-check"></i><b>14</b> Estimacion</a></li>
+<li class="chapter" data-level="15" data-path="pruebas-estadisticas.html"><a href="pruebas-estadisticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadisticas</a></li>
+<li class="chapter" data-level="16" data-path="estadistica-no-parametrica.html"><a href="estadistica-no-parametrica.html"><i class="fa fa-check"></i><b>16</b> Estadistica No Parametrica</a></li>
+<li class="chapter" data-level="17" data-path="estadistica-direccional.html"><a href="estadistica-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadistica Direccional</a></li>
+<li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a></li>
+<li class="chapter" data-level="19" data-path="geoestadistica.html"><a href="geoestadistica.html"><i class="fa fa-check"></i><b>19</b> Geoestadistica</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geología Numérica: Ciencia de Datos para Geociencias</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduccion-a-estadistica" class="section level1">
+<h1><span class="header-section-number">Capítulo 8</span> Introduccion a estadistica</h1>
+<p>Este capitulo da una introduccion a estadistica, en qué consiste, para qué se usa, los tipos, modelos y nomenclatura que se usan.</p>
+<p>Estadistica es la ciencia que estudia la manera en que se recolecta, se analiza, se interpreta la información proveniente de una población, así como el modo en que se extrapola esos resultados a otros casos similares. Tiene como objetivo principal analizar datos y transformarlos en información útil para tomar decisiones y sacar conclusiones, donde hay <strong>incertidumbre</strong> y <strong>variación</strong>.</p>
+<div id="tipos" class="section level2">
+<h2><span class="header-section-number">8.1</span> Tipos</h2>
+<p>En general hay dos tipos de estadistica:</p>
+<ul>
+<li>Descriptiva: Lo que se hace es recopilar, organizar, resumir y presentar datos para facilitar su análisis y aplicación (Tablas y/o gráficos). En este tipo es donde se ubica lo que se conoce como análisis exploratorio de datos (AED o EDA en inglés), y consiste en el proceso para utilizar herramientas estadísticas (como gráficas, medidas de tendencia central y medidas de variación), con la finalidad de investigar conjuntos de datos para comprender sus características importantes. Un ejemplo se observa en la Figura <a href="introduccion-a-estadistica.html#fig:eda">8.1</a>.</li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:eda"></span>
+<img src="images/estadistica-descriptiva.jpg" alt="Ejemplo de estadistica desciptiva y análisis exploratorio de datos. Tomado de: http://www.universoformulas.com/imagenes/estadistica/descriptiva/estadistica-descriptiva.jpg" width="70%" />
+<p class="caption">
+Figura 8.1: Ejemplo de estadistica desciptiva y análisis exploratorio de datos. Tomado de: <a href="http://www.universoformulas.com/imagenes/estadistica/descriptiva/estadistica-descriptiva.jpg" class="uri">http://www.universoformulas.com/imagenes/estadistica/descriptiva/estadistica-descriptiva.jpg</a>
+</p>
+</div>
+<ul>
+<li>Inferencial: El objetivo es hacer inferencias en base a una muestra, con la intencion de generalizar a una poblacion de interes (Figura <a href="introduccion-a-estadistica.html#fig:inferencial">8.2</a>). En este caso los resultados se usan para corroborar o refutar creencias sobre la poblacion de interes y sacar conclusiones con sustento estadistico.</li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:inferencial"></span>
+<img src="images/proceso-estadistica-inferencial.jpg" alt="Proceso de estadistica inferencial. Tomado de: http://www.universoformulas.com/imagenes/estadistica/inferencia/proceso-estadistica-inferencial.jpg" width="70%" />
+<p class="caption">
+Figura 8.2: Proceso de estadistica inferencial. Tomado de: <a href="http://www.universoformulas.com/imagenes/estadistica/inferencia/proceso-estadistica-inferencial.jpg" class="uri">http://www.universoformulas.com/imagenes/estadistica/inferencia/proceso-estadistica-inferencial.jpg</a>
+</p>
+</div>
+</div>
+<div id="modelos" class="section level2">
+<h2><span class="header-section-number">8.2</span> Modelos</h2>
+<ul>
+<li><p>Determinístico: Donde las mismas entradas producirán las mismas salidas, sin variación, esto debido a que ho hay incertidumbre en los datos, se conocen con certeza.</p></li>
+<li><p>Probabilístico (aleatorio, estocástico): Donde los resultados (salidas) dependen de las entradas y de los componentes aleatorios (incertidumbre), pudiendo producir resultados distintos a partir de una misma entrada. Los resultados se expresan en términos de probabilidad, que refleja la incertidumbre del modelo.</p></li>
+</ul>
+</div>
+<div id="nomenclatura" class="section level2">
+<h2><span class="header-section-number">8.3</span> Nomenclatura</h2>
+<p>En estadistica se maneja cierta nomenclatura (definiciones) que es importante conocer y saber usar apropiadamente. Dentro de las definiciones que se van a trabajar a los largo del curso son:</p>
+<ul>
+<li>Población
+<ul>
+<li>Conjunto con alguna característica de interés</li>
+<li>Normalmente muy grande para poder abarcarlo (estudiarlo) por completo</li>
+</ul></li>
+<li>Muestra
+<ul>
+<li>Subconjunto de la población de interes sobre el cual se hacen las observaciones y análisis</li>
+<li>Debería ser representativa</li>
+</ul></li>
+<li>Variable
+<ul>
+<li>Característica observable de los componentes de una población (muestra) y que puede tomar distintos valores</li>
+</ul></li>
+<li>Observación o dato
+<ul>
+<li>Valor obtenido para los componentes de la muestra, como resultado de algún tipo de medición</li>
+</ul></li>
+</ul>
+<p>Los conceptos de poblacion y muestra se muestran en la siguiente figura.</p>
+<div class="figure" style="text-align: center"><span id="fig:poblacion-muestra"></span>
+<img src="images/muestra-estadistica.jpg" alt="Ejemplo de una poblacion a la cual se le toma una muestra. Tomado de: http://aprendiendoadministracion.com/wp-content/uploads/2016/01/muestra-estadistica.jpg" width="70%" />
+<p class="caption">
+Figura 8.3: Ejemplo de una poblacion a la cual se le toma una muestra. Tomado de: <a href="http://aprendiendoadministracion.com/wp-content/uploads/2016/01/muestra-estadistica.jpg" class="uri">http://aprendiendoadministracion.com/wp-content/uploads/2016/01/muestra-estadistica.jpg</a>
+</p>
+</div>
+
+<div class="rmdnote">
+No hay que confundir los conceptos de muestra estadistica y muestra geologica. Una muestra estadistica es un conjunto de observaciones o datos, mientras que una muestra geologica en terminos estadisticos es una observacion o dato. Entonces <em>una</em> muestra estadistica es un conjunto de muestras geologicas.
+</div>
+
+</div>
+<div id="variables" class="section level2">
+<h2><span class="header-section-number">8.4</span> Variables</h2>
+<p>Hay dos tipos generales de variables: Cualitativa y Cuantitativa.</p>
+<div id="cualitativa" class="section level3">
+<h3><span class="header-section-number">8.4.1</span> Cualitativa</h3>
+<p>Lo que se conoce como datos categoricos, donde las entradas o datos toman valores de clases o niveles. Dentro de <strong>R</strong> estas son las que so codifican como factores. Dentro de este tipo podemos encontrar una subdivision:</p>
+<ul>
+<li>Nominal (nom): donde las clases o niveles no tienen un orden específico,</li>
+<li>Ordinal (ord): donde las clases o niveles tienen un orden relativo, que se puede pensar como una escala.</li>
+</ul>
+<p>Ejemplos de datos cualitativos son: color (nom), grado de meteorización (ord), nivel de fisuramiento (ord), intensidad (ord), escala de dureza de Mohs (ord), etc.</p>
+</div>
+<div id="cuantitativa" class="section level3">
+<h3><span class="header-section-number">8.4.2</span> Cuantitativa</h3>
+<p>Corresponden con datos numericos, es el tipo de dato que por lo general se asocia a tecnicas estadisticas y de analisis de datos, pero no se deben obviar los datos cualitativos.</p>
+<p>Se puede dividir en:</p>
+<ul>
+<li>Intervalo: donde datos los datos se encuentran igualmente espaciados y no hay un cero absoluto, o sea pueden haber valores negativos,</li>
+<li>Ratio: donde hay un cero absoluto, correspondiendo con valores positivos.</li>
+</ul>
+<p>Tambien se puede dividir en:</p>
+<ul>
+<li>Discretos (disc): por medio de conteos, corresponde con números enteros,</li>
+<li>Continuos (cont): por medio de mediciones (magnitudes), corresponde con infinitos valores entre enteros, puede expresarse con decimales.</li>
+</ul>
+<p>Ejemplos de datos cuantitativos son: edad (cont), orientación (cont), espesor (cont), número de fisuras (disc), magnitud (cont), esfuerzos (cont), deformaciones (cont), longitud (cont), superficie (cont), volumen (cont), tiempo (cont), temperatura (cont), etc.</p>
+<p>En las ciencias geológicas y de la tierra se manejan varios tipos de datos especiales, que van a requerir de adaptar tecnicas de analisis generales para los casos especificos. Dentro de estos datos se tiene:</p>
+<ul>
+<li><em>Cerrados</em>: Las variables son expresadas como proporciones y suman hasta un valor fijo total (Ej: 100%), en general el interes es mas en la razon entre las variables y no el valor de la variable. Composiciones (Ej: tipo de roca) representan la mayoría de este tipo de datos.</li>
+<li><em>Espaciales</em>: La(s) variable(e) de interes posee(n) componentes en 2D o 3D representando su distribución espacial (ubicacion en un area determinada). Ejemplos: distribución de un tipo de fósil, cambios en el espesor de una capa de arenisca, distribución de trazas en el agua subterránea.</li>
+<li><em>Direccionales</em>: Los datos son expresados en ángulos/orientaciones entre 0 y 360 y pueden tener ademas una inclinacion. Ejemplos: rumbo o buzamiento de una capa, orientación de fósiles elongados, dirección del flujo de una colada de lava.</li>
+</ul>
+<p>Una representacion grafica de los tipos de datos se observa en la Figura <a href="introduccion-a-estadistica.html#fig:tipos-datos">8.4</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:tipos-datos"></span>
+<img src="images/data-types.png" alt="Representacion graficos de los tipos de datos. Los datos cerrados (closed) y direccionales (directional) son mas tipicos de la ciencias geologicas (Swan &amp; Sandilands, 1995)." width="70%" />
+<p class="caption">
+Figura 8.4: Representacion graficos de los tipos de datos. Los datos cerrados (closed) y direccionales (directional) son mas tipicos de la ciencias geologicas <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>)</span>.
+</p>
+</div>
+</div>
+</div>
+<div id="metodos-de-analisis" class="section level2">
+<h2><span class="header-section-number">8.5</span> Metodos de analisis</h2>
+<p>Existen diferentes metodos de analisis de datos. Éstos van a depender del tipo de dato y la cantidad de variables que se tengan. Dentro de las principales metodoflogias se tienen y una representacion grafica de las variable de interes se presenta en la Figura <a href="introduccion-a-estadistica.html#fig:metodos-analisis">8.5</a>:</p>
+<ul>
+<li><em>Univariable</em>: Se analiza cada variable por separado, el interes está en enfocarse en una variable por si sola a la vez y sin considerar la relacion que pueda tener con otras.</li>
+<li><em>Bivariable</em>: Se analizan dos variables en conjunto, enfocandose en su relación y/o dependencia. Es la version simple de un analisis multivariable.</li>
+<li><em>Multivariable</em>: Cuando el analisis involucra 2 o más variable de interes a la vez y se requiere determinar la relacion e interaccion entre dichas variables.</li>
+<li><em>Secuencias</em>: Cuando los datos se presentan como secuencias (por lo general implicando algun patron o ciclicidad) en el tiempo/espacio, donde la forma más simple es un análisis bivariable donde una de las variables es el tiempo/espacio.</li>
+<li><em>Espacial</em>: Cuando la ubicacion de las muestras es de interes y se requiere entender o determinar cómo se dispone una variable en un area determinada. Por lo general tres (o cuatro) variables analizadas a la vez, donde dos (o tres) corresponden con la ubicación espacial y la otra corresponde con alguna medida de interés geológico, existen opciones univariables y multivariables.</li>
+</ul>
+
+<div class="figure" style="text-align: center"><span id="fig:metodos-analisis"></span>
+<img src="images/metodos-analisis.png" alt="Representacion grafica de las variables correspondientes a diferentes metodologias de analisis de datos (Swan &amp; Sandilands, 1995)." width="70%" />
+<p class="caption">
+Figura 8.5: Representacion grafica de las variables correspondientes a diferentes metodologias de analisis de datos <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>)</span>.
+</p>
+</div>
+</div>
+<div id="muestreo" class="section level2">
+<h2><span class="header-section-number">8.6</span> Muestreo</h2>
+<p>El muestreo es un procedimiento para obtener datos/observaciones de una población, con la finalidad de usar esta información para realizar inferencias acerca de dicha población <span class="citation">(Davis, <a href="#ref-davis2002">2002</a>)</span>. Las muestras son subconjuntos de los datos. El conjunto de todas las muestras que se pueden obtener de la población se denomina espacio muestral. La(s) muestra(s) debe(n) ser representativa(s), donde esto va a depender de la adecuada implementecion de alguna de las tecnicas de muestreo presentadas mas adelante.</p>
+<p>En la Figura <a href="introduccion-a-estadistica.html#fig:muestra-geologia">8.6</a> se presenta y retoma la el concepto de muestra geologica, donde la poblacion de interes es un afloramiento especifico, pero dicho afloramiento es demasiado grande para muestrear por completo, por lo que se deben tomar varias observaciones (muestras geologicas) para obtener una muestra que representa a la poblacion meta.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:muestra-geologia"></span>
+<img src="images/muestra-geologica.png" alt="Representacion de una poblacion de interes geologico donde es necesaria la toma de observaciones (muestras geologicas) para obtener una muestra representativa de dicha poblacion (Trauth, 2015)." width="70%" />
+<p class="caption">
+Figura 8.6: Representacion de una poblacion de interes geologico donde es necesaria la toma de observaciones (muestras geologicas) para obtener una muestra representativa de dicha poblacion <span class="citation">(Trauth, <a href="#ref-trauth2015">2015</a>)</span>.
+</p>
+</div>
+<div id="tipos-1" class="section level3">
+<h3><span class="header-section-number">8.6.1</span> Tipos</h3>
+<div id="aleatorio-simple" class="section level4">
+<h4><span class="header-section-number">8.6.1.1</span> Aleatorio Simple</h4>
+<p>Una muestra se selecciona de modo que todos los elementos de la población tengan la misma probabilidad de ser elegidos. En general es poco recomendado cuando la población es muy grande o heterogénea (Figura <a href="introduccion-a-estadistica.html#fig:muestreo-aleatorio">8.7</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:muestreo-aleatorio"></span>
+<img src="images/muestreo-aleatorio.jpg" alt="Representacion de un muestreo aleatorio simple. Tomado de: http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-probabilistico.jpg" width="70%" />
+<p class="caption">
+Figura 8.7: Representacion de un muestreo aleatorio simple. Tomado de: <a href="http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-probabilistico.jpg" class="uri">http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-probabilistico.jpg</a>
+</p>
+</div>
+</div>
+<div id="sistematico" class="section level4">
+<h4><span class="header-section-number">8.6.1.2</span> Sistematico</h4>
+<p>Se elige un punto de partida y luego seleccionamos cada k-ésimo (por ejemplo cada quincuagésimo) elemento en la población. Conlleva algunos riesgos cuando el marco muestral es repetitivo o de naturaleza cíclica (Figura <a href="introduccion-a-estadistica.html#fig:muestreo-sistematico">8.8</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:muestreo-sistematico"></span>
+<img src="images/muestreo-sistematico.jpg" alt="Representacion de un muestreo sistematico. Tomado de: http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-sistematico.jpg" width="70%" />
+<p class="caption">
+Figura 8.8: Representacion de un muestreo sistematico. Tomado de: <a href="http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-sistematico.jpg" class="uri">http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-sistematico.jpg</a>
+</p>
+</div>
+</div>
+<div id="estratificado" class="section level4">
+<h4><span class="header-section-number">8.6.1.3</span> Estratificado</h4>
+<p>Consiste en definir previamente los estratos (grupos) que posee una población a partir de características comunes entre sus elementos y distintas con los elementos de los otros estratos. A partir de eso se deben tomar muestras aleatorias en cada estrato (Figura <a href="introduccion-a-estadistica.html#fig:muestreo-estratificado">8.9</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:muestreo-estratificado"></span>
+<img src="images/muestreo-estratificado.jpg" alt="Representacion de un muestreo estratificado. Tomado de: http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-estratificado.jpg" width="70%" />
+<p class="caption">
+Figura 8.9: Representacion de un muestreo estratificado. Tomado de: <a href="http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-estratificado.jpg" class="uri">http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-estratificado.jpg</a>
+</p>
+</div>
+</div>
+<div id="bloques-conglomerados" class="section level4">
+<h4><span class="header-section-number">8.6.1.4</span> Bloques (conglomerados)</h4>
+<p>Cuando la población está agrupada en conglomerados naturales, después se seleccionan aleatoriamente algunos de estos conglomerados, y luego se elige a todos los miembros de los conglomerados seleccionados o se muestrean los conglomerados con alguna otra técnica. Se usa cuando los conglomerados son muy heterogéneos y no existen muchas diferencias entre conglomerados (Figura <a href="introduccion-a-estadistica.html#fig:muestreo-conglomerados">8.10</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:muestreo-conglomerados"></span>
+<img src="images/muestreo-conglomerados.jpg" alt="Representacion de un muestreo en bloques o por conglomerados. Tomado de: http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-estratificado.jpg" width="70%" />
+<p class="caption">
+Figura 8.10: Representacion de un muestreo en bloques o por conglomerados. Tomado de: <a href="http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-estratificado.jpg" class="uri">http://www.universoformulas.com/imagenes/estadistica/inferencia/muestreo-estratificado.jpg</a>
+</p>
+</div>
+<p>En geología muchas veces nos vemos forzados por disposición de afloramientos (clustered) o accesibilidad (traverse – cortes de carretera, ríos, etc), especialmente en climas tropicales, ver Figura <a href="introduccion-a-estadistica.html#fig:muestreo-geologia">8.11</a>, siendo estas las localidades donde se encuentra disponible la poblacion a estudiar. Idelamente un muestreo exhaustivo y de alta resolucion seria el que se define en grilla (regular).</p>
+
+<div class="figure" style="text-align: center"><span id="fig:muestreo-geologia"></span>
+<img src="images/muestreo-geologia.png" alt="Tipicas disposiciones de afloramientos en ciencias geologicas, especialmente en climas tropicales (Swan &amp; Sandilands, 1995)." width="70%" />
+<p class="caption">
+Figura 8.11: Tipicas disposiciones de afloramientos en ciencias geologicas, especialmente en climas tropicales <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>)</span>.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="incertidumbre" class="section level2">
+<h2><span class="header-section-number">8.7</span> Incertidumbre</h2>
+<p>Además de los retos de recolectar muestras representativas, las mediciones geológicas tienen incertidumbre. No es posible realizar una medición exacta (que siempre es la misma) y equipos de alta precisión aún van a tener incertidumbre, reducida pero existe. El objetivo durante la recoleccion de muestras es reducir la incertidumbre a la hora de tomar mediciones, haciéndolas más precisas y exactas.</p>
+<p>Con lo anterior se puede diferenciar entre error reproducible y sistematico. El error reproducible es donde se tienen diferencias entre mediciones repetidas y se asocia con <strong>precision</strong>, donde se puede detectar por medio de la dispersion de los datos, a menor dispersion mayor precision. El error sistematico es mas dificil de detectar, no se puede estimar unicamente a partir de mediciones repetidas, a menos que se tenga un valor de referencia (valor verdadero); se asocia con <strong>exactitud</strong>, donde mientras mas cerca del valor de referencia mayor la exactitud. Estos conceptos se pueden visualizar en la Figura <a href="introduccion-a-estadistica.html#fig:precision-exactitud">8.12</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:precision-exactitud"></span>
+<img src="images/precision-exactitud.jpg" alt="Diferencia entre precision y exactitud. Tomado de: https://www.diferenciador.com/diferencia-entre-exactitud-y-precision/" width="70%" />
+<p class="caption">
+Figura 8.12: Diferencia entre precision y exactitud. Tomado de: <a href="https://www.diferenciador.com/diferencia-entre-exactitud-y-precision/" class="uri">https://www.diferenciador.com/diferencia-entre-exactitud-y-precision/</a>
+</p>
+</div>
+
+</div>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-davis2002">
+<p>Davis, J. C. (2002). <em>Statistical and Data Analysis in Geology</em> (3rd ed.). New Delhi: John Woley &amp; Sons.</p>
+</div>
+<div id="ref-swan1995">
+<p>Swan, A., &amp; Sandilands, M. (1995). <em>Introduction to Geological Data Analysis</em>. Blackwell Science.</p>
+</div>
+<div id="ref-trauth2015">
+<p>Trauth, M. (2015). <em>MATLAB® Recipes for Earth Sciences</em> (4.ª ed.). Berlin: Springer-Verlag Berlin Heidelberg.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="álgebra-lineal.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estadistica-descriptiva-univariable.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

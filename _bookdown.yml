@@ -12,19 +12,19 @@ language:
   label:
     fig: 'Figura '
     tab: 'Tabla '
-    eq: 'Ecuacion '
+    eq: 'Ecuación '
     thm: 'Teorema '
     lem: 'Lema '
     cor: 'Corolario '
-    prp: 'Proposicion '
+    prp: 'Proposición '
     cnj: 'Conjetura '
-    def: 'Definicion '
+    def: 'Definición '
     exm: 'Ejemplo '
     exr: 'Ejercicio '
     proof: 'Prueba '
     remark: 'Remarca '
-    solution: 'Solucion. '
+    solution: 'Solución. '
   ui:
     edit: Edit
     appendix_name: ''
-    chapter_name: "Capitulo "
+    chapter_name: "Capítulo "
