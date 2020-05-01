@@ -140,6 +140,30 @@ ggplot(airquality,aes(x=Temp)) +
   geom_density(col="red")
 ```
 
+La densidad no es lo mismo que la frecuencia relativa (Figura \@ref(fig:graficos-hist6b)). La densidad es el ajuste a la función de densidad de los datos donde la integral suma a 1, la frecuencia relativa es el porcentaje de observaciones por clase. Para esto es necesario insertar dentro del `aes()` de `geom_histogram` el `y=after_stat(count/sum(count))`.
+
+```{r graficos-hist6b, fig.cap='Histograma mostrando la frecuencia relativa en el eje y en vez del conteo o la densidad'}
+ggplot(airquality,aes(x=Temp)) +
+  geom_histogram(bins = 20,aes(y=after_stat(count/sum(count))),
+                 col="black",fill="blue")
+```
+
+A veces se quiere representar la frecuencia acumulada (absoluta o relativa), con lo que el histograma va a presentar una tendencia ascendente hasta llegar al total de observaciones (absoluta) o hasta uno (relativa). Para lograr esto se hace uso de la función `cumsum` al definir `aes(y)`, como se muestra en las Figuras \@ref(fig:graficos-hist6c) y \@ref(fig:graficos-hist6d), para frecuencias absolutas y relativas respectivamente.
+
+(ref:graficos-hist6c) Histograma mostrando la frecuencia absoluta acumulada. En este caso $N = `r nrow(airquality)`$.
+
+```{r graficos-hist6c, fig.cap='(ref:graficos-hist6c)'}
+ggplot(airquality,aes(x=Temp)) +
+  geom_histogram(bins = 20,aes(y=after_stat(cumsum(count))),
+                 col="black",fill="blue")
+```
+
+```{r graficos-hist6d, fig.cap='Histograma mostrando la frecuencia relativa acumulada'}
+ggplot(airquality,aes(x=Temp)) +
+  geom_histogram(bins = 20,aes(y=after_stat(cumsum(count/sum(count)))),
+                 col="black",fill="blue")
+```
+
 Combinando lo aprendido hasta ahora se pueden modificar el relleno junto con el eje y, así como agregar la curva de densidad, para generar un gráfico que brinda más información (Figura \@ref(fig:graficos-hist7)).
 
 ```{r graficos-hist7, fig.cap='Histograma mostrando la densidad en el eje y en vez del conteo, con la curva de densidad superpuesta, y relleno de acuerdo al conteo'}
