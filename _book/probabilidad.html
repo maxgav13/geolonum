@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-05-06" />
+<meta name="date" content="2020-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -363,7 +363,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.3.4" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#medidas-de-ajuste-y-error"><i class="fa fa-check"></i><b>10.3.4</b> Medidas de ajuste y error</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a></li>
+<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a><ul>
+<li class="chapter" data-level="11.1" data-path="probabilidad.html"><a href="probabilidad.html#axiomas-y-nomenclatura"><i class="fa fa-check"></i><b>11.1</b> Axiomas y Nomenclatura</a></li>
+<li class="chapter" data-level="11.2" data-path="probabilidad.html"><a href="probabilidad.html#reglas-de-probabilidad"><i class="fa fa-check"></i><b>11.2</b> Reglas de probabilidad</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-suma"><i class="fa fa-check"></i><b>11.2.1</b> Regla de la suma</a></li>
+<li class="chapter" data-level="11.2.2" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-multiplicación"><i class="fa fa-check"></i><b>11.2.2</b> Regla de la multiplicación</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="probabilidad.html"><a href="probabilidad.html#variables-aleatorias"><i class="fa fa-check"></i><b>11.3</b> Variables aleatorias</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a></li>
 <li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a></li>
 <li class="chapter" data-level="14" data-path="estimación.html"><a href="estimación.html"><i class="fa fa-check"></i><b>14</b> Estimación</a></li>
@@ -395,7 +402,121 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="probabilidad" class="section level1">
 <h1><span class="header-section-number">Capítulo 11</span> Probabilidad</h1>
+<p>La probabilidad permite cuantificar la frecuencia de un acontecimiento determinado mediante la realización de un experimento aleatorio, del que se conocen todos los resultados posibles, bajo condiciones suficientemente estables. La probabilidad de un suceso es un numero, comprendido entre 0 y 1 (o 0 y 100), que indica las posibilidades que tiene de verificarse cuando se realiza un experimento aleatorio.</p>
+<p>Un <em>experimento aleatorio</em> es aquella experiencia que trae un resultado que no se sabe a ciencia cierta cuál será, es decir no hay certeza del resultado. Como ejemplos comunes se pueden mencionar tirar una moneda al aire, tirar los dados. El conjunto de todos los resultados posibles arrojados por un experimento aleatorio se denomina <em>espacio muestral (<span class="math inline">\(\Omega\)</span>)</em>. En el caso de tirar una moneda al aire seria <span class="math inline">\(\Omega=\lbrace escudo,corona \rbrace\)</span>, en el caso de un dado <span class="math inline">\(\Omega=\lbrace 1,2,3,4,5,6 \rbrace\)</span>. Un <em>evento o suceso</em> es cualquier subconjunto del espacio muestral, cada uno de los resultados posibles de una experiencia aleatoria <span class="citation">(Walpole, Myers, &amp; Myers, <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<div id="axiomas-y-nomenclatura" class="section level2">
+<h2><span class="header-section-number">11.1</span> Axiomas y Nomenclatura</h2>
+<p>Hay ciertos conceptos que son propios del tema de probabilidad y es necesario conocer para poder comprenderlos y aplicarlos, éstos se mencionan con más detalle en <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span>.</p>
+<ul>
+<li><span class="math inline">\(P[A]\)</span> es la probabilidad de que el evento o suceso <span class="math inline">\(A\)</span> ocurra,</li>
+<li><span class="math inline">\(P[A&#39;]=1-P[A]\)</span> es la probabilidad de que el evento o suceso <span class="math inline">\(A\)</span> no ocurra, lo que se conoce como el complemento del evento,</li>
+<li><span class="math inline">\(P[A \cap B]\)</span> es la probabilidad de que el evento <span class="math inline">\(A\)</span> <strong>y</strong> el evento <span class="math inline">\(B\)</span> ocurran (intersección),</li>
+<li><span class="math inline">\(P[A \cup B]\)</span> es la probabilidad de que el evento <span class="math inline">\(A\)</span> <strong>o</strong> el evento <span class="math inline">\(B\)</span> ocurran (unión),</li>
+<li><span class="math inline">\(P[A | B]\)</span> es la probabilidad de que el evento <span class="math inline">\(A\)</span> ocurra <strong>dado</strong> el evento <span class="math inline">\(B\)</span> ha ocurrido (condicional),</li>
+<li><span class="math inline">\(P[A \cap B] = 0\)</span> indica eventos mutuamente excluyentes, que no tienen elementos en común,</li>
+<li><span class="math inline">\(0&lt;P[A]&lt;1\)</span>, la probabilidad siempre se encuentra en 0 y 1.</li>
+</ul>
+</div>
+<div id="reglas-de-probabilidad" class="section level2">
+<h2><span class="header-section-number">11.2</span> Reglas de probabilidad</h2>
+<p>Lo que se expone aquí proviene en su mayoría de <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span>.</p>
+<div id="regla-de-la-suma" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Regla de la suma</h3>
+<p>De manera general esta regla aplica cuando se quiere obtener la probabilidad de que <span class="math inline">\(A\)</span> <strong>o</strong> <span class="math inline">\(B\)</span> ocurran, o sea que al menos uno de los eventos de interés debe ocurrir. La forma general de la regla de la suma se muestra en la Ecuación <a href="probabilidad.html#eq:p-suma">(11.1)</a>.</p>
+<p><span class="math display" id="eq:p-suma">\[\begin{equation}
+  P[A \cup B] = P[A] + P[B] - P[A \cap B]
+  \tag{11.1}
+\end{equation}\]</span></p>
+<p>Cuando los eventos son excluyentes (no pueden ocurrir al mismo tiempo) se tiene que <span class="math inline">\(P[A \cap B] = 0\)</span> y la ecuación se reduce a <span class="math inline">\(P[A] + P[B]\)</span>. Si los eventos no son excluyentes (pueden ocurrir al mismo tiempo) se utiliza toda la ecuación donde <span class="math inline">\(P[A \cap B]\)</span> va a ser la intersección (cantidad de datos en común) entre los eventos y debe ser sustraída para que no se contabilice dos veces.</p>
+<p>Un ejemplo de eventos excluyentes puede ser el sacar un As (<span class="math inline">\(A\)</span>) o un Rey rojo (<span class="math inline">\(B\)</span>) de una baraja de 52 cartas, donde los eventos son excluyentes porque no hay intersección entre As y Rey, una representación del problema se muestra en la Figura <a href="probabilidad.html#fig:suma1">11.1</a>. Se tiene <span class="math inline">\(P[A]=\frac{4}{52}\)</span>, <span class="math inline">\(P[B]=\frac{2}{52}\)</span>, entonces <span class="math inline">\(P[A \cup B]=\frac{4}{52}+\frac{2}{52}=\frac{6}{52}=0.115\)</span> o <span class="math inline">\(11.5\%\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:suma1"></span>
+<img src="images/venn_diagramm_suma1.png" alt="Ejemplo de regla de la suma para eventos excluyentes." width="70%" />
+<p class="caption">
+Figura 11.1: Ejemplo de regla de la suma para eventos excluyentes.
+</p>
+</div>
+<p>Un ejemplo de eventos no excluyentes puede ser el sacar un As (<span class="math inline">\(A\)</span>) o una carta de espadas negra (<span class="math inline">\(B\)</span>) de una baraja de 52 cartas, donde los eventos son no excluyentes porque hay un As de espadas negra, una representación del problema se muestra en la Figura <a href="probabilidad.html#fig:suma2">11.2</a>. Se tiene <span class="math inline">\(P[A]=\frac{4}{52}\)</span>, <span class="math inline">\(P[B]=\frac{13}{52}\)</span>, <span class="math inline">\(P[A \cap B] = \frac{1}{52}\)</span>, entonces <span class="math inline">\(P[A \cup B]=\frac{4}{52}+\frac{13}{52}-\frac{1}{52}=\frac{4}{13}=0.308\)</span> o <span class="math inline">\(30.8\%\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:suma2"></span>
+<img src="images/venn_diagramm_suma2.png" alt="Ejemplo de regla de la suma para eventos no excluyentes." width="70%" />
+<p class="caption">
+Figura 11.2: Ejemplo de regla de la suma para eventos no excluyentes.
+</p>
+</div>
+</div>
+<div id="regla-de-la-multiplicación" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> Regla de la multiplicación</h3>
+<p>De manera general esta regla aplica cuando se quiere obtener la probabilidad de que <span class="math inline">\(A\)</span> <strong>y</strong> <span class="math inline">\(B\)</span> ocurran, o sea que todos los eventos de interés deben ocurrir. La forma general de la regla de la suma se muestra en la Ecuación <a href="probabilidad.html#eq:p-mult">(11.2)</a>.</p>
+<p><span class="math display" id="eq:p-mult">\[\begin{equation}
+  P[A \cap B] = P[A] * P[B|A]
+  \tag{11.2}
+\end{equation}\]</span></p>
+<p>Cuando los eventos son independientes (ocurrencia de A no afecta la ocurrencia de B) se tiene que <span class="math inline">\(P[B|A] = P[B]\)</span> y la ecuación se reduce a <span class="math inline">\(P[A] * P[B]\)</span>. Si los eventos no son independientes (ocurrencia de A afecta la ocurrencia de B) y se utiliza toda la ecuación.</p>
+<p><span class="math inline">\(P[B|A]\)</span> es la probabilidad condicional de <span class="math inline">\(B\)</span> dado <span class="math inline">\(A\)</span>. La Ecuación <a href="probabilidad.html#eq:p-mult">(11.2)</a> se puede arreglar para encontrar esta probabilidad condicional como se muestra en la Ecuación <a href="probabilidad.html#eq:p-cond">(11.3)</a>, donde la principal idea es que al condicionar por un evento, ahora el total (denominador) no va a ser el total de las observaciones sino el total de observaciones del evento condicionante.</p>
+<p><span class="math display" id="eq:p-cond">\[\begin{equation}
+  P[B|A] = \frac{P[A \cap B]}{P[A]}
+  \tag{11.3}
+\end{equation}\]</span></p>
+<p>Un ejemplo de eventos independientes puede ser el siguiente. Consideremos un experimento en el que se sacan 2 cartas, una después de la otra, de una baraja ordinaria, con reemplazo. Los eventos se definen como <span class="math inline">\(A\)</span>: la primera carta es un As, <span class="math inline">\(B\)</span>: la segunda carta es una espada. Como la primera carta se reemplaza, nuestro espacio muestral para la primera y segunda cartas consta de 52 cartas, que contienen 4 ases y 13 espadas. Se tiene <span class="math inline">\(P[A]=\frac{4}{52}\)</span>, <span class="math inline">\(P[B]=\frac{13}{52}\)</span>, entonces <span class="math inline">\(P[A \cap B]=\frac{4}{52}*\frac{2}{52}=\frac{52}{2704}=0.019\)</span> o <span class="math inline">\(1.9\%\)</span>; que sería lo mismo que la intersección <span class="math inline">\(P[A \cap B]\)</span> donde solo hay una opción de que se den los dos eventos entonces <span class="math inline">\(P[A \cap B]=\frac{1}{52}=0.019\)</span>.</p>
+<p>Un ejemplo de eventos no independientes puede ser el siguiente. Suponga que se tiene una caja de fusibles con 20 unidades, de las cuales 5 están defectuosas. Si se seleccionan 2 fusibles al azar y se retiran de la caja, uno después del otro, sin reemplazar el primero, ¿cuál es la probabilidad de que ambos fusibles estén defectuosos? Se tiene <span class="math inline">\(P[A]=\frac{5}{20}\)</span>, <span class="math inline">\(P[B|A]=\frac{4}{19}\)</span>, entonces <span class="math inline">\(P[A \cap B]=\frac{5}{20}*\frac{4}{19}=\frac{20}{380}=\frac{1}{19}=0.053\)</span> o <span class="math inline">\(5.3\%\)</span></p>
+<p>Un ejemplo de probabilidad condicional puede ser el siguiente. Consideremos ahora una baraja ordinaria con 52 cartas, de 4 tipos, 13 de cada tipo y 2 colores (Figura <a href="probabilidad.html#fig:cartas">11.3</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:cartas"></span>
+<img src="images/cartas.png" alt="Cartas de una baraja de naipes." width="70%" />
+<p class="caption">
+Figura 11.3: Cartas de una baraja de naipes.
+</p>
+</div>
+<p>¿Cuál es la probabilidad de sacar 1 As si la carta que se saca es Roja <span class="math inline">\(P[As|Roja]\)</span>? Se puede resolver de dos maneras. Primero, y la que resulta más intuitiva, se puede condicionar y el nuevo total cambia, con lo que el nuevo total es el total de cartas Rojas (26), y de ese total cuántas son As (2), entonces <span class="math inline">\(P[As|Roja]=\frac{2}{26}=0.077\)</span> o <span class="math inline">\(7.7\%\)</span>. Segundo, se puede usar la ecuación de la probabilidad condicional, usando siempre el total de observaciones, <span class="math inline">\(P[As|Roja]=\frac{P[Roja \ \cap \ As]}{P[Roja]}=\frac{2/52}{26/52}=0.077\)</span> o <span class="math inline">\(7.7\%\)</span>.</p>
+</div>
+</div>
+<div id="variables-aleatorias" class="section level2">
+<h2><span class="header-section-number">11.3</span> Variables aleatorias</h2>
+<p>Una variable aleatoria es una variable X a la que le puede corresponder cada uno de los eventos del espacio muestral un número real (x). Si el número real sólo se puede expresar en enteros, a la variable aleatoria se le denomina variable aleatoria discreta, si puede tener decimales y por ende un gran número de posibilidades, es una variable aleatoria continua <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>. Ejemplos de estas variables aleatorias se presentan en la Figura <a href="probabilidad.html#fig:var-aleat">11.4</a> <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>)</span>.</p>
 
+<div class="figure" style="text-align: center"><span id="fig:var-aleat"></span>
+<img src="images/variables_aleatorias.png" alt="Ejemplos de variables aleatorias mostrando casos discretos y continuos (Swan &amp; Sandilands, 1995)." width="70%" />
+<p class="caption">
+Figura 11.4: Ejemplos de variables aleatorias mostrando casos discretos y continuos <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>)</span>.
+</p>
+</div>
+<p>Tanto para las variables aleatorias discretas como continuas existen dos funciones de densidad o probabilidad que las pueden caracterizar: función de densidad de probabilidad (ésta realmente aplica más para variables discretas) y función de densidad acumulada <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p>La función de densidad de probabilidad (Figura <a href="probabilidad.html#fig:disc-pdf">11.5</a>) brinda la probabilidad puntual de cada uno de los posibles resultados para una variable aleatoria discreta; para una variable aleatoria continua el valor de esta función de probabilidad va a ser muy pequeño dada la gran cantidad de valores que puede tomar esta variable. La función de densidad acumulada brinda la probabilidad de obtener un valor menor o igual (mayor o igual) al de interés (Figuras <a href="probabilidad.html#fig:disc-cdf">11.6</a>, <a href="probabilidad.html#fig:cont-cdf">11.8</a>), y siempre comprende de 0 a 1 (0 a 100).</p>
+<p>Para un ejemplo discreto, en el caso de lanzar una moneda al aire y de contar la corona como un éxito, se pueden tener 3 resultados 0 coronas y 2 escudos, 1 corona y 1 escudo, o 2 coronas. La probabilidad de cada uno de los posibles resultados (0, 1, 2) se muestra en la Figura <a href="probabilidad.html#fig:disc-pdf">11.5</a>, y la probabilidad acumulada se muestra en la Figura <a href="probabilidad.html#fig:disc-cdf">11.6</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:disc-pdf"></span>
+<img src="geolonum_files/figure-html/disc-pdf-1.png" alt="Función de densidad de probabilidad para una variable aleatoria discreta." width="70%" />
+<p class="caption">
+Figura 11.5: Función de densidad de probabilidad para una variable aleatoria discreta.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:disc-cdf"></span>
+<img src="geolonum_files/figure-html/disc-cdf-1.png" alt="Función de densidad acumulada para una variable aleatoria discreta" width="70%" />
+<p class="caption">
+Figura 11.6: Función de densidad acumulada para una variable aleatoria discreta
+</p>
+</div>
+<p>Para un ejemplo de variable continua, se puede tener una variable con media de 30 y desviación estándar de 3, y se quiere encontrar la probabilidad de que esta variable sea menor a 25 (Figura <a href="probabilidad.html#fig:cont-pdf">11.7</a> A), de que sea mayor a 35 (Figura <a href="probabilidad.html#fig:cont-pdf">11.7</a> B), o de que se encuentre entre 25 y 35 (Figura <a href="probabilidad.html#fig:cont-pdf">11.7</a> C). La curva de densidad acumulada se presenta en la Figura <a href="probabilidad.html#fig:cont-cdf">11.8</a>, a partir de la cual se pueden responder las mismas preguntas anteriores, lo único que cambia es la presentación de la distribución.</p>
+<div class="figure" style="text-align: center"><span id="fig:cont-pdf"></span>
+<img src="geolonum_files/figure-html/cont-pdf-1.png" alt="Ejemplos de función de densidad de probabilidad para una variable aleatoria continua. **A** Para X menor a un valor. **B** Para X mayor a un valor. **C** Para X entre entre dos valores." width="90%" />
+<p class="caption">
+Figura 11.7: Ejemplos de función de densidad de probabilidad para una variable aleatoria continua. <strong>A</strong> Para X menor a un valor. <strong>B</strong> Para X mayor a un valor. <strong>C</strong> Para X entre entre dos valores.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:cont-cdf"></span>
+<img src="geolonum_files/figure-html/cont-cdf-1.png" alt="Función de densidad acumulada para una variable aleatoria continua." width="70%" />
+<p class="caption">
+Figura 11.8: Función de densidad acumulada para una variable aleatoria continua.
+</p>
+</div>
+
+</div>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-swan1995">
+<p>Swan, A., &amp; Sandilands, M. (1995). <em>Introduction to Geological Data Analysis</em>. Blackwell Science.</p>
+</div>
+<div id="ref-walpole2012">
+<p>Walpole, R. E., Myers, R. H., &amp; Myers, S. L. (2012). <em>Probabilidad y Estadística Para Ingeniería y Ciencias</em>. Pearson.</p>
+</div>
 </div>
             </section>
 

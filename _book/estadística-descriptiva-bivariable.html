@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-05-06" />
+<meta name="date" content="2020-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -363,7 +363,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.3.4" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#medidas-de-ajuste-y-error"><i class="fa fa-check"></i><b>10.3.4</b> Medidas de ajuste y error</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a></li>
+<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a><ul>
+<li class="chapter" data-level="11.1" data-path="probabilidad.html"><a href="probabilidad.html#axiomas-y-nomenclatura"><i class="fa fa-check"></i><b>11.1</b> Axiomas y Nomenclatura</a></li>
+<li class="chapter" data-level="11.2" data-path="probabilidad.html"><a href="probabilidad.html#reglas-de-probabilidad"><i class="fa fa-check"></i><b>11.2</b> Reglas de probabilidad</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-suma"><i class="fa fa-check"></i><b>11.2.1</b> Regla de la suma</a></li>
+<li class="chapter" data-level="11.2.2" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-multiplicación"><i class="fa fa-check"></i><b>11.2.2</b> Regla de la multiplicación</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="probabilidad.html"><a href="probabilidad.html#variables-aleatorias"><i class="fa fa-check"></i><b>11.3</b> Variables aleatorias</a></li>
+</ul></li>
 <li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a></li>
 <li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a></li>
 <li class="chapter" data-level="14" data-path="estimación.html"><a href="estimación.html"><i class="fa fa-check"></i><b>14</b> Estimación</a></li>
@@ -628,6 +635,16 @@ fit_lin <span class="op">%&gt;%</span><span class="st"> </span>
 <pre><code>## [1] -0.4579879</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(airquality, <span class="kw">cor</span>(Temp,Wind))</code></pre>
 <pre><code>## [1] -0.4579879</code></pre>
+<p>De manera similar, se puede estimar la correlación a partir de la Ecuación <a href="estadística-descriptiva-bivariable.html#eq:cor-pend">(10.5)</a>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">airquality <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select_at</span>(<span class="kw">vars</span>(Temp,Wind)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">map_df</span>(sd) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">b1 =</span> <span class="kw">coef</span>(fit_lin)[<span class="dv">2</span>],
+         <span class="dt">r =</span> b1 <span class="op">*</span><span class="st"> </span>Wind<span class="op">/</span>Temp)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##    Temp  Wind    b1      r
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1  9.47  3.52 -1.23 -0.458</code></pre>
 
 </div>
 </div>

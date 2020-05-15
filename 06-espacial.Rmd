@@ -522,7 +522,7 @@ elmat %>%
 
 Para generar el modelo en 3D (Figura \@ref(fig:sp-mapas-ray4)), simplemente se termina la cadena de comandos con `plot_3d`. Esto abre una ventana interactiva donde se puede manipular el modelo, en este caso simplemente se toma una captura de la apariencia en 3D.
 
-```{r sp-mapas-ray4, fig.cap='Model de sombras en 3D'}
+```{r sp-mapas-ray4, fig.cap='Modelo de sombras en 3D'}
 elmat %>%
   sphere_shade(texture = "imhof1") %>%
   add_shadow(raymat, 0.5) %>%

@@ -289,6 +289,16 @@ sqrt(fit_lin %>% glance() %>% pull(r.squared)) * -1
 with(airquality, cor(Temp,Wind))
 ```
 
+De manera similar, se puede estimar la correlación a partir de la Ecuación \@ref(eq:cor-pend).
+
+```{r}
+airquality %>% 
+  select_at(vars(Temp,Wind)) %>% 
+  map_df(sd) %>% 
+  mutate(b1 = coef(fit_lin)[2],
+         r = b1 * Wind/Temp)
+```
+
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
