@@ -1,9 +1,9 @@
 bookdown::gitbook:
-  css: style.css
+  css: css/style.css
   config:
     toc:
       before: |
-        <li><a href="./">G-4101  Geologia Numerica</a></li>
+        <li><a href="./">Geologia Numerica</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
 #    download: ["pdf", "epub"]

@@ -1,1 +1,35 @@
 # Secuencias de Datos
+
+```{r secuencias-setup, include=FALSE}
+library(DescTools)
+library(summarytools)
+library(patchwork)
+library(janitor)
+library(tidymodels)
+library(tidyverse)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE,
+  # fig.path = "figs/",
+  fig.retina = 3,
+  fig.width = 8,
+  fig.asp = 0.618,
+  fig.align = "center",
+  out.width = "70%"
+)
+
+theme_set(theme_bw(base_size = 12))
+
+```
+
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

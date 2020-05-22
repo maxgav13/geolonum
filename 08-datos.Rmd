@@ -71,7 +71,7 @@ No hay que confundir los conceptos de muestra estadistica y muestra geologica. U
 
 ## Variables
 
-Hay dos tipos generales de variables: Cualitativa y Cuantitativa.
+Hay dos tipos generales de variables: Cualitativa y Cuantitativa. Esto es presentado por @triola2004, así como la subdivisión de dichos tipos de variables, presenta a continuación.
 
 ### Cualitativa
 
@@ -89,7 +89,7 @@ Corresponden con datos numéricos, es el tipo de dato que por lo general se asoc
 Se puede dividir en: 
 
   - Intervalo: donde datos los datos se encuentran igualmente espaciados y no hay un cero absoluto, o sea pueden haber valores negativos,
-  - Ratio: donde hay un cero absoluto, correspondiendo con valores positivos.
+  - Razón: donde hay un cero absoluto, correspondiendo con valores positivos.
 
 También se puede dividir en:
 
@@ -141,6 +141,8 @@ knitr::include_graphics('images/muestra-geologica.png')
 ```
 
 ### Tipos
+
+Se presentan los tipos o técnicas de muestreo más comunes y que permiten obtener una muestra representativa de la población, descritos en más detalle en @triola2004.
 
 #### Aleatorio Simple
 

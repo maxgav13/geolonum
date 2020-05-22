@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-05-15" />
+<meta name="date" content="2020-05-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,7 @@
 <script src="libs/pacifico-1/data_stars_pacificocdf13b.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -207,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">G-4101  Geologia Numerica</a></li>
+<li><a href="./">Geologia Numerica</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
@@ -371,7 +372,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="probabilidad.html"><a href="probabilidad.html#variables-aleatorias"><i class="fa fa-check"></i><b>11.3</b> Variables aleatorias</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a></li>
+<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a><ul>
+<li class="chapter" data-level="12.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-binomial"><i class="fa fa-check"></i><b>12.1</b> Distribución Binomial</a></li>
+<li class="chapter" data-level="12.2" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-de-poisson"><i class="fa fa-check"></i><b>12.2</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.3" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-o-gaussiana"><i class="fa fa-check"></i><b>12.3</b> Distribución Normal o Gaussiana</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-estándar-z"><i class="fa fa-check"></i><b>12.3.1</b> Distribución Normal Estándar (Z)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribuciones-de-probabilidad-en-r"><i class="fa fa-check"></i><b>12.4</b> Distribuciones de probabilidad en <strong>R</strong></a></li>
+</ul></li>
 <li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a></li>
 <li class="chapter" data-level="14" data-path="estimación.html"><a href="estimación.html"><i class="fa fa-check"></i><b>14</b> Estimación</a></li>
 <li class="chapter" data-level="15" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadísticas</a></li>
@@ -471,7 +479,7 @@ No hay que confundir los conceptos de muestra estadistica y muestra geologica. U
 </div>
 <div id="variables" class="section level2">
 <h2><span class="header-section-number">8.4</span> Variables</h2>
-<p>Hay dos tipos generales de variables: Cualitativa y Cuantitativa.</p>
+<p>Hay dos tipos generales de variables: Cualitativa y Cuantitativa. Esto es presentado por <span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span>, así como la subdivisión de dichos tipos de variables, presenta a continuación.</p>
 <div id="cualitativa" class="section level3">
 <h3><span class="header-section-number">8.4.1</span> Cualitativa</h3>
 <p>Lo que se conoce como datos categóricos, donde las entradas o datos toman valores de clases o niveles. Dentro de <strong>R</strong> estas son las que so codifican como factores. Dentro de este tipo podemos encontrar una subdivisión:</p>
@@ -487,7 +495,7 @@ No hay que confundir los conceptos de muestra estadistica y muestra geologica. U
 <p>Se puede dividir en:</p>
 <ul>
 <li>Intervalo: donde datos los datos se encuentran igualmente espaciados y no hay un cero absoluto, o sea pueden haber valores negativos,</li>
-<li>Ratio: donde hay un cero absoluto, correspondiendo con valores positivos.</li>
+<li>Razón: donde hay un cero absoluto, correspondiendo con valores positivos.</li>
 </ul>
 <p>También se puede dividir en:</p>
 <ul>
@@ -542,6 +550,7 @@ Figura 8.6: Representación de una población de interés geológico donde es ne
 </div>
 <div id="tipos-1" class="section level3">
 <h3><span class="header-section-number">8.6.1</span> Tipos</h3>
+<p>Se presentan los tipos o técnicas de muestreo más comunes y que permiten obtener una muestra representativa de la población, descritos en más detalle en <span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span>.</p>
 <div id="aleatorio-simple" class="section level4">
 <h4><span class="header-section-number">8.6.1.1</span> Aleatorio Simple</h4>
 <p>Una muestra se selecciona de modo que todos los elementos de la población tengan la misma probabilidad de ser elegidos. En general es poco recomendado cuando la población es muy grande o heterogénea (Figura <a href="introducción-a-estadística.html#fig:muestreo-aleatorio">8.7</a>).</p>
@@ -615,6 +624,9 @@ Figura 8.12: Diferencia entre precisión y exactitud. Tomado de: <a href="https:
 </div>
 <div id="ref-trauth2015">
 <p>Trauth, M. (2015). <em>MATLAB® Recipes for Earth Sciences</em> (4.ª ed.). Berlin: Springer-Verlag Berlin Heidelberg.</p>
+</div>
+<div id="ref-triola2004">
+<p>Triola, M. F. (2004). <em>Probabilidad y Estadística</em> (9na ed.). México: Pearson Educación.</p>
 </div>
 </div>
             </section>

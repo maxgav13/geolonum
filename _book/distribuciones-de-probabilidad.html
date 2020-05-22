@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-05-15" />
+<meta name="date" content="2020-05-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -128,6 +128,7 @@
 <script src="libs/pacifico-1/data_stars_pacificocdf13b.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -207,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">G-4101  Geologia Numerica</a></li>
+<li><a href="./">Geologia Numerica</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
@@ -371,7 +372,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="probabilidad.html"><a href="probabilidad.html#variables-aleatorias"><i class="fa fa-check"></i><b>11.3</b> Variables aleatorias</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a></li>
+<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a><ul>
+<li class="chapter" data-level="12.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-binomial"><i class="fa fa-check"></i><b>12.1</b> Distribución Binomial</a></li>
+<li class="chapter" data-level="12.2" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-de-poisson"><i class="fa fa-check"></i><b>12.2</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.3" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-o-gaussiana"><i class="fa fa-check"></i><b>12.3</b> Distribución Normal o Gaussiana</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-estándar-z"><i class="fa fa-check"></i><b>12.3.1</b> Distribución Normal Estándar (Z)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribuciones-de-probabilidad-en-r"><i class="fa fa-check"></i><b>12.4</b> Distribuciones de probabilidad en <strong>R</strong></a></li>
+</ul></li>
 <li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a></li>
 <li class="chapter" data-level="14" data-path="estimación.html"><a href="estimación.html"><i class="fa fa-check"></i><b>14</b> Estimación</a></li>
 <li class="chapter" data-level="15" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadísticas</a></li>
@@ -402,7 +410,400 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="distribuciones-de-probabilidad" class="section level1">
 <h1><span class="header-section-number">Capítulo 12</span> Distribuciones de Probabilidad</h1>
+<p>En el capítulo anterior se introdujeron los principios de probabilidad y las variables aleatorias (discretas y continuas), y se mencionaron las funciones (distribuciones) de probabilidad, así como unos ejemplo básicos de lo que representan. Estas distribuciones permiten aproximar de forma analítica los fenómenos que dan orígenes a las variables de interés, permitiendo obtener probabilidades para todos los posibles resultados. En este capítulo se van a introducir las distribuciones de probabilidad más utilizadas para variables discretas y continuas (haciendo referencia a una población), y que serán ampliadas en capítulos posteriores tomando en cuenta una muestra.</p>
+<div id="distribución-binomial" class="section level2">
+<h2><span class="header-section-number">12.1</span> Distribución Binomial</h2>
+<p>Esta distribución aplica para variables discretas, de ensayos repetidos cuyo resultado se puede clasificar como de <em>éxito</em> (existe, está presente, está por encima, etc.) o <em>fracaso</em> (no existe, no está presenta, está por debajo, etc.), y la probabilidad de éxito se conoce y mantiene constante para cada ensayo (repetición) <span class="citation">(Trauth, <a href="#ref-trauth2015">2015</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p>La Ecuación <a href="distribuciones-de-probabilidad.html#eq:binom">(12.1)</a> muestra cómo se pueden obtener probabilidades para esta distribución, donde se tiene una variable <span class="math inline">\(X\)</span> distribuida de forma binomial con <span class="math inline">\(n\)</span> cantidad de intentos (ensayos), una probabilidad de éxito <span class="math inline">\(p\)</span> y probabilidad de fracaso <span class="math inline">\(1-p\)</span> para cada ensayo, y <span class="math inline">\(x \ (0,1,2,\cdots,n)\)</span> representa el número de éxitos para el cual obtener la probabilidad.</p>
+<p><span class="math display" id="eq:binom">\[\begin{equation}
+  X \sim Bin(n,p) = \frac{n!}{(n-x)!x!} p^x q^{n-x}
+  \tag{12.1}
+\end{equation}\]</span></p>
+<p>Para demostrar y visualizar esta distribución se presenta el siguiente ejemplo, modificado de <span class="citation">Trauth (<a href="#ref-trauth2015">2015</a>)</span>. En el caso de una perforación para petróleo, la probabilidad de éxito está dada por 0.1 (10%). ¿Cuál es la probabilidad de tener 1 pozo exitoso de un total de 6 intentos? ¿Cuál es la probabilidad de tener al menos 2 pozos exitosos?</p>
+<p>Lo que se tiene: <span class="math inline">\(p=0.1\)</span>, <span class="math inline">\(n=6\)</span>, y se pide la probabilidad de <span class="math inline">\(x=1\)</span> pozo exitoso y la probabilidad de al menos 2 pozos exitosos, que es lo mismo que decir 2 o más. Una representación de la función (distribución) de densidad para este caso se muestra en la Figura <a href="distribuciones-de-probabilidad.html#fig:binom-ej-pdf">12.1</a>. De manera manual se puede resolver de la siguiente manera.</p>
+<p><span class="math display">\[\begin{align}
+  Bin(n,p) &amp;= \frac{n!}{(n-x)!x!} p^x q^{n-x}\\
+  Bin(6,0.1) &amp;= \frac{6!}{(6-1)!1!} 0.1^1 0.9^{6-1} = 0.35 = 35 \%
+\end{align}\]</span></p>
+<p>En <strong>R</strong> se puede usar <code>dbinom</code> para obtener la probabilidad puntual y <code>pbinom</code> para obtener la probabilidad acumulada.</p>
+<pre class="sourceCode r"><code class="sourceCode r">p =<span class="st"> </span><span class="fl">0.1</span>
+n =<span class="st"> </span><span class="dv">6</span>
+x =<span class="st"> </span><span class="dv">1</span>
 
+<span class="kw">dbinom</span>(<span class="dt">x =</span> x, <span class="dt">size =</span> n, <span class="dt">prob =</span> p) <span class="co"># probabilidad de x = 1</span></code></pre>
+<pre><code>## [1] 0.354294</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pbinom</span>(<span class="dt">q =</span> <span class="dv">1</span>, <span class="dt">size =</span> n, <span class="dt">prob =</span> p, <span class="dt">lower.tail =</span> F) <span class="co"># probabilidad de x &gt;= 2</span></code></pre>
+<pre><code>## [1] 0.114265</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:binom-ej-pdf"></span>
+<img src="geolonum_files/figure-html/binom-ej-pdf-1.png" alt="Función de probabilidad binomial para los datos del ejemplo." width="70%" />
+<p class="caption">
+Figura 12.1: Función de probabilidad binomial para los datos del ejemplo.
+</p>
+</div>
+<p>Esta distribución se puede caracterizar por medio de los parámetros <span class="math inline">\(\mu=pq\)</span> y <span class="math inline">\(\sigma=\sqrt{npq}\)</span>, donde éstos corresponden con la media y desviación estándar de una aproximación a la distribución normal <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>, la cual se va a introducir más adelante. El efecto de estos parámetros se puede visualizar en la Figura <a href="distribuciones-de-probabilidad.html#fig:binom-norm">12.2</a>, donde se grafica la distribución de probabilidad y se observa como se puede aproximar a la distribución normal definida por dichos parámetros.</p>
+<div class="figure" style="text-align: center"><span id="fig:binom-norm"></span>
+<img src="geolonum_files/figure-html/binom-norm-1.png" alt="Aproximación de la distribución binomial a la normal por medio de los parámetros de la media y desviación estándar, mostrando la ubicación de la media y una desviación estándar por debajo y encima de la misma." width="90%" />
+<p class="caption">
+Figura 12.2: Aproximación de la distribución binomial a la normal por medio de los parámetros de la media y desviación estándar, mostrando la ubicación de la media y una desviación estándar por debajo y encima de la misma.
+</p>
+</div>
+<p>El caso de la Figura <a href="distribuciones-de-probabilidad.html#fig:binom-norm">12.2</a> A corresponde con una variable distribuida binomialmente con 10 intentos y una probabilidad de éxito de 0.5 (<span class="math inline">\(Bin(10,0.5)\)</span>), dando como resultado los siguientes parámetros:</p>
+<p><span class="math display">\[\begin{equation}
+  \mu = np = 10 \cdot 0.5 = 5\\
+  \sigma = \sqrt{npq} = \sqrt{10 \cdot 0.5 \cdot 0.5} = 1.58 \approx 2
+\end{equation}\]</span></p>
+<p>El caso de la Figura <a href="distribuciones-de-probabilidad.html#fig:binom-norm">12.2</a> B corresponde con una variable distribuida binomialmente con 100 intentos y una probabilidad de éxito de 0.2 (<span class="math inline">\(Bin(100,0.2)\)</span>), dando como resultado los siguientes parámetros:</p>
+<p><span class="math display">\[\begin{equation}
+  \mu = np = 100 \cdot 0.2 = 20\\
+  \sigma = \sqrt{npq} = \sqrt{100 \cdot 0.2 \cdot 0.8} = 4
+\end{equation}\]</span></p>
+</div>
+<div id="distribución-de-poisson" class="section level2">
+<h2><span class="header-section-number">12.2</span> Distribución de Poisson</h2>
+<p>Esta distribución aplica para variables discretas, para eventos que se presentan en una región (distancia, área, volumen) o intervalo de tiempo. Estos eventos, aleatorios e independientes, se consideran poco probables en largos intervalos de ocurrencia, y la cantidad puede ser infinita. Ejemplos de eventos que se pueden caracterizar serían: terremotos, erupciones volcánicas, inundaciones, etc. <span class="citation">(Trauth, <a href="#ref-trauth2015">2015</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p>La Ecuación <a href="distribuciones-de-probabilidad.html#eq:poiss">(12.2)</a> muestra cómo se pueden obtener probabilidades para esta distribución, donde se tiene una variable <span class="math inline">\(X\)</span> distribuida de forma Poisson con <span class="math inline">\(\lambda\)</span> como único parámetro, que corresponde con un promedio de eventos por unidad de tiempo o espacio (<span class="math inline">\(t\)</span>), y <span class="math inline">\(x \ (0,1,2,\cdots)\)</span> representa el número de eventos.</p>
+<p><span class="math display" id="eq:poiss">\[\begin{equation}
+  X \sim Poiss(\lambda) = \frac{e^{-\lambda t}(\lambda t)^x}{x!}
+  \tag{12.2}
+\end{equation}\]</span></p>
+<p>Para demostrar y visualizar esta distribución se presenta el siguiente ejemplo, modificado de <span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span>. Al analizar los impactos de las bombas V1 en la Segunda Guerra Mundial, el sur de Londres se subdividió en 576 regiones, cada una con un área de 0.25 <span class="math inline">\(km^2\)</span>. En total, 535 bombas estallaron en el área combinada de 576 regiones.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Si se selecciona una región aleatoriamente, calcule la probabilidad de que fuese blanco de impactos exactamente en dos (<span class="math inline">\(x=2\)</span>) ocasiones.</li>
+<li>Con base en la probabilidad que se calculó en el inciso a, ¿cuántas de las 576 regiones se espera que reciban impactos exactamente dos veces?</li>
+</ol>
+<p>Se tiene que calcular <span class="math inline">\(\lambda\)</span> el promedio de impactos por región (<span class="math inline">\(t=1\)</span>), y se pide la probabilidad de <span class="math inline">\(x=2\)</span> impactos y la probabilidad de 3 o más impactos. Una representación de la función (distribución) de densidad para este caso se muestra en la Figura <a href="distribuciones-de-probabilidad.html#fig:poiss-ej-pdf">12.3</a>. De manera manual se puede resolver de la siguiente manera.</p>
+<p><span class="math display">\[\begin{equation}
+  \lambda = \frac{535}{576} = 0.929\\
+  Poiss(0.292) = \frac{e^{-0.929 * 1}(0.929 * 1)^2}{2!} = 0.17 = 17 \%\\
+  \text{Número de regiones que pudieran recibir 2 impactos} = 576 * 0.17 = 97.9
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se puede usar <code>dpois</code> para obtener la probabilidad puntual y <code>ppois</code> para obtener la probabilidad acumulada.</p>
+<pre class="sourceCode r"><code class="sourceCode r">lambda =<span class="st"> </span><span class="dv">535</span><span class="op">/</span><span class="dv">576</span>
+x =<span class="st"> </span><span class="dv">2</span>
+
+<span class="kw">dpois</span>(<span class="dt">x =</span> x, <span class="dt">lambda =</span> lambda)  <span class="co"># probabilidad de x = 2</span></code></pre>
+<pre><code>## [1] 0.1703929</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ppois</span>(<span class="dt">q =</span> <span class="dv">2</span>, <span class="dt">lambda =</span> lambda, <span class="dt">lower.tail =</span> F)  <span class="co"># probabilidad de x &gt;= 3</span></code></pre>
+<pre><code>## [1] 0.06768529</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:poiss-ej-pdf"></span>
+<img src="geolonum_files/figure-html/poiss-ej-pdf-1.png" alt="Función de probabilidad de Poisson para los datos del ejemplo." width="70%" />
+<p class="caption">
+Figura 12.3: Función de probabilidad de Poisson para los datos del ejemplo.
+</p>
+</div>
+<p>Esta distribución se puede caracterizar por medio de los parámetros <span class="math inline">\(\mu=\lambda\)</span> y <span class="math inline">\(\sigma=\sqrt{\lambda}\)</span>, donde éstos corresponden con la media y desviación estándar de una aproximación a la distribución normal <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>. El efecto de estos parámetros se puede visualizar en la Figura <a href="distribuciones-de-probabilidad.html#fig:poiss-norm">12.4</a>, donde se grafica la distribución de probabilidad y se observa como se puede aproximar a la distribución normal definida por dichos parámetros.</p>
+<div class="figure" style="text-align: center"><span id="fig:poiss-norm"></span>
+<img src="geolonum_files/figure-html/poiss-norm-1.png" alt="Aproximación de la distribución de Poisson a la normal por medio de los parámetros de la media y desviación estándar, mostrando la ubicación de la media y una desviación estándar por debajo y encima de la misma." width="90%" />
+<p class="caption">
+Figura 12.4: Aproximación de la distribución de Poisson a la normal por medio de los parámetros de la media y desviación estándar, mostrando la ubicación de la media y una desviación estándar por debajo y encima de la misma.
+</p>
+</div>
+<p>El caso de la Figura <a href="distribuciones-de-probabilidad.html#fig:poiss-norm">12.4</a> A corresponde con una variable distribuida como Poisson con <span class="math inline">\(\lambda=3\)</span> (<span class="math inline">\(Poiss(3)\)</span>), dando como resultado los siguientes parámetros:</p>
+<p><span class="math display">\[\begin{equation}
+  \mu = \lambda = 3\\
+  \sigma = \sqrt{\lambda} = \sqrt{3} = 1.73 \approx 2
+\end{equation}\]</span></p>
+<p>El caso de la Figura <a href="distribuciones-de-probabilidad.html#fig:poiss-norm">12.4</a> B corresponde con una variable distribuida como Poisson con <span class="math inline">\(\lambda=10\)</span> (<span class="math inline">\(Poiss(10)\)</span>), dando como resultado los siguientes parámetros:</p>
+<p><span class="math display">\[\begin{equation}
+  \mu = \lambda = 10\\
+  \sigma = \sqrt{\lambda} = \sqrt{10} = 3.16 \approx 3
+\end{equation}\]</span></p>
+
+<div class="rmdnote">
+Para las distribución binomial conforme incrementa la probabilidad de éxito (<span class="math inline">\(p\)</span>) más se asemeja a una distribución normal, y para la distribución de Poisson conforme incrementa el promedio de eventos (<span class="math inline">\(\lambda\)</span>) más se asemeja a una distribución normal.
+</div>
+
+</div>
+<div id="distribución-normal-o-gaussiana" class="section level2">
+<h2><span class="header-section-number">12.3</span> Distribución Normal o Gaussiana</h2>
+<p>Esta distribución es utilizada para variables continuas, y es la más utilizada en estadística porque “describe de manera aproximada muchos fenómenos que ocurren en la naturaleza, la industria y la investigación” <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>. Tiene una forma de campana donde los valores más frecuentes o probables se encuentran en la parte central y los valores menos frecuentes o probables se encuentran en las colas (Figura <a href="distribuciones-de-probabilidad.html#fig:dist-norm">12.5</a>)</p>
+<div class="figure" style="text-align: center"><span id="fig:dist-norm"></span>
+<img src="images/dist-norm-labels.png" alt="Forma de la distribución normal mostrando donde se presentan los valores más y menos frecuentes." width="70%" />
+<p class="caption">
+Figura 12.5: Forma de la distribución normal mostrando donde se presentan los valores más y menos frecuentes.
+</p>
+</div>
+<p>Esta distribución se puede describir por medio de los parámetros de la media (<span class="math inline">\(\mu\)</span>) y desviación estándar (<span class="math inline">\(\sigma\)</span>), donde la media representa el valor más probable <span class="citation">(Trauth, <a href="#ref-trauth2015">2015</a>)</span>. Para indicar que una variable se distribuye normalmente se usa la siguiente sintaxis:</p>
+<p><span class="math display" id="eq:norm">\[\begin{equation}
+  X \sim N(\mu,\sigma)
+  \tag{12.3}
+\end{equation}\]</span></p>
+<p>Las características principales de esta distribución son <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>:</p>
+<ul>
+<li>Simétrica alrededor de <span class="math inline">\(\mu\)</span></li>
+<li>Centrada y con valor máximo en <span class="math inline">\(\mu\)</span></li>
+<li>Puntos de inflexión en <span class="math inline">\(x = \mu \pm \sigma\)</span></li>
+<li>El área bajo la curva es 1</li>
+</ul>
+<p>La Figura <a href="distribuciones-de-probabilidad.html#fig:norm-comp">12.6</a> demuestra cómo afectan la media y desviación estándar la forma de la curva comparando dos curvas.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:norm-comp"></span>
+<img src="geolonum_files/figure-html/norm-comp-1.png" alt="Comparación entre curvas normales con diferentes parámetros. A con diferente media (\(\mu_1 &lt; \mu_2\)) pero misma desviación estándar (\(\sigma_1 = \sigma_2\)). B con misma media (\(\mu_1 = \mu_2\)) pero diferente desviación estándar (\(\sigma_1 &lt; \sigma_2\)). C con diferente media (\(\mu_1 &lt; \mu_2\)) y diferente desviación estándar (\(\sigma_1 &lt; \sigma_2\)). Tomado de (Walpole et al., 2012)." width="90%" />
+<p class="caption">
+Figura 12.6: Comparación entre curvas normales con diferentes parámetros. <strong>A</strong> con diferente media (<span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) pero misma desviación estándar (<span class="math inline">\(\sigma_1 = \sigma_2\)</span>). <strong>B</strong> con misma media (<span class="math inline">\(\mu_1 = \mu_2\)</span>) pero diferente desviación estándar (<span class="math inline">\(\sigma_1 &lt; \sigma_2\)</span>). <strong>C</strong> con diferente media (<span class="math inline">\(\mu_1 &lt; \mu_2\)</span>) y diferente desviación estándar (<span class="math inline">\(\sigma_1 &lt; \sigma_2\)</span>). Tomado de <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.
+</p>
+</div>
+<div id="distribución-normal-estándar-z" class="section level3">
+<h3><span class="header-section-number">12.3.1</span> Distribución Normal Estándar (Z)</h3>
+<p>Un caso especial de la distribución normal es la distribución normal estándar. Ésta se caracteriza por tener una media de o y desviación estándar de 1 <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p>Para transformar (estandarizar) una variable se usa la Ecuación <a href="distribuciones-de-probabilidad.html#eq:norm-z">(12.4)</a> y se describe que esta nueva variable estandarizada está distribuida normalmente con media 0 y desviación estándar 1.</p>
+<p><span class="math display" id="eq:norm-z">\[\begin{equation}
+  Z = \frac{x - \mu}{\sigma}\\
+  Z \sim N(0,1)
+  \tag{12.4}
+\end{equation}\]</span></p>
+
+<div class="rmdnote">
+<span class="math inline">\(Z\)</span> es una medida estandarizada y lo que indica es cuántas desviaciones estándar por encima o por debajo de la media se encuentra el valor <span class="math inline">\(x\)</span>. Si <span class="math inline">\(Z &gt; 0\)</span> entonces <span class="math inline">\(x\)</span> es mayor que la media y si <span class="math inline">\(Z &lt; 0\)</span> entonces <span class="math inline">\(x\)</span> es menor que la media.
+Imaginemos tenemos una población con media 45 y desviación estándar 5.
+Para un <span class="math inline">\(x=50\)</span> tenemos <span class="math inline">\(Z = \frac{50 - 45}{5} = 1\)</span>, entonces <span class="math inline">\(x\)</span> está 1 <span class="math inline">\(\sigma\)</span> por encima de <span class="math inline">\(\mu\)</span>.
+Para un <span class="math inline">\(x=35\)</span> tenemos <span class="math inline">\(Z = \frac{35 - 45}{5} = -2\)</span>, entonces <span class="math inline">\(x\)</span> está 2 <span class="math inline">\(\sigma\)</span> por debajo de <span class="math inline">\(\mu\)</span>.
+</div>
+
+<p>El área bajo la curva original y la curva estandarizada es la misma (Figura <a href="distribuciones-de-probabilidad.html#fig:dist-norm-z">12.7</a>), entonces las probabilidades son las mismas, además es útil para comparar distribuciones aún cuando tienen diferentes escalas y/o unidades <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:dist-norm-z"></span>
+<img src="images/dist-norm-z.png" alt="El área bajo la curva original es la misma que bajo la curva estandarizada, por ende las probabilidades son las mismas (Walpole et al., 2012)." width="70%" />
+<p class="caption">
+Figura 12.7: El área bajo la curva original es la misma que bajo la curva estandarizada, por ende las probabilidades son las mismas <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.
+</p>
+</div>
+<p>Se va a demostrar cómo utilizar la curva normal estándar (<span class="math inline">\(Z\)</span>) para obtener probabilidades por medio de ejemplos tomados de <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span>. El procedimiento manual general es calcular <span class="math inline">\(Z\)</span> y buscar el área a la izquierda para este valor (tablas de distribuciones en <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span>), y dependiendo de lo que se pida se realiza algún cálculo adicional.</p>
+<p>Dada una variable aleatoria X que tiene una distribución normal con <span class="math inline">\(\mu=50\)</span> y <span class="math inline">\(\sigma=10\)</span>, calcule la probabilidad de que X tome un valor entre 45 y 62. La idea es obtener al área a la izquierda del valor mayor y restarle el área a la izquierda del valor menor, obteniendo así la intersección (Figura <a href="distribuciones-de-probabilidad.html#fig:norm-ej1">12.8</a>).</p>
+<p><span class="math display">\[\begin{equation}
+  X \sim N(50,10)\\
+  z_1 = \frac{45 - 50}{10} = -0.5\\
+  z_2 = \frac{62 - 50}{10} = 1.2\\
+  P(45 &lt; X &lt; 62) = P(-0.5 &lt; Z &lt; 1.2) = P(Z &lt; 1.2) - P(Z &lt; -0.5)\\
+  P(Z &lt; 1.2) - P(Z &lt; -0.5) = 0.8849 - 0.3085 = 0.5764 = 57.6 \%
+\end{equation}\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:norm-ej1"></span>
+<img src="geolonum_files/figure-html/norm-ej1-1.png" alt="Curva normal para el ejemplo mostrando el área entre los valores de 45 y 62." width="70%" />
+<p class="caption">
+Figura 12.8: Curva normal para el ejemplo mostrando el área entre los valores de 45 y 62.
+</p>
+</div>
+<p>En <strong>R</strong> se realiza como se muestra, usando <code>pnorm</code>, donde esta función va a calcular, por defecto, el área a la izquierda para <span class="math inline">\(x=q\)</span> con una media <span class="math inline">\(\mu\)</span> y desviación estándar <span class="math inline">\(\sigma\)</span>. La función <code>pnorm</code> y el resto de funciones relacionadas con la distribución normal tienen por defecto una media de 0 y desviación estándar de 1, correspondiendo con la distribución normal estándar, por lo que se pueden usar valores de <span class="math inline">\(z\)</span> directamente y obtener los mismos resultados.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mu =<span class="st"> </span><span class="dv">50</span>
+sigma =<span class="st"> </span><span class="dv">10</span>
+x1 =<span class="st"> </span><span class="dv">45</span>
+x2 =<span class="st"> </span><span class="dv">62</span>
+z1 =<span class="st"> </span>(x1 <span class="op">-</span><span class="st"> </span>mu) <span class="op">/</span><span class="st"> </span>sigma
+z2 =<span class="st"> </span>(x2 <span class="op">-</span><span class="st"> </span>mu) <span class="op">/</span><span class="st"> </span>sigma
+<span class="kw">pnorm</span>(<span class="dt">q =</span> x2,<span class="dt">mean =</span> mu,<span class="dt">sd =</span> sigma) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dt">q =</span> x1,<span class="dt">mean =</span> mu,<span class="dt">sd =</span> sigma)</code></pre>
+<pre><code>## [1] 0.5763928</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(<span class="dt">q =</span> z2) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dt">q =</span> z1)</code></pre>
+<pre><code>## [1] 0.5763928</code></pre>
+<p>Dado que X tiene una distribución normal con <span class="math inline">\(\mu=300\)</span> y <span class="math inline">\(\sigma=50\)</span>, calcule la probabilidad de que X tome un valor mayor que 362. Aquí la idea es obtener el área a la derecha de 362 (Figura <a href="distribuciones-de-probabilidad.html#fig:norm-ej2">12.9</a>), por lo que hay que encontrar el área la izquierda y restárcela a 1.</p>
+<p><span class="math display">\[\begin{equation}
+  X \sim N(300,50)\\
+  z = \frac{362 - 300}{50} = 1.24\\
+  P(X &gt; 362) = P(Z &gt; 1.24) = 1 - P(Z &gt; 1.24)\\
+  1 - P(Z &gt; 1.24) = 1 - 0.8925 = 0.1075 = 10.7 \%
+\end{equation}\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:norm-ej2"></span>
+<img src="geolonum_files/figure-html/norm-ej2-1.png" alt="Curva normal para el ejemplo mostrando el área a la derecha de 362." width="70%" />
+<p class="caption">
+Figura 12.9: Curva normal para el ejemplo mostrando el área a la derecha de 362.
+</p>
+</div>
+<p>En <strong>R</strong> se realiza como se muestra, usando <code>pnorm</code>, donde esta función va a calcular, por defecto, el área a la izquierda para <span class="math inline">\(x=q\)</span> con una media <span class="math inline">\(\mu\)</span> y desviación estándar <span class="math inline">\(\sigma\)</span>. Para calcular el área a la derecha se puede restar el resultado a 1 o se puede usar el argumento <code>lower.tail = F</code> para obtener directamente el área a la derecha.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mu =<span class="st"> </span><span class="dv">300</span>
+sigma =<span class="st"> </span><span class="dv">50</span>
+x =<span class="st"> </span><span class="dv">362</span>
+z =<span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>mu) <span class="op">/</span><span class="st"> </span>sigma
+<span class="kw">pnorm</span>(<span class="dt">q =</span> x,<span class="dt">mean =</span> mu,<span class="dt">sd =</span> sigma,<span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 0.1074877</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dt">q =</span> z)</code></pre>
+<pre><code>## [1] 0.1074877</code></pre>
+<p>Así como se puede calcular la probabilidad para un <span class="math inline">\(x\)</span> se puede a partir de una probabilidad dada encontrar el <span class="math inline">\(x\)</span> que corresponde con dicha probabilidad. Se muestra un ejemplo a continuación.</p>
+<p>Dada una distribución normal con <span class="math inline">\(\mu = 40\)</span> y <span class="math inline">\(\sigma = 6\)</span>, calcule el valor de <span class="math inline">\(x\)</span> que tiene: 45% del área a la izquierda, y 14% del área a la derecha (o sea 86% área a la izquierda), ver Figura <a href="distribuciones-de-probabilidad.html#fig:norm-ej3">12.10</a>. Para ésto se despeja <span class="math inline">\(x\)</span> de la Ecuación <a href="distribuciones-de-probabilidad.html#eq:norm-z">(12.4)</a> y se tiene que encontrar el valor de <span class="math inline">\(z\)</span> que corresponde con la probabilidad dada.</p>
+<p><span class="math display">\[\begin{equation}
+  p = 0.45, \text{resultando en un } z = -0.13\\
+  x = \sigma * z + \mu = 6 * -0.13 + 40 = 39.24\\
+  p = 0.86, \text{resultando en un } z = 1.08\\
+  x = \sigma * z + \mu = 6 * 1.08 + 40 = 46.48
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se usa la función <code>qnorm</code> para encontrar el valor de la variable para una probabilidad dada.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(.<span class="dv">45</span>,<span class="dv">40</span>,<span class="dv">6</span>)</code></pre>
+<pre><code>## [1] 39.24603</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(.<span class="dv">14</span>,<span class="dv">40</span>,<span class="dv">6</span>,<span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 46.48192</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(.<span class="dv">86</span>,<span class="dv">40</span>,<span class="dv">6</span>)</code></pre>
+<pre><code>## [1] 46.48192</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:norm-ej3"></span>
+<img src="geolonum_files/figure-html/norm-ej3-1.png" alt="Curva normal para el ejemplo mostrando el valor para un área a la izquierda de 45% (coral) y el valor para un área a la derecha de 14% (celeste)." width="70%" />
+<p class="caption">
+Figura 12.10: Curva normal para el ejemplo mostrando el valor para un área a la izquierda de 45% (coral) y el valor para un área a la derecha de 14% (celeste).
+</p>
+</div>
+</div>
+</div>
+<div id="distribuciones-de-probabilidad-en-r" class="section level2">
+<h2><span class="header-section-number">12.4</span> Distribuciones de probabilidad en <strong>R</strong></h2>
+<p><strong>R</strong> tiene funciones para las distribuciones más usadas (Tabla <a href="distribuciones-de-probabilidad.html#tab:dist-r">12.1</a>). Existen 4 funciones generales para todas las distribuciones, donde empiezan con la misma letra y después le sigue el nombre de la distribución:</p>
+<ul>
+<li><code>d*</code>: Las funciones que empiezan con <code>d</code> calculan la probabilidad puntual. Éstas aplican más para distribuciones discretas (binomial, poisson).</li>
+<li><code>p*</code>: Las funciones que empiezan con <code>p</code> calculan la probabilidad acumulada inferior (por defecto) o superior. Éstas aplican para todas pero especialmente para las distribuciones continuas (normal, <span class="math inline">\(Z\)</span>, <span class="math inline">\(t\)</span>, <span class="math inline">\(\chi^2\)</span>, <span class="math inline">\(F\)</span>).</li>
+<li><code>q*</code>: Las funciones que empiezan con <code>q</code> calculan el valor de la variable o estadístico (cuantil) que corresponde con cierta probabilidad.</li>
+<li><code>r*</code>: Las funciones que empiezan con <code>r</code> generan datos aleatorio (<code>r</code>andom) para la distribución deseada y con los parámetros deseados.</li>
+</ul>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:dist-r">Tabla 12.1: </span>Funciones de R para las distribuciones más usadas
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Probabilidad
+</div>
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Valores
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Distribucion
+</th>
+<th style="text-align:left;">
+Puntual
+</th>
+<th style="text-align:left;">
+Acumulada
+</th>
+<th style="text-align:left;">
+Cuantil
+</th>
+<th style="text-align:left;">
+Aleatorios
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Binomial
+</td>
+<td style="text-align:left;">
+dbinom
+</td>
+<td style="text-align:left;">
+pbinom
+</td>
+<td style="text-align:left;">
+qbinom
+</td>
+<td style="text-align:left;">
+rbinom
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Poisson
+</td>
+<td style="text-align:left;">
+dpois
+</td>
+<td style="text-align:left;">
+ppois
+</td>
+<td style="text-align:left;">
+qpois
+</td>
+<td style="text-align:left;">
+rpois
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Normal
+</td>
+<td style="text-align:left;">
+dnorm
+</td>
+<td style="text-align:left;">
+pnorm
+</td>
+<td style="text-align:left;">
+qnorm
+</td>
+<td style="text-align:left;">
+rnorm
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+t
+</td>
+<td style="text-align:left;">
+dt
+</td>
+<td style="text-align:left;">
+pt
+</td>
+<td style="text-align:left;">
+qt
+</td>
+<td style="text-align:left;">
+rt
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+chi2
+</td>
+<td style="text-align:left;">
+dchisq
+</td>
+<td style="text-align:left;">
+pchisq
+</td>
+<td style="text-align:left;">
+qchisq
+</td>
+<td style="text-align:left;">
+rchisq
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+df
+</td>
+<td style="text-align:left;">
+pf
+</td>
+<td style="text-align:left;">
+qf
+</td>
+<td style="text-align:left;">
+rf
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-trauth2015">
+<p>Trauth, M. (2015). <em>MATLAB® Recipes for Earth Sciences</em> (4.ª ed.). Berlin: Springer-Verlag Berlin Heidelberg.</p>
+</div>
+<div id="ref-triola2004">
+<p>Triola, M. F. (2004). <em>Probabilidad y Estadística</em> (9na ed.). México: Pearson Educación.</p>
+</div>
+<div id="ref-walpole2012">
+<p>Walpole, R. E., Myers, R. H., &amp; Myers, S. L. (2012). <em>Probabilidad y Estadística Para Ingeniería y Ciencias</em>. Pearson.</p>
+</div>
 </div>
             </section>
 
