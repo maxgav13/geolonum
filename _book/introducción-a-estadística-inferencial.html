@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-05-22" />
+<meta name="date" content="2020-05-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -380,7 +380,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12.4" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribuciones-de-probabilidad-en-r"><i class="fa fa-check"></i><b>12.4</b> Distribuciones de probabilidad en <strong>R</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a></li>
+<li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a><ul>
+<li class="chapter" data-level="13.1" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#distribuciones-muestrales"><i class="fa fa-check"></i><b>13.1</b> Distribuciones muestrales</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#media-barx"><i class="fa fa-check"></i><b>13.1.1</b> Media <span class="math inline">\((\bar{x})\)</span></a></li>
+<li class="chapter" data-level="13.1.2" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#diferencia-de-medias-barx_1-barx_2"><i class="fa fa-check"></i><b>13.1.2</b> Diferencia de medias <span class="math inline">\((\bar{x}_1-\bar{x}_2)\)</span></a></li>
+<li class="chapter" data-level="13.1.3" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#varianza-s2-1"><i class="fa fa-check"></i><b>13.1.3</b> Varianza <span class="math inline">\((s^2)\)</span></a></li>
+<li class="chapter" data-level="13.1.4" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#dos-varianzas-left-fracs_12s_22-right"><i class="fa fa-check"></i><b>13.1.4</b> Dos varianzas <span class="math inline">\(\left( \frac{s_1^2}{s_2^2} \right)\)</span></a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="14" data-path="estimación.html"><a href="estimación.html"><i class="fa fa-check"></i><b>14</b> Estimación</a></li>
 <li class="chapter" data-level="15" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadísticas</a></li>
 <li class="chapter" data-level="16" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html"><i class="fa fa-check"></i><b>16</b> Estadística No Paramétrica</a></li>
@@ -410,7 +417,243 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="introducción-a-estadística-inferencial" class="section level1">
 <h1><span class="header-section-number">Capítulo 13</span> Introducción a Estadística Inferencial</h1>
+<p>En los capítulos anteriores se han venido construyendo las bases para poder, ahora sí, responder a preguntas acerca de poblaciones a partir de datos muestrales, esta es la esencia de la estadística inferencial, ir más allá de describir los datos recolectados para poder hacer generalizaciones con fundamento teórico y cuantitativo. Este flujo de análisis se resume en la Figura <a href="introducción-a-estadística-inferencial.html#fig:infer-diag">13.1</a>. En este capítulo se introducen conceptos fundamentales de la estadística inferencial, para posteriormente expandir sobre éstos utilizando estimación y pruebas de hipótesis para responder formalmente a una pregunta de investigación.</p>
+<div class="figure" style="text-align: center"><span id="fig:infer-diag"></span>
+<img src="images/inferencial-diagrama.png" alt="Diagrama del análisis en estadística inferencial." width="70%" />
+<p class="caption">
+Figura 13.1: Diagrama del análisis en estadística inferencial.
+</p>
+</div>
+<p>Es necesario introducir algunos conceptos nuevos que son muy usados y conocidos en estadística inferencial <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>:</p>
+<ul>
+<li>Parámetro: Es una medida estadística <em>poblacional</em>, cuyo valor es de interés conocer. Por ejemplo, la media poblacional <span class="math inline">\(\mu\)</span> y la varianza poblacional <span class="math inline">\(\sigma^2\)</span> son parámetros. Todos los parámetros se representan por medio de letras griegas.</li>
+<li>Estadístico o Estimador: Es una variable aleatoria definida con las variables de la muestra aleatoria. Por ejemplo, la media muestral <span class="math inline">\(\bar{x}\)</span> y la varianza muestral <span class="math inline">\(s^2\)</span> son estadísticos. Es lo que se mide a partir de la muestra recolectada.</li>
+<li>Distribución muestral de un estadístico: Es la distribución de probabilidad de un estadístico. Va a ser diferente a la distribución poblacional ya que toma en cuenta el tamaño de la muestra. Los diferentes estadísticos van a aproximarse a diferentes curvas de distribución.</li>
+<li>Estadística paramétrica: Es la estadística convencional, en la que se basan la mayoría de técnicas de análisis. Hace suposiciones, siendo la más importante que los datos siguen una distribución conocida, por lo general siendo esta la distribución normal.</li>
+<li>Estadística no-paramétrica: A diferencia de la paramétrica, ésta no hace suposiciones respecto a distribuciones y se emplean otros métodos de análisis, que en algunos casos se pueden realizar únicamente por medios computacionales.</li>
+</ul>
+<div id="distribuciones-muestrales" class="section level2">
+<h2><span class="header-section-number">13.1</span> Distribuciones muestrales</h2>
+<div id="media-barx" class="section level3">
+<h3><span class="header-section-number">13.1.1</span> Media <span class="math inline">\((\bar{x})\)</span></h3>
+<p>Es la distribución de probabilidad de medias muestrales, donde las diferentes muestras presentan el mismo tamaño o número de observaciones <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>)</span>. La distribución de medias muestrales va a tener la misma media de la población pero la desviación estándar va a ser el <em>error estándar de la media</em>.</p>
+<p>A continuación se exponen dos conceptos muy importantes en estadística que permiten aproximar una gran variedad de problemas a la distribución normal <span class="citation">(McKillup &amp; Darby Dyar, <a href="#ref-mckillup2010">2010</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
 
+<div class="rmdnote">
+<p><strong>Teorema del Límite Central</strong>: La distribución de las medias de las muestras tenderá a ser normalmente distribuida aún cuando la población de la cual se muestreó no es normal.</p>
+La media de la distribución de medias es la media de la población y la distribución de medias tiene menos dispersión que la población.
+</div>
+
+
+<div class="rmdnote">
+<strong>Ley de los números grandes</strong>: Si tomamos muestras de una población con distribución desconocida, ya sea finita o infinita, la distribución muestral de <span class="math inline">\(\bar{x}\)</span> aún será aproximadamente normal con media <span class="math inline">\(\mu\)</span> y varianza  o , siempre que el tamaño de la muestra sea grande (<span class="math inline">\(n ≥ 30\)</span>) y la distribución no sea muy asimétrica.
+</div>
+
+<p>En función de si se conoce o no la varianza poblacional (<span class="math inline">\(\sigma^2\)</span>), el error estándar va a ser <span class="math inline">\(\sigma_\bar{x} = \frac{\sigma}{\sqrt{n}}\)</span> o <span class="math inline">\(s_\bar{x} = \frac{s}{\sqrt{n}}\)</span>, respectivamente, donde cuando no se conoce <span class="math inline">\(\sigma^2\)</span> se usa la varianza muestral (<span class="math inline">\(s^2\)</span>) como estimador de la varianza poblacional <span class="citation">(McKillup &amp; Darby Dyar, <a href="#ref-mckillup2010">2010</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p>Lo anterior también afecta la distribución a usar para la inferencia. Si se conoce <span class="math inline">\(\sigma^2\)</span> se usa la distribución normal estándar (<span class="math inline">\(Z\)</span>), pero si no se conoce <span class="math inline">\(\sigma^2\)</span> se usa la distribución <span class="math inline">\(t\)</span> de Student. Esta distribución es similar a al normal en términos de que tiene forma de campana y es simétrica alrededor de la media, pero tiene la característica de que va a estar en función del tamaño de la muestra (<span class="math inline">\(n\)</span>, y por ende de los grados de libertad <span class="math inline">\(v\)</span>), donde a menor tamaño de la muestra va a permitir más probabilidad en las colas y a mayor tamaño de la muestra se va a parecer más a la curva normal <span class="citation">(McKillup &amp; Darby Dyar, <a href="#ref-mckillup2010">2010</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>. Una comparación entre la distribución normal y la distribución <span class="math inline">\(t\)</span> se muestra en la Figura <a href="introducción-a-estadística-inferencial.html#fig:norm-t-comp">13.2</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:norm-t-comp"></span>
+<img src="geolonum_files/figure-html/norm-t-comp-1.png" alt="Comparación entre la distribución normal Z y la distribución t, esta última con diferentes grados de libertad." width="70%" />
+<p class="caption">
+Figura 13.2: Comparación entre la distribución normal Z y la distribución t, esta última con diferentes grados de libertad.
+</p>
+</div>
+<p>Dado lo anterior, la distribución toma la forma de la Ecuación <a href="introducción-a-estadística-inferencial.html#eq:dist-medias">(13.1)</a> para la distribución normal y la Ecuación <a href="introducción-a-estadística-inferencial.html#eq:dist-medias-t">(13.2)</a> para la distribución <span class="math inline">\(t\)</span>:</p>
+<p><span class="math display" id="eq:dist-medias">\[\begin{equation}
+  Z = \frac{\bar{x} - \mu}{\sigma_\bar{x}}\\
+  \sigma_\bar{x} = \frac{\sigma}{\sqrt{n}}
+  \tag{13.1}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:dist-medias-t">\[\begin{equation}
+  t = \frac{\bar{x} - \mu}{s_\bar{x}}\\
+  s_\bar{x} = \frac{s}{\sqrt{n}}
+  \tag{13.2}
+\end{equation}\]</span></p>
+<p>Conforme el tamaño de la muestra incrementa el error estándar decrece y las inferencias/conclusiones se vuelven más precisas. Este concepto se puede observar en la Figura <a href="introducción-a-estadística-inferencial.html#fig:sem-n">13.3</a> <span class="citation">(McKillup &amp; Darby Dyar, <a href="#ref-mckillup2010">2010</a>)</span>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:sem-n"></span>
+<img src="images/sem-n.png" alt="Efecto del tamaño de la muestra en el error estándar. Al aumentar el tamaño de la muestra, manteniendo el resto de parámetros poblacionales constantes, el error estándar decrece, incrementando la precisión de las conclusiones sobre la media poblacional. Tomado de McKillup &amp; Darby Dyar (2010)." width="70%" />
+<p class="caption">
+Figura 13.3: Efecto del tamaño de la muestra en el error estándar. Al aumentar el tamaño de la muestra, manteniendo el resto de parámetros poblacionales constantes, el error estándar decrece, incrementando la precisión de las conclusiones sobre la media poblacional. Tomado de <span class="citation">McKillup &amp; Darby Dyar (<a href="#ref-mckillup2010">2010</a>)</span>.
+</p>
+</div>
+<p>El siguiente ejemplo tomado de <span class="citation">Davis (<a href="#ref-davis2002">2002</a>)</span> muestra cómo se puede tomar en cuenta una muestra para calcular probabilidades y empezar a hacer inferencias. Se realiza primero con la distribución <span class="math inline">\(Z\)</span> (asumiendo que se conoce <span class="math inline">\(\sigma\)</span>) y luego con la distribución <span class="math inline">\(t\)</span>.</p>
+<p>La longitud de especímenes de belemnite tiene una distribución normal con <span class="math inline">\(\mu = 3.5 \ cm\)</span> y <span class="math inline">\(\sigma = 0.2 \ cm\)</span>. Se obtiene una muestra al azar de 8 belemnites. Cuál es la probabilidad de que cuando se selecciona una muestra al azar, le media de la muestra sea de 3.7 cm?</p>
+<p>Si se asume <span class="math inline">\(\sigma = 0.2\)</span> se puede usar <span class="math inline">\(Z\)</span></p>
+<p><span class="math display">\[\begin{equation}
+  \bar{x} = 3.7, \mu = 3.5, \sigma = 0.2, n = 8\\
+  \sigma_\bar{x} = \frac{\sigma}{\sqrt{n}} = \frac{0.2}{\sqrt{8}} = 0.0707\\
+  Z = \frac{\bar{x} - \mu}{\sigma_\bar{x}} = \frac{3.7 - 3.5}{0.0707} = 2.82\\
+  P(X &gt; 3.7) = P(Z &gt; 2.82) = 1 - P(Z &lt; 2.82)\\
+  1 - P(Z &lt; 2.82) = 1 - 0.9976 = 0.0024 \approx 0.2\%
+\end{equation}\]</span></p>
+<p>Si no se asume <span class="math inline">\(\sigma = 0.2\)</span> se usa <span class="math inline">\(t\)</span></p>
+<p><span class="math display">\[\begin{equation}
+  \bar{x} = 3.7, \mu = 3.5, s = 0.2, n = 8, v = 8 - 1 = 7\\
+  s_\bar{x} = \frac{s}{\sqrt{n}} = \frac{0.2}{\sqrt{8}} = 0.0707\\
+  t = \frac{\bar{x} - \mu}{s_\bar{x}} = \frac{3.7 - 3.5}{0.0707} = 2.82\\
+  P(X &gt; 3.7) = P(t_7 &gt; 2.82) = 1 - P(t_7 &lt; 2.82)\\
+  1 - P(t_7 &lt; 2.82) = 1 - 0.9873 = 0.0127 \approx 1.27\%
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se usan las funciones de las distribuciones. En el caso de que conozca <span class="math inline">\(\sigma\)</span> se usa la distribución la normal, si no se conoce <span class="math inline">\(\sigma\)</span> se usa la distribución <span class="math inline">\(t\)</span>. En general se ajusta la desviación estándar y se usa el error estándar respectivo.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="fl">3.7</span>
+mu =<span class="st"> </span><span class="fl">3.5</span>
+sigma =<span class="st"> </span><span class="fl">0.2</span>
+n =<span class="st"> </span><span class="dv">8</span>
+
+<span class="kw">pnorm</span>(<span class="dt">q =</span> x, <span class="dt">mean =</span> mu, <span class="dt">sd =</span> sigma<span class="op">/</span><span class="kw">sqrt</span>(n), <span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 0.002338867</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">s =<span class="st"> </span><span class="fl">0.2</span>
+v =<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+
+<span class="kw">pt</span>(<span class="dt">q =</span> (x<span class="op">-</span>mu)<span class="op">/</span>(s<span class="op">/</span><span class="kw">sqrt</span>(n)), <span class="dt">df =</span> v, <span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 0.01273178</code></pre>
+<p>Con los ejemplos anteriores se observa como al usar la distribución <span class="math inline">\(t\)</span> la probabilidad en los extremos es mayor, especialmente cuando el tamaño de la muestra es pequeño.</p>
+</div>
+<div id="diferencia-de-medias-barx_1-barx_2" class="section level3">
+<h3><span class="header-section-number">13.1.2</span> Diferencia de medias <span class="math inline">\((\bar{x}_1-\bar{x}_2)\)</span></h3>
+<p>Es la distribución de probabilidad de la diferencia entre medias muestrales, donde las muestras pueden o no presentar el mismo tamaño o número de observaciones. Ésta se utiliza cuando se desean comparar dos posibles poblaciones, dos métodos de análisis, etc. Asumiendo que se cumple el Teorema del Límite Central, se asume que las muestras van a estar normalmente distribuidas y por ende la diferencia de medias tendrá esta forma. La distribución toma la forma presentada en la Ecuación <a href="introducción-a-estadística-inferencial.html#eq:dist-diff-medias">(13.3)</a> si se conoce <span class="math inline">\(\sigma\)</span>, sino se puede ajustar y usar la distribución <span class="math inline">\(t\)</span> usando la Ecuación <a href="introducción-a-estadística-inferencial.html#eq:dist-diff-medias-t">(13.4)</a> <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>:</p>
+<p><span class="math display" id="eq:dist-diff-medias">\[\begin{equation}
+  Z = \frac{(\bar{x}_1-\bar{x}_2) - (\mu_1-\mu_2)}{\sigma_{\bar{x}_1-\bar{x}_2}}\\
+  \sigma_{\bar{x}_1-\bar{x}_2} = \sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}
+  \tag{13.3}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:dist-diff-medias-t">\[\begin{equation}
+  t = \frac{(\bar{x}_1-\bar{x}_2) - (\mu_1-\mu_2)}{s_{\bar{x}_1-\bar{x}_2}}\\
+  s_{\bar{x}_1-\bar{x}_2} = \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}
+  \tag{13.4}
+\end{equation}\]</span></p>
+<p>El contenido de humedad del sitio A tiene una media 35% y una desviación estándar de 5%, el contenido de humedad del sitio B tiene una media 30% y una desviación estándar de 6%. Cuál es la probabilidad de que una muestra de tamaño 25 del sitio A tenga un 7% más de contenido de humedad que el una muestra de tamaño 30 del sitio B?</p>
+<p><span class="math display">\[\begin{equation}
+  \mu_1-\mu_2 = 35 - 30 = 5\\
+  \sigma_{\bar{x}_1-\bar{x}_2} = \sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}} = \sqrt{\frac{5^2}{25}+\frac{6^2}{30}} = 1.48\\
+  Z = \frac{(\bar{x}_1-\bar{x}_2) - (\mu_1-\mu_2)}{\sigma_{\bar{x}_1-\bar{x}_2}}\\
+  Z = \frac{7 - 5}{1.48} = 1.35\\
+  P(\bar{X}_1-\bar{X}_2 &gt; 7) = P(Z &gt; 1.35) = 1 - P(Z &lt; 1.35)\\
+  1 - P(Z &lt; 1.35) = 1 - 0.911 = 0.088 \approx 8.85 \%
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se hace de manera similar al caso de una media. Se puede realizar de dos maneras, calculando el <span class="math inline">\(z\)</span> (o <span class="math inline">\(t\)</span>) y usándolo directamente, o en el caso de usar <span class="math inline">\(z\)</span>, incluyendo en la función la diferencia de medias muestrales como el valor de interés, la diferencia de medias poblaciones como la media, y el error estándar como la desviación estándar.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">7</span>
+mu1 =<span class="st"> </span><span class="dv">35</span>
+mu2 =<span class="st"> </span><span class="dv">30</span>
+sigma1 =<span class="st"> </span><span class="dv">5</span><span class="op">^</span><span class="dv">2</span>
+sigma2 =<span class="st"> </span><span class="dv">6</span><span class="op">^</span><span class="dv">2</span>
+n1 =<span class="st"> </span><span class="dv">25</span>
+n2 =<span class="st"> </span><span class="dv">30</span>
+
+z =<span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>(mu1<span class="op">-</span>mu2)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sigma1<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>sigma2<span class="op">/</span>n2)
+z</code></pre>
+<pre><code>## [1] 1.3484</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(<span class="dt">q =</span> z, <span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 0.08876493</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(<span class="dt">q =</span> x, <span class="dt">mean =</span> mu1<span class="op">-</span>mu2, <span class="dt">sd =</span> <span class="kw">sqrt</span>(sigma1<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>sigma2<span class="op">/</span>n2), <span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 0.08876493</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">s1 =<span class="st"> </span><span class="dv">5</span><span class="op">^</span><span class="dv">2</span>
+s2 =<span class="st"> </span><span class="dv">6</span><span class="op">^</span><span class="dv">2</span>
+v =<span class="st"> </span>n1 <span class="op">+</span><span class="st"> </span>n2 <span class="dv">-2</span>
+
+t =<span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>(mu1<span class="op">-</span>mu2)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(s1<span class="op">/</span>n1 <span class="op">+</span><span class="st"> </span>s2<span class="op">/</span>n2)
+t</code></pre>
+<pre><code>## [1] 1.3484</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pt</span>(<span class="dt">q =</span> t, <span class="dt">df =</span> v, <span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 0.09163208</code></pre>
+<p>En el ejemplo anterior se cumple todavía que la probabilidad usando <span class="math inline">\(t\)</span> es mayor que usando <span class="math inline">\(z\)</span>, pero la diferencia no es tan grande ya que el tamaño de muestra combinado (por ende los grados de libertad) es grande y se empieza a aproximar a la distribución normal.</p>
+<p><span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span> muestra una figura (<a href="introducción-a-estadística-inferencial.html#fig:z-t">13.4</a>) que puede servir para decidir qué distribución/método utilizar cuando el parámetro de interés es la media.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:z-t"></span>
+<img src="images/norm-t-flow.png" alt="Diagrama de flujo para ayudar a decidir qué distribución usar cuando se quiere hacer inferencia sobre la media poblacional. Tomado de Triola (2004)." width="70%" />
+<p class="caption">
+Figura 13.4: Diagrama de flujo para ayudar a decidir qué distribución usar cuando se quiere hacer inferencia sobre la media poblacional. Tomado de <span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span>.
+</p>
+</div>
+</div>
+<div id="varianza-s2-1" class="section level3">
+<h3><span class="header-section-number">13.1.3</span> Varianza <span class="math inline">\((s^2)\)</span></h3>
+<p>Las distribuciones de estadísticos anteriores se enfocaron en la media, cuando es de interés sacar conclusiones para el comportamiento típico de un fenómeno o proceso. Cuando el interés es la variabilidad de un fenómeno o proceso el estadístico de interés es la varianza muestral, como proxy de la varianza poblacional. Dado que esta medida es siempre positiva se ocupa una distribución que imponga esta condición, por lo que se usa la distribución <span class="math inline">\(\chi^2\)</span>, con <span class="math inline">\(v = n - 1\)</span> grados de libertad, Ecuación <a href="introducción-a-estadística-inferencial.html#eq:dist-var">(13.5)</a> <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p><span class="math display" id="eq:dist-var">\[\begin{equation}
+  \chi^2 = \frac{(n-1)s^2}{\sigma^2}
+  \tag{13.5}
+\end{equation}\]</span></p>
+<p>La Figura <a href="introducción-a-estadística-inferencial.html#fig:dist-chi2">13.5</a> <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span> muestra la forma de la distribución <span class="math inline">\(\chi^2\)</span>, donde la probabilidad de que el estadístico tome un valor mayor o igual al calculado corresponde con el área a la derecha de dicho estadístico. Esta distribución no es simétrica, pero conforme incrementan los grados de libertad se vuelve más simétrica <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>)</span>, Figura <a href="introducción-a-estadística-inferencial.html#fig:dist-chi2-df">13.6</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:dist-chi2"></span>
+<img src="images/dist-chi2.png" alt="Distribución \(\chi^2\) mostrando el área a la derecha (probabilidad de un valor mayor) para un valor específico de \(\chi^2\). Tomada de Walpole et al. (2012)." width="70%" />
+<p class="caption">
+Figura 13.5: Distribución <span class="math inline">\(\chi^2\)</span> mostrando el área a la derecha (probabilidad de un valor mayor) para un valor específico de <span class="math inline">\(\chi^2\)</span>. Tomada de <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span>.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:dist-chi2-df"></span>
+<img src="geolonum_files/figure-html/dist-chi2-df-1.png" alt="Distribución \(\chi^2\) con diferentes grados de libertad." width="70%" />
+<p class="caption">
+Figura 13.6: Distribución <span class="math inline">\(\chi^2\)</span> con diferentes grados de libertad.
+</p>
+</div>
+<p><em>Ejemplo</em>: Una población con distribución aproximadamente normal tiene varianza especificada de 0.8. Calcule la probabilidad que una muestra aleatoria de tamaño 6 tenga una varianza mayor o igual a 1.2.</p>
+<p><span class="math display">\[\begin{equation}
+  \chi^2 = \frac{(n-1)s^2}{\sigma^2} = \frac{(6-1)1.2}{0.8} = 7.5\\
+  P(s^2 &gt; 1.2) = P(\chi^2 &gt; 7.5) = 0.186 \approx 18.6 \%
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se puede usar la función <code>pchisq</code> con el estadístico y grados de libertad específicos.</p>
+<pre class="sourceCode r"><code class="sourceCode r">sigma2 =<span class="st"> </span><span class="fl">0.8</span>
+s2 =<span class="st"> </span><span class="fl">1.2</span>
+n =<span class="st"> </span><span class="dv">6</span>
+v =<span class="st"> </span>n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+
+chi =<span class="st"> </span>(v <span class="op">*</span><span class="st"> </span>s2) <span class="op">/</span><span class="st"> </span>sigma2
+chi</code></pre>
+<pre><code>## [1] 7.5</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pchisq</span>(<span class="dt">q =</span> chi, <span class="dt">df =</span> v, <span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 0.1860298</code></pre>
+</div>
+<div id="dos-varianzas-left-fracs_12s_22-right" class="section level3">
+<h3><span class="header-section-number">13.1.4</span> Dos varianzas <span class="math inline">\(\left( \frac{s_1^2}{s_2^2} \right)\)</span></h3>
+<p>Así como se pueden hacer inferencias sobre dos medias, se pueden hacer inferencias sobre la relación entre dos varianzas (desviaciones estándar). De igual manera a la distribución <span class="math inline">\(\chi^2\)</span> para una varianza, se ocupa una distribución que sea positiva, pero al tratarse de dos muestras (poblaciones) esta distribución ocupa dos grados de libertad, uno para cada muestra, este es el caso de la distribución <span class="math inline">\(F\)</span>. Esta distribución tiene una amplia aplicación en la comparación de varianzas muestrales, así como en problemas que implican dos o más muestras <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>, lo que se cubrirá en los próximos capítulos.</p>
+<p>Si <span class="math inline">\(s_1^2\)</span> y <span class="math inline">\(s_2^2\)</span> son las varianzas de muestras aleatorias independientes de tamaño <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span> tomadas de poblaciones normales con varianzas <span class="math inline">\(\sigma_1^2\)</span> y <span class="math inline">\(\sigma_1^2\)</span>, respectivamente, entonces el estadístico <span class="math inline">\(F\)</span> se define como:</p>
+<p><span class="math display" id="eq:dist-f">\[\begin{equation}
+  F = \frac{s_1^2}{s_2^2}
+  \tag{13.6}
+\end{equation}\]</span></p>
+<p>La distribución <span class="math inline">\(F\)</span> depende de <span class="math inline">\(v_1 = n_1 - 1\)</span> y <span class="math inline">\(v_2 = n_2 - 1\)</span>, como se muestra en la Figura <a href="introducción-a-estadística-inferencial.html#fig:dist-f">13.7</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:dist-f"></span>
+<img src="geolonum_files/figure-html/dist-f-1.png" alt="Distribución \(F\) con diferentes grados de libertad." width="70%" />
+<p class="caption">
+Figura 13.7: Distribución <span class="math inline">\(F\)</span> con diferentes grados de libertad.
+</p>
+</div>
+<p><em>Ejemplo</em>: Se tienen dos muestras de tamaño <span class="math inline">\(n_1 = 6\)</span> y <span class="math inline">\(n_2 = 9\)</span>. Cuál es la probabilidad de que la razón de varianzas sea mayor a 2?</p>
+<p><span class="math display">\[\begin{equation}
+  F = \frac{s_1^2}{s_2^2} = 2\\
+  P(F_{5,8} &gt; 2) = 1 - P(F_{5,8} &lt; 2) = 1 - 0.817 = 0.183 \approx 18.3 \%
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se usa <code>pf</code> donde se requiere el valor de <span class="math inline">\(F\)</span> y los dos grados de libertad (<span class="math inline">\(df1, df2\)</span>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">f =<span class="st"> </span><span class="dv">2</span>
+n1 =<span class="st"> </span><span class="dv">6</span>
+n2 =<span class="st"> </span><span class="dv">9</span>
+v1 =<span class="st"> </span>n1 <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+v2 =<span class="st"> </span>n2 <span class="op">-</span><span class="st"> </span><span class="dv">1</span>
+
+<span class="kw">pf</span>(<span class="dt">q =</span> f, <span class="dt">df1 =</span> v1, <span class="dt">df2 =</span> v2, <span class="dt">lower.tail =</span> F)</code></pre>
+<pre><code>## [1] 0.1829977</code></pre>
+<p>Lo presentado en este capítulo es la base de lo que se va a cubrir en los próximos capítulos, donde se introducirán temas y técnicas de inferencia muy utilizadas que permiten responder a preguntas de investigación, como lo son <a href="estimación.html#estimación">Estimación</a> y <a href="pruebas-estadísticas.html#pruebas-estadísticas">Pruebas estadísticas</a>. Estas a su vez van a sentar la base para posteriormente aplicar conceptos y técnicas similares a datos típicos en geociencias.</p>
+
+</div>
+</div>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-davis2002">
+<p>Davis, J. C. (2002). <em>Statistics and Data Analysis in Geology</em> (3rd ed.). New Delhi: John Woley &amp; Sons.</p>
+</div>
+<div id="ref-mckillup2010">
+<p>McKillup, S., &amp; Darby Dyar, M. (2010). <em>Geostatistics Explained: An Introductory Guide for Earth Scientists</em>. Cambridge University Press. Recuperado a partir de <a href="www.cambridge.org/9780521763226">www.cambridge.org/9780521763226</a></p>
+</div>
+<div id="ref-triola2004">
+<p>Triola, M. F. (2004). <em>Probabilidad y Estadística</em> (9na ed.). México: Pearson Educación.</p>
+</div>
+<div id="ref-walpole2012">
+<p>Walpole, R. E., Myers, R. H., &amp; Myers, S. L. (2012). <em>Probabilidad y Estadística Para Ingeniería y Ciencias</em>. Pearson.</p>
+</div>
 </div>
             </section>
 
