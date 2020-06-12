@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Introducción
+
 En este capitulo se va a dar una introducción al funcionamiento básico de **R** [@R-base], incluyendo el uso de **R** como una calculadora (consola), creación de objetos, y los tipos principales objetos que se utilizan en **R**, así como importar y exportar datos, y unas inspecciones generales de los datos.
 
 Se van a usar, aunque poco en este capitulo, funciones de los paquetes:

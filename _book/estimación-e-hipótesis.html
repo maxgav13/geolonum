@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 14 Estimación e Hipótesis | Geología Numérica: Ciencia de Datos para Geociencias</title>
+  <meta name="description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 14 Estimación e Hipótesis | Geología Numérica: Ciencia de Datos para Geociencias" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 14 Estimación e Hipótesis | Geología Numérica: Ciencia de Datos para Geociencias" />
+  
+  <meta name="twitter:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  
+
+<meta name="author" content="Maximiliano Garnier Villarreal" />
+
+
+<meta name="date" content="2020-06-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introducción-a-estadística-inferencial.html">
+<link rel="next" href="pruebas-estadísticas.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.11/datatables.js"></script>
+<link href="libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<script src="libs/proj4js-2.3.15/proj4.js"></script>
+<link href="libs/highcharts-7.0.1/css/motion.css" rel="stylesheet" />
+<link href="libs/highcharts-7.0.1/css/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highcharts-7.0.1/highcharts.js"></script>
+<script src="libs/highcharts-7.0.1/highcharts-3d.js"></script>
+<script src="libs/highcharts-7.0.1/highcharts-more.js"></script>
+<script src="libs/highcharts-7.0.1/modules/stock.js"></script>
+<script src="libs/highcharts-7.0.1/modules/map.js"></script>
+<script src="libs/highcharts-7.0.1/modules/annotations.js"></script>
+<script src="libs/highcharts-7.0.1/modules/boost.js"></script>
+<script src="libs/highcharts-7.0.1/modules/data.js"></script>
+<script src="libs/highcharts-7.0.1/modules/drag-panes.js"></script>
+<script src="libs/highcharts-7.0.1/modules/drilldown.js"></script>
+<script src="libs/highcharts-7.0.1/modules/item-series.js"></script>
+<script src="libs/highcharts-7.0.1/modules/offline-exporting.js"></script>
+<script src="libs/highcharts-7.0.1/modules/overlapping-datalabels.js"></script>
+<script src="libs/highcharts-7.0.1/modules/exporting.js"></script>
+<script src="libs/highcharts-7.0.1/modules/export-data.js"></script>
+<script src="libs/highcharts-7.0.1/modules/funnel.js"></script>
+<script src="libs/highcharts-7.0.1/modules/heatmap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/treemap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/sankey.js"></script>
+<script src="libs/highcharts-7.0.1/modules/solid-gauge.js"></script>
+<script src="libs/highcharts-7.0.1/modules/streamgraph.js"></script>
+<script src="libs/highcharts-7.0.1/modules/sunburst.js"></script>
+<script src="libs/highcharts-7.0.1/modules/vector.js"></script>
+<script src="libs/highcharts-7.0.1/modules/wordcloud.js"></script>
+<script src="libs/highcharts-7.0.1/modules/xrange.js"></script>
+<script src="libs/highcharts-7.0.1/modules/tilemap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/venn.js"></script>
+<script src="libs/highcharts-7.0.1/modules/gantt.js"></script>
+<script src="libs/highcharts-7.0.1/modules/timeline.js"></script>
+<script src="libs/highcharts-7.0.1/modules/parallel-coordinates.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/motion.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/multicolor_series.js"></script>
+<script src="libs/highcharts-7.0.1/custom/reset.js"></script>
+<script src="libs/highcharts-7.0.1/custom/symbols-extra.js"></script>
+<script src="libs/highcharts-7.0.1/custom/text-symbols.js"></script>
+<script src="libs/highchart-binding-0.7.0/highchart.js"></script>
+<script src="libs/highcharts-regression.js-7.0.1/highcharts-regression.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/PopupTable-0.0.1/popup.css" rel="stylesheet" />
+<script src="libs/pacifico-1/data_stars_pacificocdf13b.txt"></script>
+<script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Geologia Numerica</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="part"><span><b>R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalación-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalación de R y RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#paquetes"><i class="fa fa-check"></i><b>1.2</b> Paquetes</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#ayuda-en-r"><i class="fa fa-check"></i><b>1.3</b> Ayuda en R</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rmarkdown"><i class="fa fa-check"></i><b>1.4</b> RMarkdown</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#tipos-de-resultados"><i class="fa fa-check"></i><b>1.4.1</b> Tipos de resultados</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#formulas"><i class="fa fa-check"></i><b>1.4.2</b> Formulas</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#importando-datos"><i class="fa fa-check"></i><b>1.4.3</b> Importando datos</a></li>
+<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#cálculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Cálculos en linea</a></li>
+<li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
+<li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#recursos"><i class="fa fa-check"></i><b>1.5</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento básico de R</a><ul>
+<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#introducción"><i class="fa fa-check"></i><b>2.1</b> Introducción</a></li>
+<li class="chapter" data-level="2.2" data-path="basico.html"><a href="basico.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.2</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.3" data-path="basico.html"><a href="basico.html#crear-objetos"><i class="fa fa-check"></i><b>2.3</b> Crear objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="basico.html"><a href="basico.html#vectores"><i class="fa fa-check"></i><b>2.4</b> Vectores</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="basico.html"><a href="basico.html#numéricos"><i class="fa fa-check"></i><b>2.4.1</b> Numéricos</a></li>
+<li class="chapter" data-level="2.4.2" data-path="basico.html"><a href="basico.html#texto-string-character"><i class="fa fa-check"></i><b>2.4.2</b> Texto (string, character)</a></li>
+<li class="chapter" data-level="2.4.3" data-path="basico.html"><a href="basico.html#categóricos-factores"><i class="fa fa-check"></i><b>2.4.3</b> Categóricos (factores)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="basico.html"><a href="basico.html#matrices"><i class="fa fa-check"></i><b>2.5</b> Matrices</a></li>
+<li class="chapter" data-level="2.6" data-path="basico.html"><a href="basico.html#dataframes-listas-y-tibbles"><i class="fa fa-check"></i><b>2.6</b> DataFrames, listas y tibbles</a></li>
+<li class="chapter" data-level="2.7" data-path="basico.html"><a href="basico.html#verificando-objetos"><i class="fa fa-check"></i><b>2.7</b> Verificando objetos</a></li>
+<li class="chapter" data-level="2.8" data-path="basico.html"><a href="basico.html#guardando-el-espacio-de-trabajo"><i class="fa fa-check"></i><b>2.8</b> Guardando el espacio de trabajo</a></li>
+<li class="chapter" data-level="2.9" data-path="basico.html"><a href="basico.html#importandocargando-datos"><i class="fa fa-check"></i><b>2.9</b> Importando/cargando datos</a></li>
+<li class="chapter" data-level="2.10" data-path="basico.html"><a href="basico.html#exportando-datos"><i class="fa fa-check"></i><b>2.10</b> Exportando datos</a></li>
+<li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#inspeccionando-los-datos"><i class="fa fa-check"></i><b>2.11</b> Inspeccionando los datos</a></li>
+<li class="chapter" data-level="2.12" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.12</b> Descripciones generales (globales)</a></li>
+<li class="chapter" data-level="2.13" data-path="basico.html"><a href="basico.html#recursos-1"><i class="fa fa-check"></i><b>2.13</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="avanzado.html"><a href="avanzado.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
+<li class="chapter" data-level="3.1" data-path="avanzado.html"><a href="avanzado.html#introducción-1"><i class="fa fa-check"></i><b>3.1</b> Introducción</a></li>
+<li class="chapter" data-level="3.2" data-path="avanzado.html"><a href="avanzado.html#operadores-lógicos"><i class="fa fa-check"></i><b>3.2</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="3.3" data-path="avanzado.html"><a href="avanzado.html#operador-de-secuencia-pipe-operator"><i class="fa fa-check"></i><b>3.3</b> Operador de secuencia (Pipe operator)</a></li>
+<li class="chapter" data-level="3.4" data-path="avanzado.html"><a href="avanzado.html#resumen-de-variables"><i class="fa fa-check"></i><b>3.4</b> Resumen de variables</a></li>
+<li class="chapter" data-level="3.5" data-path="avanzado.html"><a href="avanzado.html#selección-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.5</b> Selección y renombre de variables</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="avanzado.html"><a href="avanzado.html#select-helpers"><i class="fa fa-check"></i><b>3.5.1</b> <code>select</code> helpers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="avanzado.html"><a href="avanzado.html#filtrado-de-observaciones"><i class="fa fa-check"></i><b>3.6</b> Filtrado de observaciones</a></li>
+<li class="chapter" data-level="3.7" data-path="avanzado.html"><a href="avanzado.html#orden-de-acuerdo-a-variables"><i class="fa fa-check"></i><b>3.7</b> Orden de acuerdo a variables</a></li>
+<li class="chapter" data-level="3.8" data-path="avanzado.html"><a href="avanzado.html#creación-de-variables"><i class="fa fa-check"></i><b>3.8</b> Creación de variables</a></li>
+<li class="chapter" data-level="3.9" data-path="avanzado.html"><a href="avanzado.html#conteo-de-variables-cualitativas"><i class="fa fa-check"></i><b>3.9</b> Conteo de variables cualitativas</a></li>
+<li class="chapter" data-level="3.10" data-path="avanzado.html"><a href="avanzado.html#tabla-interactiva"><i class="fa fa-check"></i><b>3.10</b> Tabla interactiva</a></li>
+<li class="chapter" data-level="3.11" data-path="avanzado.html"><a href="avanzado.html#datos-relacionales"><i class="fa fa-check"></i><b>3.11</b> Datos relacionales</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="avanzado.html"><a href="avanzado.html#uniones-de-transformación"><i class="fa fa-check"></i><b>3.11.1</b> Uniones de transformación</a></li>
+<li class="chapter" data-level="3.11.2" data-path="avanzado.html"><a href="avanzado.html#uniones-de-filtro"><i class="fa fa-check"></i><b>3.11.2</b> Uniones de filtro</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="avanzado.html"><a href="avanzado.html#datos-ordenados-tidy-data"><i class="fa fa-check"></i><b>3.12</b> Datos ordenados (Tidy data)</a><ul>
+<li class="chapter" data-level="3.12.1" data-path="avanzado.html"><a href="avanzado.html#formatos-largo-y-ancho"><i class="fa fa-check"></i><b>3.12.1</b> Formatos largo y ancho</a></li>
+<li class="chapter" data-level="3.12.2" data-path="avanzado.html"><a href="avanzado.html#separar-y-unir"><i class="fa fa-check"></i><b>3.12.2</b> Separar y unir</a></li>
+</ul></li>
+<li class="chapter" data-level="3.13" data-path="avanzado.html"><a href="avanzado.html#nest"><i class="fa fa-check"></i><b>3.13</b> Datos anidados (Nesting)</a></li>
+<li class="chapter" data-level="3.14" data-path="avanzado.html"><a href="avanzado.html#recursos-2"><i class="fa fa-check"></i><b>3.14</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos-1.html"><a href="gráficos-1.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a><ul>
+<li class="chapter" data-level="4.1" data-path="gráficos-1.html"><a href="gráficos-1.html#introducción-2"><i class="fa fa-check"></i><b>4.1</b> Introducción</a></li>
+<li class="chapter" data-level="4.2" data-path="gráficos-1.html"><a href="gráficos-1.html#estáticos"><i class="fa fa-check"></i><b>4.2</b> Estáticos</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos-1.html"><a href="gráficos-1.html#líneas"><i class="fa fa-check"></i><b>4.2.5</b> líneas</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos-1.html"><a href="gráficos-1.html#gráficos-estadísticos"><i class="fa fa-check"></i><b>4.2.6</b> Gráficos estadísticos</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes"><i class="fa fa-check"></i><b>4.2.7</b> Transformación de ejes</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos-1.html"><a href="gráficos-1.html#limites-de-ejes-zoom"><i class="fa fa-check"></i><b>4.2.8</b> Limites de ejes (Zoom)</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos-1.html"><a href="gráficos-1.html#salvando-gráficos"><i class="fa fa-check"></i><b>4.2.9</b> Salvando gráficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos-1.html"><a href="gráficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.3</b> Interactivos</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.3.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.3.2</b> Barras</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.3.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión-1"><i class="fa fa-check"></i><b>4.3.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos-1.html"><a href="gráficos-1.html#líneas-1"><i class="fa fa-check"></i><b>4.3.5</b> líneas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes-1"><i class="fa fa-check"></i><b>4.3.6</b> Transformación de ejes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="gráficos-1.html"><a href="gráficos-1.html#recursos-3"><i class="fa fa-check"></i><b>4.4</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iteración.html"><a href="iteración.html"><i class="fa fa-check"></i><b>5</b> Iteración</a><ul>
+<li class="chapter" data-level="5.1" data-path="iteración.html"><a href="iteración.html#introducción-3"><i class="fa fa-check"></i><b>5.1</b> Introducción</a></li>
+<li class="chapter" data-level="5.2" data-path="iteración.html"><a href="iteración.html#iterando-sobre-un-objeto"><i class="fa fa-check"></i><b>5.2</b> Iterando sobre un objeto</a></li>
+<li class="chapter" data-level="5.3" data-path="iteración.html"><a href="iteración.html#iterando-sobre-dos-objetos"><i class="fa fa-check"></i><b>5.3</b> Iterando sobre dos objetos</a></li>
+<li class="chapter" data-level="5.4" data-path="iteración.html"><a href="iteración.html#leyendo-archivos-y-combinándolos"><i class="fa fa-check"></i><b>5.4</b> Leyendo archivos y combinándolos</a></li>
+<li class="chapter" data-level="5.5" data-path="iteración.html"><a href="iteración.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.5</b> Datos anidados, caso 1</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="iteración.html"><a href="iteración.html#efectos-secundarios"><i class="fa fa-check"></i><b>5.5.1</b> Efectos secundarios</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="iteración.html"><a href="iteración.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.6</b> Datos anidados, caso 2</a></li>
+<li class="chapter" data-level="5.7" data-path="iteración.html"><a href="iteración.html#recursos-4"><i class="fa fa-check"></i><b>5.7</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a><ul>
+<li class="chapter" data-level="6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#introducción-4"><i class="fa fa-check"></i><b>6.1</b> Introducción</a></li>
+<li class="chapter" data-level="6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#paquetes-para-datos-espaciales"><i class="fa fa-check"></i><b>6.2</b> Paquetes para datos espaciales</a></li>
+<li class="chapter" data-level="6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#sistemas-de-referencias-de-coordenadas-crs"><i class="fa fa-check"></i><b>6.3</b> Sistemas de Referencias de Coordenadas (CRS)</a></li>
+<li class="chapter" data-level="6.4" data-path="datos-espaciales.html"><a href="datos-espaciales.html#importar-datos"><i class="fa fa-check"></i><b>6.4</b> Importar datos</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-de-texto"><i class="fa fa-check"></i><b>6.4.1</b> Desde archivos de texto</a></li>
+<li class="chapter" data-level="6.4.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-espaciales"><i class="fa fa-check"></i><b>6.4.2</b> Desde archivos espaciales</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="datos-espaciales.html"><a href="datos-espaciales.html#exportar-datos"><i class="fa fa-check"></i><b>6.5</b> Exportar datos</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#vectoriales"><i class="fa fa-check"></i><b>6.5.1</b> Vectoriales</a></li>
+<li class="chapter" data-level="6.5.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#raster-1"><i class="fa fa-check"></i><b>6.5.2</b> Raster</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="datos-espaciales.html"><a href="datos-espaciales.html#mapas"><i class="fa fa-check"></i><b>6.6</b> Mapas</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#estáticos-1"><i class="fa fa-check"></i><b>6.6.1</b> Estáticos</a></li>
+<li class="chapter" data-level="6.6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#dinámicos"><i class="fa fa-check"></i><b>6.6.2</b> Dinámicos</a></li>
+<li class="chapter" data-level="6.6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#modelos-de-sombras"><i class="fa fa-check"></i><b>6.6.3</b> Modelos de sombras</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="datos-espaciales.html"><a href="datos-espaciales.html#recursos-5"><i class="fa fa-check"></i><b>6.7</b> Recursos</a></li>
+</ul></li>
+<li class="part"><span><b>Análisis de datos</b></span></li>
+<li class="chapter" data-level="7" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Álgebra lineal</a><ul>
+<li class="chapter" data-level="7.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#introducción-5"><i class="fa fa-check"></i><b>7.1</b> Introducción</a></li>
+<li class="chapter" data-level="7.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#tensores"><i class="fa fa-check"></i><b>7.2</b> Tensores</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#vectores-1"><i class="fa fa-check"></i><b>7.2.1</b> Vectores</a></li>
+<li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#matrices-1"><i class="fa fa-check"></i><b>7.2.2</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#eigenvectors-y-eigenvalues"><i class="fa fa-check"></i><b>7.3</b> Eigenvectors y Eigenvalues</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#definición"><i class="fa fa-check"></i><b>7.3.1</b> Definición</a></li>
+<li class="chapter" data-level="7.3.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#cálculo"><i class="fa fa-check"></i><b>7.3.2</b> Cálculo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html"><i class="fa fa-check"></i><b>8</b> Introducción a estadística</a><ul>
+<li class="chapter" data-level="8.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#introducción-6"><i class="fa fa-check"></i><b>8.1</b> Introducción</a></li>
+<li class="chapter" data-level="8.2" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#tipos"><i class="fa fa-check"></i><b>8.2</b> Tipos</a></li>
+<li class="chapter" data-level="8.3" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#modelos"><i class="fa fa-check"></i><b>8.3</b> Modelos</a></li>
+<li class="chapter" data-level="8.4" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#nomenclatura"><i class="fa fa-check"></i><b>8.4</b> Nomenclatura</a></li>
+<li class="chapter" data-level="8.5" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#variables"><i class="fa fa-check"></i><b>8.5</b> Variables</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#cualitativa"><i class="fa fa-check"></i><b>8.5.1</b> Cualitativa</a></li>
+<li class="chapter" data-level="8.5.2" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#cuantitativa"><i class="fa fa-check"></i><b>8.5.2</b> Cuantitativa</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#métodos-de-análisis"><i class="fa fa-check"></i><b>8.6</b> Métodos de análisis</a></li>
+<li class="chapter" data-level="8.7" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#muestreo"><i class="fa fa-check"></i><b>8.7</b> Muestreo</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#tipos-1"><i class="fa fa-check"></i><b>8.7.1</b> Tipos</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#incertidumbre"><i class="fa fa-check"></i><b>8.8</b> Incertidumbre</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html"><i class="fa fa-check"></i><b>9</b> Estadística Descriptiva Univariable</a><ul>
+<li class="chapter" data-level="9.1" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#introducción-7"><i class="fa fa-check"></i><b>9.1</b> Introducción</a></li>
+<li class="chapter" data-level="9.2" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#tablas-de-frecuencias"><i class="fa fa-check"></i><b>9.2</b> Tablas de frecuencias</a></li>
+<li class="chapter" data-level="9.3" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#gráficas"><i class="fa fa-check"></i><b>9.3</b> Gráficas</a></li>
+<li class="chapter" data-level="9.4" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#resúmenes-numéricos"><i class="fa fa-check"></i><b>9.4</b> Resúmenes numéricos</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-tendencia-central"><i class="fa fa-check"></i><b>9.4.1</b> Medidas de tendencia central</a></li>
+<li class="chapter" data-level="9.4.2" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-dispersión"><i class="fa fa-check"></i><b>9.4.2</b> Medidas de dispersión</a></li>
+<li class="chapter" data-level="9.4.3" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-posición"><i class="fa fa-check"></i><b>9.4.3</b> Medidas de posición</a></li>
+<li class="chapter" data-level="9.4.4" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-forma"><i class="fa fa-check"></i><b>9.4.4</b> Medidas de forma</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#resumen-general"><i class="fa fa-check"></i><b>9.5</b> Resumen general</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>10</b> Estadística Descriptiva Bivariable</a><ul>
+<li class="chapter" data-level="10.1" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#introducción-8"><i class="fa fa-check"></i><b>10.1</b> Introducción</a></li>
+<li class="chapter" data-level="10.2" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#covarianza"><i class="fa fa-check"></i><b>10.2</b> Covarianza</a></li>
+<li class="chapter" data-level="10.3" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#correlación"><i class="fa fa-check"></i><b>10.3</b> Correlación</a></li>
+<li class="chapter" data-level="10.4" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#regresión"><i class="fa fa-check"></i><b>10.4</b> Regresión</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#nomenclatura-1"><i class="fa fa-check"></i><b>10.4.1</b> Nomenclatura</a></li>
+<li class="chapter" data-level="10.4.2" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#supuestos"><i class="fa fa-check"></i><b>10.4.2</b> Supuestos</a></li>
+<li class="chapter" data-level="10.4.3" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#tipos-2"><i class="fa fa-check"></i><b>10.4.3</b> Tipos</a></li>
+<li class="chapter" data-level="10.4.4" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#medidas-de-ajuste-y-error"><i class="fa fa-check"></i><b>10.4.4</b> Medidas de ajuste y error</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a><ul>
+<li class="chapter" data-level="11.1" data-path="probabilidad.html"><a href="probabilidad.html#introducción-9"><i class="fa fa-check"></i><b>11.1</b> Introducción</a></li>
+<li class="chapter" data-level="11.2" data-path="probabilidad.html"><a href="probabilidad.html#axiomas-y-nomenclatura"><i class="fa fa-check"></i><b>11.2</b> Axiomas y Nomenclatura</a></li>
+<li class="chapter" data-level="11.3" data-path="probabilidad.html"><a href="probabilidad.html#reglas-de-probabilidad"><i class="fa fa-check"></i><b>11.3</b> Reglas de probabilidad</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-suma"><i class="fa fa-check"></i><b>11.3.1</b> Regla de la suma</a></li>
+<li class="chapter" data-level="11.3.2" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-multiplicación"><i class="fa fa-check"></i><b>11.3.2</b> Regla de la multiplicación</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="probabilidad.html"><a href="probabilidad.html#variables-aleatorias"><i class="fa fa-check"></i><b>11.4</b> Variables aleatorias</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a><ul>
+<li class="chapter" data-level="12.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#introducción-10"><i class="fa fa-check"></i><b>12.1</b> Introducción</a></li>
+<li class="chapter" data-level="12.2" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-binomial"><i class="fa fa-check"></i><b>12.2</b> Distribución Binomial</a></li>
+<li class="chapter" data-level="12.3" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-de-poisson"><i class="fa fa-check"></i><b>12.3</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.4" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-o-gaussiana"><i class="fa fa-check"></i><b>12.4</b> Distribución Normal o Gaussiana</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-estándar-z"><i class="fa fa-check"></i><b>12.4.1</b> Distribución Normal Estándar (Z)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribuciones-de-probabilidad-en-r"><i class="fa fa-check"></i><b>12.5</b> Distribuciones de probabilidad en <strong>R</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a><ul>
+<li class="chapter" data-level="13.1" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#introducción-11"><i class="fa fa-check"></i><b>13.1</b> Introducción</a></li>
+<li class="chapter" data-level="13.2" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#distribuciones-muestrales"><i class="fa fa-check"></i><b>13.2</b> Distribuciones muestrales</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-x"><i class="fa fa-check"></i><b>13.2.1</b> Media <span class="math inline">\((\bar{x})\)</span></a></li>
+<li class="chapter" data-level="13.2.2" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-x2"><i class="fa fa-check"></i><b>13.2.2</b> Diferencia de medias <span class="math inline">\((\bar{x}_1-\bar{x}_2)\)</span></a></li>
+<li class="chapter" data-level="13.2.3" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-chi"><i class="fa fa-check"></i><b>13.2.3</b> Varianza <span class="math inline">\((s^2)\)</span></a></li>
+<li class="chapter" data-level="13.2.4" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-f"><i class="fa fa-check"></i><b>13.2.4</b> Dos varianzas <span class="math inline">\(\left( \frac{s_1^2}{s_2^2} \right)\)</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html"><i class="fa fa-check"></i><b>14</b> Estimación e Hipótesis</a><ul>
+<li class="chapter" data-level="14.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#introducción-12"><i class="fa fa-check"></i><b>14.1</b> Introducción</a></li>
+<li class="chapter" data-level="14.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim"><i class="fa fa-check"></i><b>14.2</b> Estimación</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#media-1"><i class="fa fa-check"></i><b>14.2.1</b> Media</a></li>
+<li class="chapter" data-level="14.2.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-diff-medias"><i class="fa fa-check"></i><b>14.2.2</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="14.2.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-ic-chi"><i class="fa fa-check"></i><b>14.2.3</b> Varianza</a></li>
+<li class="chapter" data-level="14.2.4" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-ic-f"><i class="fa fa-check"></i><b>14.2.4</b> Dos varianzas</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#hip"><i class="fa fa-check"></i><b>14.3</b> Hipótesis</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#nula-h_0-y-alterna-h_1"><i class="fa fa-check"></i><b>14.3.1</b> Nula (<span class="math inline">\(H_0\)</span>) y Alterna (<span class="math inline">\(H_1\)</span>)</a></li>
+<li class="chapter" data-level="14.3.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#resultados-y-errores"><i class="fa fa-check"></i><b>14.3.2</b> Resultados y Errores</a></li>
+<li class="chapter" data-level="14.3.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estadístico-de-prueba-y-crítico"><i class="fa fa-check"></i><b>14.3.3</b> Estadístico de prueba y crítico</a></li>
+<li class="chapter" data-level="14.3.4" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#contrastes-y-valor-p"><i class="fa fa-check"></i><b>14.3.4</b> Contrastes y valor-<em>p</em></a></li>
+<li class="chapter" data-level="14.3.5" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#decisión"><i class="fa fa-check"></i><b>14.3.5</b> Decisión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadísticas</a><ul>
+<li class="chapter" data-level="15.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#introducción-13"><i class="fa fa-check"></i><b>15.1</b> Introducción</a></li>
+<li class="chapter" data-level="15.2" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#pruebas-estadísticas-1"><i class="fa fa-check"></i><b>15.2</b> Pruebas estadísticas</a></li>
+<li class="chapter" data-level="15.3" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#tamaño-del-efecto"><i class="fa fa-check"></i><b>15.3</b> Tamaño del Efecto</a></li>
+<li class="chapter" data-level="15.4" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#datos-cuantitativos"><i class="fa fa-check"></i><b>15.4</b> Datos cuantitativos</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#chi2-para-1-varianza"><i class="fa fa-check"></i><b>15.4.1</b> <span class="math inline">\(\chi^2\)</span> para 1 varianza</a></li>
+<li class="chapter" data-level="15.4.2" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#f-para-2-varianzas"><i class="fa fa-check"></i><b>15.4.2</b> <span class="math inline">\(F\)</span> para 2 varianzas</a></li>
+<li class="chapter" data-level="15.4.3" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#z-de-1-muestra"><i class="fa fa-check"></i><b>15.4.3</b> <span class="math inline">\(Z\)</span> de 1 muestra</a></li>
+<li class="chapter" data-level="15.4.4" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#t-de-1-muestra"><i class="fa fa-check"></i><b>15.4.4</b> <span class="math inline">\(t\)</span> de 1 muestra</a></li>
+<li class="chapter" data-level="15.4.5" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#t-de-2-muestras-independientes"><i class="fa fa-check"></i><b>15.4.5</b> <span class="math inline">\(t\)</span> de 2 muestras independientes</a></li>
+<li class="chapter" data-level="15.4.6" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#t-de-2-muestras-dependientes"><i class="fa fa-check"></i><b>15.4.6</b> <span class="math inline">\(t\)</span> de 2 muestras dependientes</a></li>
+<li class="chapter" data-level="15.4.7" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#t-de-correlación"><i class="fa fa-check"></i><b>15.4.7</b> <span class="math inline">\(t\)</span> de correlación</a></li>
+<li class="chapter" data-level="15.4.8" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#análisis-de-varianza-anova"><i class="fa fa-check"></i><b>15.4.8</b> Análisis de Varianza (ANOVA)</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#datos-cualitativos"><i class="fa fa-check"></i><b>15.5</b> Datos cualitativos</a><ul>
+<li class="chapter" data-level="15.5.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#bondad-de-ajuste"><i class="fa fa-check"></i><b>15.5.1</b> Bondad de ajuste</a></li>
+<li class="chapter" data-level="15.5.2" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#homogeneidad"><i class="fa fa-check"></i><b>15.5.2</b> Homogeneidad</a></li>
+<li class="chapter" data-level="15.5.3" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#independencia-asociación"><i class="fa fa-check"></i><b>15.5.3</b> Independencia / asociación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html"><i class="fa fa-check"></i><b>16</b> Estadística No Paramétrica</a></li>
+<li class="chapter" data-level="17" data-path="estadística-direccional.html"><a href="estadística-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadística Direccional</a></li>
+<li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a></li>
+<li class="chapter" data-level="19" data-path="geoestadística.html"><a href="geoestadística.html"><i class="fa fa-check"></i><b>19</b> Geoestadística</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geología Numérica: Ciencia de Datos para Geociencias</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="estimación-e-hipótesis" class="section level1">
+<h1><span class="header-section-number">Capítulo 14</span> Estimación e Hipótesis</h1>
+<div id="introducción-12" class="section level2">
+<h2><span class="header-section-number">14.1</span> Introducción</h2>
+<p>En los capítulos anteriores (<a href="distribuciones-de-probabilidad.html#distribuciones-de-probabilidad">Distribuciones de Probabilidad</a> e <a href="introducción-a-estadística-inferencial.html#introducción-a-estadística-inferencial">Introducción a Estadística Inferencial</a>) se introdujeron principios básicos de la estadística inferencial: el uso de distribuciones y distribuciones muestrales. Estos conceptos serán ampliados en este capítulo donde se introducirán los dos métodos de estadística inferencial más usados: <em>estimación</em> e <em>hipótesis</em>. En ambos casos se trabaja a partir de una muestra o muestras para indicar la incertidumbre que se tiene sobre un parámetro poblacional (estimación), o para responder a una pregunta de investigación (hipótesis); ambos métodos se pueden complementar, aunque la tendencia va más hacia la estimación, junto con tamaños de efecto.</p>
+</div>
+<div id="estim" class="section level2">
+<h2><span class="header-section-number">14.2</span> Estimación</h2>
+<p>Existen dos tipos de estimación principales: puntual y por intervalo. Un estimador puntual es un valor único que se considera representa o aproxima de mejor manera a un parámetro poblacional <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>. Una estimación por intervalo representa un rango de posibles valores para el parámetro poblacional <span class="citation">(Cumming, <a href="#ref-cumming2011">2011</a>, <a href="#ref-cumming2014ps">2014</a>; Cumming &amp; Finch, <a href="#ref-cumming2005ap">2005</a>; Triola, <a href="#ref-triola2004">2004</a>)</span>.</p>
+<p>La ventaja de un intervalo de confianza, sobre una prueba de hipótesis (como se va a ver más adelante y en el próximo capítulo), es que brinda una medida de la incertidumbre que se tiene sobre un parámetro específico, brindando más información que responder sí o no a una pregunta de hipótesis.</p>
+<p>Lo que se obtiene a partir de la estimación por intervalo es lo que se conoce como <em>intervalo de confianza (IC)</em>. Éste se construye a partir de un nivel de confianza (<span class="math inline">\(1 - \alpha\)</span>, <span class="math inline">\(\alpha\)</span> = nivel de significancia), el cual “es la proporción de veces que el intervalo de confianza realmente contiene el parámetro de población, suponiendo que el proceso de estimación se repite un gran número de veces” <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>)</span>. Los valores más comunes para el nivel de confianza son 90% (<span class="math inline">\(\alpha = 0.1\)</span>), 95% (<span class="math inline">\(\alpha = 0.05\)</span>), y 99% (<span class="math inline">\(\alpha = 0.01\)</span>) <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+
+<div class="rmdnote">
+<p><strong>Interpretación correcta del intervalo de confianza (frecuentista)</strong></p>
+<p>Si se tiene una cantidad infinita de muestras con sus respectivos intervalos de confianza, el <span class="math inline">\(100(1 - \alpha)\%\)</span> de esos intervalos va a contener el valor poblacional <span class="citation">(Cumming, <a href="#ref-cumming2011">2011</a>, <a href="#ref-cumming2014ps">2014</a>; Cumming &amp; Finch, <a href="#ref-cumming2005ap">2005</a>; Nolan &amp; Heinzen, <a href="#ref-nolan2014">2014</a>; Triola, <a href="#ref-triola2004">2004</a>)</span>. El intervalo que se obtiene puede ser uno del <span class="math inline">\(100(1 - \alpha)\%\)</span> o del <span class="math inline">\(100(\alpha)\%\)</span>, esto no se sabe.</p>
+El intervalo de confianza es el rango de valores más probables para el parámetro poblacional <span class="citation">(Cumming, <a href="#ref-cumming2011">2011</a>, <a href="#ref-cumming2014ps">2014</a>; Cumming &amp; Finch, <a href="#ref-cumming2005ap">2005</a>)</span>.
+</div>
+
+<p>La nota anterior se puede visualizar o imaginar a como lo definen <span class="citation">Cumming &amp; Finch (<a href="#ref-cumming2005ap">2005</a>)</span> y se muestra en la Figura <a href="estimación-e-hipótesis.html#fig:IC-baile">14.1</a>, donde el intervalo que se calcula es uno de muchos posibles intervalos que se pudo obtener y contiene o no el parámetro poblacional, pero ésto no se sabe.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:IC-baile"></span>
+<img src="images/IC-baile.png" alt="Intervalos de confianza al 95% para una media poblacional conocida, donde los puntos representan la media de la muestra. Los puntos sólidos contienen \(\mu\) y los puntos abiertos no contienen \(\mu\). Aquí 18 de los 20 (90%) IC contienen a \(\mu\). A la larga, el 95% de los intervalos va a contener \(\mu\). Tomado de Cumming &amp; Finch (2005)." width="70%" />
+<p class="caption">
+Figura 14.1: Intervalos de confianza al 95% para una media poblacional conocida, donde los puntos representan la media de la muestra. Los puntos sólidos contienen <span class="math inline">\(\mu\)</span> y los puntos abiertos no contienen <span class="math inline">\(\mu\)</span>. Aquí 18 de los 20 (90%) IC contienen a <span class="math inline">\(\mu\)</span>. A la larga, el 95% de los intervalos va a contener <span class="math inline">\(\mu\)</span>. Tomado de <span class="citation">Cumming &amp; Finch (<a href="#ref-cumming2005ap">2005</a>)</span>.
+</p>
+</div>
+<p>Para distribuciones simétricas (<span class="math inline">\(Z, t\)</span>) los intervalos de confianza siguen la forma que se muestra en la Ecuación <a href="estimación-e-hipótesis.html#eq:IC-sim">(14.1)</a>, mientras que para distribuciones asimétricas (<span class="math inline">\(\chi^2, F\)</span>) los intervalos de confianza siguen la forma que se muestra en la Ecuación <a href="estimación-e-hipótesis.html#eq:IC-asim">(14.2)</a>.</p>
+<p><span class="math display" id="eq:IC-sim">\[\begin{equation}
+  \hat{\theta} \pm MoE\\
+  \hat{\theta} = \text{estadístico o estimador}\\
+  MoE = \text{margen de error} =  SE \cdot stat_{crit,\alpha/2,v}\\
+  \alpha/2 \text{ va a estar en función del nivel de confianza elegido}\\
+  SE = \text{error estándar}\\
+  v = \text{grados de libertad}
+  \tag{14.1}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:IC-asim">\[\begin{equation}
+  \hat{\theta}_i &lt; \hat{\theta} &lt; \hat{\theta}_s\\
+  \hat{\theta}_i = \text{límite inferior}\\
+  \hat{\theta}_s = \text{límite superior}
+  \tag{14.2}
+\end{equation}\]</span></p>
+<p>El estadístico crítico (<span class="math inline">\(stat_{crit,\alpha/2,v}\)</span>) se puede encontrar en tablas de valores críticos <span class="citation">(Davis, <a href="#ref-davis2002">2002</a>; Nolan &amp; Heinzen, <a href="#ref-nolan2014">2014</a>; Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>, o a partir de la función <code>q</code> respectiva en <strong>R</strong>. A excepción de <span class="math inline">\(Z\)</span> todos van a estar en función de los grados de libertad, que es lo mismo que decir el tamaño de la(s) muestra(s).</p>
+<div id="media-1" class="section level3">
+<h3><span class="header-section-number">14.2.1</span> Media</h3>
+<p>Cuando se quiere estimar una media poblacional (<span class="math inline">\(\mu\)</span>) a partir de intervalos de confianza se puede usar la distribución normal estándar (<span class="math inline">\(Z\)</span>) si se conoce la desviación estándar poblacional (<span class="math inline">\(\sigma\)</span>), que es la menor cantidad del tiempo, o se puede usar la distribución <span class="math inline">\(t\)</span> si no se conoce <span class="math inline">\(\sigma\)</span>. Esto se introdujo en la sección <a href="introducción-a-estadística-inferencial.html#distribuciones-muestrales">Distribuciones muestrales</a> del capítulo anterior.</p>
+<div id="estim-ic-z" class="section level4">
+<h4><span class="header-section-number">14.2.1.1</span> Se conoce <span class="math inline">\(\sigma\)</span></h4>
+<p>Si se conoce <span class="math inline">\(\sigma\)</span> o se tiene una muestra grande (por lo general <span class="math inline">\(n &gt; 30\)</span>) se puede usar la distribución <span class="math inline">\(Z\)</span> para construir el intervalo de confianza. Modificando la Ecuación <a href="estimación-e-hipótesis.html#eq:IC-sim">(14.1)</a> y ajustándola a <span class="math inline">\(Z\)</span> se tiene la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-media-z">(14.3)</a>, donde <span class="math inline">\(z_{\alpha/2}\)</span> corresponde con el valor crítico de <span class="math inline">\(Z\)</span> para el nivel de confianza escogido, que se puede encontrar usando <code>qnorm</code>. Para este caso se puede visualizar conforme la Figura <a href="estimación-e-hipótesis.html#fig:z-crit">14.2</a>.</p>
+<p><span class="math display" id="eq:ic-media-z">\[\begin{equation}
+  \bar{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\\
+  MoE = z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+  \tag{14.3}
+\end{equation}\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:z-crit"></span>
+<img src="images/z-crit.png" alt="Representación de los valores críticos en la distribución normal estándar para un dado nivel de confianza." width="70%" />
+<p class="caption">
+Figura 14.2: Representación de los valores críticos en la distribución normal estándar para un dado nivel de confianza.
+</p>
+</div>
+<p>Como la distribución <span class="math inline">\(Z\)</span> no depende del tamaño de la muestra los valores críticos van a ser constantes para un dado nivel de confianza. Un resumen de los valores críticos de <span class="math inline">\(Z\)</span> se muestra en la Tabla <a href="estimación-e-hipótesis.html#tab:z-crit-tab">14.1</a>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:z-crit-tab">Tabla 14.1: </span>Valores críticos para <span class="math inline">\(Z\)</span>
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Nivel de confianza
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(\alpha\)</span>
+</th>
+<th style="text-align:center;">
+Valor crítico, <span class="math inline">\(z_{\alpha/2}\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+90%
+</td>
+<td style="text-align:center;">
+0.10
+</td>
+<td style="text-align:center;">
+1.645
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+95%
+</td>
+<td style="text-align:center;">
+0.05
+</td>
+<td style="text-align:center;">
+1.960
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+99%
+</td>
+<td style="text-align:center;">
+0.01
+</td>
+<td style="text-align:center;">
+2.575
+</td>
+</tr>
+</tbody>
+</table>
+<p>El siguiente ejemplo de <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span> demuestra lo expuesto anteriormente. Se encuentra que la concentración promedio de zinc que se obtiene en una muestra de mediciones en 36 sitios diferentes de un río es de 2.6 gramos por mililitro. Calcule los intervalos de confianza del 95% y 99% para la concentración media de zinc en el río. Suponga que la desviación estándar de la población es de 0.3 gramos por mililitro.</p>
+<p><span class="math display">\[\begin{equation}
+  \bar{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\\
+  Para \ (1-\alpha) = 95\% \ se \ tiene \ z_{\alpha/2} = z_{0.05/2} = 1.96\\
+  2.6 \pm 1.96 \frac{0.3}{\sqrt{36}} = 2.6 \pm 0.1 \to 95\% \ IC [2.50,2.70]\\
+  Para \ (1-\alpha) = 99\% \ se \ tiene \ z_{\alpha/2} = z_{0.01/2} = 2.575\\
+  2.6 \pm 2.575 \frac{0.3}{\sqrt{36}} = 2.6 \pm 0.13 \to 95\% \ IC [2.47,2.73]
+\end{equation}\]</span></p>
+<p>Dado que este tipo de inferencia es poco común, ya que se requiere conocer <span class="math inline">\(\sigma\)</span>, no hay funciones nativas en <strong>R</strong>, pero los paquetes <em>DescTools</em> <span class="citation">(Signorell, <a href="#ref-R-DescTools">2020</a>)</span>, <em>OneTwoSamples</em> <span class="citation">(Zhang, <a href="#ref-R-OneTwoSamples">2013</a>)</span>, y <em>GMisc</em> <span class="citation">(Garnier-Villarreal, <a href="#ref-R-GMisc">2020</a>)</span>, ofrecen diferentes funciones que pueden ser implementadas.</p>
+<p>A diferencia de la mayoría de funciones que requieren vectores de datos para realizar los cálculos, el paquete <em>GMisc</em> ofrece funciones para estimar intervalos de confianza partir de datos puntuales.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="fl">2.6</span>
+sig =<span class="st"> </span><span class="fl">0.3</span>
+n =<span class="st"> </span><span class="dv">36</span>
+
+<span class="kw">ci_z</span>(<span class="dt">x =</span> x, <span class="dt">sig =</span> sig, <span class="dt">n =</span> n, <span class="dt">conf.level =</span> <span class="fl">0.95</span>) <span class="co"># Para 95%</span></code></pre>
+<pre><code>## # A tibble: 1 x 3
+##    mean lower upper
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1   2.6   2.5   2.7</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci_z</span>(<span class="dt">x =</span> x, <span class="dt">sig =</span> sig, <span class="dt">n =</span> n, <span class="dt">conf.level =</span> <span class="fl">0.99</span>) <span class="co"># Para 99%</span></code></pre>
+<pre><code>## # A tibble: 1 x 3
+##    mean lower upper
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1   2.6  2.47  2.73</code></pre>
+<p>Simulando un vector de datos con estos valores se pueden demostrar funciones de <em>DescTools</em> y <em>OneTwoSamples</em> (Los resultados no van a ser exactos, dado que es una simulación, pero la idea es demostrar funciones a base de vectores). En la función <code>MeanCI</code> si se pasa el argumento <code>sd</code> y en la función <code>interval_estimate1</code> si se pasa el argumento <code>sigma</code> se usa <span class="math inline">\(Z\)</span> para el intervalo de confianza.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
+vec =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> x, <span class="dt">sd =</span> sig)
+
+<span class="kw">MeanCI</span>(<span class="dt">x =</span> vec, <span class="dt">sd =</span> sig, <span class="dt">conf.level =</span> <span class="fl">0.95</span>) <span class="co"># DescTools</span></code></pre>
+<pre><code>##     mean   lwr.ci   upr.ci 
+## 2.616681 2.518683 2.714680</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval_estimate1</span>(<span class="dt">x =</span> vec, <span class="dt">sigma =</span> sig, <span class="dt">alpha =</span> <span class="fl">0.05</span>) <span class="co"># OneTwoSamples</span></code></pre>
+<pre><code>## # A tibble: 1 x 4
+##    mean    df     a     b
+##   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  2.62    36  2.52  2.71</code></pre>
+</div>
+<div id="estim-ic-t" class="section level4">
+<h4><span class="header-section-number">14.2.1.2</span> No se conoce <span class="math inline">\(\sigma\)</span></h4>
+<p>Si no se conoce <span class="math inline">\(\sigma\)</span> o se tiene una muestra pequeña se puede usar la distribución <span class="math inline">\(t\)</span> para construir el intervalo de confianza. Modificando la Ecuación <a href="estimación-e-hipótesis.html#eq:IC-sim">(14.1)</a> y ajustándola a <span class="math inline">\(t\)</span> se tiene la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-media-t">(14.4)</a>, donde <span class="math inline">\(t_{\alpha/2,v}\)</span> corresponde con el valor crítico de <span class="math inline">\(t\)</span> para el nivel de confianza escogido y los grados de libertad respectivos, que se puede encontrar usando <code>qt</code>. Para este caso se puede visualizar conforme la Figura <a href="estimación-e-hipótesis.html#fig:t-crit">14.3</a>. En general los intervalos de confianza usando <span class="math inline">\(t\)</span> son más conservadores (amplios) que usando <span class="math inline">\(Z\)</span>.</p>
+<p><span class="math display" id="eq:ic-media-t">\[\begin{equation}
+  \bar{x} \pm t_{\alpha/2,v} \frac{s}{\sqrt{n}}\\
+  MoE = t_{\alpha/2,v} \frac{s}{\sqrt{n}}
+  \tag{14.4}
+\end{equation}\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:t-crit"></span>
+<img src="images/t-crit.png" alt="Representación de los valores críticos en la distribución t para un dado nivel de confianza." width="70%" />
+<p class="caption">
+Figura 14.3: Representación de los valores críticos en la distribución t para un dado nivel de confianza.
+</p>
+</div>
+<p>El siguiente ejemplo de <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span> demuestra lo expuesto anteriormente. Se tiene el porcentaje de cuarzo estimado en secciones delgadas de una roca ígnea: 23.5, 16.6, 25.4, 19.1, 19.3, 22.4, 20.9, 24.9. Estime el intervalo de confianza al 95% para el contenido de cuarzo.</p>
+<p><span class="math display">\[\begin{equation}
+  \bar{x} \pm t_{\alpha/2,v} \frac{s}{\sqrt{n}}\\
+  \bar{x} = 21.512, s = 3.083, n = 8, v = 7\\
+  21.512 \pm 2.365 \frac{3.083}{\sqrt{8}} = 21.512 \pm 2.578 \to 95\% \ IC [218.93,24.09]
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se pueden de nuevo usar funciones de los paquetes <em>DescTools</em>, <em>OneTwoSamples</em>, y <em>GMisc</em>, donde para los primeros dos ahora no se brinda el argumento de la desviación estándar poblacional, y para el último se pueden pasar las estadísticas a partir del vector.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cuarzo =<span class="st"> </span><span class="kw">c</span>(<span class="fl">23.5</span>, <span class="fl">16.6</span>, <span class="fl">25.4</span>, <span class="fl">19.1</span>, <span class="fl">19.3</span>, <span class="fl">22.4</span>, <span class="fl">20.9</span>, <span class="fl">24.9</span>)
+a =<span class="st"> </span><span class="fl">0.05</span>
+
+<span class="kw">MeanCI</span>(<span class="dt">x =</span> cuarzo, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a) <span class="co"># DescTools</span></code></pre>
+<pre><code>##     mean   lwr.ci   upr.ci 
+## 21.51250 18.93477 24.09023</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval_estimate1</span>(<span class="dt">x =</span> cuarzo, <span class="dt">alpha =</span> a) <span class="co"># OneTwoSamples</span></code></pre>
+<pre><code>## # A tibble: 1 x 4
+##    mean    df     a     b
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  21.5     7  18.9  24.1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci_t</span>(<span class="dt">x =</span> <span class="kw">mean</span>(cuarzo), <span class="dt">s =</span> <span class="kw">sd</span>(cuarzo), <span class="dt">n =</span> <span class="kw">length</span>(cuarzo), <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a) <span class="co"># GMisc</span></code></pre>
+<pre><code>## # A tibble: 1 x 4
+##    mean    df lower upper
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  21.5     7  18.9  24.1</code></pre>
+<p><span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span> presenta un diagrama de flujo (Figura <a href="estimación-e-hipótesis.html#fig:z-t-flow">14.4</a>) que puede servir como guía de cuando usar <span class="math inline">\(Z\)</span>, cuando usar <span class="math inline">\(t\)</span>, o cuando usar métodos no-paramétricos (<em>bootstrap</em>), los cuales serán cubiertos en el capítulo <a href="estadística-no-paramétrica.html#estadística-no-paramétrica">Estadística No Paramétrica</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:z-t-flow"></span>
+<img src="images/norm-t-flow.png" alt="Diagrama de flujo para la elección de la distribución (o método) a usar en el cálculo de intervalos de confianza. Tomado de Triola (2004)." width="70%" />
+<p class="caption">
+Figura 14.4: Diagrama de flujo para la elección de la distribución (o método) a usar en el cálculo de intervalos de confianza. Tomado de <span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span>.
+</p>
+</div>
+</div>
+</div>
+<div id="estim-diff-medias" class="section level3">
+<h3><span class="header-section-number">14.2.2</span> Diferencia de medias</h3>
+<p>En el caso de que se quieren comparar dos muestras independientes para determinar su similitud o no, o dos muestras dependientes (apareadas) para determinar el efecto de un fenómeno o evento, se pueden calcular intervalos de confianza para la diferencia de medias.</p>
+<p>Muestras independientes son aquellas que no tienen relación entre ellas, por lo general indicando que son muestras tomadas a partir de la misma o diferente población pero en diferentes momentos o sitios. Muestras dependientes son aquellas donde se muestrean y miden las mismas observaciones (puntos) antes y después de una intervención (fenómeno, evento, proceso, intervención, etc.) <span class="citation">(Nolan &amp; Heinzen, <a href="#ref-nolan2014">2014</a>; Triola, <a href="#ref-triola2004">2004</a>)</span>.</p>
+<p>En este caso el estadístico o estimador va a ser la diferencia de medias muestrales (<span class="math inline">\(\bar{x}_1-\bar{x}_2\)</span>) y el parámetro al diferencia de medias poblacionales (<span class="math inline">\(\mu_1-\mu_2\)</span>).</p>
+<div id="estim-ic-z2" class="section level4">
+<h4><span class="header-section-number">14.2.2.1</span> Se conoce <span class="math inline">\(\sigma\)</span></h4>
+<p>Si se conoce <span class="math inline">\(\sigma\)</span> (de nuevo, es lo menos común) se puede usar la distribución <span class="math inline">\(Z\)</span>. Modificando la Ecuación <a href="estimación-e-hipótesis.html#eq:IC-sim">(14.1)</a> y ajustándola a <span class="math inline">\(Z\)</span>, para dos muestras con <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span> como los tamaño de muestra y <span class="math inline">\(\sigma_1^2\)</span> y <span class="math inline">\(\sigma_1^2\)</span> como las varianzas poblacionales, se tiene la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-media-z2">(14.5)</a>, donde <span class="math inline">\(z_{\alpha/2}\)</span> corresponde con el valor crítico de <span class="math inline">\(Z\)</span> para el nivel de confianza escogido <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>, que se puede encontrar usando <code>qnorm</code>.</p>
+<p><span class="math display" id="eq:ic-media-z2">\[\begin{equation}
+  (\bar{x}_1-\bar{x}_2) \pm z_{\alpha/2} \sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}\\
+  MoE = z_{\alpha/2} \sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}
+  \tag{14.5}
+\end{equation}\]</span></p>
+<p>Lo anterior se demuestra con el siguiente ejemplo. Se tienen dos rocas ígneas, A y B, a las cuales se les realizan diferentes mediciones de la densidad, con tamaños 20 y 25 respectivamente. La densidad promedio de A se estima en 2.75 <span class="math inline">\(g/cm^3\)</span>, mientras que la densidad promedio de B se estima en 2.85 <span class="math inline">\(g/cm^3\)</span>. Construya un intervalo de confianza, al 95%, para la diferencia entre B y A, asumiendo varianzas poblacionales de 0.01 para A y 0.05 para B.</p>
+<p><span class="math display">\[\begin{equation}
+  (\bar{x}_B-\bar{x}_A) \pm z_{\alpha/2} \sqrt{\frac{\sigma_B^2}{n_B}+\frac{\sigma_A^2}{n_A}}\\
+  (2.85-2.75) \pm 1.96 \sqrt{\frac{0.05}{25}+\frac{0.1}{20}}\\
+  0.1 \pm 0.164 \to 95\% \ IC [-0.06,0.26]
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se pueden usar funciones de <em>OneTwoSamples</em> y <em>GMisc</em>. En este caso como se dan valores puntuales es más fácil usar <code>ci_z2</code> de <em>GMisc</em>. Para mostrar como usar <code>interval_estimate2</code> de <em>OneTwoSamples</em>, se simularon datos de acuerdo a la información (lo más cercano posibles), por lo que hay una diferencia ya que no son exactos.</p>
+<pre class="sourceCode r"><code class="sourceCode r">xB =<span class="st"> </span><span class="fl">2.85</span>
+xA =<span class="st"> </span><span class="fl">2.75</span>
+varB =<span class="st"> </span><span class="fl">0.05</span>
+varA =<span class="st"> </span><span class="fl">0.1</span>
+nB =<span class="st"> </span><span class="dv">25</span>
+nA =<span class="st"> </span><span class="dv">20</span>
+a =<span class="st"> </span><span class="fl">0.05</span>
+
+<span class="kw">set.seed</span>(<span class="dv">125</span>)
+A =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> nB, <span class="dt">mean =</span> xA, <span class="dt">sd =</span> <span class="kw">sqrt</span>(varA))
+B =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> nA, <span class="dt">mean =</span> xB, <span class="dt">sd =</span> <span class="kw">sqrt</span>(varB))
+
+<span class="kw">interval_estimate2</span>(<span class="dt">x =</span> B, <span class="dt">y =</span> A, 
+                   <span class="dt">sigma =</span> <span class="kw">c</span>(<span class="kw">sqrt</span>(varB), <span class="kw">sqrt</span>(varA)),
+                   <span class="dt">alpha =</span> a)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##     mean    df       a     b
+##    &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.0802    45 -0.0779 0.238</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci_z2</span>(<span class="dt">x1 =</span> xB, <span class="dt">sig1 =</span> <span class="kw">sqrt</span>(varB), <span class="dt">n1 =</span> nB, 
+      <span class="dt">x2 =</span> xA, <span class="dt">sig2 =</span> <span class="kw">sqrt</span>(varA), <span class="dt">n2 =</span> nA,
+      <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   mean_diff lower upper
+##       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1       0.1 -0.06  0.26</code></pre>
+</div>
+<div id="estim-ic-t2" class="section level4">
+<h4><span class="header-section-number">14.2.2.2</span> No se conoce <span class="math inline">\(\sigma\)</span></h4>
+<p>Como se ha mencionado anteriormente, y corresponde con la mayoría de las situaciones, cuando no se conoce <span class="math inline">\(\sigma\)</span> (o <span class="math inline">\(n &lt; 30\)</span>) se usa la distribución <span class="math inline">\(t\)</span>. Aquí se pueden encontrar diferentes escenarios:</p>
+<ul>
+<li>Muestras independientes con varianzas iguales,</li>
+<li>Muestras independientes con varianzas diferentes,</li>
+<li>Muestras dependientes.</li>
+</ul>
+<div id="estim-ic-t2-ind" class="section level5">
+<h5><span class="header-section-number">14.2.2.2.1</span> Muestras independientes</h5>
+<p>Como se definió en la sección <a href="estimación-e-hipótesis.html#estim-diff-medias">14.2.2</a>, las muestras independientes no tienen relación entre ellas. En esta situación se pueden encontrar dos escenarios dependiendo de si las varianzas son iguales o no. Lo que va a cambiar para los dos casos es el error estándar.</p>
+<div id="varianzas-iguales" class="section level6 unnumbered">
+<h6>Varianzas iguales</h6>
+<p>En el caso de que se pueda determinar que las varianzas (desviaciones estándar) de las dos muestras son iguales o podrían ser iguales (sección <a href="estimación-e-hipótesis.html#estim-ic-f">14.2.4</a>), se usa lo que se conoce como varianza agrupada (<em>pooled variance</em> en inglés) que se muestra en la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-var-agrupada">(14.6)</a>, con lo que el error estándar se convierte en lo que se muestra en la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-t2-se1">(14.7)</a>, y el intervalo de confianza para la diferencia de medias cuando las varianzas se pueden considerar iguales queda como se muestra en la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-media-t2-ind-igual">(14.8)</a>, con <span class="math inline">\(t_{\alpha/2,v}\)</span> como el estadístico crítico a los <span class="math inline">\(v = n_1 + n_2 - 2\)</span> grados de libertad <span class="citation">(Davis, <a href="#ref-davis2002">2002</a>; Nolan &amp; Heinzen, <a href="#ref-nolan2014">2014</a>; Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p><span class="math display" id="eq:ic-var-agrupada">\[\begin{equation}
+  s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}
+  \tag{14.6}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:ic-t2-se1">\[\begin{equation}
+  s_e = s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}
+  \tag{14.7}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:ic-media-t2-ind-igual">\[\begin{equation}
+  (\bar{x}_1-\bar{x}_2) \pm MoE\\
+  MoE = t_{\alpha/2,v} \cdot s_e\\
+  v = n_1 + n_2 - 2
+  \tag{14.8}
+\end{equation}\]</span></p>
+<p>El siguiente ejemplo de <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span> demuestra lo expuesto anteriormente. Se recolectaron braquiópodos en dos capas (A, B) y se les midió la longitud (cm), con los siguientes resultados: A <span class="math inline">\(\to\)</span> 3.2, 3.1, 3.1, 3.3, 2.9, 2.9, 3.5, 3.0; B <span class="math inline">\(\to\)</span> 3.1, 3.1, 2.8, 3.1, 3.0, 2.6, 3.0, 3.0, 3.1, 2.8. Calcule el intervalo de confianza, al 95%, para la diferencia de medias. Un resumen de los datos se muestra en la Tabla <a href="estimación-e-hipótesis.html#tab:ej-t2-ind-igual">14.2</a>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ej-t2-ind-igual">Tabla 14.2: </span>Datos ejemplo
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Capa
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(\bar{x}\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(s^2\)</span>
+</th>
+<th style="text-align:center;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+3.125
+</td>
+<td style="text-align:center;">
+0.042
+</td>
+<td style="text-align:center;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+2.960
+</td>
+<td style="text-align:center;">
+0.029
+</td>
+<td style="text-align:center;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\begin{equation}
+  s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}\\
+  s_p^2 = \frac{(8-1)0.042 + (10-1)0.029}{8 + 10 - 2} = 0.0348\\
+  
+  s_e = s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}\\
+  s_e = 0.1865 \sqrt{\frac{1}{8} + \frac{1}{10}} = 0.0885\\
+  
+  MoE = t_{\alpha/2,v} \cdot s_e = t_{0.05/2,16} \cdot s_e\\
+  MoE = 2.12 \cdot 0.0885 = 0.1876\\
+  
+  (\bar{x}_1-\bar{x}_2) \pm MoE\\
+  (3.125-2.96) \pm 0.1876\\
+  
+  0.165 \pm 0.1876 \to 95\% \ IC [-0.023,0.353]
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> de nuevo se utilizan funciones de los paquetes <em>OneTwoSamples</em> y <em>GMisc</em>. En <code>interval_estimate1</code> y <code>ci_t</code> hay que especificar que las varianzas son iguales (<code>var.equal = T</code>) ya que no es el comportamiento por defecto.</p>
+<pre class="sourceCode r"><code class="sourceCode r">A =<span class="st"> </span><span class="kw">c</span>(<span class="fl">3.2</span>, <span class="fl">3.1</span>, <span class="fl">3.1</span>, <span class="fl">3.3</span>, <span class="fl">2.9</span>, <span class="fl">2.9</span>, <span class="fl">3.5</span>, <span class="fl">3.0</span>)
+B =<span class="st"> </span><span class="kw">c</span>(<span class="fl">3.1</span>, <span class="fl">3.1</span>, <span class="fl">2.8</span>, <span class="fl">3.1</span>, <span class="fl">3.0</span>, <span class="fl">2.6</span>, <span class="fl">3.0</span>, <span class="fl">3.0</span>, <span class="fl">3.1</span>, <span class="fl">2.8</span>)
+a =<span class="st"> </span><span class="fl">0.05</span>
+
+<span class="kw">interval_estimate2</span>(<span class="dt">x =</span> A, <span class="dt">y =</span> B, <span class="dt">var.equal =</span> T, <span class="dt">alpha =</span> a)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##    mean    df       a     b
+##   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.165    16 -0.0230 0.353</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci_t2</span>(<span class="dt">x1 =</span> <span class="kw">mean</span>(A), <span class="dt">s1 =</span> <span class="kw">sd</span>(A), <span class="dt">n1 =</span> <span class="kw">length</span>(A), 
+      <span class="dt">x2 =</span> <span class="kw">mean</span>(B), <span class="dt">s2 =</span> <span class="kw">sd</span>(B), <span class="dt">n2 =</span> <span class="kw">length</span>(B), 
+      <span class="dt">var.equal =</span> T, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a, <span class="dt">digits =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   mean_diff    df  lower upper
+##       &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.165    16 -0.023 0.353</code></pre>
+</div>
+<div id="varianzas-diferentes" class="section level6 unnumbered">
+<h6>Varianzas diferentes</h6>
+<p>En el caso de que las varianzas no se puedan considerar iguales el error estándar se convierte en lo que se muestra en la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-t2-se2">(14.9)</a> (el error estándar del estadístico Welch), y el intervalo de confianza para la diferencia de medias cuando las varianzas no se pueden considerar iguales queda como se muestra en la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-media-t2-ind-dif">(14.10)</a>, con <span class="math inline">\(t_{\alpha/2,v}\)</span> como el estadístico crítico a los grados de libertad mostrados en la Ecuación <a href="estimación-e-hipótesis.html#eq:satterthwaite">(14.11)</a>, donde se redondean al entero más cercano <span class="citation">(McKillup &amp; Darby Dyar, <a href="#ref-mckillup2010">2010</a>; Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p><span class="math display" id="eq:ic-t2-se2">\[\begin{equation}
+  s_e = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
+  \tag{14.9}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:ic-media-t2-ind-dif">\[\begin{equation}
+  (\bar{x}_1-\bar{x}_2) \pm MoE\\
+  MoE = t_{\alpha/2,v} \cdot s_e\\
+  \tag{14.10}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:satterthwaite">\[\begin{equation}
+  v = \frac{(s_1^2/n_1 + s_2^2/n_2)^2}{[(s_1^2/n_1)^2/(n_1-1)] + [(s_2^2/n_2)^2/(n_2-1)]}
+  \tag{14.11}
+\end{equation}\]</span></p>
+<p>El siguiente ejemplo de <span class="citation">McKillup &amp; Darby Dyar (<a href="#ref-mckillup2010">2010</a>)</span> demuestra lo expuesto anteriormente. Se recolectaron 15 braquiópodos en cada uno de dos afloramientos (A, B) y se les midió la longitud de la concha (mm), con los siguientes resultados: A <span class="math inline">\(\to\)</span> 25, 40, 34, 37, 38, 35, 29, 32, 35, 44, 27, 33, 37, 38, 36; B <span class="math inline">\(\to\)</span> 45, 37, 36, 38, 49, 47, 32, 41, 38, 45, 33, 39, 46, 47, 40. Calcule el intervalo de confianza, al 95%, para la diferencia de medias. Un resumen de los datos se muestra en la Tabla <a href="estimación-e-hipótesis.html#tab:ej-t2-ind-dif">14.3</a>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ej-t2-ind-dif">Tabla 14.3: </span>Datos ejemplo
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Afloramiento
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(\bar{x}\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(s^2\)</span>
+</th>
+<th style="text-align:center;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+34.67
+</td>
+<td style="text-align:center;">
+24.67
+</td>
+<td style="text-align:center;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+40.87
+</td>
+<td style="text-align:center;">
+28.69
+</td>
+<td style="text-align:center;">
+15
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\begin{equation}
+  s_e = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}\\
+  s_e = \sqrt{\frac{24.67}{15} + \frac{28.69}{15}} = 1.886\\
+  
+  MoE = t_{\alpha/2,v} s_e = t_{0.05/2,28} \cdot s_e\\
+  MoE = 2.05 \cdot 1.886 = 3.863\\
+  
+  (\bar{x}_1-\bar{x}_2) \pm MoE\\
+  (34.67-40.87) \pm 3.863\\
+  
+  -6.2 \pm 3.863 \to 95\% \ IC [-10.063,-2.337]
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> de nuevo se utilizan funciones de los paquetes <em>DescTools</em>, <em>OneTwoSamples</em>, y <em>GMisc</em>. <code>MeanDiffCI</code> asume varianzas diferentes, para <code>interval_estimate2</code> y <code>ci_t2</code> se especifica que las varianzas son diferentes (el comportamiento por defecto).</p>
+<pre class="sourceCode r"><code class="sourceCode r">A =<span class="st"> </span><span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">34</span>, <span class="dv">37</span>, <span class="dv">38</span>, <span class="dv">35</span>, <span class="dv">29</span>, <span class="dv">32</span>, <span class="dv">35</span>, <span class="dv">44</span>, <span class="dv">27</span>, <span class="dv">33</span>, <span class="dv">37</span>, <span class="dv">38</span>, <span class="dv">36</span>)
+B =<span class="st"> </span><span class="kw">c</span>(<span class="dv">45</span>, <span class="dv">37</span>, <span class="dv">36</span>, <span class="dv">38</span>, <span class="dv">49</span>, <span class="dv">47</span>, <span class="dv">32</span>, <span class="dv">41</span>, <span class="dv">38</span>, <span class="dv">45</span>, <span class="dv">33</span>, <span class="dv">39</span>, <span class="dv">46</span>, <span class="dv">47</span>, <span class="dv">40</span>)
+a =<span class="st"> </span><span class="fl">0.05</span>
+
+<span class="kw">MeanDiffCI</span>(<span class="dt">x =</span> A, <span class="dt">y =</span> B, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>##  meandiff    lwr.ci    upr.ci 
+##  -6.20000 -10.06454  -2.33546</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval_estimate2</span>(<span class="dt">x =</span> A, <span class="dt">y =</span> B, <span class="dt">var.equal =</span> F, <span class="dt">alpha =</span> a)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##    mean    df     a     b
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  -6.2  27.8 -10.1 -2.34</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci_t2</span>(<span class="dt">x1 =</span> <span class="kw">mean</span>(A), <span class="dt">s1 =</span> <span class="kw">sd</span>(A), <span class="dt">n1 =</span> <span class="kw">length</span>(A), 
+      <span class="dt">x2 =</span> <span class="kw">mean</span>(B), <span class="dt">s2 =</span> <span class="kw">sd</span>(B), <span class="dt">n2 =</span> <span class="kw">length</span>(B), 
+      <span class="dt">var.equal =</span> F, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a, <span class="dt">digits =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   mean_diff    df lower upper
+##       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1      -6.2  27.8 -10.1 -2.34</code></pre>
+<p><span class="citation">Cumming &amp; Finch (<a href="#ref-cumming2005ap">2005</a>)</span> dan algunas pautas de cómo se pueden interpretar los intervalos de confianza, al 95%, para el caso de dos muestras independientes (Figura <a href="estimación-e-hipótesis.html#fig:ic-comparacion">14.5</a>), con el fin de determinar si las muestras se pueden consideras iguales o no (Esto es similar a realizar pruebas de hipótesis que serán cubiertas en el próximo capítulo). El punto principal es qué tanto se traslapan los intervalos, conforme más se traslapen más probable que las muestras sean similares y viceversa. Esto es más fácil y directo de interpretar con la diferencia de medias y su respectivo intervalo de confianza.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:ic-comparacion"></span>
+<img src="images/IC-comparacion.png" alt="Regla, según Cumming &amp; Finch (2005), de cómo interpretar intervalos de confianza al 95%, con la finalidad de determinar si las muestras se pueden considerar iguales o no. Si el traslape es igual o superior al 50% entre los brazos (márgenes de error) es probable que sean similares a un nivel de significancia \(\alpha = 0.05\), pero si el traslape es menor o nulo es poco probable que sean similares." width="70%" />
+<p class="caption">
+Figura 14.5: Regla, según <span class="citation">Cumming &amp; Finch (<a href="#ref-cumming2005ap">2005</a>)</span>, de cómo interpretar intervalos de confianza al 95%, con la finalidad de determinar si las muestras se pueden considerar iguales o no. Si el traslape es igual o superior al 50% entre los brazos (márgenes de error) es probable que sean similares a un nivel de significancia <span class="math inline">\(\alpha = 0.05\)</span>, pero si el traslape es menor o nulo es poco probable que sean similares.
+</p>
+</div>
+<p>Esto se puede representar para los ejemplo anteriores. La Figura <a href="estimación-e-hipótesis.html#fig:ci-comp1">14.6</a> muestra los intervalos de confianza para las muestras y para la diferencia de medias del ejemplo de muestras independientes con varianzas iguales, donde 0 cae dentro del intervalo de confianza para la diferencia, por lo que se pueden considerar iguales. La Figura <a href="estimación-e-hipótesis.html#fig:ci-comp2">14.7</a> muestra los intervalos de confianza para las muestras y para la diferencia de medias del ejemplo de muestras independientes con varianzas diferentes, donde 0 no cae dentro del intervalo de confianza para la diferencia, por lo que no se pueden considerar iguales. Estas figuras se generaron con la función <code>NewStats_2samples</code> del paquete <em>GMisc</em>.</p>
+<div class="figure" style="text-align: center"><span id="fig:ci-comp1"></span>
+<img src="geolonum_files/figure-html/ci-comp1-1.png" alt="Comparación de los intervalos de confianza para el ejemplo de muestras independientes con varianza igual. El valor de 0 cae dentro del intervalo de confianza para la diferencia, por lo que se pueden considerar iguales." width="70%" />
+<p class="caption">
+Figura 14.6: Comparación de los intervalos de confianza para el ejemplo de muestras independientes con varianza igual. El valor de 0 cae dentro del intervalo de confianza para la diferencia, por lo que se pueden considerar iguales.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:ci-comp2"></span>
+<img src="geolonum_files/figure-html/ci-comp2-1.png" alt="Comparación de los intervalos de confianza para el ejemplo de muestras independientes con varianza diferente. El valor de 0 no cae dentro del intervalo de confianza para la diferencia, por lo que no se pueden considerar iguales." width="70%" />
+<p class="caption">
+Figura 14.7: Comparación de los intervalos de confianza para el ejemplo de muestras independientes con varianza diferente. El valor de 0 no cae dentro del intervalo de confianza para la diferencia, por lo que no se pueden considerar iguales.
+</p>
+</div>
+</div>
+</div>
+<div id="estim-ic-t2-dep" class="section level5">
+<h5><span class="header-section-number">14.2.2.2.2</span> Muestras dependientes (apareadas)</h5>
+<p>Aunque se tratan de dos muestras, por estar relacionadas el análisis es muy similar al de una muestra, donde la diferencia es que no se trabaja con los datos de las muestras sino con la diferencia entre las muestras. Por lo anterior es que en vez de trabajar con la media y la desviación estándar de una muestra, ahora se trabaja con la media de las diferencias (<span class="math inline">\(\bar{d}\)</span>) y la desviación estándar de las diferencias (<span class="math inline">\(s_d\)</span>). El intervalo de confianza entonces queda como se presenta en la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-media-t2-dep">(14.12)</a>, donde el parámetro de interés es la media de las diferencias (<span class="math inline">\(\mu_d\)</span>), no la diferencia de medias, y los grados de libertad son <span class="math inline">\(v=n-1\)</span>, ya que se analizan las mismas observaciones dos veces <span class="citation">(McKillup &amp; Darby Dyar, <a href="#ref-mckillup2010">2010</a>; Nolan &amp; Heinzen, <a href="#ref-nolan2014">2014</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p><span class="math display" id="eq:ic-media-t2-dep">\[\begin{equation}
+  \bar{d} \pm MoE\\
+  MoE = t_{\alpha/2,v} \cdot s_e = t_{\alpha/2,v} \frac{s_d}{\sqrt{n}}\\
+  v = n-1
+  \tag{14.12}
+\end{equation}\]</span></p>
+<p>El siguiente ejemplo de <span class="citation">McKillup &amp; Darby Dyar (<a href="#ref-mckillup2010">2010</a>)</span> se usa para demostrar lo expuesto arriba. Se tiene el contenido de <span class="math inline">\(FeO\)</span> en porcentaje de peso para 10 granitos que fueron preparados a diferentes tamaños de grano: <span class="math inline">\(&lt; 25 \ \mu m\)</span> y <span class="math inline">\(&lt; 125 \ \mu m\)</span>. Los datos se muestran en la Tabla <a href="estimación-e-hipótesis.html#tab:ej-t2-dep">14.4</a>, donde <span class="math inline">\(\bar{d} = 0.1\)</span>, <span class="math inline">\(s_d = 0.1247\)</span>, <span class="math inline">\(n = 10\)</span>, <span class="math inline">\(v = 9\)</span>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:ej-t2-dep">Tabla 14.4: </span>Datos ejemplo muestras dependientes
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Granito
+</th>
+<th style="text-align:center;">
+&lt; 25 <span class="math inline">\(\mu m\)</span>
+</th>
+<th style="text-align:center;">
+&lt; 125 <span class="math inline">\(\mu m\)</span>
+</th>
+<th style="text-align:center;">
+Diferencia
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+13.5
+</td>
+<td style="text-align:center;">
+13.6
+</td>
+<td style="text-align:center;">
+0.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+14.6
+</td>
+<td style="text-align:center;">
+14.6
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+12.7
+</td>
+<td style="text-align:center;">
+12.6
+</td>
+<td style="text-align:center;">
+-0.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+15.5
+</td>
+<td style="text-align:center;">
+15.7
+</td>
+<td style="text-align:center;">
+0.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+11.1
+</td>
+<td style="text-align:center;">
+11.1
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+16.4
+</td>
+<td style="text-align:center;">
+16.6
+</td>
+<td style="text-align:center;">
+0.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+13.2
+</td>
+<td style="text-align:center;">
+13.2
+</td>
+<td style="text-align:center;">
+0.0
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+19.3
+</td>
+<td style="text-align:center;">
+19.5
+</td>
+<td style="text-align:center;">
+0.2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+16.7
+</td>
+<td style="text-align:center;">
+16.8
+</td>
+<td style="text-align:center;">
+0.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+18.4
+</td>
+<td style="text-align:center;">
+18.7
+</td>
+<td style="text-align:center;">
+0.3
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display" id="eq:ic-media-t2-dep">\[\begin{equation}
+  \bar{d} \pm MoE\\
+  MoE = t_{\alpha/2,v} \cdot s_e = t_{\alpha/2,v} \frac{s_d}{\sqrt{n}}\\
+  MoE = t_{0.05/2,9} \frac{0.1247}{\sqrt{10}} = 2.262 \cdot 0.0394 = 0.0891\\
+  0.1 \pm 0.0981 \to 95\% \ IC [0.0108,0.189]
+  \tag{14.12}
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> de nuevo se utilizan funciones de los paquetes <em>DescTools</em>, <em>OneTwoSamples</em>, y <em>GMisc</em>. En el caso de <code>MeanDiffCI</code>, esta función tiene el argumento <code>paired</code> que es para indicar que las muestras son dependientes (apareadas). Para <code>interval_estimate1</code> y <code>ci_t</code>, se trabaja con el vector de diferencias como el caso de una muestra.</p>
+<pre class="sourceCode r"><code class="sourceCode r">m1 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">13.5</span>,<span class="fl">14.6</span>,<span class="fl">12.7</span>,<span class="fl">15.5</span>,<span class="fl">11.1</span>,<span class="fl">16.4</span>,<span class="fl">13.2</span>,<span class="fl">19.3</span>,<span class="fl">16.7</span>,<span class="fl">18.4</span>)
+m2 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">13.6</span>,<span class="fl">14.6</span>,<span class="fl">12.6</span>,<span class="fl">15.7</span>,<span class="fl">11.1</span>,<span class="fl">16.6</span>,<span class="fl">13.2</span>,<span class="fl">19.5</span>,<span class="fl">16.8</span>,<span class="fl">18.7</span>)
+diferencia =<span class="st"> </span>m2 <span class="op">-</span><span class="st"> </span>m1
+a =<span class="st"> </span><span class="fl">0.05</span>
+
+<span class="kw">MeanDiffCI</span>(<span class="dt">x =</span> m2, <span class="dt">y =</span> m1, <span class="dt">paired =</span> T, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>##   meandiff     lwr.ci     upr.ci 
+## 0.10000000 0.01077932 0.18922068</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval_estimate1</span>(<span class="dt">x =</span> diferencia, <span class="dt">alpha =</span> a)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##    mean    df      a     b
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1   0.1     9 0.0108 0.189</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci_t</span>(<span class="dt">x =</span> <span class="kw">mean</span>(diferencia), <span class="dt">s =</span> <span class="kw">sd</span>(diferencia), 
+     <span class="dt">n =</span> <span class="kw">length</span>(diferencia), <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a, <span class="dt">digits =</span> <span class="dv">4</span>)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##    mean    df  lower upper
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1   0.1     9 0.0108 0.189</code></pre>
+<p>En este caso el MoE es muy pequeño dada la alta correlación entre las muestras <span class="math inline">\(r = 0.9996\)</span>.</p>
+<p>A diferencia de las muestras independientes, donde se pueden analizar los intervalos de confianza para las dos muestras y sacar conclusiones, ésto no es posible para las muestras dependientes (apareadas), donde la única forma de analizar la relación es por medio del intervalo de confianza para la media de las diferencias. Lo anterior se debe a que usualmente las muestras están correlacionadas, y conforme la correlación incrementa el margen de error del intervalo de confianza se reduce, a como se muestra en la Ecuación <a href="estimación-e-hipótesis.html#eq:moe-dep">(14.13)</a>. Gráficamente las muestras dependientes se representan por medio de una línea que une las medias de las muestras <span class="citation">(Cumming &amp; Finch, <a href="#ref-cumming2005ap">2005</a>)</span>.</p>
+<p><span class="math display" id="eq:moe-dep">\[\begin{equation}
+  MoE_d^2 = MoE_1^2 + MoE_2^2 - 2rMoE_1MoE_2\\
+  MoE_1 = \text{margen de error de la muestra 1}\\
+  MoE_2 = \text{margen de error de la muestra 2}\\
+  r = \text{coeficiente de correlación de Pearson}
+  \tag{14.13}
+\end{equation}\]</span></p>
+<p>La Figura <a href="estimación-e-hipótesis.html#fig:ci-comp3">14.8</a> muestra los intervalos de confianza para las muestras y para la media de las diferencias del ejemplo de muestras dependientes, donde 0 no cae dentro del intervalo de confianza para la diferencia, por lo que no se pueden considerar iguales. Esta figura se generó con la función <code>NewStats_2samples</code> del paquete <em>GMisc</em>.</p>
+<div class="figure" style="text-align: center"><span id="fig:ci-comp3"></span>
+<img src="geolonum_files/figure-html/ci-comp3-1.png" alt="Comparación de los intervalos de confianza para el ejemplo de muestras dependientes. El análisis se debe enfocar en el intervalo de confianza para media de las diferencias, donde aquí el valor de 0 no cae dentro del intervalo de confianza para la diferencia, por lo que no se pueden considerar iguales." width="70%" />
+<p class="caption">
+Figura 14.8: Comparación de los intervalos de confianza para el ejemplo de muestras dependientes. El análisis se debe enfocar en el intervalo de confianza para media de las diferencias, donde aquí el valor de 0 no cae dentro del intervalo de confianza para la diferencia, por lo que no se pueden considerar iguales.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="estim-ic-chi" class="section level3">
+<h3><span class="header-section-number">14.2.3</span> Varianza</h3>
+<p>A veces es el caso que se quieren hacer inferencias, sacar conclusiones para la dispersión (variabilidad) de un proceso o fenómeno (normalmente distribuido), por lo que el parámetro de interés es la varianza poblacional <span class="math inline">\(\sigma^2\)</span> y el estadístico o estimador es <span class="math inline">\(s^2\)</span>. En estos casos, y como se introdujo y mencionó en la sección <a href="introducción-a-estadística-inferencial.html#infer-chi">13.2.3</a>, se usa la distribución <span class="math inline">\(\chi^2\)</span>, ya que el parámetro de interés es siempre positivo.</p>
+<p>Para este caso la Ecuación <a href="estimación-e-hipótesis.html#eq:IC-asim">(14.2)</a> se puede ajustar a <span class="math inline">\(\chi^2\)</span>, con lo que se tiene la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-chi2">(14.14)</a>, donde <span class="math inline">\(\chi^2_{\alpha/2}\)</span> y <span class="math inline">\(\chi^2_{1-\alpha/2}\)</span> corresponden con el valores críticos de <span class="math inline">\(\chi^2\)</span> para el nivel de confianza escogido y los grados de libertad respectivos, que se puede encontrar usando <code>qchi</code>. Para este caso se puede visualizar conforme la Figura <a href="estimación-e-hipótesis.html#fig:chi2-crit">14.9</a> <span class="citation">(Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p><span class="math display" id="eq:ic-chi2">\[\begin{equation}
+  \frac{(n-1)s^2}{\chi^2_{\alpha/2,v}} &lt; \sigma^2 &lt; \frac{(n-1)s^2}{\chi^2_{1-\alpha/2,v}}
+  \tag{14.14}
+\end{equation}\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:chi2-crit"></span>
+<img src="images/chi2-crit.png" alt="Representación de los valores críticos en la distribución $\chi^2$ para un dado nivel de confianza y grados de libertad." width="70%" />
+<p class="caption">
+Figura 14.9: Representación de los valores críticos en la distribución <span class="math inline">\(\chi^2\)</span> para un dado nivel de confianza y grados de libertad.
+</p>
+</div>
+<p>Utilizando de nuevo el ejemplo de <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span> donde se tiene el porcentaje de cuarzo estimado en secciones delgadas de una roca ígnea: 23.5, 16.6, 25.4, 19.1, 19.3, 22.4, 20.9, 24.9, se puede utilizar para estimar el intervalo de confianza al 95% para la variabilidad del contenido de cuarzo.</p>
+<p>En <strong>R</strong> las funciones <code>VarCI</code> de <em>DescTools</em>, <code>interval_var1</code> de <em>OneTwoSamples</em>, y <code>ci_chisq</code> de <em>GMisc</em>, proporcionan opciones para calcular el intervalo de confianza para <span class="math inline">\(\sigma^2\)</span>. De éstas <code>ci_chisq</code> es la única que también muestra el intervalo de confianza para <span class="math inline">\(\sigma\)</span>, que es simplemente sacar la raíz cuadrada del intervalo de confianza para <span class="math inline">\(\sigma^2\)</span>.</p>
+<p><span class="math display">\[\begin{equation}
+  \frac{(n-1)s^2}{\chi^2_{\alpha/2,v}} &lt; \sigma^2 &lt; \frac{(n-1)s^2}{\chi^2_{1-\alpha/2,v}}\\
+  \frac{(8-1)9.507}{\chi^2_{0.05/2,7}} &lt; \sigma^2 &lt; \frac{(8-1)9.507}{\chi^2_{1-0.05/2,7}}\\
+  \frac{(8-1)9.507}{16.012} &lt; \sigma^2 &lt; \frac{(8-1)9.507}{1.689}\\
+  4.16 &lt; \sigma^2 &lt; 39.38
+\end{equation}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">cuarzo =<span class="st"> </span><span class="kw">c</span>(<span class="fl">23.5</span>, <span class="fl">16.6</span>, <span class="fl">25.4</span>, <span class="fl">19.1</span>, <span class="fl">19.3</span>, <span class="fl">22.4</span>, <span class="fl">20.9</span>, <span class="fl">24.9</span>)
+a =<span class="st"> </span><span class="fl">0.05</span>
+
+<span class="kw">VarCI</span>(<span class="dt">x =</span> cuarzo, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>##       var    lwr.ci    upr.ci 
+##  9.506964  4.155981 39.381007</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval_var1</span>(<span class="dt">x =</span> cuarzo, <span class="dt">alpha =</span> a)</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##     var    df     a     b
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  9.51     7  4.16  39.4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci_chisq</span>(<span class="dt">s =</span> <span class="kw">sd</span>(cuarzo), <span class="dt">n =</span> <span class="kw">length</span>(cuarzo), <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>## # A tibble: 2 x 5
+##   stat  value    df lower upper
+##   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 sd     3.08     7  2.04  6.28
+## 2 var    9.51     7  4.16 39.4</code></pre>
+</div>
+<div id="estim-ic-f" class="section level3">
+<h3><span class="header-section-number">14.2.4</span> Dos varianzas</h3>
+<p>Cuando se desea estimar la similitud entre dos varianzas se usa la distribución <span class="math inline">\(F\)</span>, que se usa para la razón de varianzas <span class="math inline">\(\frac{\sigma^2_1}{\sigma^2_2}\)</span> poblaciones. Para este escenario la Ecuación <a href="estimación-e-hipótesis.html#eq:IC-asim">(14.2)</a> se puede ajustar a <span class="math inline">\(F\)</span>, con lo que se tiene la Ecuación <a href="estimación-e-hipótesis.html#eq:ic-f">(14.15)</a>, donde <span class="math inline">\(F_{\alpha/2}\)</span> y <span class="math inline">\(F_{1-\alpha/2}\)</span> corresponden con el valores críticos de <span class="math inline">\(F\)</span> para el nivel de confianza escogido y los grados de libertad respectivos, que se puede encontrar usando <code>qf</code>. Para este caso se puede visualizar conforme la Figura <a href="estimación-e-hipótesis.html#fig:f-crit">14.10</a> <span class="citation">(Davis, <a href="#ref-davis2002">2002</a>; Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>. Aquí la idea es que si el valor de 1 cae dentro del intervalo, entonces las varianzas se pueden considerar iguales, ya que es un valor posible para la razón de varianzas. Lo típico es usar la varianza mayor como la primera para que la razón esté por encima de 1, pero no es necesario.</p>
+<p><span class="math display" id="eq:ic-f">\[\begin{equation}
+  \frac{s^2_1}{s^2_2} \frac{1}{F_{\alpha/2(v_1,v_2)}} &lt; \frac{\sigma^2_1}{\sigma^2_2} &lt; \frac{s^2_1}{s^2_2} F_{\alpha/2(v_2,v_1)}
+  \tag{14.15}
+\end{equation}\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:f-crit"></span>
+<img src="images/f-crit.png" alt="Representación de los valores críticos en la distribución $F$ para un dado nivel de confianza y grados de libertad." width="70%" />
+<p class="caption">
+Figura 14.10: Representación de los valores críticos en la distribución <span class="math inline">\(F\)</span> para un dado nivel de confianza y grados de libertad.
+</p>
+</div>
+<p>Para ilustrar este concepto se utilizan de nuevo los datos del ejemplo de <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span>, que se usó en la sección de muestras independientes con varianzas iguales, donde se recolectaron braquiópodos en dos capas (A, B), por lo que aquí se usa para comprobar si la suposición de varianzas iguales estaría correcta.</p>
+<p><span class="math display">\[\begin{equation}
+  \frac{s^2_1}{s^2_2} \frac{1}{F_{\alpha/2(v_1,v_2)}} &lt; \frac{\sigma^2_1}{\sigma^2_2} &lt; \frac{s^2_1}{s^2_2} F_{\alpha/2(v_2,v_1)}\\
+  \frac{0.042}{0.029} \frac{1}{F_{0.05/2(7,9)}} &lt; \frac{\sigma^2_1}{\sigma^2_2} &lt; \frac{0.042}{0.029} F_{0.05/2(9,7)}\\
+  \frac{0.042}{0.029} \frac{1}{4.197} &lt; \frac{\sigma^2_1}{\sigma^2_2} &lt; \frac{0.042}{0.029} 4.823\\
+  0.345 &lt; \frac{\sigma^2_1}{\sigma^2_2} &lt; 6.985
+\end{equation}\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">A =<span class="st"> </span><span class="kw">c</span>(<span class="fl">3.2</span>, <span class="fl">3.1</span>, <span class="fl">3.1</span>, <span class="fl">3.3</span>, <span class="fl">2.9</span>, <span class="fl">2.9</span>, <span class="fl">3.5</span>, <span class="fl">3.0</span>)
+B =<span class="st"> </span><span class="kw">c</span>(<span class="fl">3.1</span>, <span class="fl">3.1</span>, <span class="fl">2.8</span>, <span class="fl">3.1</span>, <span class="fl">3.0</span>, <span class="fl">2.6</span>, <span class="fl">3.0</span>, <span class="fl">3.0</span>, <span class="fl">3.1</span>, <span class="fl">2.8</span>)
+a =<span class="st"> </span><span class="fl">0.05</span>
+
+<span class="kw">interval_var2</span>(<span class="dt">x =</span> A, <span class="dt">y =</span> B, <span class="dt">alpha =</span> a)</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##    rate   df1   df2     a     b
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  1.44     7     9 0.342  6.93</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ci_F</span>(<span class="dt">s1 =</span> <span class="kw">sd</span>(A), <span class="dt">n1 =</span> <span class="kw">length</span>(A), 
+     <span class="dt">s2 =</span> <span class="kw">sd</span>(B), <span class="dt">n2 =</span> <span class="kw">length</span>(B), 
+     <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a, <span class="dt">digits =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>## # A tibble: 2 x 6
+##   stat  ratio   df1   df2 lower upper
+##   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 sd     1.20     7     9 0.585  2.63
+## 2 var    1.44     7     9 0.342  6.93</code></pre>
+<p>Como se observa en este caso 1 cae dentro del intervalo, por lo que las varianzas se pueden considerar iguales, y se consideraría correcto suponer ésto para la construcción del intervalo de confianza para la diferencia de medias.</p>
+</div>
+</div>
+<div id="hip" class="section level2">
+<h2><span class="header-section-number">14.3</span> Hipótesis</h2>
+<p>Como se mencionó al principio del capítulo, en estadística inferencial se usan los métodos de estimación e hipótesis. En la sección anterior se introdujeron los conceptos de estimación y varios de los casos donde se suelen utilizar. Esta sección y el resto del capítulo se va a enfocar en introducir lo que es una hipótesis estadística, cuáles son de forma general las hipótesis que se usan, y qué conclusiones (resultados) se obtienen a partir de éstas. En el próximo capítulo (<a href="pruebas-estadísticas.html#pruebas-estadísticas-1">Pruebas Estadísticas</a>) se presentarán diferentes pruebas que se pueden realizar y que complementan a la estimación.</p>
+<p>De acuerdo con <span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span> y <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span> una hipótesis es una aseveración o conjetura respecto a una o más poblaciones, y nunca se va a saber con certeza si es correcta o no. Para intentar responder a la hipótesis planteada se toma una muestra representativa y los datos de ésta se usan en pruebas estadísticas para llegar a una conclusión <span class="citation">(Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<div id="nula-h_0-y-alterna-h_1" class="section level3">
+<h3><span class="header-section-number">14.3.1</span> Nula (<span class="math inline">\(H_0\)</span>) y Alterna (<span class="math inline">\(H_1\)</span>)</h3>
+<p>Las pruebas de hipótesis, que se van a mostrar más específicamente en el próximo capítulo, se formalizan por medio de lo que se conoce como <strong>hipótesis nula</strong> e <strong>hipótesis alterna</strong>. La hipótesis alterna es típicamente la aseveración de interés o lo que quiere probar, y se simboliza con <span class="math inline">\(H_1\)</span>, mientras que la hipótesis nula es lo que se opone a la alterna y se simboliza con <span class="math inline">\(H_0\)</span>. La hipótesis nula por lo general hace referencia a la ausencia de una relación o diferencia, mientras que la hipótesis alterna hace referencia a la existencia de una relación o diferencia, un efecto medible <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>; Trauth, <a href="#ref-trauth2015">2015</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+</div>
+<div id="resultados-y-errores" class="section level3">
+<h3><span class="header-section-number">14.3.2</span> Resultados y Errores</h3>
+<p>Dado que no se sabe con certeza si las aseveraciones propuestas son correctas o no es que los dos posibles resultados o conclusiones después de realizar una prueba de hipótesis son:</p>
+<ul>
+<li><em>rechazar <span class="math inline">\(H_0\)</span></em> en favor de <span class="math inline">\(H_1\)</span>
+<ul>
+<li>hay suficiente evidencia,</li>
+<li>resultado erróneo al azar (<span class="math inline">\(\alpha\)</span>)</li>
+</ul></li>
+<li><em>no rechazar <span class="math inline">\(H_0\)</span></em>
+<ul>
+<li>no hay suficiente evidencia,</li>
+<li>muestra no representativa,</li>
+<li>es verdadera,</li>
+<li>resultado erróneo al azar (<span class="math inline">\(\beta\)</span>)</li>
+</ul></li>
+</ul>
+<p>De nuevo, dada la incertidumbre en los datos es que no se puede aceptar <span class="math inline">\(H_0\)</span>, solo se puede no rechazar, ya que la muestra que se utilizó puede que no fuera lo suficientemente representativa o grande <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<p>La Tabla <a href="estimación-e-hipótesis.html#tab:errores">14.5</a> muestra los posibles resultados que se pueden obtener al realizar una prueba de hipótesis (Tabla <a href="estimación-e-hipótesis.html#tab:errores2">14.6</a> muestra la misma tabla pero con términos estadísticos). Dentro de éstos se incluyen los mencionado anteriormente, y se incluyen los posibles errores que se pueden cometer, dado que hay incertidumbre en los datos. El error tipo I es cuando se rechaza <span class="math inline">\(H_0\)</span> cuando ésta es correcta y corresponde con <span class="math inline">\(\alpha\)</span> el nivel de significancia. El error tipo II es cuando no se rechaza <span class="math inline">\(H_0\)</span> cuando ésta es falsa y corresponde con <span class="math inline">\(\beta\)</span>. El complemento de <span class="math inline">\(\beta\)</span> (<span class="math inline">\(1-\beta\)</span>) corresponde con el poder (potencia) de la prueba y corresponde con rechazar <span class="math inline">\(H_0\)</span> cuando es falsa (decisión correcta), y en la mayoría de los círculos científicos se usa 80% como mínimo valor aceptable. Ambos errores se pueden reducir incrementando el tamaño de la muestra <span class="citation">(Nolan &amp; Heinzen, <a href="#ref-nolan2014">2014</a>; Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:errores">Tabla 14.5: </span>Posibles resultados de una prueba de hipótesis
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(H_0\)</span> es verdadera
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(H_0\)</span> es falsa
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+No rechazar <span class="math inline">\(H_0\)</span>
+</td>
+<td style="text-align:center;">
+Decisión correcta
+</td>
+<td style="text-align:center;">
+Error Tipo II
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Rechazar <span class="math inline">\(H_0\)</span>
+</td>
+<td style="text-align:center;">
+Error Tipo I
+</td>
+<td style="text-align:center;">
+Decisión correcta
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:errores2">Tabla 14.6: </span>Términos estadísticos para posibles resultados de una prueba de hipótesis
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(H_0\)</span> es verdadera
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(H_0\)</span> es falsa
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+No rechazar <span class="math inline">\(H_0\)</span>
+</td>
+<td style="text-align:center;">
+Nivel de confianza (1 - <span class="math inline">\(\alpha\)</span>)
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\beta\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Rechazar <span class="math inline">\(H_0\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\alpha\)</span>
+</td>
+<td style="text-align:center;">
+Potencia (<span class="math inline">\(1-\beta\)</span>)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="estadístico-de-prueba-y-crítico" class="section level3">
+<h3><span class="header-section-number">14.3.3</span> Estadístico de prueba y crítico</h3>
+<p>El estadístico de prueba (<span class="math inline">\(z\)</span>, <span class="math inline">\(t\)</span>, <span class="math inline">\(\chi^2\)</span>, <span class="math inline">\(F\)</span>, etc.) es el que se obtiene a partir de los datos muestrales y es el que se va a usar para decidir si se rechaza o no la hipótesis nula. El estadístico o valor crítico es el que va a delimitar el valor mínimo de la región de rechazo, la cuál va a comprender todos los valores posibles que van a resultar en un rechazo de la hipótesis nula. El valor crítico está en función del nivel de significancia <span class="math inline">\(\alpha\)</span>, y debe ser escogido con anterioridad a la recolección de los datos <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>. Este estadístico crítico era el que se usó en la sección de <a href="estimación-e-hipótesis.html#estim">Estimación</a> para construir los intervalos de confianza.</p>
+</div>
+<div id="contrastes-y-valor-p" class="section level3">
+<h3><span class="header-section-number">14.3.4</span> Contrastes y valor-<em>p</em></h3>
+<p>Al formular las hipótesis (especialmente la alterna <span class="math inline">\(H_1\)</span>) éstas pueden ser de tres tipos (Figura <a href="estimación-e-hipótesis.html#fig:hip-contrastes">14.11</a>) <span class="citation">(Nolan &amp; Heinzen, <a href="#ref-nolan2014">2014</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>:</p>
+<ul>
+<li>Dos colas (bilateral): La región de rechazo se divide en dos partes iguales en ambos extremos de la distribución
+<ul>
+<li><span class="math inline">\(H_0: \theta = \theta_0\)</span></li>
+<li><span class="math inline">\(H_1: \theta \ne \theta_0\)</span></li>
+</ul></li>
+<li>Cola izquierda (unilateral izquierda): La región de rechazo se encuentra completamente en el extremo izquierdo (inferior) de la distribución.
+<ul>
+<li><span class="math inline">\(H_0: \theta \ge \theta_0\)</span></li>
+<li><span class="math inline">\(H_1: \theta &lt; \theta_0\)</span></li>
+</ul></li>
+<li>Cola derecha (unilateral derecha): La región de rechazo se encuentra completamente en el extremo derecho (superior) de la distribución.
+<ul>
+<li><span class="math inline">\(H_0: \theta \le \theta_0\)</span></li>
+<li><span class="math inline">\(H_1: \theta &gt; \theta_0\)</span></li>
+</ul></li>
+</ul>
+
+<div class="figure" style="text-align: center"><span id="fig:hip-contrastes"></span>
+<img src="images/hipotesis-contrastes.png" alt="Posibles contrastes para una prueba de hipótesis. Superior es bilateral, Medio es unilateral izquierda, Inferior es unilateral derecha. Tomado de Triola (2004)." width="50%" />
+<p class="caption">
+Figura 14.11: Posibles contrastes para una prueba de hipótesis. Superior es bilateral, Medio es unilateral izquierda, Inferior es unilateral derecha. Tomado de <span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span>.
+</p>
+</div>
+<p>El valor-<em>p</em> (<span class="math inline">\(p\)</span>) es la probabilidad de obtener un resultado tan extremo como el observado si <span class="math inline">\(H_0\)</span> es verdadera (NO es la probabilidad de que <span class="math inline">\(H_0\)</span> sea verdad), en notación probabilística sería <span class="math inline">\(P(resultado|H_0)\)</span>, la probabilidad del resultado dado <span class="math inline">\(H_0\)</span>. Este valor va a depender del tamaño de la muestra, ya que a mayor tamaño de la muestra menor el error estándar (<span class="math inline">\(s/\sqrt(n)\)</span>) y menor el valor-<em>p</em> y más extremo el resultado <span class="citation">(Nolan &amp; Heinzen, <a href="#ref-nolan2014">2014</a>; Triola, <a href="#ref-triola2004">2004</a>; Walpole et al., <a href="#ref-walpole2012">2012</a>)</span>. El procedimiento de cómo calcular el valor-<em>p</em> se muestra en la Figura <a href="estimación-e-hipótesis.html#fig:valor-p">14.12</a>.</p>
+
+<div class="figure" style="text-align: center"><span id="fig:valor-p"></span>
+<img src="images/hipotesis-p.png" alt="Procedimiento para calcular el valor-p. Tomado de Triola (2004)." width="70%" />
+<p class="caption">
+Figura 14.12: Procedimiento para calcular el valor-<em>p</em>. Tomado de <span class="citation">Triola (<a href="#ref-triola2004">2004</a>)</span>.
+</p>
+</div>
+</div>
+<div id="decisión" class="section level3">
+<h3><span class="header-section-number">14.3.5</span> Decisión</h3>
+<p>De manera general se rechaza <span class="math inline">\(H_0\)</span> si:</p>
+<ul>
+<li><span class="math inline">\(p &lt; \alpha\)</span>,</li>
+<li>estadístico de prueba es mayor que el estadístico crítico (ej: <span class="math inline">\(t &gt; t_{crit}\)</span>),</li>
+<li>parámetro poblacional cae fuera del intervalo de confianza.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-cumming2011">
+<p>Cumming, G. (2011). <em>Understanding The New Statistics - Effect Sizes, Confidence Intervals, and Meta-Analysis</em>. New York: Rutledge.</p>
+</div>
+<div id="ref-cumming2014ps">
+<p>Cumming, G. (2014). The New Statistics: Why and How. <em>Psychological Science</em>, <em>25</em>(1), 7-29. <a href="https://doi.org/10.1177/0956797613504966">https://doi.org/10.1177/0956797613504966</a></p>
+</div>
+<div id="ref-cumming2005ap">
+<p>Cumming, G., &amp; Finch, S. (2005). Inference by Eye: Confidence Intervals and How to Read Pictures of Data. <em>American Psychologist</em>, <em>60</em>(2), 170-180. <a href="https://doi.org/10.1037/0003-066X.60.2.170">https://doi.org/10.1037/0003-066X.60.2.170</a></p>
+</div>
+<div id="ref-davis2002">
+<p>Davis, J. C. (2002). <em>Statistics and Data Analysis in Geology</em> (3rd ed.). New Delhi: John Woley &amp; Sons.</p>
+</div>
+<div id="ref-R-GMisc">
+<p>Garnier-Villarreal, M. (2020). <em>GMisc: Miscellaneous Functions for Geology (and its areas)</em>. Recuperado a partir de <a href="http://github.com/maxgav13/GMisc">http://github.com/maxgav13/GMisc</a></p>
+</div>
+<div id="ref-mckillup2010">
+<p>McKillup, S., &amp; Darby Dyar, M. (2010). <em>Geostatistics Explained: An Introductory Guide for Earth Scientists</em>. Cambridge University Press. Recuperado a partir de <a href="www.cambridge.org/9780521763226">www.cambridge.org/9780521763226</a></p>
+</div>
+<div id="ref-nolan2014">
+<p>Nolan, S. A., &amp; Heinzen, T. E. (2014). <em>Statistics for the Behavioral Sciences</em> (3era ed.). New York: Worth Publishers.</p>
+</div>
+<div id="ref-R-DescTools">
+<p>Signorell, A. (2020). <em>DescTools: Tools for Descriptive Statistics</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=DescTools">https://CRAN.R-project.org/package=DescTools</a></p>
+</div>
+<div id="ref-swan1995">
+<p>Swan, A., &amp; Sandilands, M. (1995). <em>Introduction to Geological Data Analysis</em>. Blackwell Science.</p>
+</div>
+<div id="ref-trauth2015">
+<p>Trauth, M. (2015). <em>MATLAB® Recipes for Earth Sciences</em> (4.ª ed.). Berlin: Springer-Verlag Berlin Heidelberg.</p>
+</div>
+<div id="ref-triola2004">
+<p>Triola, M. F. (2004). <em>Probabilidad y Estadística</em> (9na ed.). México: Pearson Educación.</p>
+</div>
+<div id="ref-walpole2012">
+<p>Walpole, R. E., Myers, R. H., &amp; Myers, S. L. (2012). <em>Probabilidad y Estadística Para Ingeniería y Ciencias</em>. Pearson.</p>
+</div>
+<div id="ref-R-OneTwoSamples">
+<p>Zhang, Y.-Y. (2013). <em>OneTwoSamples: Deal with one and two (normal) samples</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=OneTwoSamples">https://CRAN.R-project.org/package=OneTwoSamples</a></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introducción-a-estadística-inferencial.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pruebas-estadísticas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

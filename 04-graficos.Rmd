@@ -1,5 +1,7 @@
 # Gráficos
 
+## Introducción
+
 En este capitulo se muestra como crear diferentes tipos de gráficos, tanto estáticos usando el paquete *ggplot2* [@ggplot22016; @R-ggplot2], como dinámicos usando los paquetes *highcharter* [@R-highcharter], *plotly* [@R-plotly], y *dygraphs* [@R-dygraphs].
 
 ```{r graficos-setup, include=FALSE}

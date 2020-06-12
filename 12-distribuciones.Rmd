@@ -25,6 +25,8 @@ theme_set(theme_bw(base_size = 12))
 
 ```
 
+## Introducción
+
 En el capítulo anterior se introdujeron los principios de probabilidad y las variables aleatorias (discretas y continuas), y se mencionaron las funciones (distribuciones) de probabilidad, así como unos ejemplo básicos de lo que representan. Estas distribuciones permiten aproximar de forma analítica los fenómenos que dan orígenes a las variables de interés, permitiendo obtener probabilidades para todos los posibles resultados. En este capítulo se van a introducir las distribuciones de probabilidad más utilizadas para variables discretas y continuas (haciendo referencia a una población), y que serán ampliadas en capítulos posteriores tomando en cuenta una muestra.
 
 ## Distribución Binomial

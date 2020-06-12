@@ -25,7 +25,37 @@ theme_set(theme_bw(base_size = 12))
 
 ```
 
+## Introducción
 
+## Pruebas estadísticas
+
+## Tamaño del Efecto
+
+## Datos cuantitativos
+
+### $\chi^2$ para 1 varianza
+
+### $F$ para 2 varianzas
+
+### $Z$ de 1 muestra
+
+### $t$ de 1 muestra
+
+### $t$ de 2 muestras independientes
+
+### $t$ de 2 muestras dependientes
+
+### $t$ de correlación
+
+### Análisis de Varianza (ANOVA)
+
+## Datos cualitativos
+
+### Bondad de ajuste
+
+### Homogeneidad
+
+### Independencia / asociación
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

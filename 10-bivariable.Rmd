@@ -25,6 +25,8 @@ theme_set(theme_bw())
 
 ```
 
+## Introducción
+
 En el capítulo anterior ([Estadística Descriptiva Univariable]) se enfocó en analizar una variable por separado, sin considerar otra(s) variable(s) que pudiera(n) estar relacionada(s). A veces ese puede ser el enfoque de un análisis o estudio, pero en la mayoría de los casos, muy probablemente, se cuenta con más de una variable y esa(s) variable(s) puede(n) ser importante(s), ya sea para efectos de simple correlación o para efectos de predicción. Esta relación entre dos variables es el enfoque de este capítulo.
 
 De manera general se pueden mencionar tres formas de analizar una variable con respecto a otra: Covarianza (lineal), Correlación (lineal), y Regresión (lineal, no lineal).
@@ -202,9 +204,9 @@ ggplot(NULL,aes(x,y)) +
   geom_smooth(method = 'lm', formula = y ~ log(x), se=F)
 ```
 
-* Logística: Es cuando la variable dependiente (respuesta) es cualitativa y tiene únicamente dos clases o niveles (Figura \@ref(fig:reg-logistica)). En este caso el resultado se puede dar como la clase predecida, o las probabilidades de pertenencia a cada clase, donde generalmente se asigna la clase predecida a la clase con más de un 50% de probabilidad. Por esto el eje vertical (y) se representa como probabilidades.
+* Logística: Es cuando la variable dependiente (respuesta) es cualitativa y puede tener dos clases o niveles (*regresión logística binomial*), tres o más clases nominales (*regresión logística multinomial*), o tres o más clases ordinales (*regresión logística ordinal*). La regresión logística binomial es la más común (Figura \@ref(fig:reg-logistica)). En todos estos casos el resultado se puede dar como la clase predecida, o las probabilidades de pertenencia a cada clase, donde generalmente se asigna la clase predecida a la clase con mayor probabilidad de pertenencia. Por esto el eje vertical (y) se representa como probabilidades.
 
-```{r reg-logistica, echo=FALSE, fig.cap='Ejemplo de regresión logística.'}
+```{r reg-logistica, echo=FALSE, fig.cap='Ejemplo de regresión logística binomial.'}
 # knitr::include_graphics('images/regresion-logistica.png')
 iris %>% 
   filter(Species != 'virginica') %>%  
@@ -212,7 +214,9 @@ iris %>%
                              T ~ 1)) %>%
   ggplot(aes(Sepal.Length,Species)) + 
   geom_point() +
-  geom_smooth(method = 'glm', method.args = list(family = "binomial"), se=F) +
+  geom_smooth(method = 'glm', 
+              method.args = list(family = "binomial"), 
+              se=F) +
   labs(x='',y='')
 ```
 

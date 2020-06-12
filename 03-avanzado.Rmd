@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Introducción
+
 En el capitulo anterior se mostraron de manera muy rápida las funciones básicas de **R**, esto porque de ahora en adelante se va a enfocar en el uso de funciones del *tidyverse* [@tidyverse2019]. Este meta-paquete es uno que engloba a un montón de paquetes que se rigen bajo el paradigma de datos ordenados (tidy data). Datos ordenados quiere decir una observación por fila y cada variable en su columna. Lo que se cubre en este capitulo y más se puede encontrar en "R for Data Science" [@grolemund2016].
 
 En este capitulo se van a utilizar los siguientes paquetes:

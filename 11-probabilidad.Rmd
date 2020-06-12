@@ -25,6 +25,8 @@ theme_set(theme_bw(base_size = 12))
 
 ```
 
+## Introducción
+
 La probabilidad permite cuantificar la frecuencia de un acontecimiento determinado mediante la realización de un experimento aleatorio, del que se conocen todos los resultados posibles, bajo condiciones suficientemente estables. La probabilidad de un suceso es un numero, comprendido entre 0 y 1 (o 0 y 100), que indica las posibilidades que tiene de verificarse cuando se realiza un experimento aleatorio.
 
 Un *experimento aleatorio* es aquella experiencia que trae un resultado que no se sabe a ciencia cierta cuál será, es decir no hay certeza del resultado. Como ejemplos comunes se pueden mencionar tirar una moneda al aire, tirar los dados. El conjunto de todos los resultados posibles arrojados por un experimento aleatorio se denomina *espacio muestral ($\Omega$)*. En el caso de tirar una moneda al aire seria $\Omega=\lbrace escudo,corona \rbrace$, en el caso de un dado $\Omega=\lbrace 1,2,3,4,5,6 \rbrace$. Un *evento o suceso* es cualquier subconjunto del espacio muestral, cada uno de los resultados posibles de una experiencia aleatoria [@walpole2012].

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 5 Iteración | Geología Numérica: Ciencia de Datos para Geociencias</title>
+  <meta name="description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 5 Iteración | Geología Numérica: Ciencia de Datos para Geociencias" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 5 Iteración | Geología Numérica: Ciencia de Datos para Geociencias" />
+  
+  <meta name="twitter:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  
+
+<meta name="author" content="Maximiliano Garnier Villarreal" />
+
+
+<meta name="date" content="2020-06-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="gráficos-1.html">
+<link rel="next" href="datos-espaciales.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.11/datatables.js"></script>
+<link href="libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<script src="libs/proj4js-2.3.15/proj4.js"></script>
+<link href="libs/highcharts-7.0.1/css/motion.css" rel="stylesheet" />
+<link href="libs/highcharts-7.0.1/css/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highcharts-7.0.1/highcharts.js"></script>
+<script src="libs/highcharts-7.0.1/highcharts-3d.js"></script>
+<script src="libs/highcharts-7.0.1/highcharts-more.js"></script>
+<script src="libs/highcharts-7.0.1/modules/stock.js"></script>
+<script src="libs/highcharts-7.0.1/modules/map.js"></script>
+<script src="libs/highcharts-7.0.1/modules/annotations.js"></script>
+<script src="libs/highcharts-7.0.1/modules/boost.js"></script>
+<script src="libs/highcharts-7.0.1/modules/data.js"></script>
+<script src="libs/highcharts-7.0.1/modules/drag-panes.js"></script>
+<script src="libs/highcharts-7.0.1/modules/drilldown.js"></script>
+<script src="libs/highcharts-7.0.1/modules/item-series.js"></script>
+<script src="libs/highcharts-7.0.1/modules/offline-exporting.js"></script>
+<script src="libs/highcharts-7.0.1/modules/overlapping-datalabels.js"></script>
+<script src="libs/highcharts-7.0.1/modules/exporting.js"></script>
+<script src="libs/highcharts-7.0.1/modules/export-data.js"></script>
+<script src="libs/highcharts-7.0.1/modules/funnel.js"></script>
+<script src="libs/highcharts-7.0.1/modules/heatmap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/treemap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/sankey.js"></script>
+<script src="libs/highcharts-7.0.1/modules/solid-gauge.js"></script>
+<script src="libs/highcharts-7.0.1/modules/streamgraph.js"></script>
+<script src="libs/highcharts-7.0.1/modules/sunburst.js"></script>
+<script src="libs/highcharts-7.0.1/modules/vector.js"></script>
+<script src="libs/highcharts-7.0.1/modules/wordcloud.js"></script>
+<script src="libs/highcharts-7.0.1/modules/xrange.js"></script>
+<script src="libs/highcharts-7.0.1/modules/tilemap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/venn.js"></script>
+<script src="libs/highcharts-7.0.1/modules/gantt.js"></script>
+<script src="libs/highcharts-7.0.1/modules/timeline.js"></script>
+<script src="libs/highcharts-7.0.1/modules/parallel-coordinates.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/motion.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/multicolor_series.js"></script>
+<script src="libs/highcharts-7.0.1/custom/reset.js"></script>
+<script src="libs/highcharts-7.0.1/custom/symbols-extra.js"></script>
+<script src="libs/highcharts-7.0.1/custom/text-symbols.js"></script>
+<script src="libs/highchart-binding-0.7.0/highchart.js"></script>
+<script src="libs/highcharts-regression.js-7.0.1/highcharts-regression.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/PopupTable-0.0.1/popup.css" rel="stylesheet" />
+<script src="libs/pacifico-1/data_stars_pacificocdf13b.txt"></script>
+<script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Geologia Numerica</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="part"><span><b>R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalación-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalación de R y RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#paquetes"><i class="fa fa-check"></i><b>1.2</b> Paquetes</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#ayuda-en-r"><i class="fa fa-check"></i><b>1.3</b> Ayuda en R</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rmarkdown"><i class="fa fa-check"></i><b>1.4</b> RMarkdown</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#tipos-de-resultados"><i class="fa fa-check"></i><b>1.4.1</b> Tipos de resultados</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#formulas"><i class="fa fa-check"></i><b>1.4.2</b> Formulas</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#importando-datos"><i class="fa fa-check"></i><b>1.4.3</b> Importando datos</a></li>
+<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#cálculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Cálculos en linea</a></li>
+<li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
+<li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#recursos"><i class="fa fa-check"></i><b>1.5</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento básico de R</a><ul>
+<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#introducción"><i class="fa fa-check"></i><b>2.1</b> Introducción</a></li>
+<li class="chapter" data-level="2.2" data-path="basico.html"><a href="basico.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.2</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.3" data-path="basico.html"><a href="basico.html#crear-objetos"><i class="fa fa-check"></i><b>2.3</b> Crear objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="basico.html"><a href="basico.html#vectores"><i class="fa fa-check"></i><b>2.4</b> Vectores</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="basico.html"><a href="basico.html#numéricos"><i class="fa fa-check"></i><b>2.4.1</b> Numéricos</a></li>
+<li class="chapter" data-level="2.4.2" data-path="basico.html"><a href="basico.html#texto-string-character"><i class="fa fa-check"></i><b>2.4.2</b> Texto (string, character)</a></li>
+<li class="chapter" data-level="2.4.3" data-path="basico.html"><a href="basico.html#categóricos-factores"><i class="fa fa-check"></i><b>2.4.3</b> Categóricos (factores)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="basico.html"><a href="basico.html#matrices"><i class="fa fa-check"></i><b>2.5</b> Matrices</a></li>
+<li class="chapter" data-level="2.6" data-path="basico.html"><a href="basico.html#dataframes-listas-y-tibbles"><i class="fa fa-check"></i><b>2.6</b> DataFrames, listas y tibbles</a></li>
+<li class="chapter" data-level="2.7" data-path="basico.html"><a href="basico.html#verificando-objetos"><i class="fa fa-check"></i><b>2.7</b> Verificando objetos</a></li>
+<li class="chapter" data-level="2.8" data-path="basico.html"><a href="basico.html#guardando-el-espacio-de-trabajo"><i class="fa fa-check"></i><b>2.8</b> Guardando el espacio de trabajo</a></li>
+<li class="chapter" data-level="2.9" data-path="basico.html"><a href="basico.html#importandocargando-datos"><i class="fa fa-check"></i><b>2.9</b> Importando/cargando datos</a></li>
+<li class="chapter" data-level="2.10" data-path="basico.html"><a href="basico.html#exportando-datos"><i class="fa fa-check"></i><b>2.10</b> Exportando datos</a></li>
+<li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#inspeccionando-los-datos"><i class="fa fa-check"></i><b>2.11</b> Inspeccionando los datos</a></li>
+<li class="chapter" data-level="2.12" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.12</b> Descripciones generales (globales)</a></li>
+<li class="chapter" data-level="2.13" data-path="basico.html"><a href="basico.html#recursos-1"><i class="fa fa-check"></i><b>2.13</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="avanzado.html"><a href="avanzado.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
+<li class="chapter" data-level="3.1" data-path="avanzado.html"><a href="avanzado.html#introducción-1"><i class="fa fa-check"></i><b>3.1</b> Introducción</a></li>
+<li class="chapter" data-level="3.2" data-path="avanzado.html"><a href="avanzado.html#operadores-lógicos"><i class="fa fa-check"></i><b>3.2</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="3.3" data-path="avanzado.html"><a href="avanzado.html#operador-de-secuencia-pipe-operator"><i class="fa fa-check"></i><b>3.3</b> Operador de secuencia (Pipe operator)</a></li>
+<li class="chapter" data-level="3.4" data-path="avanzado.html"><a href="avanzado.html#resumen-de-variables"><i class="fa fa-check"></i><b>3.4</b> Resumen de variables</a></li>
+<li class="chapter" data-level="3.5" data-path="avanzado.html"><a href="avanzado.html#selección-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.5</b> Selección y renombre de variables</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="avanzado.html"><a href="avanzado.html#select-helpers"><i class="fa fa-check"></i><b>3.5.1</b> <code>select</code> helpers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="avanzado.html"><a href="avanzado.html#filtrado-de-observaciones"><i class="fa fa-check"></i><b>3.6</b> Filtrado de observaciones</a></li>
+<li class="chapter" data-level="3.7" data-path="avanzado.html"><a href="avanzado.html#orden-de-acuerdo-a-variables"><i class="fa fa-check"></i><b>3.7</b> Orden de acuerdo a variables</a></li>
+<li class="chapter" data-level="3.8" data-path="avanzado.html"><a href="avanzado.html#creación-de-variables"><i class="fa fa-check"></i><b>3.8</b> Creación de variables</a></li>
+<li class="chapter" data-level="3.9" data-path="avanzado.html"><a href="avanzado.html#conteo-de-variables-cualitativas"><i class="fa fa-check"></i><b>3.9</b> Conteo de variables cualitativas</a></li>
+<li class="chapter" data-level="3.10" data-path="avanzado.html"><a href="avanzado.html#tabla-interactiva"><i class="fa fa-check"></i><b>3.10</b> Tabla interactiva</a></li>
+<li class="chapter" data-level="3.11" data-path="avanzado.html"><a href="avanzado.html#datos-relacionales"><i class="fa fa-check"></i><b>3.11</b> Datos relacionales</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="avanzado.html"><a href="avanzado.html#uniones-de-transformación"><i class="fa fa-check"></i><b>3.11.1</b> Uniones de transformación</a></li>
+<li class="chapter" data-level="3.11.2" data-path="avanzado.html"><a href="avanzado.html#uniones-de-filtro"><i class="fa fa-check"></i><b>3.11.2</b> Uniones de filtro</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="avanzado.html"><a href="avanzado.html#datos-ordenados-tidy-data"><i class="fa fa-check"></i><b>3.12</b> Datos ordenados (Tidy data)</a><ul>
+<li class="chapter" data-level="3.12.1" data-path="avanzado.html"><a href="avanzado.html#formatos-largo-y-ancho"><i class="fa fa-check"></i><b>3.12.1</b> Formatos largo y ancho</a></li>
+<li class="chapter" data-level="3.12.2" data-path="avanzado.html"><a href="avanzado.html#separar-y-unir"><i class="fa fa-check"></i><b>3.12.2</b> Separar y unir</a></li>
+</ul></li>
+<li class="chapter" data-level="3.13" data-path="avanzado.html"><a href="avanzado.html#nest"><i class="fa fa-check"></i><b>3.13</b> Datos anidados (Nesting)</a></li>
+<li class="chapter" data-level="3.14" data-path="avanzado.html"><a href="avanzado.html#recursos-2"><i class="fa fa-check"></i><b>3.14</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos-1.html"><a href="gráficos-1.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a><ul>
+<li class="chapter" data-level="4.1" data-path="gráficos-1.html"><a href="gráficos-1.html#introducción-2"><i class="fa fa-check"></i><b>4.1</b> Introducción</a></li>
+<li class="chapter" data-level="4.2" data-path="gráficos-1.html"><a href="gráficos-1.html#estáticos"><i class="fa fa-check"></i><b>4.2</b> Estáticos</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos-1.html"><a href="gráficos-1.html#líneas"><i class="fa fa-check"></i><b>4.2.5</b> líneas</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos-1.html"><a href="gráficos-1.html#gráficos-estadísticos"><i class="fa fa-check"></i><b>4.2.6</b> Gráficos estadísticos</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes"><i class="fa fa-check"></i><b>4.2.7</b> Transformación de ejes</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos-1.html"><a href="gráficos-1.html#limites-de-ejes-zoom"><i class="fa fa-check"></i><b>4.2.8</b> Limites de ejes (Zoom)</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos-1.html"><a href="gráficos-1.html#salvando-gráficos"><i class="fa fa-check"></i><b>4.2.9</b> Salvando gráficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos-1.html"><a href="gráficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.3</b> Interactivos</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.3.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.3.2</b> Barras</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.3.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión-1"><i class="fa fa-check"></i><b>4.3.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos-1.html"><a href="gráficos-1.html#líneas-1"><i class="fa fa-check"></i><b>4.3.5</b> líneas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes-1"><i class="fa fa-check"></i><b>4.3.6</b> Transformación de ejes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="gráficos-1.html"><a href="gráficos-1.html#recursos-3"><i class="fa fa-check"></i><b>4.4</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iteración.html"><a href="iteración.html"><i class="fa fa-check"></i><b>5</b> Iteración</a><ul>
+<li class="chapter" data-level="5.1" data-path="iteración.html"><a href="iteración.html#introducción-3"><i class="fa fa-check"></i><b>5.1</b> Introducción</a></li>
+<li class="chapter" data-level="5.2" data-path="iteración.html"><a href="iteración.html#iterando-sobre-un-objeto"><i class="fa fa-check"></i><b>5.2</b> Iterando sobre un objeto</a></li>
+<li class="chapter" data-level="5.3" data-path="iteración.html"><a href="iteración.html#iterando-sobre-dos-objetos"><i class="fa fa-check"></i><b>5.3</b> Iterando sobre dos objetos</a></li>
+<li class="chapter" data-level="5.4" data-path="iteración.html"><a href="iteración.html#leyendo-archivos-y-combinándolos"><i class="fa fa-check"></i><b>5.4</b> Leyendo archivos y combinándolos</a></li>
+<li class="chapter" data-level="5.5" data-path="iteración.html"><a href="iteración.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.5</b> Datos anidados, caso 1</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="iteración.html"><a href="iteración.html#efectos-secundarios"><i class="fa fa-check"></i><b>5.5.1</b> Efectos secundarios</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="iteración.html"><a href="iteración.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.6</b> Datos anidados, caso 2</a></li>
+<li class="chapter" data-level="5.7" data-path="iteración.html"><a href="iteración.html#recursos-4"><i class="fa fa-check"></i><b>5.7</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a><ul>
+<li class="chapter" data-level="6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#introducción-4"><i class="fa fa-check"></i><b>6.1</b> Introducción</a></li>
+<li class="chapter" data-level="6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#paquetes-para-datos-espaciales"><i class="fa fa-check"></i><b>6.2</b> Paquetes para datos espaciales</a></li>
+<li class="chapter" data-level="6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#sistemas-de-referencias-de-coordenadas-crs"><i class="fa fa-check"></i><b>6.3</b> Sistemas de Referencias de Coordenadas (CRS)</a></li>
+<li class="chapter" data-level="6.4" data-path="datos-espaciales.html"><a href="datos-espaciales.html#importar-datos"><i class="fa fa-check"></i><b>6.4</b> Importar datos</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-de-texto"><i class="fa fa-check"></i><b>6.4.1</b> Desde archivos de texto</a></li>
+<li class="chapter" data-level="6.4.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-espaciales"><i class="fa fa-check"></i><b>6.4.2</b> Desde archivos espaciales</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="datos-espaciales.html"><a href="datos-espaciales.html#exportar-datos"><i class="fa fa-check"></i><b>6.5</b> Exportar datos</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#vectoriales"><i class="fa fa-check"></i><b>6.5.1</b> Vectoriales</a></li>
+<li class="chapter" data-level="6.5.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#raster-1"><i class="fa fa-check"></i><b>6.5.2</b> Raster</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="datos-espaciales.html"><a href="datos-espaciales.html#mapas"><i class="fa fa-check"></i><b>6.6</b> Mapas</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#estáticos-1"><i class="fa fa-check"></i><b>6.6.1</b> Estáticos</a></li>
+<li class="chapter" data-level="6.6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#dinámicos"><i class="fa fa-check"></i><b>6.6.2</b> Dinámicos</a></li>
+<li class="chapter" data-level="6.6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#modelos-de-sombras"><i class="fa fa-check"></i><b>6.6.3</b> Modelos de sombras</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="datos-espaciales.html"><a href="datos-espaciales.html#recursos-5"><i class="fa fa-check"></i><b>6.7</b> Recursos</a></li>
+</ul></li>
+<li class="part"><span><b>Análisis de datos</b></span></li>
+<li class="chapter" data-level="7" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Álgebra lineal</a><ul>
+<li class="chapter" data-level="7.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#introducción-5"><i class="fa fa-check"></i><b>7.1</b> Introducción</a></li>
+<li class="chapter" data-level="7.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#tensores"><i class="fa fa-check"></i><b>7.2</b> Tensores</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#vectores-1"><i class="fa fa-check"></i><b>7.2.1</b> Vectores</a></li>
+<li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#matrices-1"><i class="fa fa-check"></i><b>7.2.2</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#eigenvectors-y-eigenvalues"><i class="fa fa-check"></i><b>7.3</b> Eigenvectors y Eigenvalues</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#definición"><i class="fa fa-check"></i><b>7.3.1</b> Definición</a></li>
+<li class="chapter" data-level="7.3.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#cálculo"><i class="fa fa-check"></i><b>7.3.2</b> Cálculo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html"><i class="fa fa-check"></i><b>8</b> Introducción a estadística</a><ul>
+<li class="chapter" data-level="8.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#introducción-6"><i class="fa fa-check"></i><b>8.1</b> Introducción</a></li>
+<li class="chapter" data-level="8.2" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#tipos"><i class="fa fa-check"></i><b>8.2</b> Tipos</a></li>
+<li class="chapter" data-level="8.3" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#modelos"><i class="fa fa-check"></i><b>8.3</b> Modelos</a></li>
+<li class="chapter" data-level="8.4" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#nomenclatura"><i class="fa fa-check"></i><b>8.4</b> Nomenclatura</a></li>
+<li class="chapter" data-level="8.5" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#variables"><i class="fa fa-check"></i><b>8.5</b> Variables</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#cualitativa"><i class="fa fa-check"></i><b>8.5.1</b> Cualitativa</a></li>
+<li class="chapter" data-level="8.5.2" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#cuantitativa"><i class="fa fa-check"></i><b>8.5.2</b> Cuantitativa</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#métodos-de-análisis"><i class="fa fa-check"></i><b>8.6</b> Métodos de análisis</a></li>
+<li class="chapter" data-level="8.7" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#muestreo"><i class="fa fa-check"></i><b>8.7</b> Muestreo</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#tipos-1"><i class="fa fa-check"></i><b>8.7.1</b> Tipos</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#incertidumbre"><i class="fa fa-check"></i><b>8.8</b> Incertidumbre</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html"><i class="fa fa-check"></i><b>9</b> Estadística Descriptiva Univariable</a><ul>
+<li class="chapter" data-level="9.1" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#introducción-7"><i class="fa fa-check"></i><b>9.1</b> Introducción</a></li>
+<li class="chapter" data-level="9.2" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#tablas-de-frecuencias"><i class="fa fa-check"></i><b>9.2</b> Tablas de frecuencias</a></li>
+<li class="chapter" data-level="9.3" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#gráficas"><i class="fa fa-check"></i><b>9.3</b> Gráficas</a></li>
+<li class="chapter" data-level="9.4" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#resúmenes-numéricos"><i class="fa fa-check"></i><b>9.4</b> Resúmenes numéricos</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-tendencia-central"><i class="fa fa-check"></i><b>9.4.1</b> Medidas de tendencia central</a></li>
+<li class="chapter" data-level="9.4.2" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-dispersión"><i class="fa fa-check"></i><b>9.4.2</b> Medidas de dispersión</a></li>
+<li class="chapter" data-level="9.4.3" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-posición"><i class="fa fa-check"></i><b>9.4.3</b> Medidas de posición</a></li>
+<li class="chapter" data-level="9.4.4" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-forma"><i class="fa fa-check"></i><b>9.4.4</b> Medidas de forma</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#resumen-general"><i class="fa fa-check"></i><b>9.5</b> Resumen general</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>10</b> Estadística Descriptiva Bivariable</a><ul>
+<li class="chapter" data-level="10.1" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#introducción-8"><i class="fa fa-check"></i><b>10.1</b> Introducción</a></li>
+<li class="chapter" data-level="10.2" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#covarianza"><i class="fa fa-check"></i><b>10.2</b> Covarianza</a></li>
+<li class="chapter" data-level="10.3" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#correlación"><i class="fa fa-check"></i><b>10.3</b> Correlación</a></li>
+<li class="chapter" data-level="10.4" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#regresión"><i class="fa fa-check"></i><b>10.4</b> Regresión</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#nomenclatura-1"><i class="fa fa-check"></i><b>10.4.1</b> Nomenclatura</a></li>
+<li class="chapter" data-level="10.4.2" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#supuestos"><i class="fa fa-check"></i><b>10.4.2</b> Supuestos</a></li>
+<li class="chapter" data-level="10.4.3" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#tipos-2"><i class="fa fa-check"></i><b>10.4.3</b> Tipos</a></li>
+<li class="chapter" data-level="10.4.4" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#medidas-de-ajuste-y-error"><i class="fa fa-check"></i><b>10.4.4</b> Medidas de ajuste y error</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a><ul>
+<li class="chapter" data-level="11.1" data-path="probabilidad.html"><a href="probabilidad.html#introducción-9"><i class="fa fa-check"></i><b>11.1</b> Introducción</a></li>
+<li class="chapter" data-level="11.2" data-path="probabilidad.html"><a href="probabilidad.html#axiomas-y-nomenclatura"><i class="fa fa-check"></i><b>11.2</b> Axiomas y Nomenclatura</a></li>
+<li class="chapter" data-level="11.3" data-path="probabilidad.html"><a href="probabilidad.html#reglas-de-probabilidad"><i class="fa fa-check"></i><b>11.3</b> Reglas de probabilidad</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-suma"><i class="fa fa-check"></i><b>11.3.1</b> Regla de la suma</a></li>
+<li class="chapter" data-level="11.3.2" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-multiplicación"><i class="fa fa-check"></i><b>11.3.2</b> Regla de la multiplicación</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="probabilidad.html"><a href="probabilidad.html#variables-aleatorias"><i class="fa fa-check"></i><b>11.4</b> Variables aleatorias</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a><ul>
+<li class="chapter" data-level="12.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#introducción-10"><i class="fa fa-check"></i><b>12.1</b> Introducción</a></li>
+<li class="chapter" data-level="12.2" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-binomial"><i class="fa fa-check"></i><b>12.2</b> Distribución Binomial</a></li>
+<li class="chapter" data-level="12.3" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-de-poisson"><i class="fa fa-check"></i><b>12.3</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.4" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-o-gaussiana"><i class="fa fa-check"></i><b>12.4</b> Distribución Normal o Gaussiana</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-estándar-z"><i class="fa fa-check"></i><b>12.4.1</b> Distribución Normal Estándar (Z)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribuciones-de-probabilidad-en-r"><i class="fa fa-check"></i><b>12.5</b> Distribuciones de probabilidad en <strong>R</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a><ul>
+<li class="chapter" data-level="13.1" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#introducción-11"><i class="fa fa-check"></i><b>13.1</b> Introducción</a></li>
+<li class="chapter" data-level="13.2" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#distribuciones-muestrales"><i class="fa fa-check"></i><b>13.2</b> Distribuciones muestrales</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-x"><i class="fa fa-check"></i><b>13.2.1</b> Media <span class="math inline">\((\bar{x})\)</span></a></li>
+<li class="chapter" data-level="13.2.2" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-x2"><i class="fa fa-check"></i><b>13.2.2</b> Diferencia de medias <span class="math inline">\((\bar{x}_1-\bar{x}_2)\)</span></a></li>
+<li class="chapter" data-level="13.2.3" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-chi"><i class="fa fa-check"></i><b>13.2.3</b> Varianza <span class="math inline">\((s^2)\)</span></a></li>
+<li class="chapter" data-level="13.2.4" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-f"><i class="fa fa-check"></i><b>13.2.4</b> Dos varianzas <span class="math inline">\(\left( \frac{s_1^2}{s_2^2} \right)\)</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html"><i class="fa fa-check"></i><b>14</b> Estimación e Hipótesis</a><ul>
+<li class="chapter" data-level="14.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#introducción-12"><i class="fa fa-check"></i><b>14.1</b> Introducción</a></li>
+<li class="chapter" data-level="14.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim"><i class="fa fa-check"></i><b>14.2</b> Estimación</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#media-1"><i class="fa fa-check"></i><b>14.2.1</b> Media</a></li>
+<li class="chapter" data-level="14.2.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-diff-medias"><i class="fa fa-check"></i><b>14.2.2</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="14.2.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-ic-chi"><i class="fa fa-check"></i><b>14.2.3</b> Varianza</a></li>
+<li class="chapter" data-level="14.2.4" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-ic-f"><i class="fa fa-check"></i><b>14.2.4</b> Dos varianzas</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#hip"><i class="fa fa-check"></i><b>14.3</b> Hipótesis</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#nula-h_0-y-alterna-h_1"><i class="fa fa-check"></i><b>14.3.1</b> Nula (<span class="math inline">\(H_0\)</span>) y Alterna (<span class="math inline">\(H_1\)</span>)</a></li>
+<li class="chapter" data-level="14.3.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#resultados-y-errores"><i class="fa fa-check"></i><b>14.3.2</b> Resultados y Errores</a></li>
+<li class="chapter" data-level="14.3.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estadístico-de-prueba-y-crítico"><i class="fa fa-check"></i><b>14.3.3</b> Estadístico de prueba y crítico</a></li>
+<li class="chapter" data-level="14.3.4" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#contrastes-y-valor-p"><i class="fa fa-check"></i><b>14.3.4</b> Contrastes y valor-<em>p</em></a></li>
+<li class="chapter" data-level="14.3.5" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#decisión"><i class="fa fa-check"></i><b>14.3.5</b> Decisión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadísticas</a><ul>
+<li class="chapter" data-level="15.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#introducción-13"><i class="fa fa-check"></i><b>15.1</b> Introducción</a></li>
+<li class="chapter" data-level="15.2" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#pruebas-estadísticas-1"><i class="fa fa-check"></i><b>15.2</b> Pruebas estadísticas</a></li>
+<li class="chapter" data-level="15.3" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#tamaño-del-efecto"><i class="fa fa-check"></i><b>15.3</b> Tamaño del Efecto</a></li>
+<li class="chapter" data-level="15.4" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#datos-cuantitativos"><i class="fa fa-check"></i><b>15.4</b> Datos cuantitativos</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#chi2-para-1-varianza"><i class="fa fa-check"></i><b>15.4.1</b> <span class="math inline">\(\chi^2\)</span> para 1 varianza</a></li>
+<li class="chapter" data-level="15.4.2" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#f-para-2-varianzas"><i class="fa fa-check"></i><b>15.4.2</b> <span class="math inline">\(F\)</span> para 2 varianzas</a></li>
+<li class="chapter" data-level="15.4.3" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#z-de-1-muestra"><i class="fa fa-check"></i><b>15.4.3</b> <span class="math inline">\(Z\)</span> de 1 muestra</a></li>
+<li class="chapter" data-level="15.4.4" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#t-de-1-muestra"><i class="fa fa-check"></i><b>15.4.4</b> <span class="math inline">\(t\)</span> de 1 muestra</a></li>
+<li class="chapter" data-level="15.4.5" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#t-de-2-muestras-independientes"><i class="fa fa-check"></i><b>15.4.5</b> <span class="math inline">\(t\)</span> de 2 muestras independientes</a></li>
+<li class="chapter" data-level="15.4.6" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#t-de-2-muestras-dependientes"><i class="fa fa-check"></i><b>15.4.6</b> <span class="math inline">\(t\)</span> de 2 muestras dependientes</a></li>
+<li class="chapter" data-level="15.4.7" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#t-de-correlación"><i class="fa fa-check"></i><b>15.4.7</b> <span class="math inline">\(t\)</span> de correlación</a></li>
+<li class="chapter" data-level="15.4.8" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#análisis-de-varianza-anova"><i class="fa fa-check"></i><b>15.4.8</b> Análisis de Varianza (ANOVA)</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#datos-cualitativos"><i class="fa fa-check"></i><b>15.5</b> Datos cualitativos</a><ul>
+<li class="chapter" data-level="15.5.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#bondad-de-ajuste"><i class="fa fa-check"></i><b>15.5.1</b> Bondad de ajuste</a></li>
+<li class="chapter" data-level="15.5.2" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#homogeneidad"><i class="fa fa-check"></i><b>15.5.2</b> Homogeneidad</a></li>
+<li class="chapter" data-level="15.5.3" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#independencia-asociación"><i class="fa fa-check"></i><b>15.5.3</b> Independencia / asociación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html"><i class="fa fa-check"></i><b>16</b> Estadística No Paramétrica</a></li>
+<li class="chapter" data-level="17" data-path="estadística-direccional.html"><a href="estadística-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadística Direccional</a></li>
+<li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a></li>
+<li class="chapter" data-level="19" data-path="geoestadística.html"><a href="geoestadística.html"><i class="fa fa-check"></i><b>19</b> Geoestadística</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geología Numérica: Ciencia de Datos para Geociencias</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="iteración" class="section level1">
+<h1><span class="header-section-number">Capítulo 5</span> Iteración</h1>
+<div id="introducción-3" class="section level2">
+<h2><span class="header-section-number">5.1</span> Introducción</h2>
+<p>En este capitulo se muestra como iterar funciones sobre diferentes objetos (vectores, tablas, listas). La idea de las iteraciones es ser más eficiente a la hora de realizar cálculos repetitivos. Se va a introducir al paquete <em>purrr</em> <span class="citation">(Henry &amp; Wickham, <a href="#ref-R-purrr">2019</a>)</span> que brinda funciones para realizar diferentes tareas que requieren iterar sobre 1 o más objetos.</p>
+<p>En este capitulo se van a utilizar los siguientes paquetes:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gapminder)
+<span class="kw">library</span>(fs)
+<span class="kw">library</span>(rio)
+<span class="kw">library</span>(tidymodels)
+<span class="kw">library</span>(tidyverse)</code></pre>
+<p>Así mismo se vuelven a importar y manipular los datos con que se venia trabajando:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;airquality&quot;</span>)
+
+airq =<span class="st"> </span>airquality <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Month =</span> <span class="kw">factor</span>(Month,
+                        <span class="dt">levels =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">9</span>,
+                        <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Mayo&quot;</span>, <span class="st">&quot;Junio&quot;</span>, <span class="st">&quot;Julio&quot;</span>, 
+                                   <span class="st">&quot;Agosto&quot;</span>, <span class="st">&quot;Setiembre&quot;</span>)),
+         <span class="dt">Sensation =</span> <span class="kw">case_when</span>(Temp <span class="op">&lt;</span><span class="st"> </span><span class="dv">60</span> <span class="op">~</span><span class="st"> &#39;Cold&#39;</span>,
+                               Temp <span class="op">&lt;</span><span class="st"> </span><span class="dv">70</span> <span class="op">~</span><span class="st"> &#39;Cool&#39;</span>,
+                               Temp <span class="op">&lt;</span><span class="st"> </span><span class="dv">85</span> <span class="op">~</span><span class="st"> &#39;Warm&#39;</span>,
+                               T <span class="op">~</span><span class="st"> &#39;Hot&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">           </span><span class="kw">as.factor</span>())</code></pre>
+</div>
+<div id="iterando-sobre-un-objeto" class="section level2">
+<h2><span class="header-section-number">5.2</span> Iterando sobre un objeto</h2>
+<p>La función básica de <code>purrr</code> es <code>map(.x, .f, ...)</code>, donde <code>.x</code> es el objeto sobre el cual iterar (vector, tabla o lista), <code>.f</code> es la función o tarea a realizar durante la iteración, y <code>...</code> son argumentos extra dependiendo de la función. Esta función (<code>map</code>) siempre va a resultar en una lista; existen variantes de esta que son especificas para cuando se conoce cual va a ser el tipo de dato de salida. Por ejemplo, <code>map_dbl</code> se usa cuando el resultado de la función es un numero con decimales.</p>
+<p>En el siguiente bloque de código se generan dos listas ficticias, ambas de 7 elementos, donde la primera corresponde con notas de estudiantes en pruebas durante un semestre, y la segunda son puntos extra para cada estudiante.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">4101</span>)
+n =<span class="st"> </span><span class="dv">8</span>
+minima =<span class="st"> </span><span class="dv">60</span>
+maxima =<span class="st"> </span><span class="dv">100</span>
+exams &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">student1 =</span> <span class="kw">round</span>(<span class="kw">runif</span>(n, minima, maxima)),
+  <span class="dt">student2 =</span> <span class="kw">round</span>(<span class="kw">runif</span>(n, minima, maxima)),
+  <span class="dt">student3 =</span> <span class="kw">round</span>(<span class="kw">runif</span>(n, minima, maxima)),
+  <span class="dt">student4 =</span> <span class="kw">round</span>(<span class="kw">runif</span>(n, minima, maxima)),
+  <span class="dt">student5 =</span> <span class="kw">round</span>(<span class="kw">runif</span>(n, minima, maxima)),
+  <span class="dt">student6 =</span> <span class="kw">round</span>(<span class="kw">runif</span>(n, minima, maxima)),
+  <span class="dt">student7 =</span> <span class="kw">round</span>(<span class="kw">runif</span>(n, minima, maxima))
+)
+
+extra_credit &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>)</code></pre>
+<p>Usando los datos generados anteriormente, se muestra la funcionalidad de varias de las funciones <code>map_*</code>. Estas funciones se pueden usar con el pipe operator (<code>%&gt;%</code>).</p>
+<p>El primer ejemplo muestra como con <code>map</code> se obtiene una lista de la nota media de los exámenes por estudiante. Se itera sobre la lista ‘exams’, y a cada elemento de la lista (en este caso vectores) se le calcula la media.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(exams, mean) <span class="co"># media</span></code></pre>
+<pre><code>## $student1
+## [1] 79.25
+## 
+## $student2
+## [1] 75.875
+## 
+## $student3
+## [1] 80.25
+## 
+## $student4
+## [1] 85.125
+## 
+## $student5
+## [1] 84.875
+## 
+## $student6
+## [1] 79.625
+## 
+## $student7
+## [1] 81.875</code></pre>
+<p>En el segundo ejemplo se utiliza el pipe (<code>%&gt;%</code>) y una de las variantes de <code>map</code> (<code>map_dbl</code>), ya que lo que se va a calcular (nota máxima) se sabe es un numero con decimales.</p>
+<pre class="sourceCode r"><code class="sourceCode r">exams <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_dbl</span>(max) <span class="co"># nota maxima</span></code></pre>
+<pre><code>## student1 student2 student3 student4 student5 student6 student7 
+##      100       96       91       99       95       93      100</code></pre>
+<p>En el tercer ejemplo se itera sobre una tabla, donde en este caso la iteración es sobre las columnas. Recordemos que una tabla es una lista donde las columnas son los elementos de la lista. Lo que se quiere hacer es obtener el valor de la media para cada columna de la tabla ‘airq’. Al hacer esto encontramos dos situaciones; la primera que dice que hay un argumento no numérico o lógico (en este caso se refiere a las columnas ‘Month’ y ‘Sensation’ que son factor), por lo que al ser un factor no se le puede aplicar una función numérica; la segunda que hay valores ‘NA’ aun en columnas que son numéricas (‘Ozone’, ‘Solar.R’), esto porque en esas columnas hay NAs y por defecto la función <code>mean</code> no los remueve a la hora de hacer el calculo.</p>
+<pre class="sourceCode r"><code class="sourceCode r">airq <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_dbl</span>(mean)</code></pre>
+<pre><code>##     Ozone   Solar.R      Wind      Temp     Month       Day Sensation 
+##        NA        NA  9.957516 77.882353        NA 15.803922        NA</code></pre>
+<p>Por lo anterior, hay dos soluciones dependiendo de lo que se quiera resolver. Si solo se quiere lidiar con los ‘NA’, se puede agregar el argumento <code>na.rm = T</code> de la función <code>mean</code>, pero las columnas de tipo factor van a seguir estando presentes y dar ‘NA’ como resultado.</p>
+<pre class="sourceCode r"><code class="sourceCode r">airq <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_dbl</span>(mean, <span class="dt">na.rm =</span> T)</code></pre>
+<pre><code>##      Ozone    Solar.R       Wind       Temp      Month        Day  Sensation 
+##  42.129310 185.931507   9.957516  77.882353         NA  15.803922         NA</code></pre>
+<p>La solución más adecuada en este caso es primero seleccionar las columnas de tipo numérico (<code>select_if(is.numeric)</code>) y a estas aplicarle el calculo de la media removiendo los ‘NA’. Esta ultima forma de aplicar la función es, a mi parecer, la más practica y clara. Se tiene que escribir la función empezando con el símbolo <code>~</code>, esto le dice a <em>purrr</em> que lo que va a estar a al derecha va a ser una función, seguido de este símbolo se escribe la función de manera normal, con la excepción de que en el lugar donde iría típicamente el vector se pone <code>.x</code>, para decirle a <em>purrr</em> donde incrustar los elementos del objeto sobre el cual se esta iterando.</p>
+<pre class="sourceCode r"><code class="sourceCode r">airq <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select_if</span>(is.numeric) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">map_dbl</span>(<span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(.x, <span class="dt">na.rm =</span> T))</code></pre>
+<pre><code>##      Ozone    Solar.R       Wind       Temp        Day 
+##  42.129310 185.931507   9.957516  77.882353  15.803922</code></pre>
+</div>
+<div id="iterando-sobre-dos-objetos" class="section level2">
+<h2><span class="header-section-number">5.3</span> Iterando sobre dos objetos</h2>
+<p>Los ejemplos anteriores se estaba iterando únicamente sobre un objeto. Para iterar sobre dos objetos (que tienen que tener la misma cantidad de elementos), existen las funciones <code>map2_*</code>, que tienen al estructura <code>map2(.x, .y, .f, ...)</code>, donde <code>.x</code> es el primer objeto, <code>.y</code> es el segundo objeto, y <code>.f</code> es al función a utilizar sobre los dos objetos. Un ejemplo de esto es calcular la nota final de los estudiantes por medio de la media de los exámenes y agregarle el crédito extra.</p>
+<pre class="sourceCode r"><code class="sourceCode r">exams <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">map2_dbl</span>(extra_credit, <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(.x) <span class="op">+</span><span class="st"> </span>.y)</code></pre>
+<pre><code>## student1 student2 student3 student4 student5 student6 student7 
+##   89.250   80.875   80.250  100.125   89.875   79.625   86.875</code></pre>
+</div>
+<div id="leyendo-archivos-y-combinándolos" class="section level2">
+<h2><span class="header-section-number">5.4</span> Leyendo archivos y combinándolos</h2>
+<p>Un caso típico donde se desea iterar es leer varios archivos de texto que tienen el mismo formato y como combinarlos en una sola tabla para posterior manipulación. En este caso se usa la función <code>dir_ls</code> del paquete <em>fs</em> <span class="citation">(Hester &amp; Wickham, <a href="#ref-R-fs">2020</a>)</span>, donde se define la carpeta donde se encuentran los archivos (<code>path</code>) y con <code>glob</code> se define un patrón en el nombre de los archivos (en este caso todos los archivos empiezan con ‘datos_’).</p>
+<pre class="sourceCode r"><code class="sourceCode r">archivos &lt;-<span class="st"> </span><span class="kw">dir_ls</span>(<span class="dt">path =</span> <span class="st">&#39;data&#39;</span>, <span class="dt">glob =</span> <span class="st">&quot;*datos_*&quot;</span>) 
+
+archivos</code></pre>
+<pre><code>## data/datos_cuarto_grado.csv data/datos_quinto_grado.csv 
+## data/datos_tercer_grado.csv</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file_info</span>(archivos)</code></pre>
+<pre><code>## # A tibble: 3 x 18
+##   path       type   size permissions modification_time   user  group device_id
+##   &lt;fs::path&gt; &lt;fct&gt; &lt;fs:&gt; &lt;fs::perms&gt; &lt;dttm&gt;              &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;
+## 1 data/dato… file  1.79K rw-r--r--   2019-07-01 16:52:58 maxi… staff  16777220
+## 2 data/dato… file  1.84K rw-r--r--   2019-07-01 16:52:58 maxi… staff  16777220
+## 3 data/dato… file  1.81K rw-r--r--   2019-07-01 16:52:58 maxi… staff  16777220
+## # … with 10 more variables: hard_links &lt;dbl&gt;, special_device_id &lt;dbl&gt;,
+## #   inode &lt;dbl&gt;, block_size &lt;dbl&gt;, blocks &lt;dbl&gt;, flags &lt;int&gt;, generation &lt;dbl&gt;,
+## #   access_time &lt;dttm&gt;, change_time &lt;dttm&gt;, birth_time &lt;dttm&gt;</code></pre>
+<p>Una vez se tiene le objeto con los nombres de los archivos (‘archivos’), se puede proceder a realizar la iteración. Como estamos importando archivos de texto (.csv) usamos la función <code>import</code> del paquete <em>rio</em>.</p>
+<p>Primeramente podemos generar una lista donde iteramos sobre el objeto ‘archivos’ e importamos cada uno, para posteriormente “pegar” uno tras otro con la función <code>bind_rows</code> de <em>dplyr</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(archivos, import) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">bind_rows</span>()</code></pre>
+<pre><code>## # A tibble: 144 x 5
+##    fecha    nombre             matematica ingles matricula
+##    &lt;chr&gt;    &lt;chr&gt;                   &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
+##  1 1/1/2015 Hernandez, Rodrigo         90     60       100
+##  2 1/2/2015 Hernandez, Rodrigo         85     70       100
+##  3 1/3/2015 Hernandez, Rodrigo         70     80       100
+##  4 1/4/2015 Hernandez, Rodrigo         75     85       100
+##  5 1/5/2015 Hernandez, Rodrigo         70     90       100
+##  6 1/6/2015 Hernandez, Rodrigo         66     90       100
+##  7 1/1/2015 Sanchez, Juan              60     80       102
+##  8 1/2/2015 Sanchez, Juan              70     80       102
+##  9 1/3/2015 Sanchez, Juan              80     90       102
+## 10 1/4/2015 Sanchez, Juan              85     85       102
+## # … with 134 more rows</code></pre>
+<p>Con lo anterior logramos generar una tabla con todos los datos pero no sabemos cuales datos corresponden con cual archivo (y consecuentemente con que nivel). Para remediar lo anterior la función <code>bind_rows</code> tiene un argumento <code>.id</code>, al cual se le pasa el nombre de la columna que se quiere agregar mostrando el nombre del archivo al cual pertenece cada observación.</p>
+<pre class="sourceCode r"><code class="sourceCode r">archivos <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map_dfr</span>(import, <span class="dt">.id =</span> <span class="st">&quot;archivo&quot;</span>)</code></pre>
+<pre><code>## # A tibble: 144 x 6
+##    archivo                  fecha    nombre          matematica ingles matricula
+##    &lt;chr&gt;                    &lt;chr&gt;    &lt;chr&gt;                &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
+##  1 data/datos_cuarto_grado… 1/1/2015 Hernandez, Rod…         90     60       100
+##  2 data/datos_cuarto_grado… 1/2/2015 Hernandez, Rod…         85     70       100
+##  3 data/datos_cuarto_grado… 1/3/2015 Hernandez, Rod…         70     80       100
+##  4 data/datos_cuarto_grado… 1/4/2015 Hernandez, Rod…         75     85       100
+##  5 data/datos_cuarto_grado… 1/5/2015 Hernandez, Rod…         70     90       100
+##  6 data/datos_cuarto_grado… 1/6/2015 Hernandez, Rod…         66     90       100
+##  7 data/datos_cuarto_grado… 1/1/2015 Sanchez, Juan           60     80       102
+##  8 data/datos_cuarto_grado… 1/2/2015 Sanchez, Juan           70     80       102
+##  9 data/datos_cuarto_grado… 1/3/2015 Sanchez, Juan           80     90       102
+## 10 data/datos_cuarto_grado… 1/4/2015 Sanchez, Juan           85     85       102
+## # … with 134 more rows</code></pre>
+<p>La siguiente situación que podemos encontrar es que el nombre del archivo (o cualquier otra columna de la tabla) tiene más información de la necesaria, por lo que hay que separar los contenidos de la columna. Para esto usamos <code>separate</code> de <em>tidyr</em> para separar la columna en varias. En el caso de la columna ‘archivo’ podemos esperar tres columnas si especificamos el separador (<code>sep = '_'</code>), pero hay columnas que no ofrecen ninguna información (de las 3, la 1 y la 3, la 2 es la que tiene el nombre del nivel); para descartar estas columnas a la hora de separarlas se puede incluir <code>NA</code> en la posición de las columnas que se desea descartar.</p>
+<pre class="sourceCode r"><code class="sourceCode r">archivos <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map_dfr</span>(import, <span class="dt">.id =</span> <span class="st">&quot;archivo&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">separate</span>(archivo, <span class="dt">into =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">sep =</span> <span class="st">&#39;_&#39;</span>)</code></pre>
+<pre><code>## # A tibble: 144 x 8
+##    a         b      c        fecha   nombre          matematica ingles matricula
+##    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;                &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
+##  1 data/dat… cuarto grado.c… 1/1/20… Hernandez, Rod…         90     60       100
+##  2 data/dat… cuarto grado.c… 1/2/20… Hernandez, Rod…         85     70       100
+##  3 data/dat… cuarto grado.c… 1/3/20… Hernandez, Rod…         70     80       100
+##  4 data/dat… cuarto grado.c… 1/4/20… Hernandez, Rod…         75     85       100
+##  5 data/dat… cuarto grado.c… 1/5/20… Hernandez, Rod…         70     90       100
+##  6 data/dat… cuarto grado.c… 1/6/20… Hernandez, Rod…         66     90       100
+##  7 data/dat… cuarto grado.c… 1/1/20… Sanchez, Juan           60     80       102
+##  8 data/dat… cuarto grado.c… 1/2/20… Sanchez, Juan           70     80       102
+##  9 data/dat… cuarto grado.c… 1/3/20… Sanchez, Juan           80     90       102
+## 10 data/dat… cuarto grado.c… 1/4/20… Sanchez, Juan           85     85       102
+## # … with 134 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">archivos <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map_dfr</span>(import, <span class="dt">.id =</span> <span class="st">&quot;archivo&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">separate</span>(archivo, <span class="dt">into =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&#39;grado&#39;</span>, <span class="ot">NA</span>), <span class="dt">sep =</span> <span class="st">&#39;_&#39;</span>)</code></pre>
+<pre><code>## # A tibble: 144 x 6
+##    grado  fecha    nombre             matematica ingles matricula
+##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;                   &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
+##  1 cuarto 1/1/2015 Hernandez, Rodrigo         90     60       100
+##  2 cuarto 1/2/2015 Hernandez, Rodrigo         85     70       100
+##  3 cuarto 1/3/2015 Hernandez, Rodrigo         70     80       100
+##  4 cuarto 1/4/2015 Hernandez, Rodrigo         75     85       100
+##  5 cuarto 1/5/2015 Hernandez, Rodrigo         70     90       100
+##  6 cuarto 1/6/2015 Hernandez, Rodrigo         66     90       100
+##  7 cuarto 1/1/2015 Sanchez, Juan              60     80       102
+##  8 cuarto 1/2/2015 Sanchez, Juan              70     80       102
+##  9 cuarto 1/3/2015 Sanchez, Juan              80     90       102
+## 10 cuarto 1/4/2015 Sanchez, Juan              85     85       102
+## # … with 134 more rows</code></pre>
+<p>Por ultimo, en este caso también se puede separar la columna ‘nombre’ en ‘apellido’ y ‘nombre’, usando los mismos principios anteriores.</p>
+<pre class="sourceCode r"><code class="sourceCode r">archivos <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">map_dfr</span>(import, <span class="dt">.id =</span> <span class="st">&quot;archivo&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">separate</span>(archivo, <span class="dt">into =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&#39;grado&#39;</span>, <span class="ot">NA</span>), <span class="dt">sep =</span> <span class="st">&#39;_&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">separate</span>(nombre, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&#39;apellido&#39;</span>, <span class="st">&#39;nombre&#39;</span>), <span class="dt">sep =</span> <span class="st">&#39;, &#39;</span>)</code></pre>
+<pre><code>## # A tibble: 144 x 7
+##    grado  fecha    apellido  nombre  matematica ingles matricula
+##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;     &lt;int&gt;
+##  1 cuarto 1/1/2015 Hernandez Rodrigo         90     60       100
+##  2 cuarto 1/2/2015 Hernandez Rodrigo         85     70       100
+##  3 cuarto 1/3/2015 Hernandez Rodrigo         70     80       100
+##  4 cuarto 1/4/2015 Hernandez Rodrigo         75     85       100
+##  5 cuarto 1/5/2015 Hernandez Rodrigo         70     90       100
+##  6 cuarto 1/6/2015 Hernandez Rodrigo         66     90       100
+##  7 cuarto 1/1/2015 Sanchez   Juan            60     80       102
+##  8 cuarto 1/2/2015 Sanchez   Juan            70     80       102
+##  9 cuarto 1/3/2015 Sanchez   Juan            80     90       102
+## 10 cuarto 1/4/2015 Sanchez   Juan            85     85       102
+## # … with 134 more rows</code></pre>
+</div>
+<div id="datos-anidados-caso-1" class="section level2">
+<h2><span class="header-section-number">5.5</span> Datos anidados, caso 1</h2>
+<p>Como se había mencionado en la Sección <a href="avanzado.html#nest">3.13</a> del Capitulo <a href="avanzado.html#avanzado">Funcionamiento avanzado de R</a>, una de las ventajas de los tibbles es que permiten tener columnas tipo lista, las cuales son muy útiles para iterar y realizar cálculos de manera expedita.</p>
+<p>En este caso 1 se trabaja con los datos de ‘airq’, que era la tabla modificada de ‘airquality’. Un caso típico de datos anidados es el agrupar la tabla de acuerdo a una variable categórica y aplicar la función <code>nest</code> de <em>tidyr</em>. Esto genera una columna ‘data’, del tipo lista, donde se almacena una tabla para cada nivel de la variable agrupadora.</p>
+<pre class="sourceCode r"><code class="sourceCode r">airq_nest =<span class="st"> </span>airq <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(Month) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">nest</span>()</code></pre>
+<p>El poder de los datos anidados es la combinación de <code>mutate</code> (<em>dplyr</em>) para generar nuevas columnas, y de las funciones <code>map</code> (<em>purrr</em>) para iterar sobre una columna tipo lista. De forma general esta combinación se plasma de la siguiente forma: <code>mutate(nueva_columna = map(columna_lista, ~ .f(.x)))</code>, donde ‘nueva_columna’ es el nombre de la columna a crear, ‘columna_lista’ es el nombre de la columna tipo lista sobre la cual se va a iterar, y <code>~ .f(.x)</code> es la función o secuencia de funciones a realizar sobre cada elemento (<code>.x</code>) de la ‘columna_lista’.</p>
+<p>Aplicando lo mencionado anteriormente sobre la tabla anidada ‘airq_nest’ se tienen los siguientes pasos, en diferentes <code>mutate</code>:</p>
+<ul>
+<li><code>mod = map(data, ~lm(Wind ~ Temp, data = .x))</code>: Crea una nueva columna ‘mod’, que va a ser el resultado de un modelo lineal para cada mes (iterando sobre ‘data’), en función del viento (‘Wind’) y la temperatura (‘Temp’). La función para modelos lineales es <code>lm</code> y el primer argumento es la <code>formula</code> que lleva la estructura <code>y ~ x</code>, el argumento <code>data</code> se pone de forma explicita y aquí es donde se le indica los elementos sobre los cuales iterar (<code>.x</code>). El resultado es una lista, de ahí que se usara <code>map</code> y no una de sus versiones.</li>
+<li><code>slope = map_dbl(mod, ~tidy(.) %&gt;% filter(term == 'Temp') %&gt;% pull(estimate))</code>: Crea una nueva columna ‘slope’, que va a almacenar la pendiente del modelo lineal (‘mod’) anteriormente calculado, como se sabe que es un numero se usa <code>map_dbl</code>.</li>
+<li><code>r2 = map_dbl(mod, ~glance(.) %&gt;% pull(r.squared))</code>: Crea una nueva columna ‘r2’, donde se va a almacenar el valor del coeficiente de determinación (<span class="math inline">\(R^2\)</span>), como se sabe que es un numero se usa <code>map_dbl</code>.</li>
+<li><code>plot = map2(data,Month, ~ggplot(.x, aes(Temp, Wind)) + geom_point() + geom_smooth(method = 'lm') + labs(title = .y) + theme_bw(base_size = 12))</code>: Crea una nueva columna, donde se va a almacenar el gráfico de dispersión para cada mes, y se le agrega un titulo para saber a que mes corresponde. En este caso se esta iterando sobre dos objetos, por lo que se usa <code>map2</code>: la columna tipo lista donde están los datos a graficar (‘data’), y la columna tipo factor (vector) donde esta la variable agrupadora (‘Month’) para poder poner el titulo correspondiente.</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r">airq_nest =<span class="st"> </span>airq_nest <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="kw">lm</span>(Wind <span class="op">~</span><span class="st"> </span>Temp, <span class="dt">data =</span> .x))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">slope =</span> <span class="kw">map_dbl</span>(mod, <span class="op">~</span><span class="kw">tidy</span>(.) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                           </span><span class="kw">filter</span>(term <span class="op">==</span><span class="st"> &#39;Temp&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                           </span><span class="kw">pull</span>(estimate)),
+         <span class="dt">r2 =</span> <span class="kw">map_dbl</span>(mod, <span class="op">~</span><span class="kw">glance</span>(.) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(r.squared)),
+         <span class="dt">plot =</span> <span class="kw">map2</span>(data,Month, <span class="op">~</span><span class="kw">ggplot</span>(.x, <span class="kw">aes</span>(Temp, Wind)) <span class="op">+</span><span class="st"> </span>
+<span class="st">                       </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">                       </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">                       </span><span class="kw">labs</span>(<span class="dt">title =</span> .y) <span class="op">+</span><span class="st"> </span>
+<span class="st">                       </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>)))
+airq_nest</code></pre>
+<pre><code>## # A tibble: 5 x 6
+##   Month     data              mod      slope     r2 plot  
+##   &lt;fct&gt;     &lt;list&gt;            &lt;list&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;list&gt;
+## 1 Mayo      &lt;tibble [31 × 6]&gt; &lt;lm&gt;   -0.192  0.139  &lt;gg&gt;  
+## 2 Junio     &lt;tibble [30 × 6]&gt; &lt;lm&gt;   -0.0691 0.0146 &lt;gg&gt;  
+## 3 Julio     &lt;tibble [31 × 6]&gt; &lt;lm&gt;   -0.215  0.0932 &lt;gg&gt;  
+## 4 Agosto    &lt;tibble [31 × 6]&gt; &lt;lm&gt;   -0.249  0.258  &lt;gg&gt;  
+## 5 Setiembre &lt;tibble [30 × 6]&gt; &lt;lm&gt;   -0.236  0.325  &lt;gg&gt;</code></pre>
+<div id="efectos-secundarios" class="section level3">
+<h3><span class="header-section-number">5.5.1</span> Efectos secundarios</h3>
+<p>En algunas ocasiones el resultado de una iteración no corresponde con un vector, tabla o lista, sino que puede ser la creación de gráficos o el exportar objetos (lo que se conoce en ingles como ‘side effect’); para estos casos existe la función <code>walk</code> y sus variantes.</p>
+<p>En el primer ejemplo se quiere imprimir cada gráfico en la columna ‘plot’, por lo que se itera sobre la columna deseada, y se llama a la función <code>~ print(.)</code> para que despliegue cada uno de los elementos.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">walk</span>(airq_nest<span class="op">$</span>plot, <span class="op">~</span><span class="kw">print</span>(.))</code></pre>
+<p><img src="geolonum_files/figure-html/iter-15-1.png" width="90%" style="display: block; margin: auto;" /><img src="geolonum_files/figure-html/iter-15-2.png" width="90%" style="display: block; margin: auto;" /><img src="geolonum_files/figure-html/iter-15-3.png" width="90%" style="display: block; margin: auto;" /><img src="geolonum_files/figure-html/iter-15-4.png" width="90%" style="display: block; margin: auto;" /><img src="geolonum_files/figure-html/iter-15-5.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>Un resultado similar se puede obtener usando <code>pull</code>, donde se jala como vector los elementos de la columna deseada.</p>
+<pre class="sourceCode r"><code class="sourceCode r">airq_nest <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(plot)</code></pre>
+<pre><code>## [[1]]</code></pre>
+<p><img src="geolonum_files/figure-html/iter-16-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[2]]</code></pre>
+<p><img src="geolonum_files/figure-html/iter-16-2.png" width="90%" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[3]]</code></pre>
+<p><img src="geolonum_files/figure-html/iter-16-3.png" width="90%" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[4]]</code></pre>
+<p><img src="geolonum_files/figure-html/iter-16-4.png" width="90%" style="display: block; margin: auto;" /></p>
+<pre><code>## 
+## [[5]]</code></pre>
+<p><img src="geolonum_files/figure-html/iter-16-5.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>El ultimo ejemplo hace uso de <code>walk2</code> ya que se desea iterar sobre dos objetos: la columna de gráficos (‘plot’) y la columna agrupadora (‘Month’). Lo que se desea realizar es exportar cada gráfico por separado, de ahí la necesidad de usar ambos objetos, el gráfico a exportar y la variable agrupadora para incluirla en el nombre del archivo. Para esto ultimo se usa la función <code>str_glue</code> de <em>stringr</em> que lo que hace es crear una linea de texto donde se pueden ingresar variables usando <code>{variable}</code>. En el ejemplo específicamente, se guarda cada gráfico en la carpeta ‘figures’, con el nombre ‘regresion_{.y}.png’, donde ‘{.y}’ corresponde con el segundo objeto a iterar, en este caso el mes (‘Month’).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">walk2</span>(airq_nest<span class="op">$</span>plot, 
+      airq_nest<span class="op">$</span>Month, 
+      <span class="op">~</span><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="kw">str_glue</span>(<span class="st">&quot;figures/regresion_{.y}.png&quot;</span>),
+       <span class="dt">plot =</span> .x, <span class="dt">dpi =</span> <span class="dv">300</span>,
+       <span class="dt">width =</span> <span class="dv">7</span>, <span class="dt">height =</span> <span class="dv">4</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>,
+       <span class="dt">type =</span> <span class="st">&quot;cairo&quot;</span>))</code></pre>
+</div>
+</div>
+<div id="datos-anidados-caso-2" class="section level2">
+<h2><span class="header-section-number">5.6</span> Datos anidados, caso 2</h2>
+<p>En este caso 2 se trabaja con los datos de ‘gapminder’, donde se agrupa por país (‘country’), y se crea una tabla para cada país. Este caso es bastante ilustrativo del poder de los tibbles y la iteración, ya que la tabla anidada cuenta con 142 filas (1 por país), y si se quisiera realizar una tarea por país a pie, seria muy tedioso y poco eficiente.</p>
+<pre class="sourceCode r"><code class="sourceCode r">gap_nest =<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">nest</span>()</code></pre>
+<p>De manera similar al caso 1, se genera un modelo lineal para cada país en función de la expectativa de vida (‘lifeExp’) por año (‘year’), y adicionalmente se calcula el coeficiente de determinación (<span class="math inline">\(R^2\)</span>) para cada modelo lineal.</p>
+<pre class="sourceCode r"><code class="sourceCode r">gap_nest =<span class="st"> </span>gap_nest <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span>year, <span class="dt">data =</span> .x))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">r2 =</span> <span class="kw">map_dbl</span>(mod, <span class="op">~</span><span class="kw">glance</span>(.) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(r.squared)))
+gap_nest</code></pre>
+<pre><code>## # A tibble: 142 x 4
+##    country     data              mod       r2
+##    &lt;fct&gt;       &lt;list&gt;            &lt;list&gt; &lt;dbl&gt;
+##  1 Afghanistan &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.948
+##  2 Albania     &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.911
+##  3 Algeria     &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.985
+##  4 Angola      &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.888
+##  5 Argentina   &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.996
+##  6 Australia   &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.980
+##  7 Austria     &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.992
+##  8 Bahrain     &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.967
+##  9 Bangladesh  &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.989
+## 10 Belgium     &lt;tibble [12 × 5]&gt; &lt;lm&gt;   0.995
+## # … with 132 more rows</code></pre>
+<p>Con los datos anteriores se pueden filtrar los países que hayan tenido un <span class="math inline">\(R^2\)</span> por debajo de 0.25, lo que seria indicio de un comportamiento no lineal, lo que podría estar asociado a problemas de desarrollo en esos países. Para poder graficar los datos es necesario desanidarlos (<code>unnest</code>) para volver a contar con las columnas a como estaban en la tabla original, pero ahora con las columnas calculadas en las iteraciones.</p>
+<pre class="sourceCode r"><code class="sourceCode r">gap_nest <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="co"># ungroup() %&gt;%</span>
+<span class="st">  </span><span class="co"># arrange(r2) %&gt;%</span>
+<span class="st">  </span><span class="co"># slice(1:10) %&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(r2 <span class="op">&lt;</span><span class="st"> </span><span class="fl">.25</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">unnest</span>(data) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(year, lifeExp, <span class="dt">col =</span> country, <span class="dt">group =</span> country))</code></pre>
+<p><img src="geolonum_files/figure-html/iter-20-1.png" width="90%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="recursos-4" class="section level2">
+<h2><span class="header-section-number">5.7</span> Recursos</h2>
+<p>Se presentan recursos a consultar para ahondar más en los temas presentados.</p>
+<p><a href="https://www.tidyverse.org">tidyverse</a></p>
+<p><a href="https://b-rodrigues.github.io/modern_R/">Modern R with the tidyverse</a> (Capítulo 8)</p>
+
+</div>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-R-purrr">
+<p>Henry, L., &amp; Wickham, H. (2019). <em>purrr: Functional Programming Tools</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a></p>
+</div>
+<div id="ref-R-fs">
+<p>Hester, J., &amp; Wickham, H. (2020). <em>fs: Cross-Platform File System Operations Based on ’libuv’</em>. Recuperado a partir de <a href="https://CRAN.R-project.org/package=fs">https://CRAN.R-project.org/package=fs</a></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="gráficos-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="datos-espaciales.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

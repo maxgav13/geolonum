@@ -1,4 +1,6 @@
-# Iteración con `purrr`
+# Iteración
+
+## Introducción
 
 En este capitulo se muestra como iterar funciones sobre diferentes objetos (vectores, tablas, listas). La idea de las iteraciones es ser más eficiente a la hora de realizar cálculos repetitivos. Se va a introducir al paquete *purrr* [@R-purrr] que brinda funciones para realizar diferentes tareas que requieren iterar sobre 1 o más objetos.
 

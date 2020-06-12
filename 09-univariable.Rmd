@@ -24,6 +24,8 @@ theme_set(theme_bw())
 
 ```
 
+## Introducción
+
 Como se mencionó en la introducción, la estadística univariable se enfoca en describir una variable a la vez, sin considerar la relación con cualquier otra variable. La descripción y métodos a usar va a estar en función del tipo de variable: cualitativa o cuantitativa. Las tres formas en que se pueden describir los datos son: *tabularmente* (datos cualitativos o cuantitativos discretos), *gráficamente*, y por medio de *resúmenes numéricos*.
 
 ## Tablas de frecuencias

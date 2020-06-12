@@ -17,7 +17,9 @@ knitr::opts_chunk$set(
 
 # Álgebra lineal
 
-Este capitulo hace una introducción básica a conceptos y técnicas en álgebra lineal.
+## Introducción
+
+El álgebra se usa en muchas de las operaciones básicas que se realizan rutinariamente, y es la base para poder aplicar y resolver problemas más complejos que involucaran gran cantidad de datos y variables. Este capitulo hace una introducción básica a conceptos y técnicas en álgebra lineal, para familiarizar al lector y sentar una base para la comprensión de casos donde soluciones analíticas no pueden emplearse y es necesario recurrir a métodos algebráicos.
 
 ## Tensores
 

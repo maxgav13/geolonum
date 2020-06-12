@@ -9,7 +9,7 @@ output:
     css: css/style.css
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib, packages.bib, references.bib]
+bibliography: [book.bib, packages.bib, geolonum.bib]
 csl: apa.csl
 link-citations: yes
 lang: es
@@ -28,9 +28,9 @@ install.packages("bookdown")
 # devtools::install_github("rstudio/bookdown")
 ```
 
-Este documento se basa en el material creado para el curso **G-4101 Geología Numérica**, de la [Escuela Centroamericana de Geologia](geologia.ucr.ac.cr), [Universidad de Costa Rica](ucr.ac.cr), pero la idea es ir expandiendo los temas más allá del curso. El curso hace uso del software estadístico y de programación **R** [@R-base] para desarrollar la parte práctica de los temas cubiertos en la teoría.
+Este libro se basa en el material creado para el curso **G-4101 Geología Numérica**, de la [Escuela Centroamericana de Geologia](geologia.ucr.ac.cr), [Universidad de Costa Rica](ucr.ac.cr), pero la idea es ir expandiendo los temas más allá del curso, y que sirva como base para ir promoviendo la cuantificación de la geología. El libro hace uso del software estadístico y de programación **R** [@R-base] para desarrollar la parte práctica de los temas cubiertos en la teoría.
 
-Existe un repositorio en GitHub para este proyecto ([geolonum](https://github.com/maxgav13/geolonum)), donde se pueden acceder los documentos y datos usados en este libro. Adicionalmente, se ha creado un paquete que ofrece funciones adicionales que serán usadas en algunos de los temas que se van a tratar. Para instalar y ver la documentación del paquete se puede ir a [GMisc](https://maxgav13.github.io/GMisc/) y seguir las instrucciones de la instalación (el paquete no esta en CRAN, esta en GitHub, por lo que no se puede instalar de la forma convencional).
+Existe un repositorio en GitHub para este proyecto ([geolonum](https://github.com/maxgav13/geolonum)), donde se pueden acceder a los documentos y datos usados en este libro. Adicionalmente, se ha creado un paquete que ofrece funciones adicionales que serán usadas en algunos de los temas que se van a tratar. Para instalar y ver la documentación del paquete se puede ir a [GMisc](https://maxgav13.github.io/GMisc/) y seguir las instrucciones de la instalación (el paquete no esta en CRAN, esta en GitHub, por lo que no se puede instalar de la forma convencional).
 
 El libro se divide en 2 partes principales:
 

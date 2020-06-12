@@ -25,6 +25,8 @@ theme_set(theme_bw(base_size = 12))
 
 ```
 
+## Introducción
+
 En los capítulos anteriores se han venido construyendo las bases para poder, ahora sí, responder a preguntas acerca de poblaciones a partir de datos muestrales, esta es la esencia de la estadística inferencial, ir más allá de describir los datos recolectados para poder hacer generalizaciones con fundamento teórico y cuantitativo. Este flujo de análisis se resume en la Figura \@ref(fig:infer-diag). En este capítulo se introducen conceptos fundamentales de la estadística inferencial, para posteriormente expandir sobre éstos utilizando estimación y pruebas de hipótesis para responder formalmente a una pregunta de investigación.
 
 ```{r infer-diag, echo=FALSE, fig.cap='Diagrama del análisis en estadística inferencial.'}
@@ -41,7 +43,7 @@ Es necesario introducir algunos conceptos nuevos que son muy usados y conocidos 
 
 ## Distribuciones muestrales
 
-### Media $(\bar{x})$
+### Media $(\bar{x})$ {#infer-x}
 
 Es la distribución de probabilidad de medias muestrales, donde las diferentes muestras presentan el mismo tamaño o número de observaciones [@triola2004]. La distribución de medias muestrales va a tener la misma media de la población pero la desviación estándar va a ser el *error estándar de la media*.
 
@@ -96,7 +98,7 @@ Conforme el tamaño de la muestra incrementa el error estándar decrece y las in
 knitr::include_graphics('images/sem-n.png')
 ```
 
-El siguiente ejemplo tomado de @davis2002 muestra cómo se puede tomar en cuenta una muestra para calcular probabilidades y empezar a hacer inferencias. Se realiza primero con la distribución $Z$ (asumiendo que se conoce $\sigma$) y luego con la distribución $t$.
+El siguiente ejemplo tomado de @swan1995 muestra cómo se puede tomar en cuenta una muestra para calcular probabilidades y empezar a hacer inferencias. Se realiza primero con la distribución $Z$ (asumiendo que se conoce $\sigma$) y luego con la distribución $t$.
 
 La longitud de especímenes de belemnite tiene una distribución normal con $\mu = 3.5 \ cm$ y $\sigma = 0.2 \ cm$. Se obtiene una muestra al azar de 8 belemnites. Cuál es la probabilidad de que cuando se selecciona una muestra al azar, le media de la muestra sea de 3.7 cm?
 
@@ -138,7 +140,7 @@ pt(q = (x-mu)/(s/sqrt(n)), df = v, lower.tail = F)
 
 Con los ejemplos anteriores se observa como al usar la distribución $t$ la probabilidad en los extremos es mayor, especialmente cuando el tamaño de la muestra es pequeño.
 
-### Diferencia de medias $(\bar{x}_1-\bar{x}_2)$
+### Diferencia de medias $(\bar{x}_1-\bar{x}_2)$ {#infer-x2}
 
 Es la distribución de probabilidad de la diferencia entre medias muestrales, donde las muestras pueden o no presentar el mismo tamaño o número de observaciones. Ésta se utiliza cuando se desean comparar dos posibles poblaciones, dos métodos de análisis, etc. Asumiendo que se cumple el Teorema del Límite Central, se asume que las muestras van a estar normalmente distribuidas y por ende la diferencia de medias tendrá esta forma. La distribución toma la forma presentada en la Ecuación \@ref(eq:dist-diff-medias) si se conoce $\sigma$, sino se puede ajustar y usar la distribución $t$ usando la Ecuación \@ref(eq:dist-diff-medias-t) [@walpole2012]:
 
@@ -154,7 +156,7 @@ Es la distribución de probabilidad de la diferencia entre medias muestrales, do
   (\#eq:dist-diff-medias-t)
 \end{equation}
 
-El contenido de humedad del sitio A tiene una media 35% y una desviación estándar de 5%, el contenido de humedad del sitio B tiene una media 30% y una desviación estándar de 6%. Cuál es la probabilidad de que una muestra de tamaño 25 del sitio A tenga un 7% más de contenido de humedad que el una muestra de tamaño 30 del sitio B?
+El contenido de humedad del sitio A tiene una media 35% y una desviación estándar de 5%, el contenido de humedad del sitio B tiene una media 30% y una desviación estándar de 6%. Cuál es la probabilidad de que una muestra de tamaño 25 del sitio A tenga un 7% más de contenido de humedad que una muestra de tamaño 30 del sitio B?
 
 \begin{equation}
   \mu_1-\mu_2 = 35 - 30 = 5\\
@@ -203,7 +205,7 @@ En el ejemplo anterior se cumple todavía que la probabilidad usando $t$ es mayo
 knitr::include_graphics('images/norm-t-flow.png')
 ```
 
-### Varianza $(s^2)$
+### Varianza $(s^2)$ {#infer-chi}
 
 Las distribuciones de estadísticos anteriores se enfocaron en la media, cuando es de interés sacar conclusiones para el comportamiento típico de un fenómeno o proceso. Cuando el interés es la variabilidad de un fenómeno o proceso el estadístico de interés es la varianza muestral, como proxy de la varianza poblacional. Dado que esta medida es siempre positiva se ocupa una distribución que imponga esta condición, por lo que se usa la distribución $\chi^2$, con $v = n - 1$ grados de libertad, Ecuación \@ref(eq:dist-var) [@triola2004; @walpole2012].
 
@@ -256,7 +258,7 @@ chi
 pchisq(q = chi, df = v, lower.tail = F)
 ```
 
-### Dos varianzas $\left( \frac{s_1^2}{s_2^2} \right)$
+### Dos varianzas $\left( \frac{s_1^2}{s_2^2} \right)$ {#infer-f}
 
 Así como se pueden hacer inferencias sobre dos medias, se pueden hacer inferencias sobre la relación entre dos varianzas (desviaciones estándar). De igual manera a la distribución $\chi^2$ para una varianza, se ocupa una distribución que sea positiva, pero al tratarse de dos muestras (poblaciones) esta distribución ocupa dos grados de libertad, uno para cada muestra, este es el caso de la distribución $F$. Esta distribución tiene una amplia aplicación en la comparación de varianzas muestrales, así como en problemas que implican dos o más muestras [@walpole2012], lo que se cubrirá en los próximos capítulos.
 
@@ -302,7 +304,7 @@ v2 = n2 - 1
 pf(q = f, df1 = v1, df2 = v2, lower.tail = F)
 ```
 
-Lo presentado en este capítulo es la base de lo que se va a cubrir en los próximos capítulos, donde se introducirán temas y técnicas de inferencia muy utilizadas que permiten responder a preguntas de investigación, como lo son [Estimación] y [Pruebas estadísticas]. Estas a su vez van a sentar la base para posteriormente aplicar conceptos y técnicas similares a datos típicos en geociencias.
+Lo presentado en este capítulo es la base de lo que se va a cubrir en los próximos capítulos, donde se introducirán temas y técnicas de inferencia muy utilizadas que permiten responder a preguntas de investigación, como lo son [Estimación e Hipótesis], [Pruebas Estadísticas] y [Estadística No Paramétrica]. Estas a su vez van a sentar la base para posteriormente aplicar conceptos y técnicas similares a datos típicos en geociencias.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

@@ -34,6 +34,8 @@ knitr::opts_chunk$set(
 
 ```
 
+## Introducción
+
 En este capitulo se presenta una breve introducción al uso de **R** como ambiente para trabajar datos espaciales. Los paquetes a utilizar son:
 
 ```{r sp-paquetes, eval=FALSE}
