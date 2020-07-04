@@ -78,7 +78,7 @@ cov(rock)
 
 Del resultado de la matriz de covarianza se observa cómo la escala de las variables afecta el valor de la varianza-covarianza. La diagonal de la matriz es la varianza de la variable respectiva, y las entradas fuera de la diagonal son las covarianzas entre las diferentes variables.
 
-## Correlación
+## Correlación {#bivar-cor}
 
 El objetivo de la correlación de Pearson (Ecuación \@ref(eq:cor-pearson)) es determinar la magnitud de la asociación entre dos variables cuantitativas continuas que tengan una relación lineal. En el caso de que la relación entre las variables no sea lineal se pueden utilizar los coeficientes de correlación de Spearman o Kendall, los cuales son homólogos no-paramétricos que se cubrirán en el capítulo de [Estadística No Paramétrica].
 
@@ -129,7 +129,7 @@ cor(rock)
 
 En los resultados se puede ahora sí estimar la magnitud de las relaciones, donde valores cercanos a 1 y -1 indican una asociación mayor y valores cercanos a 0 indican poca o nula asociación. Más delante en el capítulo de [Pruebas Estadísticas] se podrá determinar si la correlación es nula o no.
 
-## Regresión
+## Regresión {#bivar-reg}
 
 A diferencia de la correlación donde se busca únicamente establecer la presencia y magnitud de las asociación entre variables, sin importar el orden, la regresión pretende establecer la dependencia de una variable con respecto a otra(s), con el fin de predecir dicha variable y/o entender su relación, ya sea porque es difícil de medir o porque se asume y/o conoce la dependencia de otra variables.
 
@@ -263,7 +263,7 @@ Por el momento en la tabla de resultados que se muestra únicamente es de inter�
 
 Una vez ajustado un modelo es importante saber la calidad del ajuste, ya que se pueden generar varios modelos y se quisiera saber cuál modelo se ajusta mejor o representa mejor los datos. Para este fin se pueden usar varias métricas.
 
-#### RMSE
+#### RMSE {#bivar-reg-rmse}
 
 El Root Mean Square Error (RMSE en inglés) o error cuadrático medio (Ecuación \@ref(eq:rmse)) mide qué tan diferentes (alejados) son los residuos de la línea de mejor ajuste. Tiene la propiedad de que se encuentra en la misma escala de la variable respuesta, por lo que va a depender de la misma. En general a menor RMSE mejor ajuste, pero esta métrica es más útil para comparar modelos.
 
@@ -272,7 +272,7 @@ El Root Mean Square Error (RMSE en inglés) o error cuadrático medio (Ecuación
   (\#eq:rmse)
 \end{equation}
 
-#### Coeficiente de determinación ($R^2$)
+#### Coeficiente de determinación ($R^2$) {#bivar-reg-r2}
 
 El coeficiente de determinación ($R^2$) es una métrica de ajuste **estandarizada**, ya que varia entre 0 y 1, donde mientras más cercano a 1 mejor el ajuste. Esta métrica se puede interpretar como *el porcentaje de variación en la variable respuesta que puede ser explicado por la variable predictora*. Para el caso de la regresión lineal simple (únicamente) se puede relacionar el coeficiente de determinación con el coeficiente de correlación de la siguiente manera: $R^2 = r^2$, o lo que es lo mismo $r = \sqrt{R^2}$.
 

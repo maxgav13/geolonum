@@ -1,7 +1,15 @@
 # Estadística No Paramétrica
 
 ```{r noparam-setup, include=FALSE}
-library(DescTools)
+library(DescTools) # para pruebas
+library(effsize) # para tamanho del efecto
+library(effectsize) # para tamanho del efecto
+library(MOTE) # para tamanho del efecto
+library(itns) # para tamanho del efecto
+library(multcomp) # comparaciones multiples
+library(ggmosaic) # mosaico en ggplot
+library(vcd) # variables categoricas
+library(kableExtra)
 library(summarytools)
 library(patchwork)
 library(janitor)
@@ -25,7 +33,59 @@ theme_set(theme_bw(base_size = 12))
 
 ```
 
+## Introducción
 
+## Pruebas no-paramétricas {#pruebas-noparam}
+
+* Prueba-$\chi^2$ de bondad de ajuste (\@ref(prueba-chi-gof))
+  - $H_0:$ Datos siguen la distribución/proporción esperada
+* Prueba-$\chi^2$ de homogeneidad (\@ref(prueba-chi-hom))
+  - $H_0:$ Distribución homogenea entre las categorías de variables cualitativas
+* Prueba-$\chi^2$ de independencia/asociación (\@ref(prueba-chi-asoc))
+  - $H_0:$ No hay relación entre variables cualitativas o éstas son independientes entre si
+
+## Tamaño del efecto {#ES-np}
+
+```{r ES-np, echo=FALSE}
+tibble(Prueba = c('Correlación',
+                  '$\\chi^2$',
+                  '$\\chi^2$'),
+       ES = c('\\begin{equation}
+              r_{s} = \\frac{d_s}{\\sqrt{d_s^2 + \\frac{(n_1 + n_2)^2}{n_1  n_2}}}
+              (\\#eq:r-pb)
+              \\end{equation}',
+              '\\begin{equation}
+              \\phi = \\sqrt{\\frac{\\chi^2}{N}}
+              (\\#eq:phi)
+              \\end{equation}',
+              '\\begin{equation}
+              V = \\sqrt{\\frac{\\chi^2}{N \\cdot v_{min}}}
+              (\\#eq:v)
+              \\end{equation}')
+       ) %>% 
+  kable(col.names = c('Prueba',
+                      'Tamaño de efecto'
+                      ),
+        caption = 'Tamaños de efecto estandarizados para pruebas no-paramétricas',
+        align = 'c',
+        escape = F) %>% 
+  kable_styling(full_width = T) %>% 
+  column_spec(1,width = '15em') %>% 
+  column_spec(2,width = '25em') %>% 
+  footnote(general_title = 'Notas:',
+           general = c('$N$ = total de observaciones',
+                       '$r_{s}$ = coeficiente de correlación de Spearman',
+                       '$v_{min}$ = grados de libertad mínimo de las filas o columnas de la tabla de contingencia'
+                       ))
+```
+
+El $\phi$ y Cramer $V$ comprenden el rango de 0 a 1 y se pueden interpretar similar a $r$, donde valores cercanos a 0 indican poca o nula asociación y valores cerca de 1 indican alta asociación [@fritz2012joepg; @tomczak2014tss].
+
+## Bondad de ajuste {#prueba-chi-gof}
+
+## Homogeneidad {#prueba-chi-hom}
+
+## Independencia / asociación {#prueba-chi-asoc}
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

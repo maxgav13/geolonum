@@ -34,7 +34,7 @@ En los capítulos anteriores ([Distribuciones de Probabilidad] e [Introducción 
 
 ## Estimación {#estim}
 
-Existen dos tipos de estimación principales: puntual y por intervalo. Un estimador puntual es un valor único que se considera representa o aproxima de mejor manera a un parámetro poblacional [@triola2004; @walpole2012]. Una estimación por intervalo representa un rango de posibles valores para el parámetro poblacional [@cumming2005ap; @cumming2011; @cumming2014ps; @triola2004]. 
+Existen dos tipos de estimación principales: puntual y por intervalo. Un estimador puntual es un valor único que se considera representa o aproxima de mejor manera a un parámetro poblacional [@triola2004; @walpole2012]. Una estimación por intervalo representa un rango de posibles valores para el parámetro poblacional [@cumming2005ap; @cumming2012; @cumming2014ps; @cumming2017; @triola2004]. 
 
 La ventaja de un intervalo de confianza, sobre una prueba de hipótesis (como se va a ver más adelante y en el próximo capítulo), es que brinda una medida de la incertidumbre que se tiene sobre un parámetro específico, brindando más información que responder sí o no a una pregunta de hipótesis.
 
@@ -43,9 +43,9 @@ Lo que se obtiene a partir de la estimación por intervalo es lo que se conoce c
 ```{block2 IC, type='rmdnote'}
 **Interpretación correcta del intervalo de confianza (frecuentista)**
   
-Si se tiene una cantidad infinita de muestras con sus respectivos intervalos de confianza, el $100(1 - \alpha)\%$ de esos intervalos va a contener el valor poblacional [@cumming2005ap; @cumming2011; @cumming2014ps; @triola2004; @nolan2014]. El intervalo que se obtiene puede ser uno del $100(1 - \alpha)\%$ o del $100(\alpha)\%$, esto no se sabe.
+Si se tiene una cantidad infinita de muestras con sus respectivos intervalos de confianza, el $100(1 - \alpha)\%$ de esos intervalos va a contener el valor poblacional [@cumming2005ap; @cumming2012; @cumming2014ps; @triola2004; @nolan2014]. El intervalo que se obtiene puede ser uno del $100(1 - \alpha)\%$ o del $100(\alpha)\%$, esto no se sabe.
 
-El intervalo de confianza es el rango de valores más probables para el parámetro poblacional [@cumming2005ap; @cumming2011; @cumming2014ps].
+El intervalo de confianza es el rango de valores más probables para el parámetro poblacional [@cumming2005ap; @cumming2012; @cumming2014ps; @cumming2017].
 ```
 
 La nota anterior se puede visualizar o imaginar a como lo definen @cumming2005ap y se muestra en la Figura \@ref(fig:IC-baile), donde el intervalo que se calcula es uno de muchos posibles intervalos que se pudo obtener y contiene o no el parámetro poblacional, pero ésto no se sabe.
@@ -116,7 +116,7 @@ El siguiente ejemplo de @walpole2012 demuestra lo expuesto anteriormente. Se enc
   Para \ (1-\alpha) = 95\% \ se \ tiene \ z_{\alpha/2} = z_{0.05/2} = 1.96\\
   2.6 \pm 1.96 \frac{0.3}{\sqrt{36}} = 2.6 \pm 0.1 \to 95\% \ IC [2.50,2.70]\\
   Para \ (1-\alpha) = 99\% \ se \ tiene \ z_{\alpha/2} = z_{0.01/2} = 2.575\\
-  2.6 \pm 2.575 \frac{0.3}{\sqrt{36}} = 2.6 \pm 0.13 \to 95\% \ IC [2.47,2.73]
+  2.6 \pm 2.575 \frac{0.3}{\sqrt{36}} = 2.6 \pm 0.13 \to 99\% \ IC [2.47,2.73]
 \end{equation}
 
 Dado que este tipo de inferencia es poco común, ya que se requiere conocer $\sigma$, no hay funciones nativas en **R**, pero los paquetes *DescTools* [@R-DescTools], *OneTwoSamples* [@R-OneTwoSamples], y *GMisc* [@R-GMisc], ofrecen diferentes funciones que pueden ser implementadas. 
@@ -161,7 +161,7 @@ El siguiente ejemplo de @swan1995 demuestra lo expuesto anteriormente. Se tiene 
 \begin{equation}
   \bar{x} \pm t_{\alpha/2,v} \frac{s}{\sqrt{n}}\\
   \bar{x} = 21.512, s = 3.083, n = 8, v = 7\\
-  21.512 \pm 2.365 \frac{3.083}{\sqrt{8}} = 21.512 \pm 2.578 \to 95\% \ IC [218.93,24.09]
+  21.512 \pm 2.365 \frac{3.083}{\sqrt{8}} = 21.512 \pm 2.578 \to 95\% \ IC [18.93,24.09]
 \end{equation}
 
 En **R** se pueden de nuevo usar funciones de los paquetes *DescTools*, *OneTwoSamples*, y *GMisc*, donde para los primeros dos ahora no se brinda el argumento de la desviación estándar poblacional, y para el último se pueden pasar las estadísticas a partir del vector.
@@ -316,7 +316,7 @@ ci_t2(x1 = mean(A), s1 = sd(A), n1 = length(A),
 
 ###### Varianzas diferentes {-}
 
-En el caso de que las varianzas no se puedan considerar iguales el error estándar se convierte en lo que se muestra en la Ecuación \@ref(eq:ic-t2-se2) (el error estándar del estadístico Welch), y el intervalo de confianza para la diferencia de medias cuando las varianzas no se pueden considerar iguales queda como se muestra en la Ecuación \@ref(eq:ic-media-t2-ind-dif), con $t_{\alpha/2,v}$ como el estadístico crítico a los grados de libertad mostrados en la Ecuación \@ref(eq:satterthwaite), donde se redondean al entero más cercano [@swan1995; @triola2004; @walpole2012; @mckillup2010].
+En el caso de que las varianzas no se puedan considerar iguales el error estándar se convierte en lo que se muestra en la Ecuación \@ref(eq:ic-t2-se2) (el error estándar del estadístico Welch), y el intervalo de confianza para la diferencia de medias cuando las varianzas no se pueden considerar iguales queda como se muestra en la Ecuación \@ref(eq:ic-media-t2-ind-dif), con $t_{\alpha/2,v}$ como el estadístico crítico a los grados de libertad mostrados en la Ecuación \@ref(eq:satterthwaite), donde se redondean al entero más cercano [@cumming2017; @swan1995; @triola2004; @walpole2012; @mckillup2010].
 
 \begin{equation}
   s_e = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
@@ -436,7 +436,7 @@ tibble(Granito = 1:10,
   \bar{d} \pm MoE\\
   MoE = t_{\alpha/2,v} \cdot s_e = t_{\alpha/2,v} \frac{s_d}{\sqrt{n}}\\
   MoE = t_{0.05/2,9} \frac{0.1247}{\sqrt{10}} = 2.262 \cdot 0.0394 = 0.0891\\
-  0.1 \pm 0.0981 \to 95\% \ IC [0.0108,0.189]
+  0.1 \pm 0.0891 \to 95\% \ IC [0.0108,0.189]
   (\#eq:ic-media-t2-dep)
 \end{equation}
 
@@ -602,7 +602,7 @@ data.frame(res = c('No rechazar $H_0$', 'Rechazar $H_0$'),
 
 ### Estadístico de prueba y crítico
 
-El estadístico de prueba ($z$, $t$, $\chi^2$, $F$, etc.) es el que se obtiene a partir de los datos muestrales y es el que se va a usar para decidir si se rechaza o no la hipótesis nula. El estadístico o valor crítico es el que va a delimitar el valor mínimo de la región de rechazo, la cuál va a comprender todos los valores posibles que van a resultar en un rechazo de la hipótesis nula. El valor crítico está en función del nivel de significancia $\alpha$, y debe ser escogido con anterioridad a la recolección de los datos [@swan1995; @triola2004; @walpole2012]. Este estadístico crítico era el que se usó en la sección de [Estimación] para construir los intervalos de confianza.
+El estadístico de prueba ($z$, $t$, $\chi^2$, $F$, etc.) es el que se obtiene a partir de los datos muestrales, asumiendo que $H_0$ es verdadera, y es el que se va a usar para decidir si se rechaza o no la hipótesis nula. El estadístico o valor crítico es el que va a delimitar el valor mínimo de la región de rechazo, la cuál va a comprender todos los valores posibles que van a resultar en un rechazo de la hipótesis nula. El valor crítico está en función del nivel de significancia $\alpha$, y debe ser escogido con anterioridad a la recolección de los datos [@cumming2017; @swan1995; @triola2004; @walpole2012]. Este estadístico crítico era el que se usó en la sección de [Estimación] para construir los intervalos de confianza.
 
 ### Contrastes y valor-*p*
 
