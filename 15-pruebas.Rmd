@@ -4,6 +4,7 @@
 library(GMisc) # para intervalos de confianza
 library(OneTwoSamples) # para intervalos y pruebas
 library(psych)
+library(latex2exp)
 library(papaja)
 library(DescTools) # para pruebas
 library(effsize) # para tamanho del efecto
@@ -11,11 +12,13 @@ library(effectsize) # para tamanho del efecto
 library(MOTE) # para tamanho del efecto
 library(itns) # para tamanho del efecto
 library(multcomp) # comparaciones multiples
+library(ggstatsplot)
 library(kableExtra)
 library(summarytools)
 library(patchwork)
 library(janitor)
 library(rio)
+library(conflicted)
 library(tidymodels)
 library(tidyverse)
 
@@ -33,6 +36,10 @@ knitr::opts_chunk$set(
 )
 
 theme_set(theme_bw(base_size = 12))
+conflict_prefer('select','dplyr')
+conflict_prefer("cohen.d", "effsize")
+conflict_prefer("TeX", "latex2exp")
+conflict_prefer("stack", "utils")
 
 U3 = function(m1,m2=0,s=1) {
   m.min = min(c(m1,m2))
@@ -97,7 +104,7 @@ De manera general se van a cubrir las pruebas estadísticas homólogas con las e
 
 ### Supuestos y Pasos {#supuestos-pasos}
 
-Las pruebas presentadas en este capítulo se conocen como pruebas paramétricas, que a diferencia de las pruebas no-parámetricas que se presentan en el próximo capítulo, hacen supuestos sobre los datos que se van a analizar, siendo el mayor supuesto de que los datos siguen una distribución aproximadamente normal (o se tiene una muestra grande, $n > 30$), y que las muestras son aleatoreas independientes (excepto en el caso de datos apareados) [@nolan2014; @triola2004]; en algunos casos pueden haber otros supuestos (parámetros conocidos, varianzas iguales, etc.) pero en general éstos son los más importantes.
+Las pruebas presentadas en este capítulo se conocen como pruebas paramétricas, que a diferencia de las pruebas no-parámetricas que se presentan en el próximo capítulo, hacen supuestos sobre los datos que se van a analizar, siendo el mayor supuesto de que los datos siguen una distribución aproximadamente normal (o se tiene una muestra grande, $n > 30$), y que las muestras son aleatorias independientes (excepto en el caso de datos apareados) [@nolan2014; @triola2004]; en algunos casos pueden haber otros supuestos (parámetros conocidos, varianzas iguales, etc.) pero en general éstos son los más importantes.
 
 Para evaluar la "normalidad" de los datos se pueden generar gráficos como el de caja, histogramas, y QQ (Figura \@ref(fig:normalidad)). El gráfico de caja muestra la mediana y los cuartiles, mientras la mediana no se encuentre muy cerca de alguno de los extremos de la caja se puede considerar normalmente distribuida; en caso de haber valores atípicos (extremos) éstos aparecerían como puntos en los extremos. El gráfico QQ hace una comparación de los valores originales con los cuantiles teóricos, la idea es que si los puntos caen cerca de la línea se puede considerar normalmente distribuida; puede que en las colas haya cierta desviación pero eso es normal siempre y cuando no sea muy extrema. El histograma se puede comparar con una curva normal y ver asimetrías, similar al de caja, mientras las asimetría sea nula o mínima se puede considerar normalmente distribuida. Hay pruebas específicas para evaluar la normalidad (Shapiro-Wilk), pero éstas tienden a ser muy sensibles a desviaciones por lo que en general es más recomendado hacer una evaluación visual
 
@@ -137,11 +144,11 @@ Si se rechaza $H_0$ se dice que hay un resultado __*estadísticamente significat
 
 ## Tamaño del Efecto {#ES-p}
 
-Cuando una prueba da un resultado estadísticamente significativo, quiere decir que se determinó que hay una diferencia o relación. Como se mencionó en el capítulo anterior, este resultado se va a ver afectado directamente por el tamaño de la muestra, por lo que en el caso de muestras grandes casí siempre se va a encontrar un resultado estadísticamente significativo, aun cuando la diferencia o relación real sea pequeña. El tamaño del efecto (ES) es lo que indica la magnitud real de esa diferencia o relación, no se ve afectada por el tamaño de la muestra, e indica la importancia práctica de un efecto, y debe ser el objetivo a la hora de realizar análisis estadísticos [@cohen1988; @cumming2012; @cumming2017; @nolan2014].
+Cuando una prueba da un resultado estadísticamente significativo, quiere decir que se determinó que hay una diferencia o relación. Como se mencionó en el capítulo anterior, este resultado se va a ver afectado directamente por el tamaño de la muestra, por lo que en el caso de muestras grandes casi siempre se va a encontrar un resultado estadísticamente significativo, aun cuando la diferencia o relación real sea pequeña. El tamaño del efecto (ES) es lo que indica la magnitud real de esa diferencia o relación, no se ve afectada por el tamaño de la muestra, e indica la importancia práctica de un efecto, y debe ser el objetivo a la hora de realizar análisis estadísticos [@cohen1988; @cumming2012; @cumming2017; @nolan2014].
 
 El tamaño del efecto puede presentarse en las unidades originales o de forma estandarizada (más usadas) y se reconocen dos familias: diferencia entre medias (familia $d$ y sus variantes), asociación/relación entre variables (familia $r$ y similares como $R^2, \eta^2, V$), y dentro de lo posible es recomendable incluir intervalos de confianza [@cohen1988; @cumming2012; @cumming2017; @lakens2013fp; @nakagawa2007br]. Para los tamaños de efecto es complicado calcular de forma manual los intervalos de confianza, en la mayoría de los casos se usa la distribución $t$ no-central, por lo que se recomienda utilizar métodos computacionales [@cumming2012; @cumming2017].
 
-A parte de presentar los resultados de pruebas estadísticas, sea que se rechace o no la hipótesis nula, es necesario incluir el tamaño del efecto para brindar una mejor idea del resultado encontrado, así como para posibles usos en futuros estudios (meta-analisis, cálculos de tamaños de muestra, potencia, etc.), y generar una base de resultados resportados en un área específica del saber para determinar qué se puede considerar como un efecto pequeño, mediano o grande [American Psycological Association [APA] -@americanpsychologicalassociation2010; @cumming2012; @cumming2017; @nakagawa2007br; @thompson2007ps; @tomczak2014tss].
+A parte de presentar los resultados de pruebas estadísticas, sea que se rechace o no la hipótesis nula, es necesario incluir el tamaño del efecto para brindar una mejor idea del resultado encontrado, así como para posibles usos en futuros estudios (meta-análisis, cálculos de tamaños de muestra, potencia, etc.), y generar una base de resultados reportados en un área específica del saber para determinar qué se puede considerar como un efecto pequeño, mediano o grande [American Psycological Association [APA] -@americanpsychologicalassociation2010; @cumming2012; @cumming2017; @nakagawa2007br; @thompson2007ps; @tomczak2014tss].
 
 La diferencia entre medias estandarizada se conoce como Cohen $d$ [@cohen1988], de manera general se presenta en la Ecuación \@ref(eq:cohen-d-pop), y se puede visualizar en la Figura \@ref(fig:cohen-d). Se interpreta de manera similar a $Z$, donde la diferencia entre medias está dada en función de una desviación estándar. La desviación estándar (denominador) es la que va a cambiar dependiendo de la prueba y condiciones de la misma (Tabla \@ref(tab:ES-p)).
 
@@ -167,7 +174,7 @@ ggplot(NULL,aes(x=10:45)) +
 
 Hay dos factores que controlan el tamaño de $d$, primero al incrementar la diferencia entre medias (manteniendo la dispersión constante) mayor será $d$, segundo al disminuir la dispersión (manteniendo la diferencia de medias constante) mayor será $d$. Estos dos factores van a influenciar el traslape entre las curvas, donde a mayor $d$ menor el traslape y mayor la diferencia entre las curvas y las muestras. Al igual que $Z$ puede tomar valores de $-∞$ a $∞$. 
 
-Dada la naturaleza estadística del Cohen $d$ y la dificultad de su interpretación para personas con poco conocimiento estadístico, se han generado otras métricas comparables que pueden ser más fáciles de entender en términos generales. @grissom2005, @mcgraw1992pb, y @ruscio2008pm desarrollaron el concepto de probabilidad de superioridad (PS) o lenguage común del tamaño del efecto (CL) el cuál se puede calcular de acuerdo a la Ecuación \@ref(eq:PS). Este concepto se interpreta como la probabilidad de que un elemento del grupo con media superior (elegido al azar) tenga un valor superior al de un elemento del grupo con media inferior, y al ser una probabilidad se encuentra entre 0 y 100%, conforme mayor sea $d$ mayor será PS. @reiser1999jrss modificaron de @cohen1988 el traslape (OVL) entre las curvas (grupos), dado por la Ecuación \@ref(eq:traslape), donde a mayor $d$ menor el traslape y más diferenciados los grupos. @cohen1988 definió el concepto de $U_3$, denominado la medida de no-traslape, presentado en Ecuación \@ref(eq:U3), y se puede interpretar como el porcentaje del grupo con media superior que va a estar por encima de la media del grupo con media inferior. Para todos estos casos $\Phi$ corresponde con la función de densidad acumulada de la distribución normal estándar $Z$. *Cabe resaltar que éstos conceptos y cálculos se basan en grupos de mismo tamaño y misma desviación estándar*.Un muy buen recurso para visualizar todos estos conceptos lo brinda @magnusson2020 en [Interpreting Cohen's d](https://rpsychologist.com/d3/cohend/).
+Dada la naturaleza estadística del Cohen $d$ y la dificultad de su interpretación para personas con poco conocimiento estadístico, se han generado otras métricas comparables que pueden ser más fáciles de entender en términos generales. @grissom2005, @mcgraw1992pb, y @ruscio2008pm desarrollaron el concepto de probabilidad de superioridad (PS) o lenguaje común del tamaño del efecto (CL) el cuál se puede calcular de acuerdo a la Ecuación \@ref(eq:PS). Este concepto se interpreta como la probabilidad de que un elemento del grupo con media superior (elegido al azar) tenga un valor superior al de un elemento del grupo con media inferior, y al ser una probabilidad se encuentra entre 0 y 100%, conforme mayor sea $d$ mayor será PS. @reiser1999jrss modificaron de @cohen1988 el traslape (OVL) entre las curvas (grupos), dado por la Ecuación \@ref(eq:traslape), donde a mayor $d$ menor el traslape y más diferenciados los grupos. @cohen1988 definió el concepto de $U_3$, denominado la medida de no-traslape, presentado en Ecuación \@ref(eq:U3), y se puede interpretar como el porcentaje del grupo con media superior que va a estar por encima de la media del grupo con media inferior. Para todos estos casos $\Phi$ corresponde con la función de densidad acumulada de la distribución normal estándar $Z$. *Cabe resaltar que éstos conceptos y cálculos se basan en grupos de mismo tamaño y misma desviación estándar*.Un muy buen recurso para visualizar todos estos conceptos lo brinda @magnusson2020 en [Interpreting Cohen's d](https://rpsychologist.com/d3/cohend/).
 
 \begin{equation}
   PS = CL = \Phi \left( \frac{|d|}{\sqrt{2}} \right)
@@ -203,7 +210,7 @@ ESp = tibble(
              't de 2 muestras dependientes usando la desviación de las diferencias',
              't de 2 muestras dependientes tomando en cuenta la correlación',
              't de 2 muestras dependientes usando el promedio de las desviaciones',
-             't con correción de Hedges',
+             't con corrección de Hedges',
              'Correlación punto biserial a partir de $d_s$ para 2 muestras independientes',
              'Correlación',
              'Regresión',
@@ -314,7 +321,7 @@ ESpc %>%
                       'Mediano',
                       'Grande'
                       ),
-        caption = 'Clases comunmente usadas para diferentes tamaños de efecto',
+        caption = 'Clases comúnmente usadas para diferentes tamaños de efecto',
         align = 'c',
         escape = F) %>% 
   kable_styling(full_width = T) %>% 
@@ -327,7 +334,7 @@ ESpc %>%
 
 ## $z$ de 1 muestra {#prueba-z1}
 
-El uso de la prueba $z$ de 1 muestra se realiza con el ejemplo de la sección \@ref(estim-ic-z) [@walpole2012], donde se tenía una media muestral de $2.6 \ g/ml$ para una muestra de tamaño 36 y se asumía una deviación poblacional de $0.3 \ g/ml$. Es posible que esta muestra provenga de una población con media 2.8 ($\mu_0=2.8$)? Asuma $\alpha = 0.05$.
+El uso de la prueba $z$ de 1 muestra se realiza con el ejemplo de la sección \@ref(estim-ic-z) [@walpole2012], donde se tenía una media muestral de $2.6 \ g/ml$ para una muestra de tamaño 36 y se asumía una desviación poblacional de $0.3 \ g/ml$. Es posible que esta muestra provenga de una población con media 2.8 ($\mu_0=2.8$)? Asuma $\alpha = 0.05$.
 
 Usando los pasos mencionados anteriormente (\@ref(supuestos-pasos)) se tiene:
 
@@ -410,7 +417,7 @@ u.z1.2 = U3(dpop)
   plot_annotation(tag_levels = 'A')
 ```
 
-> Conclusión: La concentración de zinc (`r z1.apa$estimate %>% str_replace('CI','IC')`) es signficativamente diferente a la media de 2.8 g/ml, `r z1.apa$statistic %>% str_replace('z',str_glue('z({n})'))`, $d = `r dpop.ci[2]` \ [`r dpop.ci[1]`, `r dpop.ci[3]`]$. El efecto se puede considerar mediano, pero con un rango de pequeño hasta muy grande. Hay una probabilidad de 68.1% (PS) que un elemento de la población hipotética tenga una concentración mayor a un elemento de la muestra; las dos curvas se traslapan en un 73.9% (OVL); el 74.8% ($U_3$) de la población hipotética se encuentra por encima de la media de la muestra.
+> Conclusión: La concentración de zinc (`r z1.apa$estimate %>% str_replace('CI','IC')`) es significativamente diferente a la media de 2.8 g/ml, `r z1.apa$statistic %>% str_replace('z',str_glue('z({n})'))`, $d = `r dpop.ci[2]` \ [`r dpop.ci[1]`, `r dpop.ci[3]`]$. El efecto se puede considerar mediano, pero con un rango de pequeño hasta muy grande. Hay una probabilidad de 68.1% (PS) que un elemento de la población hipotética tenga una concentración mayor a un elemento de la muestra; las dos curvas se traslapan en un 73.9% (OVL); el 74.8% ($U_3$) de la población hipotética se encuentra por encima de la media de la muestra.
 
 ## $t$ de 1 muestra {#prueba-t1}
 
@@ -492,11 +499,27 @@ u.t1.2 = U3(d.t1.res$d)
   plot_annotation(tag_levels = 'A')
 ```
 
-> Conclusión: El contenido de cuarzo de la roca ígnea (`r t1.apa$estimate %>% str_replace('CI','IC')`) no es signficativamente diferente a la media de 20% , `r t1.apa$statistic`, `r d.t1.res$estimate %>% str_sub(end = 10)` $`r d.t1.res$estimate %>% str_sub(start = 21)`$. El efecto se puede considerar mediano, pero con un rango de pequeño, en dirección opuesta, hasta muy grande. Hay una probabilidad de 63.6% (PS) que un elemento de la muestra tenga un contenido de cuarzo mayor a un elemento de la población hipotética; las dos curvas se traslapan en un 80.6% (OVL); el 68.8% ($U_3$) de la muestra se encuentra por encima de la media de la población hipotética.
+> Conclusión: El contenido de cuarzo de la roca ígnea (`r t1.apa$estimate %>% str_replace('CI','IC')`) no es significativamente diferente a la media de 20% , `r t1.apa$statistic`, `r d.t1.res$estimate %>% str_sub(end = 10)` $`r d.t1.res$estimate %>% str_sub(start = 21)`$. El efecto se puede considerar mediano, pero con un rango de pequeño, en dirección opuesta, hasta muy grande. Hay una probabilidad de 63.6% (PS) que un elemento de la muestra tenga un contenido de cuarzo mayor a un elemento de la población hipotética; las dos curvas se traslapan en un 80.6% (OVL); el 68.8% ($U_3$) de la muestra se encuentra por encima de la media de la población hipotética.
+
+```{r echo=FALSE}
+t1.stats = TeX(str_interp("$\\mathit{t}(${t1.res$parameter}) = ${apa(t1.res$statistic,2)}, \\mathit{p} ${printp(t1.res$p.value,add_equals = T)}, \\mathit{d} = ${apa(d.t1.res[[1]],2)}, IC_{${(1-a)*100}%} \\[${apa(d.t1.res[[2]],2)}, ${apa(d.t1.res[[3]],2)}\\]"))
+```
+
+```{r t1-stats, echo=FALSE, out.width='90%', fig.cap='Histograma del contenido de cuarzo, mostrando la media muestral (azul) y el valor a comparar (rojo), así como el resumen estadístico respectivo.'}
+Q = tibble(Q = cuarzo)
+gghistostats(Q,Q,type = 'p',
+             bf.message = F,
+             results.subtitle = F,
+             xlab = 'Contenido de cuarzo (%)',
+             test.value = mu0,test.value.line = T,
+             test.value.line.args = list(col='red',size=1),
+             test.value.label.args = list(col='red',size=3),
+             subtitle = t1.stats)
+```
 
 ## $t$ de 2 muestras independientes {#prueba-t2-ind}
 
-Para este caso es cuando, en teoría, se debiera cumplir no solo la normalidad de las muestras, sino también la igualdad de varianzas. Si se quiere relajar el supuesto de igualdad de varianzas se usa el estadístico Welch o Welch-Satterthwaite (\@ref(estim-ic-t2-ind) - varianzas diferentes). En general la diferecia entre asumir igualdad de varianzas o no va a ser pequeña, siempre y cuando éstas no sean muy diferentes y los tamaños de muestra no sean muy disparejos, y es recomendado indicar qué método se usó [@cumming2017].
+Para este caso es cuando, en teoría, se debiera cumplir no solo la normalidad de las muestras, sino también la igualdad de varianzas. Si se quiere relajar el supuesto de igualdad de varianzas se usa el estadístico Welch o Welch-Satterthwaite (\@ref(estim-ic-t2-ind) - varianzas diferentes). En general la diferencia entre asumir igualdad de varianzas o no va a ser pequeña, siempre y cuando éstas no sean muy diferentes y los tamaños de muestra no sean muy disparejos, y es recomendado indicar qué método se usó [@cumming2017].
 
 El uso de la prueba $t$ de 2 muestras independientes se realiza con el ejemplo de la sección \@ref(estim-ic-t2-ind) [@swan1995], el de varianzas iguales, donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es posible que estas muestras provenga de una misma población ($\mu_1=\mu_2$)? Asuma $\alpha = 0.05$.
 
@@ -558,9 +581,9 @@ El tamaño del efecto se puede calcular de acuerdo a las Ecuaciones \@ref(eq:d-t
   g_s = 0.88 \cdot \left( 1 - \frac{3}{4(16)-1} \right) = 0.84
 \end{equation}
 
-La correción de Hedges ($g_s$) se usa ya que $d_s$ se considera un estimador sesgado (biased) especialmenta para muestras pequeñas, conforme mayor sea el tamaño de muestra más similares $d_s$ y $g_s$ [@cumming2012; @cumming2017; @fritz2012joepg; @mcgrath2006pm].
+La corrección de Hedges ($g_s$) se usa ya que $d_s$ se considera un estimador sesgado (biased) especialmente para muestras pequeñas, conforme mayor sea el tamaño de muestra más similares $d_s$ y $g_s$ [@cumming2012; @cumming2017; @fritz2012joepg; @mcgrath2006pm].
 
-En **R** se puede calcular $d_s$ con la función `d.ind.t` y $g_s$ con la función `g.ind.t` del paquete *MOTE*, donde es necesario indicar la media muestral de ambas muetras, desviación estándar muestral de ambas muestras, tamaño ambas muestras, y nivel de significancia. Adicionalmente existen las funciones `cohens_d` y `hedges_g` de *effectsize* [@R-effectsize], y `cohen.d` de *effsize* [@R-effsize].
+En **R** se puede calcular $d_s$ con la función `d.ind.t` y $g_s$ con la función `g.ind.t` del paquete *MOTE*, donde es necesario indicar la media muestral de ambas muestras, desviación estándar muestral de ambas muestras, tamaño ambas muestras, y nivel de significancia. Adicionalmente existen las funciones `cohens_d` y `hedges_g` de *effectsize* [@R-effectsize], y `cohen.d` de *effsize* [@R-effsize].
 
 Usando *MOTE*
 
@@ -623,7 +646,29 @@ u.ind2 = U3(d.t2.ind.res$d)
   plot_annotation(tag_levels = 'A')
 ```
 
-> Conclusión: La longitud de los braquiópodos en la capa A no es signficativamente diferente de la longitud de los braquiópodos en la capa B (`r t2.ind.apa$estimate %>% str_replace('CI','IC')`), `r t2.ind.apa$statistic`, `r d.t2.ind.res$estimate %>% str_sub(end = 12)` $`r d.t2.ind.res$estimate %>% str_sub(start = 23)`$. El efecto se puede considerar grande, pero con un rango de muy pequeño, en dirección opuesta, hasta muy grande. Hay una probabilidad de 73.4% (PS) que un elemento de la muestra A tenga una longitud mayor que un elemento de la muestra B; las dos curvas se traslapan en un 65.9% (OVL); el 81.8% ($U_3$) de la muestra A se encuentra por encima de la media de la muestra B.
+> Conclusión: La longitud de los braquiópodos en la capa A no es significativamente diferente de la longitud de los braquiópodos en la capa B (`r t2.ind.apa$estimate %>% str_replace('CI','IC')`), `r t2.ind.apa$statistic`, `r d.t2.ind.res$estimate %>% str_sub(end = 12)` $`r d.t2.ind.res$estimate %>% str_sub(start = 23)`$. El efecto se puede considerar grande, pero con un rango de muy pequeño, en dirección opuesta, hasta muy grande. Hay una probabilidad de 73.4% (PS) que un elemento de la muestra A tenga una longitud mayor que un elemento de la muestra B; las dos curvas se traslapan en un 65.9% (OVL); el 81.8% ($U_3$) de la muestra A se encuentra por encima de la media de la muestra B.
+
+```{r echo=FALSE}
+t2.ind.stats = TeX(str_interp("$\\mathit{t}(${t2.ind.res$parameter}) = ${apa(t2.ind.res$statistic,2)}, \\mathit{p} ${printp(t2.ind.res$p.value,add_equals = T)}, \\mathit{g} = ${apa(g.t2.ind.res[[1]],2)}, IC_{${(1-a)*100}%} \\[${apa(g.t2.ind.res[[2]],2)}, ${apa(g.t2.ind.res[[3]],2)}\\]"))
+```
+
+```{r t2-ind-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de caja mostrando el efecto de la capa sobre la longitud de los braquiópodos, así como el resumen estadístico respectivo.'}
+braq = stack(list(A=A,
+                  B=B)) %>% 
+  mutate(ranking = rank(values))
+
+ggbetweenstats(braq,ind,values,
+               type = 'p',
+               plot.type = 'box',
+               pairwise.comparisons = T,
+               pairwise.display = 'all',
+               var.equal = T,
+               bf.message = F,
+               results.subtitle = F,
+               sample.size.label = F,
+               xlab = 'Capa',ylab = 'Longitud (cm)',
+               subtitle = t2.ind.stats)
+```
 
 ## $t$ de 2 muestras dependientes {#prueba-t2-dep}
 
@@ -670,7 +715,7 @@ t2.dep.res = t.test(x = m2,
 t2.dep.res
 ```
 
-Como se mencionó en la sección \@ref(estim-ic-t2-dep), y a diferencia de muestras independientes, las pruebas de hipótesis para muestras dependientes no se pueden aproximar por medio de los intervalos de confianza (Figura \@ref(fig:t2-dep-ci)), siguiendo las guías de @cumming2005ap, @cumming2012, y @cumming2017. En este caso solo se puede utilizar el intervalo de confianza para la diferencia, que va a estar en función de los márgenes de error de las muestras y la correlación entre las mismas ($MoE_d^2 = MoE_1^2 + MoE_2^2 - 2rMoE_1MoE_2$), donde a mayor correlación menor el márgen de error para la diferencia y mayor precisión [@cumming2005ap].
+Como se mencionó en la sección \@ref(estim-ic-t2-dep), y a diferencia de muestras independientes, las pruebas de hipótesis para muestras dependientes no se pueden aproximar por medio de los intervalos de confianza (Figura \@ref(fig:t2-dep-ci)), siguiendo las guías de @cumming2005ap, @cumming2012, y @cumming2017. En este caso solo se puede utilizar el intervalo de confianza para la diferencia, que va a estar en función de los márgenes de error de las muestras y la correlación entre las mismas ($MoE_d^2 = MoE_1^2 + MoE_2^2 - 2rMoE_1MoE_2$), donde a mayor correlación menor el margen de error para la diferencia y mayor precisión [@cumming2005ap].
 
 ```{r t2-dep-ci, echo=FALSE, fig.cap='Intervalos de confianza para la prueba t de 2 muestras independientes. El valor de 0 cae fuera del intervalo de confianza para la diferencia, por lo que no se pueden considerar iguales o que hay diferencia entre la concentración de $FeO$ para los tamaños.'}
 NewStats_2samples(m2,m1,dep = T,ylab.diff = 'Diferencia') + 
@@ -730,7 +775,7 @@ d.t2.dep.res3 = d.dep.t.avg(m1 = mean(m2),
 d.t2.dep.res3[1:3] %>% unlist()
 ```
 
-La Tabla \@ref(tab:d-dep-comparacion) muestra la comparación entre los diferentes tamaños de efecto para el ejemplo de muestras dependientes. Los resultados muestran como $d_z$ sobreestima (y por mucho) a $d_{rm}$ y $d_{av}$, donde $d_{rm}$ es el más conservador de todos. [@lakens2013fp]. El hecho de que $d_z$ sobreestima el tamaño del efecto es devido a la alta correlación entre las muestras $r = `r round(cor(m1,m2),4)`$.
+La Tabla \@ref(tab:d-dep-comparacion) muestra la comparación entre los diferentes tamaños de efecto para el ejemplo de muestras dependientes. Los resultados muestran como $d_z$ sobrestima (y por mucho) a $d_{rm}$ y $d_{av}$, donde $d_{rm}$ es el más conservador de todos. [@lakens2013fp]. El hecho de que $d_z$ sobrestima el tamaño del efecto es debido a la alta correlación entre las muestras $r = `r round(cor(m1,m2),4)`$.
 
 ```{r d-dep-comparacion, echo=FALSE}
 bind_rows(d.t2.dep.res1[1:3] %>% unlist(),
@@ -747,7 +792,7 @@ bind_rows(d.t2.dep.res1[1:3] %>% unlist(),
         caption = 'Comparación de tamaños de efecto para muestras dependientes')
 ```
 
-Un panorama general del efecto de $r$ en el tamaño del efecto para muestras dependientes se muestra en la Tabla \@ref(tab:d-dep-comparacion2), donde se generaron tres juegos de datos, provenientes de poblaciones con $r=0.1$, $r=0.5$, y $r=0.9$, respectivamente. Se observa como a bajos valores de $r$ $d_z$ subestima el tamaño del efecto (con respecto a $d_{rm}$ y $d_{av}$), a valores intermedios todos son muy similares, y a altos valores de $r$ $d_z$ sobreestima el tamaño del efecto (con respecto a $d_{rm}$ y $d_{av}$), lo que muestra la sensibilidad y el efecto de $r$ en el uso de $d_z$, y por lo que se recomienda usar $d_{rm}$ o $d_{av}$.
+Un panorama general del efecto de $r$ en el tamaño del efecto para muestras dependientes se muestra en la Tabla \@ref(tab:d-dep-comparacion2), donde se generaron tres juegos de datos, provenientes de poblaciones con $r=0.1$, $r=0.5$, y $r=0.9$, respectivamente. Se observa como a bajos valores de $r$ $d_z$ subestima el tamaño del efecto (con respecto a $d_{rm}$ y $d_{av}$), a valores intermedios todos son muy similares, y a altos valores de $r$ $d_z$ sobrestima el tamaño del efecto (con respecto a $d_{rm}$ y $d_{av}$), lo que muestra la sensibilidad y el efecto de $r$ en el uso de $d_z$, y por lo que se recomienda usar $d_{rm}$ o $d_{av}$.
 
 ```{r echo=FALSE}
 set.seed(123)
@@ -781,7 +826,7 @@ correls %>%
                                           nrow(.))[[1]]) %>% round(3)) %>% 
   unnest(c(d_z,d_rm,d_av)) %>% 
   ungroup() %>% 
-  dplyr::select(-data) %>%
+  select(-data) %>%
   kable(col.names = c('$\\rho$',
                       '$r$',
                       '$d_z$',
@@ -837,13 +882,31 @@ u.dep2 = U3(d.t2.dep.res3$d)
   plot_annotation(tag_levels = 'A')
 ```
 
-> Conclusión: La concentración de $FeO$ es signficativamente diferente para los diferentes tamaños (`r t2.dep.apa$estimate %>% str_replace('CI','IC')`), `r t2.dep.apa$statistic`, $N = `r n`$, $r = `r r`$, `r d.t2.dep.res3$estimate %>% str_sub(end = 15)` $`r d.t2.dep.res3$estimate %>% str_sub(start = -13)`$. El efecto se puede considerar muy pequeño, con un rango de mediano, en dirección opuesta, hasta mediano en la dirección del efecto. Hay una probabilidad de 51.1% (PS) que un elemento de la muestra de $< 125 \ \mu m$ tenga una concentración mayor que un elemento de la muestra de $< 25 \ \mu m$; las dos curvas se traslapan en un 98.5% (OVL); el 51.5% ($U_3$) de la muestra de $< 125 \ \mu m$ se encuentra por encima de la media de la muestra de $< 25 \ \mu m$.
+> Conclusión: La concentración de $FeO$ es significativamente diferente para los diferentes tamaños (`r t2.dep.apa$estimate %>% str_replace('CI','IC')`), `r t2.dep.apa$statistic`, $N = `r n`$, $r = `r r`$, `r d.t2.dep.res3$estimate %>% str_sub(end = 15)` $`r d.t2.dep.res3$estimate %>% str_sub(start = -13)`$. El efecto se puede considerar muy pequeño, con un rango de mediano, en dirección opuesta, hasta mediano en la dirección del efecto. Hay una probabilidad de 51.1% (PS) que un elemento de la muestra de $< 125 \ \mu m$ tenga una concentración mayor que un elemento de la muestra de $< 25 \ \mu m$; las dos curvas se traslapan en un 98.5% (OVL); el 51.5% ($U_3$) de la muestra de $< 125 \ \mu m$ se encuentra por encima de la media de la muestra de $< 25 \ \mu m$.
+
+```{r echo=FALSE}
+t2.dep.stats = TeX(str_interp("$\\mathit{t}(${t2.dep.res$parameter}) = ${apa(t2.dep.res$statistic,2)}, \\mathit{p} ${printp(t2.dep.res$p.value,add_equals = T)}, \\mathit{d_{av}} = ${apa(d.t2.dep.res3[[1]],2)}, IC_{${(1-a)*100}%} \\[${apa(d.t2.dep.res3[[2]],2)}, ${apa(d.t2.dep.res3[[3]],2)}\\]"))
+```
+
+```{r t2-dep-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de caja mostrando el efecto del tamaño de partícula sobre el contenido de FeO, así como el resumen estadístico respectivo.'}
+FeO = stack(list(m1=m1,
+                 m2=m2))
+
+ggwithinstats(FeO,ind,values,
+              type = 'p',
+              bf.message = F,
+              results.subtitle = F,
+              sample.size.label = F,
+              xlab = 'Tamaño',ylab = 'Contenido de FeO (%)',
+              subtitle = t2.dep.stats) + 
+  scale_x_discrete(labels = c('< 25','< 125'))
+```
 
 ## ANOVA de 1-factor entre-grupos {#prueba-aov}
 
 Hasta el momento solo se han analizado casos donde se tenían 1 o 2 muestras  y se desean hacer inferencias sobre la media, pero en muchos casos se pueden llegar a tener 3 o más muestras. 
 
-Se podría pensar en realizar diferentes pruebas $t$ de dos muestras, pero esto genera dos problemas: primero, dependiendo de la cantidad de grupos el número de comparaciones sería muy grande, y segundo y más importante al realizar diferentes purbeas $t$ se va a inflar el error tipo-I ($\alpha$), pudiendo incurrir en conclusiones equivocadas [@nolan2014]. 
+Se podría pensar en realizar diferentes pruebas $t$ de dos muestras, pero esto genera dos problemas: primero, dependiendo de la cantidad de grupos el número de comparaciones sería muy grande, y segundo y más importante al realizar diferentes pruebas $t$ se va a inflar el error tipo-I ($\alpha$), pudiendo incurrir en conclusiones equivocadas [@nolan2014]. 
 
 La prueba del análisis de varianza (ANOVA - Analysis of Variance, en inglés), es una prueba que permite dilucidar la similitud entre muestras sin incurrir en los problemas antes mencionados, y la cual hace uso de la distribución y prueba $F$ para el análisis. La base teórica y procedimental que se va a exponer aquí se puede encontrar en [@borradaile2003; @davis2002; @mckillup2010; @nolan2014; @swan1995; @walpole2012]
 
@@ -914,8 +977,8 @@ tibble(variacion = c('Entre grupos', 'Dentro de grupos (error)'),
 
 Cuando el resultado de la prueba de ANOVA es significativo esto indica que al menos uno de los grupos es diferente, pero no se sabe cuál. Para poder responder hay dos opciones:
 
-- Si no se tiene idea o no se ha decidido con anterioridad de cuáles grupos se quieren comparar se puedeen realizar análisis posteriores (post-hoc) comparando todos los grupos, donde se ajusta para el error tipo-I. El post-hoc más utilizado es TukeyHSD (Honestly Significant Difference), pero existen otros como Bonferroni, Holm, Scheffe, etc.
-- Si se han decidido comparaciones (contrastes) *a priori* éstas son las que se analizan, pero debieron haberse especificado durante la planificación del estudio y antes de recolectar los datos.
+- Si no se tiene idea o no se ha decidido con anterioridad de cuáles grupos se quieren comparar se pueden realizar análisis posteriores (post-hoc) comparando todos los grupos, donde se ajusta para el error tipo-I. El post-hoc más utilizado es TukeyHSD (Honestly Significant Difference), pero existen otros como Bonferroni, Holm, Scheffe, etc. La ventaja de Tukey es que brinda más información que los otros (diferencia entre grupos e intervalo de confianza para la diferencia).
+- Si se han decidido comparaciones (contrastes) *a priori* éstas son las que se analizan, pero debieron haberse especificado durante la planificación del estudio y antes de recolectar los datos. Estas tienen la ventaja de que se reducen el número de comparaciones, y por lo general se obtienen las mismas conclusiones.
 
 Para demostrar el ANOVA se usa un ejemplo de @mckillup2010, donde se tiene el contenido de $MgO$ presente en cuatro turmalinas en tres sitios diferentes: Mount Mica, Sebago Batholith, Black Mountain. Asuma $\alpha=0.05$.
 
@@ -940,7 +1003,7 @@ Para demostrar el ANOVA se usa un ejemplo de @mckillup2010, donde se tiene el co
     - El valor-*p* es menor a $\alpha = 0.05$, $p = 0.004$
     - *Decisión*: Se rechaza $H_0$ y por lo menos uno de los contenidos de $MgO$ es diferente
 
-En **R** los datos tienen que estar en formato largo, lo que quiere decir una columna con los valores de la variable de interés, y otra columna con el grupo al que pertence la medición. Otro punto importante es que la variable agrupadora es mejor que sea del tipo *factor*.
+En **R** los datos tienen que estar en formato largo, lo que quiere decir una columna con los valores de la variable de interés, y otra columna con el grupo al que pertenece la medición. Otro punto importante es que la variable agrupadora es mejor que sea del tipo *factor*.
 
 Los datos del ejemplo se encuentran en el archivo *anova MgO.csv*
 
@@ -952,7 +1015,7 @@ dat.aov = import('data/anova MgO.csv', setclass = 'tibble') %>%
 dat.aov
 ```
 
-Es recomendable hacer una inspección de los grupos, tanto numerica (Tabla \@ref(tab:mgo-resumen)) como gráfica, para darnos una idea de la media y desviaciones estándar. Aquí se observa que todos los grupos tienen la misma desviación estándar (algo poco comun), por lo que el supuesto de la homogeniedad de varianzas se mantiene.
+Es recomendable hacer una inspección de los grupos, tanto numérica (Tabla \@ref(tab:mgo-resumen)) como gráfica, para darnos una idea de la media y desviaciones estándar. Aquí se observa que todos los grupos tienen la misma desviación estándar (algo poco común), por lo que el supuesto de la homogeneidad de varianzas se mantiene.
 
 ```{r eval=FALSE}
 dat.aov %>% 
@@ -980,7 +1043,7 @@ ggplot(dat.aov, aes(Location, MgO)) +
   labs(x='')
 ```
 
-Para realizar el ANOVA se puede hacer de diferentes maneras, pero de manera general se expresa como un modelo lineal `y ~ x`, donde `y` es la variable de interes y `x` es la variable agrupadora. Se pueden usar diferentes funciones, dentro de ellas `aov`, `lm`, donde siempre es necesario especificar la tabla de datos. La tabla resumen se muestra en la Tabla \@ref(tab:mgo-anova), donde se puede confeccionar a partir de la función `anova`.
+Para realizar el ANOVA se puede hacer de diferentes maneras, pero de manera general se expresa como un modelo lineal `y ~ x`, donde `y` es la variable de interés y `x` es la variable agrupadora. Se pueden usar diferentes funciones, dentro de ellas `aov`, `lm`, donde siempre es necesario especificar la tabla de datos. La tabla resumen se muestra en la Tabla \@ref(tab:mgo-anova), donde se puede confeccionar a partir de la función `anova` o `summary`.
 
 ```{r}
 mgo.aov = aov(MgO ~ Location, dat.aov)
@@ -1009,7 +1072,13 @@ mgo.aov %>%
 
 El resultado es significativo, indicando que por lo menos uno de los contenidos de $MgO$ difiere del resto. 
 
-El tamaño del efecto $\eta^2$, así como el intervalo de confianza, se puede obtener por medio de las funciones `eta.F` de *MOTE* y `eta_squared` de *effectsize*. Para `eta.F` es necesario indicar los grados de liberta, el valor de $F$, y el nivel de significancia $\alpha$. Para `eta_squared` lo que se necesita es el objeto de ANOVA y el nivel se confianza.
+El tamaño del efecto $\eta^2$ se puede calcula usando las Ecuaciones \@ref(eq:eta2-1) o \@ref(eq:eta2-2), donde $SC_{total}$ es la suma de la columna *Suma de cuadrados (Sum Sq)*. Para este tipo de ANOVA (1-factor entre grupos) se cumple que $\eta^2 = \eta_p^2$, ya que hay solo 1 factor, pero para el resto de ocasiones donde haya más de un factor esta igualdad no se cumple y se recomienda incluir ambos tamaños de efecto.
+
+\begin{equation}
+  \eta^2 = \frac{SC_{efecto}}{SC_{total}} = \frac{72}{72+30} = 0.706
+\end{equation}
+
+En **R** el tamaño del efecto así, como el intervalo de confianza, se puede obtener por medio de las funciones `eta.F` de *MOTE* y `eta_squared` de *effectsize*. Para `eta.F` es necesario indicar los grados de liberta, el valor de $F$, y el nivel de significancia $\alpha$. Para `eta_squared` lo que se necesita es el objeto de ANOVA y el nivel se confianza.
 
 ```{r}
 aov.eta = eta.F(dfm = 2, dfe = 9, Fvalue = 10.8, a = a)
@@ -1020,17 +1089,17 @@ aov.eta[1:3] %>% unlist()
 eta_squared(mgo.aov,ci = 1-a)
 ```
 
-Como se encontró un resultdo significativo, es necesario indicar dónde se encuentran esas diferencias. Aquí no se definirieron contrastes *a priori*, por lo que se usa Tukey para ajustar el error tipo-I para todas las comparaciones. Se usa la función `TukeyHSD` donde los argumentos necesarios son el objeto de ANOVA y el nivel de confianza. Aquí se puede interpretar el valor-*p* con respecto al nivel de significancia escogido, ya que es un valor-*p* ajustado, de igual manera se puede interpretar el intervalo de confianza. El resumen de la prueba de Tukey se presenta en la Tabla \@ref(tab:mgo-tukey-resumen) y la Figura \@ref(fig:mgo-tukey-ci).
+Como se encontró un resultado significativo, es necesario indicar dónde se encuentran esas diferencias. Aquí no se definieron contrastes *a priori*, por lo que se usa Tukey para ajustar el error tipo-I para todas las comparaciones. Se usa la función `TukeyHSD` donde los argumentos necesarios son el objeto de ANOVA y el nivel de confianza. Aquí se puede interpretar el valor-*p* con respecto al nivel de significancia escogido, ya que es un valor-*p* ajustado, de igual manera se puede interpretar el intervalo de confianza. El resumen de la prueba de Tukey se presenta en la Tabla \@ref(tab:mgo-tukey-resumen) y la Figura \@ref(fig:mgo-tukey-ci). En los resultados se observa que la única diferencia significativa es la de *Mount Mica-Black Mountain*, ya que el valor-*p* está por debajo del $\alpha$ y el intervalo de confianza no incluye 0.
 
 ```{r}
 tukey = TukeyHSD(mgo.aov, 
                  conf.level = 1-a) %>% 
   tidy() %>% 
-  dplyr::select(-term)
+  select(-term)
 ```
 
 ```{r echo=FALSE}
-pht <- glht(mgo.aov, linfct = mcp(Location = "Tukey"))
+pht <- glht(mgo.aov, linfct = multcomp::mcp('Location' = "Tukey"))
 tukey.apa = summary(pht) %>% 
   apa_print.summary.glht(ci=1-a)
 ```
@@ -1038,7 +1107,7 @@ tukey.apa = summary(pht) %>%
 ```{r mgo-tukey-resumen, echo=F}
 TukeyHSD(mgo.aov) %>% 
   tidy() %>% 
-  dplyr::select(-term) %>% 
+  select(-term) %>% 
   kable(digits = 3,
         caption = 'Resumen de la prueba de Tukey',
         col.names = c('Comparación',
@@ -1055,14 +1124,51 @@ ggplot(tukey, aes(comparison, estimate,
   geom_hline(yintercept = 0, col = 'red') +
   coord_flip() + 
   theme_bw() + 
-  labs(y = 'Diferencia en medias', x = 'Comparacion')
+  labs(y = 'Diferencia en medias', x = 'Comparación')
 ```
 
-> Conclusión: El contenido de $MgO$ varía significativamentre entre las localidades, `r aov.eta$statistic`. El tamano del efecto es grande, `r aov.eta$estimate %>% str_replace('CI','IC')`, pero con un rango muy amplio. Analisis posteriores con Tukey HSD indican que hay una diferencia entre Mount Mica - Black Mountain (*p* = .003), pero no asi entre Mount Mica - Sebago Batholit (*p* = .103), ni Sebago Batholith - Black Mountain (*p* = .103).
+Además de realizar los análisis posteriores (contrastes *a priori* o comparaciones múltiples posteriores) y determinar en dónde hay diferencias significativas, es recomendable calcular el tamaño del efecto ($d$ o $g$) para estos contrastes/comparaciones. Ésto se demuestra en el siguiente bloque de código donde a los resultados de Tukey se le agregan el tamaño de efecto y el intervalo de confianza para éste.
+
+```{r tukey-d}
+dat.aov.wide = dat.aov %>% 
+  mutate(id = 1:nrow(.)) %>%
+  pivot_wider(names_from = 'Location',values_from = 'MgO')
+
+tukey %>% 
+  separate(comparison,c('G1','G2'),'-') %>% 
+  mutate(d = map2(G1,G2,~hedges_g(dat.aov.wide[[.x]] %>% na.omit(),
+                                  dat.aov.wide[[.y]] %>% na.omit(),
+                                  ci = 1-a,correction = F) %>%
+                    as.data.frame)) %>%
+  unnest(d) %>% 
+  as.data.frame() %>% 
+  select(-CI) %>% 
+  mutate_if(is.numeric,~round(.,3))
+```
+
+> Conclusión: El contenido de $MgO$ varía significativamente entre las localidades, `r aov.eta$statistic`. El tamaño del efecto es grande, `r aov.eta$estimate %>% str_replace_all(c('CI'='IC','0.'='.'))`, pero con un rango muy amplio. Análisis posteriores con Tukey HSD indican que hay una diferencia entre Mount Mica - Black Mountain (`r tukey.apa$full_result$Mount_Mica___Black_Mountain`), pero no así entre Mount Mica - Sebago Batholith (`r tukey.apa$full_result$Mount_Mica___Sebago_Batholith`), ni Sebago Batholith - Black Mountain (`r tukey.apa$full_result$Sebago_Batholith___Black_Mountain`).
+
+```{r echo=FALSE}
+aov.stats = TeX(str_interp("$\\mathit{F}(${aov.eta$dfm},${aov.eta$dfe}) = ${apa(aov.eta$F,2)}, \\mathit{p} ${printp(aov.eta$p,add_equals = T)}, \\eta^2 = ${apa(aov.eta[[1]],2,F)}, IC_{${(1-a)*100}%} \\[${apa(aov.eta[[2]],2,F)}, ${apa(aov.eta[[3]],2,F)}\\]"))
+```
+
+```{r aov-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de caja mostrando el efecto de localidad sobre el contenido de MgO, la comparación significativa, así como el resumen estadístico respectivo.'}
+ggbetweenstats(dat.aov,Location,MgO,
+               plot.type = 'box',
+               type = 'p',
+               var.equal = T,
+               pairwise.comparisons = T,
+               # pairwise.display = 'all',
+               bf.message = F,
+               results.subtitle = F,
+               sample.size.label = F,
+               xlab = 'Localidad',ylab = 'Contenido de MgO (%)',
+               subtitle = aov.stats)
+```
 
 ## $t$ de correlación {#prueba-t-cor}
 
-En la sección de [Correlación] (\@ref(bivar-cor)) se introdujo el concepto de correlación, más específicamente la correlación de Pearson. Esta es una medida de asosiación entre dos variables (en este caso numéricas) que indica la magnitud y dirección de dicha asociación. La idea de la prueba para la correlación es determinar si la correlación encontrada es significativa o no, o sea, si difiere de cero [@borradaile2003; @davis2002; @nolan2014; @swan1995; @trauth2015].
+En la sección de [Correlación] (\@ref(bivar-cor)) se introdujo el concepto de correlación, más específicamente la correlación de Pearson. Esta es una medida de asociación entre dos variables (en este caso numéricas) que indica la magnitud y dirección de dicha asociación. La idea de la prueba para la correlación es determinar si la correlación encontrada es significativa o no, o sea, si difiere de cero [@borradaile2003; @davis2002; @field2012; @nolan2014; @swan1995; @trauth2015].
 
 El uso de la prueba $t$ de correlación se realiza con un ejemplo de @davis2002, donde se tiene la longitud de los ejes de cantos en una playa (Tabla \@ref(tab:cantos-playa)). Se quiere determinar si la correlación entre los ejes $a$ y $b$ es significativa, asumiendo $\alpha = 0.1$.
 
@@ -1107,7 +1213,7 @@ tibble(Canto = 1:10,
     - *Decisión*: Se rechaza $H_0$
     - *Nota*: Tomar en cuenta que si se escogiera $\alpha=0.05$, no se rechazaría $H_0$
 
-En **R** así como está la función `cor` para calcular el coeficiente de correlación, se tiene la función `cor.test` para la prueba específica. Se pueden especificar el típo de correlación (`method`) y el nivel de significancia. El coeficiente de correlación es ya un tamaño de efecto, por lo que no es necesario realizar ningun cálculo adicional.
+En **R** así como está la función `cor` para calcular el coeficiente de correlación, se tiene la función `cor.test` para la prueba específica. Se pueden especificar el tipo de correlación (`method`) y el nivel de significancia. El coeficiente de correlación es ya un tamaño de efecto, por lo que no es necesario realizar ningún cálculo adicional.
 
 ```{r}
 cantos = tibble(Canto = 1:10,
@@ -1128,6 +1234,16 @@ r.apa = apa_print(r.res)
 ```
 
 > Conclusión: Los ejes $a$ y $b$ están correlacionados, `r r.apa$full_result %>% str_replace('CI','IC')`. El efecto se puede considerar grande, con un rango de pequeño,  hasta muy grande.
+
+```{r pearson-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de dispersión mostrando la relación entre longitud de 2 ejes de cantos de playa, así como el resumen estadístico respectivo.'}
+cantos %>% 
+  ggplot(aes(a,b)) + 
+  geom_point(size=2,col='blue') + 
+  labs(x = 'Longitud de eje a',
+       y = 'Longitud de eje b',
+       subtitle = TeX(str_interp("$\\mathit{r} = ${apa(r.res$estimate,2,F)}, IC_{${(1-a)*100}%} \\[${apa(r.res$conf.int[[1]],2,F)}, ${apa(r.res$conf.int[[2]],2,F)}\\], \\mathit{p} ${printp(r.res$p.value,add_equals = T)}"))) + 
+  theme(plot.subtitle = element_text(size = 10))
+```
 
 ## $\chi^2$ para 1 varianza {#prueba-chi}
 
@@ -1181,17 +1297,17 @@ chi.apa = apa_print(chi.res,n=n)
 
 ## $F$ para 2 varianzas {#prueba-f}
 
-En algunas de las pruebas se hace la suposicion de igualdad de varianzas. Lo anterior se puede evaluar empiricamente comparando la menor y mayor desviacion estandar, donde la relacion entre ellas no debiera ser mayor a 2 [@cumming2017]. Si se quiere realizar de manera formal se puede realizar la prueba aqui descrita.
+En algunas de las pruebas se hace la suposición de igualdad de varianzas. Lo anterior se puede evaluar empíricamente comparando la menor y mayor desviación estándar, donde la relación entre ellas no debiera ser mayor a 2 [@cumming2017]. Si se quiere realizar de manera formal se puede realizar la prueba aquí descrita.
 
-El uso de la prueba $F$ para 2 varianzas se realiza con el ejemplo de la sección \@ref(prueba-t2-ind) [@swan1995], donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es factible la suposicion de igualdad de varianzas ($\sigma^2_1=\sigma^2_2$)? Asuma $\alpha = 0.05$.
+El uso de la prueba $F$ para 2 varianzas se realiza con el ejemplo de la sección \@ref(prueba-t2-ind) [@swan1995], donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es factible la suposición de igualdad de varianzas ($\sigma^2_1=\sigma^2_2$)? Asuma $\alpha = 0.05$.
 
 1. Identificar la población, distribución, y la prueba apropiada:
-    - Población: variabilidad de la longitud de braquiopodos en las capas A y B
-    - Distribución: de razon de varianzas ($F$)
+    - Población: variabilidad de la longitud de braquiópodos en las capas A y B
+    - Distribución: de razón de varianzas ($F$)
     - Prueba: $F$ para 2 muestras (varianzas), se quiere hacer inferencia sobre la variabilidad, y se quieren comparar las varianzas de 2 muestras
 2. Establecer las hipótesis nula y alterna:
-    - $H_0: \sigma^2_1 = \sigma^2_2, \ \frac{\sigma^2_1}{\sigma^2_2} = 1 \to$ La variabilidad la longitud de braquiopodos de la capa A es *igual* a la variabilidad la longitud de braquiopodos de la capa B
-    - $H_1: \sigma^2_1 \neq \sigma^2_2, \ \frac{\sigma^2_1}{\sigma^2_2} \neq 1 \to$ La variabilidad la longitud de braquiopodos de la capa A es *diferente* a la variabilidad la longitud de braquiopodos de la capa B
+    - $H_0: \sigma^2_1 = \sigma^2_2, \ \frac{\sigma^2_1}{\sigma^2_2} = 1 \to$ La variabilidad la longitud de braquiópodos de la capa A es *igual* a la variabilidad la longitud de braquiópodos de la capa B
+    - $H_1: \sigma^2_1 \neq \sigma^2_2, \ \frac{\sigma^2_1}{\sigma^2_2} \neq 1 \to$ La variabilidad la longitud de braquiópodos de la capa A es *diferente* a la variabilidad la longitud de braquiópodos de la capa B
 3. Determinar parámetros de la distribución a comparar ($H_0$):
     - $v_1 = n_1-1 = 8-1 = 7$
     - $v_2 = n_2-1 = 10-1 = 9$
@@ -1208,7 +1324,7 @@ El uso de la prueba $F$ para 2 varianzas se realiza con el ejemplo de la secció
     - El valor hipotético del parámetro (1) cae dentro del intervalo de confianza, $IC \ [0.345, 6.985]$
     - *Decisión*: No se rechaza $H_0$
 
-En **R** la función `var.test` para realizar esta prueba, donde se ocupan brindar los vectores de datos, la razon de varianzas (`ratio`), y el nivel de confianza.
+En **R** la función `var.test` para realizar esta prueba, donde se ocupan brindar los vectores de datos, la razón de varianzas (`ratio`), y el nivel de confianza.
 
 ```{r}
 a = 0.05
@@ -1223,7 +1339,7 @@ f.res
 f.apa = apa_print(f.res)
 ```
 
-> Conclusión: La variabilidad de la longitud de los braquiopodos en las capas A y B no varia significativamente, $\text{razon de varianzas} `r f.apa$full_result %>% str_replace('CI','IC') %>% str_sub(start = 20)`.
+> Conclusión: La variabilidad de la longitud de los braquiópodos en las capas A y B no varia significativamente, $\text{razón de varianzas} `r f.apa$full_result %>% str_replace('CI','IC') %>% str_sub(start = 20)`.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

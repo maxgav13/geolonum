@@ -2,9 +2,10 @@
 
 ```{r dir-setup, include=FALSE}
 library(DescTools)
-library(summarytools)
+library(GMisc)
 library(patchwork)
 library(janitor)
+library(conflicted)
 library(tidymodels)
 library(tidyverse)
 
@@ -22,10 +23,12 @@ knitr::opts_chunk$set(
 )
 
 theme_set(theme_bw(base_size = 12))
+conflict_prefer('select','dplyr')
+conflict_prefer('filter','dplyr')
 
 ```
 
-
+## Introducción
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-07-03" />
+<meta name="date" content="2020-07-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -435,11 +435,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#introducción-14"><i class="fa fa-check"></i><b>16.1</b> Introducción</a></li>
 <li class="chapter" data-level="16.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-noparam"><i class="fa fa-check"></i><b>16.2</b> Pruebas no-paramétricas</a></li>
 <li class="chapter" data-level="16.3" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#ES-np"><i class="fa fa-check"></i><b>16.3</b> Tamaño del efecto</a></li>
-<li class="chapter" data-level="16.4" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-chi-gof"><i class="fa fa-check"></i><b>16.4</b> Bondad de ajuste</a></li>
-<li class="chapter" data-level="16.5" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-chi-hom"><i class="fa fa-check"></i><b>16.5</b> Homogeneidad</a></li>
-<li class="chapter" data-level="16.6" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-chi-asoc"><i class="fa fa-check"></i><b>16.6</b> Independencia / asociación</a></li>
+<li class="chapter" data-level="16.4" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-chi2-nominales"><i class="fa fa-check"></i><b>16.4</b> Pruebas <span class="math inline">\(\chi^2\)</span> (nominales)</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#vector-de-datos"><i class="fa fa-check"></i><b>16.4.1</b> Vector de datos</a></li>
+<li class="chapter" data-level="16.4.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#tab-contingencia"><i class="fa fa-check"></i><b>16.4.2</b> Tablas de Contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="estadística-direccional.html"><a href="estadística-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadística Direccional</a></li>
+<li class="chapter" data-level="16.5" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-sobre-rangos-ordinales"><i class="fa fa-check"></i><b>16.5</b> Pruebas sobre rangos (ordinales)</a><ul>
+<li class="chapter" data-level="16.5.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-wilcoxon"><i class="fa fa-check"></i><b>16.5.1</b> Rango con signo de Wilcoxon</a></li>
+<li class="chapter" data-level="16.5.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-mwu"><i class="fa fa-check"></i><b>16.5.2</b> Suma de rangos de Wilcoxon / U de Mann-Whitney</a></li>
+<li class="chapter" data-level="16.5.3" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-kruskal"><i class="fa fa-check"></i><b>16.5.3</b> Kruskal-Wallis</a></li>
+<li class="chapter" data-level="16.5.4" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-spearman"><i class="fa fa-check"></i><b>16.5.4</b> Correlación de Spearman</a></li>
+</ul></li>
+<li class="chapter" data-level="16.6" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#bootstrap"><i class="fa fa-check"></i><b>16.6</b> Bootstrap (remuestreo)</a><ul>
+<li class="chapter" data-level="16.6.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#infer"><i class="fa fa-check"></i><b>16.6.1</b> <em>infer</em></a></li>
+<li class="chapter" data-level="16.6.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#rsample"><i class="fa fa-check"></i><b>16.6.2</b> <em>rsample</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="estadística-direccional.html"><a href="estadística-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadística Direccional</a><ul>
+<li class="chapter" data-level="17.1" data-path="estadística-direccional.html"><a href="estadística-direccional.html#introducción-15"><i class="fa fa-check"></i><b>17.1</b> Introducción</a></li>
+</ul></li>
 <li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a></li>
 <li class="chapter" data-level="19" data-path="geoestadística.html"><a href="geoestadística.html"><i class="fa fa-check"></i><b>19</b> Geoestadística</a></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
@@ -467,29 +480,175 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Capítulo 16</span> Estadística No Paramétrica</h1>
 <div id="introducción-14" class="section level2">
 <h2><span class="header-section-number">16.1</span> Introducción</h2>
+<p>En el capítulo anterior (<a href="pruebas-estadísticas.html#pruebas-estadísticas">Pruebas Estadísticas</a>) se introdujeron las pruebas estadísticas paramétricas más comunes, donde la suposición principal era que la(s) variable(s) de interés se encuentra(s) aproximadamente normalmente distribuida(s). Esta suposición aplica más que todo cuando la(s) variable(s) es(son) cuantitativa(s) continua(s) y se tiene una muestra relativamente grande. En los casos donde la(s) variable(s) de interés es(son) nominal u ordinal, o no cumple(n) con otras suposiciones de las pruebas o técnicas de análisis, es más apropiado utilizar pruebas o técnicas no paramétricas.</p>
+<p>Al igual que para las pruebas paramétricas, en los casos que corresponda se presentará el tamaño del efecto respectivo. Para algunas de las pruebas no paramétricas la metodología consiste en transformar los datos continuos a datos ordinales y realizar la prueba sobre estos datos transformados. Los pasos mencionados por <span class="citation">Nolan &amp; Heinzen (<a href="#ref-nolan2014">2014</a>)</span> se pueden aplicar también para estas pruebas.</p>
+<p>De manera general lo expuesto en este capítulo se basa en <span class="citation">Tomczak &amp; Tomczak (<a href="#ref-tomczak2014tss">2014</a>)</span>, <span class="citation">Fritz et al. (<a href="#ref-fritz2012joepg">2012</a>)</span>, <span class="citation">Nolan &amp; Heinzen (<a href="#ref-nolan2014">2014</a>)</span>, <span class="citation">Borradaile (<a href="#ref-borradaile2003">2003</a>)</span>, <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span>, <span class="citation">McKillup &amp; Darby Dyar (<a href="#ref-mckillup2010">2010</a>)</span>, <span class="citation">Field et al. (<a href="#ref-field2012">2012</a>)</span> y <span class="citation">Sheskin (<a href="#ref-sheskin2011">2011</a>)</span>.</p>
 </div>
 <div id="pruebas-noparam" class="section level2">
 <h2><span class="header-section-number">16.2</span> Pruebas no-paramétricas</h2>
+<p>Estas pruebas se pueden dividir en dos grupos: para <em>datos nominales</em> (pruebas <span class="math inline">\(\chi^2\)</span>) y para <em>datos ordinales</em>. Los datos nominales, típicamente presentados como conteos, corresponden con observaciones en categorías excluyentes, queriendo decir que cada observación pertenece a una sola categoría, y tener más observaciones de una categoría implica menos observaciones de la(s) otra(s). Estos datos se pueden presentar en <strong>tablas de contingencia</strong> (Tabla <a href="estadística-no-paramétrica.html#tab:contingencia-ej">16.1</a>), donde se tabulan la cantidad de observaciones que pertenecen a cada una de las categorías.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:contingencia-ej">Tabla 16.1: </span>Ejemplo de tabla de contingencia.
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Capa
+</div>
+</th>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Clasto
+</th>
+<th style="text-align:right;">
+1
+</th>
+<th style="text-align:right;">
+2
+</th>
+<th style="text-align:right;">
+3
+</th>
+<th style="text-align:right;">
+4
+</th>
+<th style="text-align:right;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Cuarzo
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+91
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pedernal
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Basalto
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+200
+</td>
+</tr>
+</tbody>
+</table>
+<p>En este capítulo se presentan las siguientes pruebas:</p>
 <ul>
-<li>Prueba-<span class="math inline">\(\chi^2\)</span> de bondad de ajuste (<a href="estadística-no-paramétrica.html#prueba-chi-gof">16.4</a>)
+<li>Prueba <span class="math inline">\(\chi^2\)</span> de bondad de ajuste (<a href="estadística-no-paramétrica.html#prueba-chi-gof">16.4.1.1</a>)
 <ul>
 <li><span class="math inline">\(H_0:\)</span> Datos siguen la distribución/proporción esperada</li>
 </ul></li>
-<li>Prueba-<span class="math inline">\(\chi^2\)</span> de homogeneidad (<a href="estadística-no-paramétrica.html#prueba-chi-hom">16.5</a>)
+<li>Prueba <span class="math inline">\(\chi^2\)</span> de homogeneidad (<a href="estadística-no-paramétrica.html#prueba-chi-hom">16.4.2.1</a>)
 <ul>
-<li><span class="math inline">\(H_0:\)</span> Distribución homogenea entre las categorías de variables cualitativas</li>
+<li><span class="math inline">\(H_0:\)</span> Distribución homogénea entre las categorías de variables nominales</li>
 </ul></li>
-<li>Prueba-<span class="math inline">\(\chi^2\)</span> de independencia/asociación (<a href="estadística-no-paramétrica.html#prueba-chi-asoc">16.6</a>)
+<li>Prueba <span class="math inline">\(\chi^2\)</span> de independencia/asociación (<a href="estadística-no-paramétrica.html#prueba-chi-asoc">16.4.2.2</a>)
 <ul>
-<li><span class="math inline">\(H_0:\)</span> No hay relación entre variables cualitativas o éstas son independientes entre si</li>
+<li><span class="math inline">\(H_0:\)</span> No hay relación entre variables nominales o éstas son independientes entre si</li>
+</ul></li>
+<li>Prueba de rango con signo de Wilcoxon (<a href="estadística-no-paramétrica.html#prueba-wilcoxon">16.5.1</a>)
+<ul>
+<li><span class="math inline">\(H_0:\)</span> La mediana es igual a un valor dado</li>
+</ul></li>
+<li>Prueba de la suma de rangos de Wilcoxon / Prueba U de Mann-Whitney (<a href="estadística-no-paramétrica.html#prueba-mwu">16.5.2</a>)
+<ul>
+<li><span class="math inline">\(H_0:\)</span> No hay diferencia entre las medianas de las dos muestras</li>
+</ul></li>
+<li>Prueba de Kruskal-Wallis (<a href="estadística-no-paramétrica.html#prueba-kruskal">16.5.3</a>)
+<ul>
+<li><span class="math inline">\(H_0:\)</span> No hay diferencia entre las medianas de las muestras</li>
+</ul></li>
+<li>Correlación de Spearman (<a href="estadística-no-paramétrica.html#prueba-spearman">16.5.4</a>)
+<ul>
+<li><span class="math inline">\(H_0: r_s = 0\)</span> No hay relación/asociación entre las variables ordinales</li>
+</ul></li>
+<li>Bootstrap (remuestreo) (<a href="estadística-no-paramétrica.html#bootstrap">16.6</a>)
+<ul>
+<li>Técnica que permita hacer inferencias por medio de pruebas estadísticas o intervalos de confianza, especialmente útil para casos donde no hay una solución analítica</li>
 </ul></li>
 </ul>
 </div>
 <div id="ES-np" class="section level2">
 <h2><span class="header-section-number">16.3</span> Tamaño del efecto</h2>
+<p>De manera similar a las pruebas paramétricas es importante además de presentar los resultados de pruebas de hipótesis, presentar tamaños de efecto para evaluar la significancia práctica del estudio. Para estas pruebas los tamaños del efecto corresponden principalmente con la familia <span class="math inline">\(r\)</span>, de asociación/relación entre variables, los cuales se presentan en la Tabla <a href="estadística-no-paramétrica.html#tab:ES-np">16.2</a>.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:ES-np">Tabla 16.1: </span>Tamaños de efecto estandarizados para pruebas no-paramétricas
+<span id="tab:ES-np">Tabla 16.2: </span>Tamaños de efecto estandarizados para pruebas no-paramétricas
 </caption>
 <thead>
 <tr>
@@ -507,9 +666,42 @@ Tamaño de efecto
 Correlación
 </td>
 <td style="text-align:center;width: 25em; ">
-<span class="math display" id="eq:r-pb">\[\begin{equation}
-              r_{s} = \frac{d_s}{\sqrt{d_s^2 + \frac{(n_1 + n_2)^2}{n_1  n_2}}}
-              \tag{15.12}
+<span class="math display" id="eq:r-spearman">\[\begin{equation}
+              r_{s} = 1 - \frac{6\sum_i^N[R(x_i)-R(y_i)]^2}{N(N^2-1)}
+              \tag{16.1}
+              \end{equation}\]</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 15em; ">
+Rango de 1 y 2 muestras
+</td>
+<td style="text-align:center;width: 25em; ">
+<span class="math display" id="eq:r-rangos">\[\begin{equation}
+              r = \frac{Z}{\sqrt{N}}
+              \tag{16.2}
+              \end{equation}\]</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 15em; ">
+Rango de 2+ muestras
+</td>
+<td style="text-align:center;width: 25em; ">
+<span class="math display" id="eq:eta2-h">\[\begin{equation}
+              \eta_H^2 = \frac{H-k+1}{N-k}
+              \tag{16.3}
+              \end{equation}\]</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 15em; ">
+Rango de 2+ muestras
+</td>
+<td style="text-align:center;width: 25em; ">
+<span class="math display" id="eq:epsilon2">\[\begin{equation}
+              \epsilon^2 = \frac{H}{(N^2-1)/(N+1)}
+              \tag{16.4}
               \end{equation}\]</span>
 </td>
 </tr>
@@ -520,7 +712,7 @@ Correlación
 <td style="text-align:center;width: 25em; ">
 <span class="math display" id="eq:phi">\[\begin{equation}
               \phi = \sqrt{\frac{\chi^2}{N}}
-              \tag{16.1}
+              \tag{16.5}
               \end{equation}\]</span>
 </td>
 </tr>
@@ -531,7 +723,7 @@ Correlación
 <td style="text-align:center;width: 25em; ">
 <span class="math display" id="eq:v">\[\begin{equation}
               V = \sqrt{\frac{\chi^2}{N \cdot v_{min}}}
-              \tag{16.2}
+              \tag{16.6}
               \end{equation}\]</span>
 </td>
 </tr>
@@ -554,31 +746,2926 @@ Correlación
 </tr>
 <tr>
 <td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> <span class="math inline">\(R(x_i)\)</span> = Rangos de la variable x
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> <span class="math inline">\(R(y_i)\)</span> = Rangos de la variable y
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> <span class="math inline">\(H\)</span> = Estadístico de Kruskal-Wallis (<span class="math inline">\(\chi^2\)</span>)
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> <span class="math inline">\(k\)</span> = Número de grupos
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
 <sup></sup> <span class="math inline">\(v_{min}\)</span> = grados de libertad mínimo de las filas o columnas de la tabla de contingencia
 </td>
 </tr>
 </tfoot>
 </table>
-<p>El <span class="math inline">\(\phi\)</span> y Cramer <span class="math inline">\(V\)</span> comprenden el rango de 0 a 1 y se pueden interpretar similar a <span class="math inline">\(r\)</span>, donde valores cercanos a 0 indican poca o nula asociación y valores cerca de 1 indican alta asociación <span class="citation">(Fritz et al., <a href="#ref-fritz2012joepg">2012</a>; Tomczak &amp; Tomczak, <a href="#ref-tomczak2014tss">2014</a>)</span>.</p>
+<p>El <span class="math inline">\(\phi\)</span> y Cramer <span class="math inline">\(V\)</span> comprenden el rango de 0 a 1 y se pueden interpretar similar a <span class="math inline">\(r\)</span> y <span class="math inline">\(r_s\)</span>, donde valores cercanos a 0 indican poca o nula asociación y valores cerca de 1 indican alta asociación. El <span class="math inline">\(\phi\)</span> aplica para tablas de <span class="math inline">\(2 \times 2\)</span> (<span class="math inline">\(v=1\)</span>) o vectores, mientras que Cramer <span class="math inline">\(V\)</span> aplica para tablas de diferentes dimensiones( <span class="math inline">\(r \times c\)</span>, <span class="math inline">\(r = \text{rows/filas}\)</span> y <span class="math inline">\(c = \text{columnas}\)</span>) <span class="citation">(Cohen, <a href="#ref-cohen1988">1988</a>; Fritz et al., <a href="#ref-fritz2012joepg">2012</a>; Tomczak &amp; Tomczak, <a href="#ref-tomczak2014tss">2014</a>)</span>. Para clasificar el tamaño del efecto se pueden seguir las mismas guías que para <span class="math inline">\(r\)</span> (0.1, 0.3, 0.5). El <span class="math inline">\(\eta_H^2\)</span> y <span class="math inline">\(\epsilon^2\)</span> comprenden el rango de 0 a 1 y se interpreta igual a <span class="math inline">\(R^2\)</span> y <span class="math inline">\(\eta^2\)</span> presentados en los capítulos de <a href="estadística-descriptiva-bivariable.html#estadística-descriptiva-bivariable">Estadística Descriptiva Bivariable</a> y <a href="pruebas-estadísticas.html#pruebas-estadísticas">Pruebas Estadísticas</a>.</p>
 </div>
-<div id="prueba-chi-gof" class="section level2">
-<h2><span class="header-section-number">16.4</span> Bondad de ajuste</h2>
+<div id="pruebas-chi2-nominales" class="section level2">
+<h2><span class="header-section-number">16.4</span> Pruebas <span class="math inline">\(\chi^2\)</span> (nominales)</h2>
+<p>Para la prueba <span class="math inline">\(\chi^2\)</span> el estadístico se calcula de acuerdo a la Ecuación <a href="estadística-no-paramétrica.html#eq:chi2">(16.7)</a>, donde <span class="math inline">\(O_K\)</span> es la frecuencia (conteo) observada y <span class="math inline">\(E_K\)</span> es la frecuencia (conteo) esperada para la categoría <span class="math inline">\(K\)</span>. Esta prueba requiere que todas las frecuencias (conteos) esperados sean superiores a 5 y que se tengan por lo menos 50 observaciones. Esta prueba es siempre de una cola con la región de rechazo en la cola derecha.</p>
+<p><span class="math display" id="eq:chi2">\[\begin{equation}
+  \chi^2 = \sum_{K=1}^K\frac{(O_K-E_K)^2}{E_K}
+  \tag{16.7}
+\end{equation}\]</span></p>
+<div id="vector-de-datos" class="section level3">
+<h3><span class="header-section-number">16.4.1</span> Vector de datos</h3>
+<div id="prueba-chi-gof" class="section level4">
+<h4><span class="header-section-number">16.4.1.1</span> Bondad de ajuste</h4>
+<p>Esta prueba se realiza cuando se tiene 1 variable de interés y dicha variable es nominal, y ésta puede tener <span class="math inline">\(2+\)</span> categorías (<span class="math inline">\(K\)</span>), y se quiere comparar el conteo de dichas categorías con unos valores esperados o predefinidos, de ahí el término “ajuste”, donde se refiere a qué tanto se “ajusta” o parece lo observado a lo esperado.
+De manera general la prueba <span class="math inline">\(\chi^2\)</span> se ajusta a la cantidad de categorías que tenga la variable, pero existen pruebas exactas donde si la variable tiene 2 categorías es una prueba binomial y si tiene 3 o más es una prueba multinomial.</p>
+<p>El estadístico se calcula conforme la Ecuación <a href="estadística-no-paramétrica.html#eq:chi2">(16.7)</a>, donde los grados de libertad son el número de categorías menos uno (<span class="math inline">\(v=K-1\)</span>).</p>
+<p>Para mostrar la prueba de bondad de ajuste se usa el ejemplo de <span class="citation">McKillup &amp; Darby Dyar (<a href="#ref-mckillup2010">2010</a>)</span>, donde se tiene una muestra de 20 foraminíferos, clasificados en enrollados a la derecha (16) o a la izquierda (4), y se quiere comparar con las proporciones de 0.9 y 0.1 respectivamente. Asuma <span class="math inline">\(\alpha=0.05\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li>Identificar la población, distribución, y la prueba apropiada:
+<ul>
+<li>Población: foraminíferos enrollados a la derecha e izquierda</li>
+<li>Distribución: <span class="math inline">\(\chi^2\)</span></li>
+<li>Prueba: <span class="math inline">\(\chi^2\)</span> de bondad de ajuste, ya que se tiene una variable nominal (dirección en que se enrollan), en este caso con 2 niveles (<span class="math inline">\(K=2\)</span>)</li>
+</ul></li>
+<li>Establecer las hipótesis nula y alterna:
+<ul>
+<li><span class="math inline">\(H_0:\)</span> Los foraminíferos que se contaron siguen las proporciones propuestas (0.9 derecha, 0.1 izquierda)</li>
+<li><span class="math inline">\(H_1:\)</span> Los foraminíferos que se contaron siguen otras proporciones</li>
+</ul></li>
+<li>Determinar parámetros de la distribución a comparar (<span class="math inline">\(H_0\)</span>):
+<ul>
+<li><span class="math inline">\(v = K-1 = 2 - 1 = 1\)</span></li>
+</ul></li>
+<li>Determinar valores críticos
+<ul>
+<li><span class="math inline">\(\alpha = 0.05\)</span></li>
+<li><span class="math inline">\(\chi^2_{\alpha,v} = \chi_{0.05,1}^2=3.84\)</span></li>
+</ul></li>
+<li>Calcular el estadístico de prueba
+<ul>
+<li>Para un <span class="math inline">\(N=20\)</span> la proporción de 0.9 equivale a 18 y la proporción de 0.1 equivale a 2, que serían las frecuencias esperadas (<em>Con estos valores, especialmente el de 2, se estaría violando el supuesto de tener 5 o más frecuencias esperadas</em>)</li>
+<li><span class="math inline">\(\chi^2 = \sum_{K=1}^K\frac{(O_K-E_K)^2}{E_K}\)</span></li>
+<li><span class="math inline">\(\chi^2 = \frac{(16-18)^2}{18} + \frac{(4-2)^2}{2} = 2.22\)</span></li>
+</ul></li>
+<li>Tomar una decisión
+<ul>
+<li>El estadístico de prueba es menor al crítico, <span class="math inline">\(\chi^2 &lt; \chi_{\alpha,v}^2\)</span></li>
+<li>El valor-<em>p</em> es mayor a <span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(p = 0.136\)</span></li>
+<li><em>Decisión</em>: No se rechaza <span class="math inline">\(H_0\)</span></li>
+</ul></li>
+</ol>
+<p>En <strong>R</strong> existe la función <code>chisq.test</code> que realiza esta prueba, donde los argumentos principales son el vector de valores observados (variable nominal) y el vector de probabilidades para cada uno de los valores (categorías) de la variable observada.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="fl">0.05</span>
+N =<span class="st"> </span><span class="dv">20</span>
+chi.gof =<span class="st"> </span><span class="kw">chisq.test</span>(<span class="kw">c</span>(<span class="dv">16</span>,<span class="dv">4</span>),<span class="dt">p =</span> <span class="kw">c</span>(.<span class="dv">9</span>,.<span class="dv">1</span>))
+chi.gof</code></pre>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  c(16, 4)
+## X-squared = 2.2222, df = 1, p-value = 0.136</code></pre>
+<p>Como se está violando el supuesto de frecuencias esperadas mínimas (la prueba arroja una advertencia), se puede realizar la prueba exacta binomial (ya que <span class="math inline">\(K=2\)</span>, si se tuvieran más categorías se usa la prueba multinomial), que se demuestra aquí únicamente en <strong>R</strong>. Para ésto se usa la función <code>binom.test</code>, donde se requiere el valor observado para una de las categorías que se determina como el “éxito” (en este caso se escogió los enrollados a la derecha), el total de observaciones, la probabilidad de éxito (probabilidad de la categoría definida anteriormente), y el nivel de confianza.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">binom.test</span>(<span class="dt">x =</span> <span class="dv">16</span>,<span class="dt">n =</span> N,<span class="dt">p =</span> <span class="fl">0.9</span>,<span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  16 and N
+## number of successes = 16, number of trials = 20, p-value = 0.133
+## alternative hypothesis: true probability of success is not equal to 0.9
+## 95 percent confidence interval:
+##  0.563386 0.942666
+## sample estimates:
+## probability of success 
+##                    0.8</code></pre>
+<p>Esta prueba arroja la probabilidad de éxito de acuerdo a los datos, el valor-<em>p</em>, y el intervalo de confianza, donde se compararía con la probabilidad definida para la categoría denominada como éxito.</p>
+<p>El tamaño del efecto se calcula conforma la Ecuación <a href="estadística-no-paramétrica.html#eq:phi">(16.5)</a>.</p>
+<p><span class="math display">\[\begin{equation}
+  \phi = \sqrt{\frac{\chi^2}{N}} = \sqrt{\frac{2.22}{20}} = 0.33
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se puede calcular <span class="math inline">\(\phi\)</span> con la función <code>v.chi.sq</code> del paquete <em>MOTE</em> <span class="citation">(Buchanan et al., <a href="#ref-R-MOTE">2019</a>)</span>, donde es necesario indicar el estadístico <span class="math inline">\(\chi^2\)</span>, el total de observaciones, el número de filas (para este caso es necesario usar 2 para que pueda funcionar), el número de columnas (categorías, <span class="math inline">\(K\)</span>), y el nivel de significancia.</p>
+<pre class="sourceCode r"><code class="sourceCode r">chi.gof.phi =<span class="st"> </span><span class="kw">v.chi.sq</span>(<span class="dt">x2 =</span> chi.gof<span class="op">$</span>statistic,
+                       <span class="dt">n =</span> N,
+                       <span class="dt">r =</span> <span class="dv">2</span>,
+                       <span class="dt">c =</span> <span class="dv">2</span>,
+                       <span class="dt">a =</span> a)
+chi.gof.phi[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()</code></pre>
+<pre><code>## v.X-squared        vlow       vhigh 
+##   0.3333333   0.2236068   0.8033405</code></pre>
+<blockquote>
+<p>Conclusión: El conteo de foraminíferos enrollados a la derecha y a la izquierda no difiere de los valores esperados, <span class="math inline">\(\chi^2(1, N = 20) = 2.22\)</span>, <span class="math inline">\(p = .136\)</span>, <span class="math inline">\(V\)</span> = .33, 95% IC [.22, .80]. El efecto se puede considerar mediano, pero con un rango amplio de pequeño hasta muy grande.</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span id="fig:chi-gof-stats"></span>
+<img src="geolonum_files/figure-html/chi-gof-stats-1.png" alt="Gráfico de barra mostrando la proporción de la dirección de enroscamiento para los foraminíferos, así como el resumen estadístico respectivo." width="90%" />
+<p class="caption">
+Figura 16.1: Gráfico de barra mostrando la proporción de la dirección de enroscamiento para los foraminíferos, así como el resumen estadístico respectivo.
+</p>
 </div>
-<div id="prueba-chi-hom" class="section level2">
-<h2><span class="header-section-number">16.5</span> Homogeneidad</h2>
 </div>
-<div id="prueba-chi-asoc" class="section level2">
-<h2><span class="header-section-number">16.6</span> Independencia / asociación</h2>
+</div>
+<div id="tab-contingencia" class="section level3">
+<h3><span class="header-section-number">16.4.2</span> Tablas de Contingencia</h3>
+<p>En el caso de que se tienen dos variables nominales (o que se tratan como nominales), y por ende una tabla de contingencia, se pueden definir 2 tipos de muestreo, los cuales van a, de cierta forma, definir el tipo de pregunta (prueba) que se quiere responder (realizar). Estos tipos de muestreo se explican en <span class="citation">Agresti (<a href="#ref-agresti2007">2007</a>)</span>, y se asocian a las pruebas respectivas en <span class="citation">Sheskin (<a href="#ref-sheskin2011">2011</a>)</span> y <span class="citation">Walpole et al. (<a href="#ref-walpole2012">2012</a>)</span>, y serían los siguientes:</p>
+<ul>
+<li>Multinomial independiente: Cuando se determina un total de observaciones a realizar por fila o columna, donde cada fila o columna se interpreta como una muestra multinomial independiente. Se plantea para determinar <strong>homogeneidad</strong>.</li>
+<li>Multinomial conjunto: Cuando se determina el total de observaciones a realizar en general y se clasifican las observaciones de acuerdo a las categorías de las filas y columnas, donde cada celda es el conteo conjunto de las categorías que la representa. Se plantea para determinar <strong>independencia/asociación</strong>.</li>
+</ul>
+<p>Para el caso de dos variables nominales, donde se representan por medio de una tabla de contingencia, los grados de libertad son <span class="math inline">\(v = (r-1)(c-1)\)</span>, correspondiendo a la multiplicación de los grados de libertad de las filas por los de las columnas.</p>
+<p>Las frecuencias esperadas para cada celda de la tabla se determinan mediante la Ecuación <a href="estadística-no-paramétrica.html#eq:expected-tab">(16.8)</a>, donde <span class="math inline">\(f_E = \text{frecuencia esperada}\)</span>, <span class="math inline">\(T_f = \text{total de la fila}\)</span>, <span class="math inline">\(T_c = \text{total de la columna}\)</span>, y <span class="math inline">\(N = \text{total de la tabla}\)</span>.</p>
+<p><span class="math display" id="eq:expected-tab">\[\begin{equation}
+  f_E = \frac{T_f \cdot T_c}{N}
+  \tag{16.8}
+\end{equation}\]</span></p>
+<p>Por ejemplo, para los datos de la Tabla <a href="estadística-no-paramétrica.html#tab:contingencia-ej">16.1</a>, para la Capa 1 se tendrían las siguientes frecuencias esperadas (de hecho en este caso las frecuencias esperadas son las mismas para todas las celdas de una misma fila):</p>
+<p><span class="math display">\[\begin{equation}
+  f_{E(cuarzo,1)} = \frac{91 \cdot 50}{200} = 22.75\\
+  f_{E(pedernal,1)} = \frac{48 \cdot 50}{200} = 12\\
+  f_{E(basalto,1)} = \frac{61 \cdot 50}{200} = 15.25\\
+\end{equation}\]</span></p>
+<p>En caso de que se encuentre un resultado significativo (rechazar <span class="math inline">\(H_0\)</span>), ya sea para la prueba de homogeneidad o de independencia, es importante explicar dónde o cuáles celdas (combinaciones de categorías) de la tabla de contingencia se desvían de los valores esperados. Para ésto se pueden analizar los residuales ajustados (un tipo de análisis posterior - post-hoc), con lo que cuando un residual ajustado es superior a <span class="math inline">\(|1.96|\)</span>, para un <span class="math inline">\(\alpha=0.05\)</span>, esta celda se considera se desvía significativamente de la hipótesis nula, mostrando dónde se dan estas diferencias entre los valores observados y esperados, pudiendo ayudar a explicar la relación entre las variables.</p>
+<div id="prueba-chi-hom" class="section level4">
+<h4><span class="header-section-number">16.4.2.1</span> Homogeneidad</h4>
+<p>Para ejemplificar la prueba de homogeneidad se usa el ejemplo de <span class="citation">McKillup &amp; Darby Dyar (<a href="#ref-mckillup2010">2010</a>)</span> (Tabla <a href="estadística-no-paramétrica.html#tab:pozos">16.3</a>), donde se tienen 20 mediciones de pozos en 3 localidades diferentes, a los cuales se les determinó si se encontraban contaminados o no con nitratos. Asuma <span class="math inline">\(\alpha=0.05\)</span>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:pozos">Tabla 16.3: </span>Datos de pozos contaminados o no en diferentes localidades
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Localidad
+</div>
+</th>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+Townsville
+</th>
+<th style="text-align:center;">
+Bowen
+</th>
+<th style="text-align:center;">
+Mackay
+</th>
+<th style="text-align:center;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Si
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+No
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+27
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Total
+</td>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+60
+</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li>Identificar la población, distribución, y la prueba apropiada:
+<ul>
+<li>Población: nivel de contaminación en las localidades</li>
+<li>Distribución: <span class="math inline">\(\chi^2\)</span></li>
+<li>Prueba: <span class="math inline">\(chi^2\)</span> de homogeneidad, ya que se tienen dos variables nominales, y se controló la cantidad de observaciones por una de ellas (en este caso localidad)</li>
+</ul></li>
+<li>Establecer las hipótesis nula y alterna:
+<ul>
+<li><span class="math inline">\(H_0:\)</span> La proporción de pozos contaminados o no <em>es la misma</em> para las diferentes localidades</li>
+<li><span class="math inline">\(H_1:\)</span> La proporción de pozos contaminados o no <em>es diferente</em> para las diferentes localidades</li>
+</ul></li>
+<li>Determinar parámetros de la distribución a comparar (<span class="math inline">\(H_0\)</span>):
+<ul>
+<li><span class="math inline">\(v = (r-1)(c-1) = (2-1)(3-1) = 1 \cdot 2 = 2\)</span></li>
+</ul></li>
+<li>Determinar valores críticos
+<ul>
+<li><span class="math inline">\(\alpha = 0.05\)</span></li>
+<li><span class="math inline">\(\chi^2_{\alpha,v} = \chi_{0.05,2}^2=5.99\)</span></li>
+</ul></li>
+<li>Calcular el estadístico de prueba
+<ul>
+<li>Usando la Ecuación <a href="estadística-no-paramétrica.html#eq:expected-tab">(16.8)</a> se tiene que los valores esperados son 11 para los contaminados y 9 para los no contaminados</li>
+<li><span class="math inline">\(\chi^2 = \frac{(12-11)^2}{12} + \frac{(8-9)^2}{9} + \dots = 5.25\)</span></li>
+</ul></li>
+<li>Tomar una decisión
+<ul>
+<li>El estadístico de prueba es menor al crítico, <span class="math inline">\(\chi^2 &lt; \chi_{\alpha,v}^2\)</span></li>
+<li>El valor-<em>p</em> es mayor a <span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(p = 0.072\)</span></li>
+<li><em>Decisión</em>: No se rechaza <span class="math inline">\(H_0\)</span>. El valor-<em>p</em> cercano al <span class="math inline">\(\alpha\)</span> indica evidencia marginal en favor de no rechazar <span class="math inline">\(H_0\)</span>, por lo que sería bueno investigar más allá los resultados.</li>
+</ul></li>
+</ol>
+<p>Una forma de graficar tablas de contingencia es por medio de gráficos de mosaico, que es similar a un gráfico de barras donde todas las barras tienen la misma longitud y el área (relleno) representa la proporción de observaciones de la respectiva categoría, que a su vez representa las diferentes celdas de la tabla de contingencia. Para el caso del ejemplo se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-hom-mosaico">16.2</a>, donde se tiene la proporción de contaminación por localidad.</p>
+<div class="figure" style="text-align: center"><span id="fig:chi-hom-mosaico"></span>
+<img src="geolonum_files/figure-html/chi-hom-mosaico-1.png" alt="Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad." width="70%" />
+<p class="caption">
+Figura 16.2: Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad.
+</p>
+</div>
+<p>En <strong>R</strong> se tiene la función <code>chisq.test</code> para realizar estas pruebas. Para el caso de tablas de contingencia el único argumento que se necesita es la tabla, sin importar qué variable está en las columnas y qué variable está en las filas.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="fl">0.05</span>
+chi.h =<span class="st"> </span><span class="kw">chisq.test</span>(pozos_tab)
+chi.h</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  pozos_tab
+## X-squared = 5.2525, df = 2, p-value = 0.07235</code></pre>
+<p>La función <code>mosaic</code> del paquete <em>vcd</em> <span class="citation">(Meyer et al., <a href="#ref-R-vcd">2017</a>)</span> permite visualizar el gráfico de mosaico, mostrando el valor-<em>p</em> de la prueba, y rellenando las barras (celdas) con los residuales de Pearson. En caso de que haya diferencia significativa entre lo observado y lo esperado las celdas serán coloreadas respectivamente. El gráfico de mosaico de la prueba se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-hom-mosaico2">16.3</a>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">vcd<span class="op">::</span><span class="kw">mosaic</span>(<span class="kw">t</span>(pozos_tab),
+            <span class="dt">direction =</span> <span class="st">&#39;v&#39;</span>,
+            <span class="dt">shade =</span> T,
+            <span class="dt">gp=</span>shading_hcl,
+            <span class="dt">spacing=</span><span class="kw">spacing_equal</span>(<span class="dt">sp =</span> <span class="kw">unit</span>(.<span class="dv">5</span>, <span class="st">&quot;lines&quot;</span>)),
+            <span class="dt">labeling=</span><span class="kw">labeling_border</span>(<span class="dt">gp_labels =</span> <span class="kw">gpar</span>(<span class="dt">fontsize =</span> <span class="dv">10</span>)))</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:chi-hom-mosaico2"></span>
+<img src="geolonum_files/figure-html/chi-hom-mosaico2-1.png" alt="Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad, mostrando el valor-*p* y los residuales." width="70%" />
+<p class="caption">
+Figura 16.3: Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad, mostrando el valor-<em>p</em> y los residuales.
+</p>
+</div>
+<p>Los residuales ajustados se pueden acceder a partir del objeto en que se guarda la prueba, como se muestra en el siguiente bloque. Estos residuales son los que realmente indican si hay una diferencia significativa entre lo observado y lo esperado (<span class="math inline">\(&gt; |1.96|\)</span> para <span class="math inline">\(\alpha=0.05\)</span>), que para el caso del ejemplo ocurre en la localidad de Bowen, donde hay menos valores observados para lo contaminado y más valores observados para lo no contaminado.</p>
+<pre class="sourceCode r"><code class="sourceCode r">chi.h<span class="op">$</span>stdres</code></pre>
+<pre><code>##            Localidad
+## Contaminado Townsville      Bowen     Mackay
+##          Si  0.5504819 -2.2019275  1.6514456
+##          No -0.5504819  2.2019275 -1.6514456</code></pre>
+<p>Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima o debajo del valor crítico de acuerdo al nivel de significancia <span class="math inline">\(\alpha\)</span>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Localidad
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Contaminado
+</th>
+<th style="text-align:left;">
+Townsville
+</th>
+<th style="text-align:left;">
+Bowen
+</th>
+<th style="text-align:left;">
+Mackay
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Si
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">0.55</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-2.202</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">1.651</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">-0.55</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: blue !important;">2.202</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">-1.651</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>El tamaño del efecto se puede calcular de acuerdo a la Ecuación <a href="estadística-no-paramétrica.html#eq:v">(16.6)</a> de la siguiente manera:</p>
+<p><span class="math display">\[\begin{equation}
+  V = \sqrt{\frac{\chi^2}{N \cdot v_{min}}}\\
+  V = \sqrt{\frac{5.25}{60 \cdot 1}} = 0.29
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se puede calcular por medio de las funciones <code>CramerV</code> del paquete <em>DescTools</em> <span class="citation">(Signorell, <a href="#ref-R-DescTools">2020</a>)</span>, y <code>v.chi.sq</code> del paquete <em>MOTE</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">CramerV</span>(pozos_tab,
+        <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a,
+        <span class="dt">method =</span> <span class="st">&#39;ncchisqadj&#39;</span>)</code></pre>
+<pre><code>##  Cramer V    lwr.ci    upr.ci 
+## 0.2958751 0.1825742 0.5583684</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">chi.h.v =<span class="st"> </span><span class="kw">v.chi.sq</span>(<span class="dt">x2 =</span> chi.h<span class="op">$</span>statistic, <span class="dt">n =</span> <span class="kw">sum</span>(pozos_tab),
+                   <span class="dt">r =</span> <span class="kw">nrow</span>(pozos_tab), <span class="dt">c =</span> <span class="kw">ncol</span>(pozos_tab),
+                   <span class="dt">a =</span> a)
+chi.h.v[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()</code></pre>
+<pre><code>## v.X-squared        vlow       vhigh 
+##   0.2958751   0.1825742   0.5583804</code></pre>
+<blockquote>
+<p>Conclusión: El nivel de contaminación no varía significativamente de acuerdo a la localidad, <span class="math inline">\(\chi^2(2, N = 60) = 5.25\)</span>, <span class="math inline">\(p = .072\)</span>, <span class="math inline">\(V\)</span> = .30, 95% IC [.18, .56]. El efecto se puede considerar mediano, pero con un rango amplio de pequeño hasta grande. Aunque el resultado no fue estadísticamente significativo, el valor-<em>p</em> se encuentra cerca del nivel de significancia, y si se estudian los residuales ajustados se ve que la localidad de Bowen difiere de los valores esperados.</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span id="fig:chi-h-stats"></span>
+<img src="geolonum_files/figure-html/chi-h-stats-1.png" alt="Gráfico mostrando la relación entre nivel de contaminación y localidad, el porcentaje de cada celda, así como el resumen estadístico respectivo." width="90%" />
+<p class="caption">
+Figura 16.4: Gráfico mostrando la relación entre nivel de contaminación y localidad, el porcentaje de cada celda, así como el resumen estadístico respectivo.
+</p>
+</div>
+</div>
+<div id="prueba-chi-asoc" class="section level4">
+<h4><span class="header-section-number">16.4.2.2</span> Independencia/asociación</h4>
+<p>Para ejemplificar la prueba de homogeneidad se usa el ejemplo de <span class="citation">Borradaile (<a href="#ref-borradaile2003">2003</a>)</span> (Tabla <a href="estadística-no-paramétrica.html#tab:dist-red">16.4</a>), donde se tienen 246 mediciones de clastos, los cuales se clasificaron de acuerdo a la redondez y la distancia de la fuente. Asuma <span class="math inline">\(\alpha=0.05\)</span>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:dist-red">Tabla 16.4: </span>Datos de redondez contra distancia para diferentes clastos
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Distancia (km)
+</div>
+</th>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+0-5
+</th>
+<th style="text-align:center;">
+5-10
+</th>
+<th style="text-align:center;">
+10-20
+</th>
+<th style="text-align:center;">
+20-30
+</th>
+<th style="text-align:center;">
+30-40
+</th>
+<th style="text-align:center;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Angular
+</td>
+<td style="text-align:center;">
+28
+</td>
+<td style="text-align:center;">
+21
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+61
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sub-angular
+</td>
+<td style="text-align:center;">
+23
+</td>
+<td style="text-align:center;">
+23
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+77
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sub-redondeado
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+18
+</td>
+<td style="text-align:center;">
+57
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Redondeado
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+29
+</td>
+<td style="text-align:center;">
+51
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Total
+</td>
+<td style="text-align:center;">
+56
+</td>
+<td style="text-align:center;">
+54
+</td>
+<td style="text-align:center;">
+45
+</td>
+<td style="text-align:center;">
+35
+</td>
+<td style="text-align:center;">
+56
+</td>
+<td style="text-align:center;">
+246
+</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li>Identificar la población, distribución, y la prueba apropiada:
+<ul>
+<li>Población: redondez de clasto de acuerdo a distancia de la fuente</li>
+<li>Distribución: <span class="math inline">\(\chi^2\)</span></li>
+<li>Prueba: <span class="math inline">\(chi^2\)</span> de asociación, ya que se tienen dos variables nominales (se podrían tratar como ordinales), y se controló la cantidad total de observaciones</li>
+</ul></li>
+<li>Establecer las hipótesis nula y alterna:
+<ul>
+<li><span class="math inline">\(H_0:\)</span> No hay relación entre la redondez de los clastos y la distancia de la fuente, o la redondez de los clastos es independiente de la distancia de la fuente</li>
+<li><span class="math inline">\(H_1:\)</span> La redondez de los clastos depende (está en relacionado) de (con) la distancia de la fuente</li>
+</ul></li>
+<li>Determinar parámetros de la distribución a comparar (<span class="math inline">\(H_0\)</span>):
+<ul>
+<li><span class="math inline">\(v = (r-1)(c-1) = (4-1)(5-1) = 3 \cdot 4 = 12\)</span></li>
+</ul></li>
+<li>Determinar valores críticos
+<ul>
+<li><span class="math inline">\(\alpha = 0.05\)</span></li>
+<li><span class="math inline">\(\chi^2_{\alpha,v} = \chi_{0.05,12}^2=21.03\)</span></li>
+</ul></li>
+<li>Calcular el estadístico de prueba
+<ul>
+<li>Usando la Ecuación <a href="estadística-no-paramétrica.html#eq:expected-tab">(16.8)</a> se tiene que los valores esperados son los que se muestran a continuación</li>
+</ul></li>
+</ol>
+<pre><code>##                 Distancia
+## Redondez          0-5 5-10 10-20 20-30 30-40
+##   Angular        13.9 13.4  11.2   8.7  13.9
+##   Sub-angular    17.5 16.9  14.1  11.0  17.5
+##   Sub-redondeado 13.0 12.5  10.4   8.1  13.0
+##   Redondeado     11.6 11.2   9.3   7.3  11.6</code></pre>
+<ul>
+<li><span class="math inline">\(\chi^2 = \frac{(28-13.9)^2}{13.9} + \frac{(23-17.5)^2}{17.5} + \frac{(13-5)^2}{5} + \frac{(0-11.6)^2}{11.6} + \dots = 109.7\)</span></li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>Tomar una decisión
+<ul>
+<li>El estadístico de prueba es mayor al crítico, <span class="math inline">\(\chi^2 &gt; \chi_{\alpha,v}^2\)</span></li>
+<li>El valor-<em>p</em> es menor a <span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(p &lt; .001\)</span></li>
+<li><em>Decisión</em>: Se rechaza <span class="math inline">\(H_0\)</span></li>
+</ul></li>
+</ol>
+<p>El gráfico de mosaico para el caso del ejemplo se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-ind-mosaico">16.5</a>, donde se tiene la proporción de redondez por distancia.</p>
+<div class="figure" style="text-align: center"><span id="fig:chi-ind-mosaico"></span>
+<img src="geolonum_files/figure-html/chi-ind-mosaico-1.png" alt="Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos." width="70%" />
+<p class="caption">
+Figura 16.5: Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos.
+</p>
+</div>
+<p>En <strong>R</strong> se usa la función <code>chisq.test</code> para realizar estas pruebas, a como se mostró en la prueba de homogeneidad.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="fl">0.05</span>
+chi.ind =<span class="st"> </span><span class="kw">chisq.test</span>(dist_red_tab)
+chi.ind</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  dist_red_tab
+## X-squared = 109.7, df = 12, p-value &lt; 2.2e-16</code></pre>
+<p>El gráfico de mosaico de la prueba se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-ind-mosaico2">16.6</a>, donde se muestra que hay predominancia de clastos angulares a distancias cortas y de clastos redondeados a distancias largas, y hay pocos clastos angulares a distancias largas y redondeados a distancias cortas, que es de esperar. Los colores azules indican valores observados por encima de los valores esperados, mientras que los colores rojos indican valores observados por debajo de los valores esperados. Esta relación se puede ver de igual manera observando los residuales ajustados.</p>
+<pre class="sourceCode r"><code class="sourceCode r">vcd<span class="op">::</span><span class="kw">mosaic</span>(<span class="kw">t</span>(dist_red_tab),
+            <span class="dt">direction =</span> <span class="st">&#39;v&#39;</span>,
+            <span class="dt">shade =</span> T,
+            <span class="dt">gp=</span>shading_hcl,
+            <span class="dt">spacing=</span><span class="kw">spacing_equal</span>(<span class="dt">sp =</span> <span class="kw">unit</span>(.<span class="dv">5</span>, <span class="st">&quot;lines&quot;</span>)),
+            <span class="dt">labeling=</span><span class="kw">labeling_border</span>(<span class="dt">gp_labels =</span> <span class="kw">gpar</span>(<span class="dt">fontsize =</span> <span class="dv">10</span>)))</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:chi-ind-mosaico2"></span>
+<img src="geolonum_files/figure-html/chi-ind-mosaico2-1.png" alt="Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos, mostrando el valor-*p* y los residuales." width="70%" />
+<p class="caption">
+Figura 16.6: Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos, mostrando el valor-<em>p</em> y los residuales.
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r">chi.ind<span class="op">$</span>stdres</code></pre>
+<pre><code>##                 Distancia
+## Redondez                 0-5        5-10       10-20       20-30       30-40
+##   Angular         4.96964852  2.71440797 -0.06054483 -3.24543922 -4.88949290
+##   Sub-angular     1.79412660  2.02545502 -0.03035945 -1.16315609 -2.79649153
+##   Sub-redondeado -2.87426901 -1.64730762  0.61490200  2.54795855  1.81070158
+##   Redondeado     -4.35464292 -3.49389835 -0.54076506  2.13580090  6.52281597</code></pre>
+<p>Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima o debajo del valor crítico de acuerdo al nivel de significancia <span class="math inline">\(\alpha\)</span>.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Distancia (km)
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Redondez
+</th>
+<th style="text-align:left;">
+0-5
+</th>
+<th style="text-align:left;">
+5-10
+</th>
+<th style="text-align:left;">
+10-20
+</th>
+<th style="text-align:left;">
+20-30
+</th>
+<th style="text-align:left;">
+30-40
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Angular
+</td>
+<td style="text-align:left;">
+<span style="     color: blue !important;">4.97</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: blue !important;">2.714</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">-0.061</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-3.245</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-4.889</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sub-angular
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">1.794</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: blue !important;">2.025</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">-0.03</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">-1.163</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-2.796</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sub-redondeado
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-2.874</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">-1.647</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">0.615</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: blue !important;">2.548</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">1.811</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Redondeado
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-4.355</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-3.494</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black !important;">-0.541</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: blue !important;">2.136</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: blue !important;">6.523</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>El tamaño del efecto se puede calcular de acuerdo a la Ecuación <a href="estadística-no-paramétrica.html#eq:v">(16.6)</a> de la siguiente manera:</p>
+<p><span class="math display">\[\begin{equation}
+  V = \sqrt{\frac{\chi^2}{N \cdot v_{min}}}\\
+  V = \sqrt{\frac{109.7}{264 \cdot 3}} = 0.38
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se puede calcular por medio de las funciones <code>CramerV</code> del paquete <em>DescTools</em>, y <code>v.chi.sq</code> del paquete <em>MOTE</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">CramerV</span>(dist_red_tab,
+        <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a,
+        <span class="dt">method =</span> <span class="st">&#39;ncchisqadj&#39;</span>)</code></pre>
+<pre><code>##  Cramer V    lwr.ci    upr.ci 
+## 0.3855446 0.3179013 0.4576978</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">chi.ind.v =<span class="st"> </span><span class="kw">v.chi.sq</span>(<span class="dt">x2 =</span> chi.ind<span class="op">$</span>statistic, <span class="dt">n =</span> <span class="kw">sum</span>(dist_red_tab),
+                   <span class="dt">r =</span> <span class="kw">nrow</span>(dist_red_tab), <span class="dt">c =</span> <span class="kw">ncol</span>(dist_red_tab),
+                   <span class="dt">a =</span> a)
+chi.ind.v[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unlist</span>()</code></pre>
+<pre><code>## v.X-squared        vlow       vhigh 
+##   0.3855446   0.3179001   0.4576964</code></pre>
+<blockquote>
+<p>Conclusión: Hay una asociación entre la redondez del clasto y su distancia de la fuente, <span class="math inline">\(\chi^2(12, N = 246) = 109.70\)</span>, <span class="math inline">\(p &lt; .001\)</span>, <span class="math inline">\(V\)</span> = .39, 95% IC [.32, .46]. El efecto se puede considerar grande.</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span id="fig:chi-ind-stats"></span>
+<img src="geolonum_files/figure-html/chi-ind-stats-1.png" alt="Gráfico mostrando la relación entre distancia de la fuente y redondez, el porcentaje de cada celda, así como el resumen estadístico respectivo." width="90%" />
+<p class="caption">
+Figura 16.7: Gráfico mostrando la relación entre distancia de la fuente y redondez, el porcentaje de cada celda, así como el resumen estadístico respectivo.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="pruebas-sobre-rangos-ordinales" class="section level2">
+<h2><span class="header-section-number">16.5</span> Pruebas sobre rangos (ordinales)</h2>
+<p>Cuando se tienen datos ordinales o cuantitativos continuos que no se distribuyen normalmente, éstos se convierten a rangos (valor más bajo es 1 y así sucesivamente, donde valores empatados se promedian), y los análisis se realizan sobre los datos ranqueados. Las pruebas sobre rangos son homólogas a las pruebas paramétricas que hacen inferencias sobre la medida de tendencia central (1 y 2 muestras) y de asociación/relación (entre 2 variables). En el caso de las pruebas no paramétricas la mediana es más utilizada y reportada como medida de tendencia central.</p>
+<div id="prueba-wilcoxon" class="section level3">
+<h3><span class="header-section-number">16.5.1</span> Rango con signo de Wilcoxon</h3>
+<p>Esta prueba se puede utilizar con 1 muestra o 2 muestras dependientes, ya que con esta última se trabaja con el vector de las diferencias. Las hipótesis serían las siguientes:</p>
+<ul>
+<li><span class="math inline">\(H_0: Mdn = Mdn_0\)</span> La mediana es igual a un valor dado, o <span class="math inline">\(R+ = R-\)</span>,</li>
+<li><span class="math inline">\(H_1: Mdn \neq Mdn_0\)</span> La mediana es diferente al valor dado, o <span class="math inline">\(R+ \neq R-\)</span></li>
+</ul>
+<p>El procedimiento para la prueba sería el siguiente:</p>
+<ol style="list-style-type: decimal">
+<li>Para el caso de 1 muestra se le resta a los valores el valor hipotético o con el cual se quiere comparar. Para el caso de 2 muestras dependientes se saca la diferencia entre las muestras.</li>
+<li>De haber alguna diferencia igual a cero (0) se descarta.</li>
+<li>Se ranquean las diferencia en valor absoluto.</li>
+<li>Se suman los rangos para las diferencias positivas (<span class="math inline">\(R+\)</span>) y para las diferencias negativas (<span class="math inline">\(R-\)</span>).</li>
+<li>Se escoge el menor <span class="math inline">\(R\)</span> como <span class="math inline">\(T\)</span>.</li>
+<li>Se rechaza <span class="math inline">\(H_0\)</span> si el <span class="math inline">\(T &lt; T_{crit}\)</span> o si <span class="math inline">\(p &lt; \alpha\)</span>.</li>
+</ol>
+<p>Para el tamaño del efecto (Ecuación <a href="estadística-no-paramétrica.html#eq:r-rangos">(16.2)</a>) se necesita el estadístico <span class="math inline">\(Z\)</span>, el cual se puede obtener a partir del valor-<em>p</em> que arroja la prueba (encontrando el cuantil de la distribución normal - <code>qnorm(p/2)</code>), o por medio de la aproximación a la distribución normal conforme las Ecuaciones <a href="estadística-no-paramétrica.html#eq:mu-T">(16.9)</a>, <a href="estadística-no-paramétrica.html#eq:sigma-T">(16.10)</a>, y <a href="estadística-no-paramétrica.html#eq:z-T">(16.11)</a>.</p>
+<p><span class="math display" id="eq:mu-T">\[\begin{equation}
+  \mu_T = \frac{N(N+1)}{4}
+  \tag{16.9}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:sigma-T">\[\begin{equation}
+  \sigma_T = \sqrt{\frac{N(N+1)(2N+1)}{24}}
+  \tag{16.10}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:z-T">\[\begin{equation}
+  Z = \frac{T - \mu_T}{\sigma_T}
+  \tag{16.11}
+\end{equation}\]</span></p>
+<p>El uso de la prueba se demuestra con el ejemplo <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span>, donde se tenía el contenido de cuarzo en secciones delgadas de una roca ígnea. Es posible que esta muestra provenga de una población con valor central de 20%? Asuma <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a los signos se muestra en las Tablas <a href="estadística-no-paramétrica.html#tab:wilcoxon1">16.5</a> y <a href="estadística-no-paramétrica.html#tab:wilcoxon2">16.6</a>. De acuerdo con los resultados el estadístico sería <span class="math inline">\(T=8.5\)</span>, y el valor crítico sería 4.</p>
+<pre class="sourceCode r"><code class="sourceCode r">loc0 =<span class="st"> </span><span class="dv">20</span>
+a =<span class="st"> </span><span class="fl">0.05</span>
 
+cuarzo =<span class="st"> </span><span class="kw">c</span>(<span class="fl">23.5</span>, <span class="fl">16.6</span>, <span class="fl">25.4</span>, <span class="fl">19.1</span>, <span class="fl">19.3</span>, <span class="fl">22.4</span>, <span class="fl">20.9</span>, <span class="fl">24.9</span>)
+
+Q =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Q =</span> cuarzo) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dif =</span> Q<span class="op">-</span>loc0, 
+         <span class="dt">signo =</span> <span class="kw">factor</span>(<span class="kw">sign</span>(dif),
+                        <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>),
+                        <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Negativo&#39;</span>,<span class="st">&#39;Positivo&#39;</span>)), 
+         <span class="dt">ranking =</span> <span class="kw">rank</span>(<span class="kw">abs</span>(dif)))
+
+N =<span class="st"> </span><span class="kw">nrow</span>(Q)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:wilcoxon1">Tabla 16.5: </span>Ranqueo con signo para el contenido de cuarzo
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Q (%)
+</th>
+<th style="text-align:center;">
+Diferencia
+</th>
+<th style="text-align:center;">
+Signo
+</th>
+<th style="text-align:center;">
+Ranqueo
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+16.6
+</td>
+<td style="text-align:center;">
+-3.4
+</td>
+<td style="text-align:center;">
+Negativo
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+19.1
+</td>
+<td style="text-align:center;">
+-0.9
+</td>
+<td style="text-align:center;">
+Negativo
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">2.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+19.3
+</td>
+<td style="text-align:center;">
+-0.7
+</td>
+<td style="text-align:center;">
+Negativo
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">1</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+20.9
+</td>
+<td style="text-align:center;">
+0.9
+</td>
+<td style="text-align:center;">
+Positivo
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">2.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+22.4
+</td>
+<td style="text-align:center;">
+2.4
+</td>
+<td style="text-align:center;">
+Positivo
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">4</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+23.5
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+<td style="text-align:center;">
+Positivo
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">6</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+24.9
+</td>
+<td style="text-align:center;">
+4.9
+</td>
+<td style="text-align:center;">
+Positivo
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">7</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+25.4
+</td>
+<td style="text-align:center;">
+5.4
+</td>
+<td style="text-align:center;">
+Positivo
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">8</span>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:wilcoxon2">Tabla 16.6: </span>Estadístico T
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Signo
+</th>
+<th style="text-align:center;">
+T
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Negativo
+</td>
+<td style="text-align:center;">
+8.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Positivo
+</td>
+<td style="text-align:center;">
+27.5
+</td>
+</tr>
+</tbody>
+</table>
+<p>En <strong>R</strong> se tiene la función <code>wilcox.test</code> que realiza la prueba, y se puede usar para el caso de una muestra o dos muestras dependientes (<code>paired = T</code>), donde hay que especificar el o los vectores, la medida de posición a comparar (<code>mu</code>), si se quiere un intervalo de confianza, y el nivel de confianza. <em>Nota: Esta función NO necesariamente reporta el W más bajo (creo que siempre presenta el positivo), pero ésto no afecta la interpretación del valor-<em>p</em> o el intervalo de confianza</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">wilcox.res =<span class="st"> </span><span class="kw">wilcox.test</span>(cuarzo, <span class="dt">mu =</span> loc0, 
+                         <span class="dt">paired =</span> F,
+                         <span class="dt">conf.int =</span> T, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)
+wilcox.res</code></pre>
+<pre><code>## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  cuarzo
+## V = 27.5, p-value = 0.207
+## alternative hypothesis: true location is not equal to 20
+## 95 percent confidence interval:
+##  18.75005 24.44997
+## sample estimates:
+## (pseudo)median 
+##       21.56763</code></pre>
+<p><em>Decisión</em>: No se rechaza <span class="math inline">\(H_0\)</span></p>
+<p>Para el tamaño del efecto se pueden usar las Ecuaciones <a href="estadística-no-paramétrica.html#eq:mu-T">(16.9)</a>, <a href="estadística-no-paramétrica.html#eq:sigma-T">(16.10)</a>, <a href="estadística-no-paramétrica.html#eq:z-T">(16.11)</a>, y <a href="estadística-no-paramétrica.html#eq:r-rangos">(16.2)</a>.</p>
+<p><span class="math display">\[\begin{equation}
+  \mu_T = \frac{N(N+1)}{4} = \frac{8(8+1)}{4} = 18
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  \sigma_T = \sqrt{\frac{N(N+1)(2N+1)}{24}} = \sqrt{\frac{8(8+1)(2 \cdot 8+1)}{24}} = 7.14
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  Z = \frac{T - \mu_T}{\sigma_T} = \frac{8.5 - 18}{7.14} = -1.33
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  r = \frac{Z}{\sqrt{N}} = \frac{-1.33}{\sqrt{8}} = -0.47
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> la función <code>wilcox_effsize</code> del paquete <em>rstatix</em> <span class="citation">(Kassambara, <a href="#ref-R-rstatix">2020</a>)</span> puede calcular este valor directamente, pero ocupa que los datos se encuentren en un dataframe en formato largo, definir la fórmula (<code>variable~1</code> para el caso de 1 muestra, o <code>variable~grupos</code> para el caso de 2 muestras), indicar si las muestras son dependientes (<code>paired = T</code>), y en el caso de 1 muestra el valor a comparar (<code>mu</code>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">wilcox.r =<span class="st"> </span><span class="kw">wilcox_effsize</span>(Q, Q<span class="op">~</span><span class="dv">1</span>, <span class="dt">mu =</span> loc0,
+                          <span class="dt">paired =</span> F)
+wilcox.r</code></pre>
+<pre><code>## # A tibble: 1 x 6
+##   .y.   group1 group2     effsize     n magnitude
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt; &lt;int&gt; &lt;ord&gt;    
+## 1 Q     1      null model   0.471     8 moderate</code></pre>
+<p>Para este tamaño de efecto no está tan establecido el cómo obtener el intervalo de confianza, pero se puede aproximar por medio del intervalo de confianza para el coeficiente de correlación <span class="math inline">\(r\)</span>, por medio de la función <code>CorCI</code> del paquete <em>DescTools</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">wilcox.r.ci =<span class="st"> </span><span class="kw">CorCI</span>(<span class="dt">rho =</span> wilcox.r<span class="op">$</span>effsize[[<span class="dv">1</span>]], <span class="dt">n =</span> N, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)
+wilcox.r.ci</code></pre>
+<pre><code>##        cor     lwr.ci     upr.ci 
+##  0.4708975 -0.3498735  0.8826739</code></pre>
+<blockquote>
+<p>Conclusión: El contenido de cuarzo de la roca ígnea no es significativamente diferente a la mediana de 20% , <span class="math inline">\(Mdn^* = 21.57\)</span>, 95% IC <span class="math inline">\([18.75\)</span>, <span class="math inline">\(24.45]\)</span>, <span class="math inline">\(T = 27.50\)</span>, <span class="math inline">\(p = .207\)</span>, <span class="math inline">\(r = .47\)</span>, 95% IC <span class="math inline">\([-.35, .88]\)</span>. El efecto se puede considerar mediano, pero con un rango amplio de mediano, en dirección opuesta, hasta muy grande.</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span id="fig:wilcoxon-stats"></span>
+<img src="geolonum_files/figure-html/wilcoxon-stats-1.png" alt="Histograma del contenido de cuarzo, mostrando la media muestral (azul) y el valor a comparar (rojo), así como el resumen estadístico respectivo." width="90%" />
+<p class="caption">
+Figura 16.8: Histograma del contenido de cuarzo, mostrando la media muestral (azul) y el valor a comparar (rojo), así como el resumen estadístico respectivo.
+</p>
+</div>
+</div>
+<div id="prueba-mwu" class="section level3">
+<h3><span class="header-section-number">16.5.2</span> Suma de rangos de Wilcoxon / U de Mann-Whitney</h3>
+<p>Esta prueba se utiliza con 2 muestras independientes. Las hipótesis serían las siguientes:</p>
+<ul>
+<li><span class="math inline">\(H_0: Mdn_1 = Mdn_2\)</span> La mediana es la misma para las dos muestras, o <span class="math inline">\(\bar{R}_1 = \bar{R}_2\)</span>,</li>
+<li><span class="math inline">\(H_1: Mdn_1 \neq Mdn_2\)</span> La mediana es diferente para las dos muestras, o <span class="math inline">\(\bar{R}_1 \neq \bar{R}_2\)</span></li>
+</ul>
+<p>El procedimiento para la prueba sería el siguiente:</p>
+<ol style="list-style-type: decimal">
+<li>Se agrupan las dos muestras en una sola y se ranquea.</li>
+<li>Se suman los rangos para cada muestra (<span class="math inline">\(R_{1}\)</span>, <span class="math inline">\(R_{2}\)</span>).</li>
+<li>Se calcula el estadístico <span class="math inline">\(U\)</span> para cada muestra (Ecuación <a href="estadística-no-paramétrica.html#eq:mwu-u">(16.12)</a>) y se escoge el menor.</li>
+<li>Se rechaza <span class="math inline">\(H_0\)</span> si el <span class="math inline">\(U &lt; U_{crit}\)</span> o si <span class="math inline">\(p &lt; \alpha\)</span>.</li>
+</ol>
+<p><span class="math display" id="eq:mwu-u">\[\begin{equation}
+  U_i = R_i - \frac{n_i(n_i+1)}{2}
+  \tag{16.12}
+\end{equation}\]</span></p>
+<p>Además se tienen las siguientes propiedades:</p>
+<p><span class="math display" id="eq:mwu-Ts">\[\begin{equation}
+  R_1 + R_2 = \frac{(n_1+n_2)(n_1+n_2+1)}{2}
+  \tag{16.13}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:mwu-us">\[\begin{equation}
+  U_1 + U_2 = n_1 n_2
+  \tag{16.14}
+\end{equation}\]</span></p>
+<p>Para el tamaño del efecto (Ecuación <a href="estadística-no-paramétrica.html#eq:r-rangos">(16.2)</a>) se necesita el estadístico <span class="math inline">\(Z\)</span>, el cual se puede obtener a partir del valor-<em>p</em> que arroja la prueba (encontrando el cuantil de la distribución normal - <code>qnorm(p/2)</code>), o por medio de la aproximación a la distribución normal conforme las Ecuaciones <a href="estadística-no-paramétrica.html#eq:mu-u">(16.15)</a>, <a href="estadística-no-paramétrica.html#eq:sigma-u">(16.16)</a>, y <a href="estadística-no-paramétrica.html#eq:z-u">(16.17)</a>.</p>
+<p><span class="math display" id="eq:mu-u">\[\begin{equation}
+  \mu_u = \frac{n_1 n_2}{2}
+  \tag{16.15}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:sigma-u">\[\begin{equation}
+  \sigma_u = \sqrt{\frac{(n_1 n_2)(n_1 + n_2 + 1)}{12}}
+  \tag{16.16}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:z-u">\[\begin{equation}
+  Z = \frac{U - \mu_u}{\sigma_u}
+  \tag{16.17}
+\end{equation}\]</span></p>
+<p>El uso de la prueba se demuestra con el ejemplo <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span>, donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es posible que estas muestras provenga de una misma población? Asuma <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a las muestras se detalla en las Tablas <a href="estadística-no-paramétrica.html#tab:u1">16.7</a> y <a href="estadística-no-paramétrica.html#tab:u2">16.8</a>. De acuerdo con los resultados el estadístico sería <span class="math inline">\(U=23.5\)</span>, y el valor crítico sería 17.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="fl">0.05</span>
+
+A =<span class="st"> </span><span class="kw">c</span>(<span class="fl">3.2</span>, <span class="fl">3.1</span>, <span class="fl">3.1</span>, <span class="fl">3.3</span>, <span class="fl">2.9</span>, <span class="fl">2.9</span>, <span class="fl">3.5</span>, <span class="fl">3.0</span>)
+B =<span class="st"> </span><span class="kw">c</span>(<span class="fl">3.1</span>, <span class="fl">3.1</span>, <span class="fl">2.8</span>, <span class="fl">3.1</span>, <span class="fl">3.0</span>, <span class="fl">2.6</span>, <span class="fl">3.0</span>, <span class="fl">3.0</span>, <span class="fl">3.1</span>, <span class="fl">2.8</span>)
+
+braq =<span class="st"> </span><span class="kw">stack</span>(<span class="kw">list</span>(<span class="dt">A=</span>A,
+                  <span class="dt">B=</span>B)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ranking =</span> <span class="kw">rank</span>(values))
+
+N =<span class="st"> </span><span class="kw">nrow</span>(braq)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:u1">Tabla 16.7: </span>Ranqueo para la longitud de los braquiópodos
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Longitud (cm)
+</th>
+<th style="text-align:center;">
+Capa
+</th>
+<th style="text-align:center;">
+Ranqueo
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+2.6
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">1</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2.8
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">2.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2.8
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">2.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2.9
+</td>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">4.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2.9
+</td>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">4.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">7.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">7.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">7.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">7.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.1
+</td>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">12.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.1
+</td>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">12.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.1
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">12.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.1
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">12.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.1
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">12.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.1
+</td>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">12.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.2
+</td>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">16</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.3
+</td>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">17</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3.5
+</td>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">18</span>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:u2">Tabla 16.8: </span>Estadístico U
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Capa
+</th>
+<th style="text-align:center;">
+n
+</th>
+<th style="text-align:center;">
+Rango medio
+</th>
+<th style="text-align:center;">
+R
+</th>
+<th style="text-align:center;">
+U
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+A
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+11.56
+</td>
+<td style="text-align:center;">
+92.5
+</td>
+<td style="text-align:center;">
+56.5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+B
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+7.85
+</td>
+<td style="text-align:center;">
+78.5
+</td>
+<td style="text-align:center;">
+23.5
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\begin{equation}
+  U_1 = R_1 - \frac{n_1(n_1+1)}{2} = 92.5 - \frac{8(8+1)}{2} = 56.5\\
+  U_2 = R_2 - \frac{n_2(n_2+1)}{2} = 78.5 - \frac{10(10+1)}{2} = 23.5
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se tiene la función <code>wilcox.test</code> que realiza la prueba, donde hay que especificar los vectores o la fórmula, si se quiere un intervalo de confianza, y el nivel de confianza. <em>Nota: El orden de los grupos altera el estadístico reportado y el signo de la diferencia e intervalo de confianza pero no la significancia de la prueba</em>.</p>
+<p>Con <span class="math inline">\(A\)</span> primero.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(A,B,<span class="dt">conf.int =</span> T, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  A and B
+## W = 56.5, p-value = 0.145
+## alternative hypothesis: true location shift is not equal to 0
+## 95 percent confidence interval:
+##  -0.09995953  0.39995658
+## sample estimates:
+## difference in location 
+##              0.1000317</code></pre>
+<p>Con <span class="math inline">\(B\)</span> primero.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mwu.res =<span class="st"> </span><span class="kw">wilcox.test</span>(B,A,
+                      <span class="dt">conf.int =</span> T, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)
+mwu.res</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  B and A
+## W = 23.5, p-value = 0.145
+## alternative hypothesis: true location shift is not equal to 0
+## 95 percent confidence interval:
+##  -0.39995658  0.09995953
+## sample estimates:
+## difference in location 
+##             -0.1000317</code></pre>
+<p>Con fórmula, que va a depender del orden de las categorías de la variable agrupadora.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wilcox.test</span>(values<span class="op">~</span>ind,<span class="dt">data =</span> braq,<span class="dt">conf.int =</span> T, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  values by ind
+## W = 56.5, p-value = 0.145
+## alternative hypothesis: true location shift is not equal to 0
+## 95 percent confidence interval:
+##  -0.09995953  0.39995658
+## sample estimates:
+## difference in location 
+##              0.1000317</code></pre>
+<p><em>Decisión</em>: No se rechaza <span class="math inline">\(H_0\)</span></p>
+<p>Para el tamaño del efecto se pueden usar las Ecuaciones <a href="estadística-no-paramétrica.html#eq:mu-u">(16.15)</a>, <a href="estadística-no-paramétrica.html#eq:sigma-u">(16.16)</a>, <a href="estadística-no-paramétrica.html#eq:z-u">(16.17)</a>, y <a href="estadística-no-paramétrica.html#eq:r-rangos">(16.2)</a>.</p>
+<p><span class="math display">\[\begin{equation}
+  \mu_u = \frac{n_1 n_2}{2} = \frac{8 \cdot 10}{2} = 40
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  \sigma_u = \sqrt{\frac{(n_1 n_2)(n_1 + n_2 + 1)}{12}} = \sqrt{\frac{(8 \cdot 10)(8 + 10 + 1)}{12}} = 11.25
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  Z = \frac{U - \mu_u}{\sigma_u} = \frac{23.5 - 40}{11.25} = -1.47
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  r = \frac{Z}{\sqrt{N}} = \frac{-1.46}{\sqrt{18}} = -0.35
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> la función <code>wilcox_effsize</code> del paquete <em>rstatix</em> puede calcular este valor directamente, pero ocupa que los datos se encuentren en un dataframe en formato largo, y definir la fórmula (<code>variable~grupos</code>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">mwu.r =<span class="st"> </span><span class="kw">wilcox_effsize</span>(braq, values<span class="op">~</span>ind)
+mwu.r</code></pre>
+<pre><code>## # A tibble: 1 x 7
+##   .y.    group1 group2 effsize    n1    n2 magnitude
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;ord&gt;    
+## 1 values A      B        0.354     8    10 moderate</code></pre>
+<p>Para este tamaño de efecto no está tan establecido el cómo obtener el intervalo de confianza, pero se puede aproximar por medio del intervalo de confianza para el coeficiente de correlación <span class="math inline">\(r\)</span>, por medio de la función <code>CorCI</code> del paquete <em>DescTools</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mwu.r.ci =<span class="st"> </span><span class="kw">CorCI</span>(<span class="dt">rho =</span> mwu.r<span class="op">$</span>effsize[[<span class="dv">1</span>]], <span class="dt">n =</span> N, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)
+mwu.r.ci</code></pre>
+<pre><code>##        cor     lwr.ci     upr.ci 
+##  0.3542525 -0.1349343  0.7045904</code></pre>
+<blockquote>
+<p>Conclusión: La longitud de los braquiópodos no difiere significativamente entre las capas A y B, <span class="math inline">\(Mdn_d = -0.10\)</span>, 95% IC <span class="math inline">\([-0.40\)</span>, <span class="math inline">\(0.10]\)</span>, <span class="math inline">\(U = 23.50\)</span>, <span class="math inline">\(p = .145\)</span>, <span class="math inline">\(r = .35\)</span>, 95% IC <span class="math inline">\([-.13, .70]\)</span>. El efecto se puede considerar mediano, pero con un rango amplio de pequeño, en dirección opuesta, hasta muy grande.</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span id="fig:mwu-stats"></span>
+<img src="geolonum_files/figure-html/mwu-stats-1.png" alt="Gráfico de caja mostrando el efecto de la capa sobre la longitud de los braquiópodos, así como el resumen estadístico respectivo." width="90%" />
+<p class="caption">
+Figura 16.9: Gráfico de caja mostrando el efecto de la capa sobre la longitud de los braquiópodos, así como el resumen estadístico respectivo.
+</p>
+</div>
+</div>
+<div id="prueba-kruskal" class="section level3">
+<h3><span class="header-section-number">16.5.3</span> Kruskal-Wallis</h3>
+<p>Esta prueba se utiliza con <span class="math inline">\(2+\)</span> muestras independientes (homólogo de ANOVA). Las hipótesis serían las siguientes:</p>
+<ul>
+<li><span class="math inline">\(H_0: Mdn_1 = Mdn_2 = Mdn_3 = \cdots = Mdn_k\)</span> La mediana es la misma para todas las muestras, o <span class="math inline">\(\bar{R}_1 = \bar{R}_2 = \bar{R}_3 = \cdots = \bar{R}_k\)</span>,</li>
+<li><span class="math inline">\(H_1:\)</span> Al menos 1 de las medianas es diferente.</li>
+</ul>
+<p>El procedimiento para la prueba sería el siguiente:</p>
+<ol style="list-style-type: decimal">
+<li>Se agrupan las muestras en una sola y se ranquea.</li>
+<li>Se suman los rangos para cada muestra (<span class="math inline">\(r_{k}\)</span>).</li>
+<li>Se calcula el estadístico <span class="math inline">\(H\)</span> (Ecuación <a href="estadística-no-paramétrica.html#eq:kw-h">(16.18)</a>), el cual sigue una distribución <span class="math inline">\(\chi^2\)</span>, con grados de libertad <span class="math inline">\(v=k-1\)</span>.</li>
+<li>Se rechaza <span class="math inline">\(H_0\)</span> si el <span class="math inline">\(H &gt; \chi^2_{crit}\)</span> o si <span class="math inline">\(p &lt; \alpha\)</span>.</li>
+</ol>
+<p><span class="math display" id="eq:kw-h">\[\begin{equation}
+  H = \frac{12}{N(N+1)}\sum_{k=1}^k\frac{R_{k}^2}{n_k}-3(N+1)
+  \tag{16.18}
+\end{equation}\]</span></p>
+<p>De manera similar al ANOVA, si se encuentra un resultado significativo es necesario explorar más por medio de análisis posteriores (<em>post-hoc</em>), donde los análisis más utilizados son las pruebas de Dunn y Nemenyi, que realizan comparaciones múltiples sobre los rangos, y ajusta el valor-<em>p</em> (de acuerdo a diferentes métodos) para una correcta interpretación.</p>
+<p>El uso de la prueba se demuestra con el ejemplo de <span class="citation">McKillup &amp; Darby Dyar (<a href="#ref-mckillup2010">2010</a>)</span>, donde se tiene el contenido de <span class="math inline">\(MgO\)</span> presente en cuatro turmalinas en tres sitios diferentes (<span class="math inline">\(k=3\)</span>): Mount Mica, Sebago Batholith, Black Mountain. Asuma <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a las muestras se detalla en las Tablas <a href="estadística-no-paramétrica.html#tab:kw1">16.9</a> y <a href="estadística-no-paramétrica.html#tab:kw2">16.10</a>. El estadístico crítico sería <span class="math inline">\(\chi^2_{\alpha,v} = \chi^2_{0.05,2} = 5.99\)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="fl">0.05</span>
+
+dat.kw =<span class="st"> </span><span class="kw">import</span>(<span class="st">&#39;data/anova MgO.csv&#39;</span>, <span class="dt">setclass =</span> <span class="st">&#39;tibble&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Location =</span> <span class="kw">as.factor</span>(Location) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">           </span><span class="kw">fct_reorder</span>(MgO))
+
+N =<span class="st"> </span><span class="kw">nrow</span>(dat.kw)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:kw1">Tabla 16.9: </span>Ranqueo para la el contenido de MgO
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Localidad
+</th>
+<th style="text-align:center;">
+MgO (%)
+</th>
+<th style="text-align:center;">
+Ranqueo
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Black Mountain
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">1</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Black Mountain
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">2</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sebago Batholith
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">3.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Black Mountain
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">3.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sebago Batholith
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">5.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Black Mountain
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+<span style="     color: blue !important;">5.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Mount Mica
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+<span style="     color: orange !important;">7.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sebago Batholith
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">7.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Mount Mica
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+<span style="     color: orange !important;">9.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sebago Batholith
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+<span style="     color: red !important;">9.5</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Mount Mica
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+<span style="     color: orange !important;">11</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Mount Mica
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+<span style="     color: orange !important;">12</span>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:kw2">Tabla 16.10: </span>Rangos para las diferentes localidades
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Localidad
+</th>
+<th style="text-align:center;">
+n
+</th>
+<th style="text-align:center;">
+Rango medio
+</th>
+<th style="text-align:center;">
+R
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Black Mountain
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3.0
+</td>
+<td style="text-align:center;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Sebago Batholith
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+6.5
+</td>
+<td style="text-align:center;">
+26
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Mount Mica
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+10.0
+</td>
+<td style="text-align:center;">
+40
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\begin{equation}
+  H = \frac{12}{N(N+1)}\sum_{k=1}^k\frac{R_{k}^2}{n_k}-3(N+1)\\
+  H = \frac{12}{12(12+1)}\left(\frac{12^2}{4}+\frac{26^2}{4}+\frac{40^2}{4}\right)-3(12+1) = 7.54
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se tiene la función <code>kruskal.test</code> que realiza la prueba.</p>
+<pre class="sourceCode r"><code class="sourceCode r">kw.res =<span class="st"> </span><span class="kw">kruskal.test</span>(MgO <span class="op">~</span><span class="st"> </span>Location, dat.kw)
+kw.res</code></pre>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  MgO by Location
+## Kruskal-Wallis chi-squared = 7.6454, df = 2, p-value = 0.02187</code></pre>
+<p><em>Decisión</em>: Se rechaza <span class="math inline">\(H_0\)</span></p>
+<p>Para el tamaño del efecto se pueden usar las Ecuaciones <a href="estadística-no-paramétrica.html#eq:eta2-h">(16.3)</a> o <a href="estadística-no-paramétrica.html#eq:epsilon2">(16.4)</a>.</p>
+<p><span class="math display">\[\begin{equation}
+  \eta_H^2 = \frac{H-k+1}{N-k} = \frac{7.54-3+1}{12-3} = 0.62
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  \epsilon^2 = \frac{H}{(N^2-1)/(N+1)} = \frac{7.54}{(12^2-1)/(12+1)} = 0.69
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> la función <code>kruskal_effsize</code> del paquete <em>rstatix</em> puede calcular <span class="math inline">\(\eta_H^2\)</span>, y la función <code>epsilonSquared</code> del paquete <em>rcompanion</em> <span class="citation">(Mangiafico, <a href="#ref-R-rcompanion">2020</a>)</span> puede calcular <span class="math inline">\(\epsilon^2\)</span>. Para estos tamaño de efecto no está establecido el cómo obtener el intervalo de confianza, pero se puede utilizar la técnica de bootstrap (<a href="estadística-no-paramétrica.html#bootstrap">16.6</a>). Las funciones mencionadas utiliza este método, definiendo que se quiere el intervalo de confianza con <code>ci = T</code>. Como este método varía cada vez que se corre es recomendable definir el punto de partida para siempre obtener el mismo resultado, ésto se logra definiendo <code>set.seed</code> y escogiendo un número entero cualquiera.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">101</span>)
+kw.eta =<span class="st"> </span><span class="kw">kruskal_effsize</span>(dat.kw, MgO <span class="op">~</span><span class="st"> </span>Location, <span class="dt">ci =</span> T, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)
+kw.eta</code></pre>
+<pre><code>## # A tibble: 1 x 7
+##   .y.       n effsize conf.low conf.high method  magnitude
+##   &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;ord&gt;    
+## 1 MgO      12   0.627     0.26      0.85 eta2[H] large</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(dat.kw,<span class="kw">epsilonSquared</span>(<span class="dt">x =</span> MgO,<span class="dt">g =</span> Location,<span class="dt">ci =</span> T,<span class="dt">conf =</span> <span class="dv">1</span><span class="op">-</span>a))</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   epsilon.squared lower.ci upper.ci
+##             &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1           0.695    0.356    0.881</code></pre>
+<p>Como se encontró un resultado significativo, es necesario indicar dónde se encuentran esas diferencias. Se va a usar la prueba de Dunn para ajustar el error tipo-I para todas las comparaciones. Se pueden usar usas las funciones <code>dunn_test</code> del paquete <em>rstatix</em> o <code>DunnTest</code> del paquete <em>DescTools</em>, donde los argumentos necesarios los datos y la fórmula que describe la variable con respecto a los grupos. Aquí se puede interpretar el valor-<em>p</em> ajustado con respecto al nivel de significancia escogido. En los resultados se observa que la única diferencia significativa es la de <em>Mount Mica-Black Mountain</em>, ya que el valor-<em>p</em> está por debajo del <span class="math inline">\(\alpha\)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">dunn =<span class="st"> </span><span class="kw">dunn_test</span>(dat.kw, MgO <span class="op">~</span><span class="st"> </span>Location) <span class="co"># rstatix</span>
+dunn</code></pre>
+<pre><code>## # A tibble: 3 x 9
+##   .y.   group1      group2        n1    n2 statistic       p  p.adj p.adj.signif
+##   &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       
+## 1 MgO   Black Moun… Sebago Ba…     4     4      1.38 0.167   0.334  ns          
+## 2 MgO   Black Moun… Mount Mica     4     4      2.77 0.00569 0.0171 *           
+## 3 MgO   Sebago Bat… Mount Mica     4     4      1.38 0.167   0.334  ns</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">DunnTest</span>(MgO <span class="op">~</span><span class="st"> </span>Location,dat.kw) <span class="co"># DescTools</span></code></pre>
+<pre><code>## 
+##  Dunn&#39;s test of multiple comparisons using rank sums : holm  
+## 
+##                                 mean.rank.diff   pval    
+## Sebago Batholith-Black Mountain            3.5 0.3336    
+## Mount Mica-Black Mountain                  7.0 0.0171 *  
+## Mount Mica-Sebago Batholith                3.5 0.3336    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<blockquote>
+<p>Conclusión: El contenido de <span class="math inline">\(MgO\)</span> difiere significativamente entre las localidades, <span class="math inline">\(Kruskal-Wallis \chi^2(2) = 7.65\)</span>, <span class="math inline">\(p = .022\)</span>, <span class="math inline">\(\eta^2_H = .63\)</span>, 95% IC <span class="math inline">\([.26, .85]\)</span>. El efecto se puede considerar grande, pero con un rango amplio. Análisis posteriores con Dunn indican que hay una diferencia entre Mount Mica - Black Mountain (<span class="math inline">\(p=.017\)</span>), pero no así entre Mount Mica - Sebago Batholith (<span class="math inline">\(p=.334\)</span>), ni Sebago Batholith - Black Mountain (<span class="math inline">\(p=.334\)</span>).</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span id="fig:kw-stats"></span>
+<img src="geolonum_files/figure-html/kw-stats-1.png" alt="Gráfico de caja mostrando el efecto de localidad sobre el contenido de MgO, la comparación significativa, así como el resumen estadístico respectivo." width="90%" />
+<p class="caption">
+Figura 16.10: Gráfico de caja mostrando el efecto de localidad sobre el contenido de MgO, la comparación significativa, así como el resumen estadístico respectivo.
+</p>
+</div>
+</div>
+<div id="prueba-spearman" class="section level3">
+<h3><span class="header-section-number">16.5.4</span> Correlación de Spearman</h3>
+<p>La correlación de Spearman es una modificación de la correlación de Pearson, donde el interés es la relación entre variables numéricas continuas. La correlación de Spearman tiene las ventajas sobre Pearson que se puede utilizar cuando la relación es <strong>no</strong> lineal, y no se ve tan afectada por valores extremos o atípicos. las hipótesis serían las siguientes:</p>
+<ul>
+<li><span class="math inline">\(H_0: r_s = 0 \to\)</span> No hay relación entre las variables,</li>
+<li><span class="math inline">\(H_1: r_s \neq 0 \to\)</span> Hay relación entre las variables.</li>
+</ul>
+<p>El procedimiento de la prueba sería el siguiente:</p>
+<ol style="list-style-type: decimal">
+<li>Ranquear cada variable por separado.</li>
+<li>Sacar las diferencias al cuadrado entre las observaciones ranqueadas.</li>
+<li>Calcular el coeficiente por medio de la Ecuación <a href="estadística-no-paramétrica.html#eq:r-spearman">(16.1)</a>, o calcular el coeficiente de Pearson con los datos ranqueados.</li>
+<li>Se rechaza <span class="math inline">\(H_0\)</span> si el <span class="math inline">\(r_s &gt; \text{valor crítico}\)</span> o si <span class="math inline">\(p &lt; \alpha\)</span>.</li>
+</ol>
+<p>El uso de la prueba de correlación de Spearman se realiza con un ejemplo de <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span>, donde se el tamaño de ostrácodos con respecto a la profundidad (Tabla <a href="estadística-no-paramétrica.html#tab:spearman-ej1">16.11</a>). Hay una relación entre el paso del tiempo (mayor profundidad) y el tamaño de los ostrácodos? Asuma <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="fl">0.05</span>
+ostracodos =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">prof =</span> <span class="kw">c</span>(<span class="dv">242</span>,<span class="dv">253</span>,<span class="dv">271</span>,<span class="dv">292</span>,<span class="dv">305</span>,<span class="dv">332</span>,<span class="dv">335</span>,<span class="dv">337</span>,<span class="dv">338</span>,<span class="dv">350</span>,
+                             <span class="dv">357</span>,<span class="dv">364</span>,<span class="dv">365</span>,<span class="dv">371</span>,<span class="dv">372</span>,<span class="dv">385</span>,<span class="dv">401</span>,<span class="dv">402</span>,<span class="dv">410</span>,<span class="dv">412</span>,
+                             <span class="dv">418</span>,<span class="dv">423</span>,<span class="dv">427</span>,<span class="dv">429</span>,<span class="dv">432</span>,<span class="dv">446</span>,<span class="dv">451</span>,<span class="dv">454</span>,<span class="dv">460</span>,<span class="dv">470</span>,
+                             <span class="dv">474</span>,<span class="dv">481</span>,<span class="dv">497</span>),
+                    <span class="dt">size =</span> <span class="kw">c</span>(<span class="fl">1.3</span>,.<span class="dv">9</span>,.<span class="dv">7</span>,.<span class="dv">8</span>,.<span class="dv">8</span>,<span class="fl">1.2</span>,.<span class="dv">9</span>,<span class="fl">1.1</span>,<span class="fl">1.6</span>,<span class="fl">1.6</span>,<span class="dv">1</span>,
+                             <span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.4</span>,<span class="fl">1.1</span>,.<span class="dv">9</span>,<span class="fl">1.3</span>,<span class="fl">1.5</span>,<span class="fl">1.8</span>,<span class="fl">1.6</span>,<span class="fl">1.2</span>,
+                             <span class="fl">1.5</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">1.9</span>,<span class="fl">1.5</span>,<span class="fl">1.6</span>,<span class="fl">1.2</span>,<span class="fl">1.6</span>,<span class="fl">1.7</span>,
+                             <span class="fl">1.8</span>,<span class="fl">1.8</span>,<span class="fl">1.3</span>),
+                    <span class="dt">Rprof =</span> <span class="kw">rank</span>(prof),
+                    <span class="dt">Rsize =</span> <span class="kw">rank</span>(size),
+                    <span class="dt">Dif =</span> (Rprof<span class="op">-</span>Rsize)<span class="op">^</span><span class="dv">2</span>)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:spearman-ej1">Tabla 16.11: </span>Valores para la correlación de Spearman
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Profundidad (x)
+</th>
+<th style="text-align:center;">
+Tamaño (y)
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(R_{x}\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(R_{y}\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\((R_{x}-R_{y})^2\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+242
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+15.5
+</td>
+<td style="text-align:center;">
+210.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+253
+</td>
+<td style="text-align:center;">
+0.9
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+5.0
+</td>
+<td style="text-align:center;">
+9.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+271
+</td>
+<td style="text-align:center;">
+0.7
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+4.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+292
+</td>
+<td style="text-align:center;">
+0.8
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2.5
+</td>
+<td style="text-align:center;">
+2.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+305
+</td>
+<td style="text-align:center;">
+0.8
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2.5
+</td>
+<td style="text-align:center;">
+6.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+332
+</td>
+<td style="text-align:center;">
+1.2
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+11.5
+</td>
+<td style="text-align:center;">
+30.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+335
+</td>
+<td style="text-align:center;">
+0.9
+</td>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+5.0
+</td>
+<td style="text-align:center;">
+4.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+337
+</td>
+<td style="text-align:center;">
+1.1
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+8.5
+</td>
+<td style="text-align:center;">
+0.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+338
+</td>
+<td style="text-align:center;">
+1.6
+</td>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+25.0
+</td>
+<td style="text-align:center;">
+256.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+350
+</td>
+<td style="text-align:center;">
+1.6
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+25.0
+</td>
+<td style="text-align:center;">
+225.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+357
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+7.0
+</td>
+<td style="text-align:center;">
+16.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+364
+</td>
+<td style="text-align:center;">
+1.2
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+11.5
+</td>
+<td style="text-align:center;">
+0.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+365
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+15.5
+</td>
+<td style="text-align:center;">
+6.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+371
+</td>
+<td style="text-align:center;">
+1.4
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+18.0
+</td>
+<td style="text-align:center;">
+16.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+372
+</td>
+<td style="text-align:center;">
+1.1
+</td>
+<td style="text-align:center;">
+15
+</td>
+<td style="text-align:center;">
+8.5
+</td>
+<td style="text-align:center;">
+42.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+385
+</td>
+<td style="text-align:center;">
+0.9
+</td>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+5.0
+</td>
+<td style="text-align:center;">
+121.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+401
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+17
+</td>
+<td style="text-align:center;">
+15.5
+</td>
+<td style="text-align:center;">
+2.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+402
+</td>
+<td style="text-align:center;">
+1.5
+</td>
+<td style="text-align:center;">
+18
+</td>
+<td style="text-align:center;">
+20.5
+</td>
+<td style="text-align:center;">
+6.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+410
+</td>
+<td style="text-align:center;">
+1.8
+</td>
+<td style="text-align:center;">
+19
+</td>
+<td style="text-align:center;">
+31.0
+</td>
+<td style="text-align:center;">
+144.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+412
+</td>
+<td style="text-align:center;">
+1.6
+</td>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+25.0
+</td>
+<td style="text-align:center;">
+25.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+418
+</td>
+<td style="text-align:center;">
+1.2
+</td>
+<td style="text-align:center;">
+21
+</td>
+<td style="text-align:center;">
+11.5
+</td>
+<td style="text-align:center;">
+90.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+423
+</td>
+<td style="text-align:center;">
+1.5
+</td>
+<td style="text-align:center;">
+22
+</td>
+<td style="text-align:center;">
+20.5
+</td>
+<td style="text-align:center;">
+2.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+427
+</td>
+<td style="text-align:center;">
+1.5
+</td>
+<td style="text-align:center;">
+23
+</td>
+<td style="text-align:center;">
+20.5
+</td>
+<td style="text-align:center;">
+6.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+429
+</td>
+<td style="text-align:center;">
+1.7
+</td>
+<td style="text-align:center;">
+24
+</td>
+<td style="text-align:center;">
+28.5
+</td>
+<td style="text-align:center;">
+20.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+432
+</td>
+<td style="text-align:center;">
+1.9
+</td>
+<td style="text-align:center;">
+25
+</td>
+<td style="text-align:center;">
+33.0
+</td>
+<td style="text-align:center;">
+64.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+446
+</td>
+<td style="text-align:center;">
+1.5
+</td>
+<td style="text-align:center;">
+26
+</td>
+<td style="text-align:center;">
+20.5
+</td>
+<td style="text-align:center;">
+30.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+451
+</td>
+<td style="text-align:center;">
+1.6
+</td>
+<td style="text-align:center;">
+27
+</td>
+<td style="text-align:center;">
+25.0
+</td>
+<td style="text-align:center;">
+4.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+454
+</td>
+<td style="text-align:center;">
+1.2
+</td>
+<td style="text-align:center;">
+28
+</td>
+<td style="text-align:center;">
+11.5
+</td>
+<td style="text-align:center;">
+272.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+460
+</td>
+<td style="text-align:center;">
+1.6
+</td>
+<td style="text-align:center;">
+29
+</td>
+<td style="text-align:center;">
+25.0
+</td>
+<td style="text-align:center;">
+16.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+470
+</td>
+<td style="text-align:center;">
+1.7
+</td>
+<td style="text-align:center;">
+30
+</td>
+<td style="text-align:center;">
+28.5
+</td>
+<td style="text-align:center;">
+2.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+474
+</td>
+<td style="text-align:center;">
+1.8
+</td>
+<td style="text-align:center;">
+31
+</td>
+<td style="text-align:center;">
+31.0
+</td>
+<td style="text-align:center;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+481
+</td>
+<td style="text-align:center;">
+1.8
+</td>
+<td style="text-align:center;">
+32
+</td>
+<td style="text-align:center;">
+31.0
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+497
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+33
+</td>
+<td style="text-align:center;">
+15.5
+</td>
+<td style="text-align:center;">
+306.25
+</td>
+</tr>
+</tbody>
+</table>
+<p>La suma de las diferencias al cuadrado resulta en:</p>
+<pre class="sourceCode r"><code class="sourceCode r">ostracodos <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Suma =</span> <span class="kw">sum</span>(Dif))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##    Suma
+##   &lt;dbl&gt;
+## 1 1942.</code></pre>
+<p><span class="math display">\[\begin{equation}
+  r_{s} = 1 - \frac{6\sum_i^N[R(x_i)-R(y_i)]^2}{N(N^2-1)}\\
+  r_{s} = 1 - \frac{6 \cdot 1941.5}{33(33^2-1)} = 0.675
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se tiene la función <code>cor.test</code> que puede calcular diferentes coeficientes de correlación. El argumento <code>method</code> define cuál correlación calcular. Se puede calcular <code>spearman</code> sobre los datos originales, pero éste no arroja un intervalo de confianza, o se puede calcular <code>spearman</code> sobre los datos ranqueados; la inferencia no cambia.</p>
+<pre class="sourceCode r"><code class="sourceCode r">spearman.res =<span class="st"> </span><span class="kw">cor.test</span>(<span class="op">~</span>prof<span class="op">+</span>size,ostracodos,<span class="dt">method=</span><span class="st">&#39;spearman&#39;</span>)
+spearman.res</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  prof and size
+## S = 1951.4, p-value = 1.715e-05
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.6738982</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor.test</span>(<span class="op">~</span>Rprof<span class="op">+</span>Rsize,ostracodos,<span class="dt">method=</span><span class="st">&#39;pearson&#39;</span>)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  Rprof and Rsize
+## t = 5.0785, df = 31, p-value = 1.715e-05
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.4300936 0.8260874
+## sample estimates:
+##       cor 
+## 0.6738982</code></pre>
+<p><em>Decisión</em>: Se rechaza <span class="math inline">\(H_0\)</span></p>
+<p>La significancia de la correlación también puede aproximarse por medio de las Ecuaciones <a href="estadística-no-paramétrica.html#eq:spearman-t">(16.19)</a> y <a href="estadística-no-paramétrica.html#eq:spearman-z">(16.20)</a>, donde la primera es similar a la utilizada para la correlación de Pearson (el valor de <span class="math inline">\(t\)</span> en la prueba de Pearson sobre los datos ranqueados, <span class="math inline">\(v=N-2\)</span>), y la segunda es una aproximación a la distribución normal, especialmente cuando el tamaño de la muestra es grande.</p>
+<p><span class="math display" id="eq:spearman-t">\[\begin{equation}
+  t = \frac{r_s \sqrt{v}}{\sqrt{1-r_s^2}}
+  \tag{16.19}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  t = \frac{r_s \sqrt{v}}{\sqrt{1-r_s^2}} = \frac{0.675 \sqrt{31}}{\sqrt{1-0.675^2}} = 5.09
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:spearman-z">\[\begin{equation}
+  z = r_s\sqrt{N-1}
+  \tag{16.20}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  z = r_s\sqrt{N-1} = 0.675\sqrt{33-1} = 3.82
+\end{equation}\]</span></p>
+<p>Al ser <span class="math inline">\(t\)</span> mayor al valor crítico, <span class="math inline">\(t_{0.05/2,31}=|2.04|\)</span>, y al ser <span class="math inline">\(z\)</span> mayor al valor crítico, <span class="math inline">\(1.96\)</span> para <span class="math inline">\(\alpha=0.05\)</span>, se obtiene la misma decisión que con la prueba respectiva.</p>
+<p>El intervalo de confianza puede calcularse por medio de la prueba de Pearson sobre datos ranqueados (mostrada arriba), o por medio de las funciones <code>SpearmanRho</code> del paquete <em>DescTools</em>, o <code>spearmanRho</code> del paquete <em>rcompanion</em> (por medio de bootstrap).</p>
+<pre class="sourceCode r"><code class="sourceCode r">spearman.ci =<span class="st"> </span><span class="kw">with</span>(ostracodos,<span class="kw">SpearmanRho</span>(prof,size,<span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a))
+spearman.ci</code></pre>
+<pre><code>##       rho    lwr.ci    upr.ci 
+## 0.6738982 0.4300936 0.8260874</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">101</span>)
+<span class="kw">spearmanRho</span>(<span class="op">~</span>prof<span class="op">+</span>size,ostracodos,<span class="dt">ci =</span> T,<span class="dt">conf =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##     rho lower.ci upper.ci
+##   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 0.674    0.391    0.832</code></pre>
+<blockquote>
+<p>Conclusión: La profundidad y el tamaño de los ostrácodos están significativa correlacionados, <span class="math inline">\(r_{\mathrm{s}} = .67\)</span>, 95% IC <span class="math inline">\([.43, .83]\)</span>, <span class="math inline">\(p &lt; .001\)</span>. El tamaño del efecto es grande con un rango de medio hasta muy grande.</p>
+</blockquote>
+<div class="figure" style="text-align: center"><span id="fig:spearman-stats"></span>
+<img src="geolonum_files/figure-html/spearman-stats-1.png" alt="Gráfico de dispersión mostrando la relación entre tamaño y profundidad para los ostrácodos, así como el resumen estadístico respectivo." width="90%" />
+<p class="caption">
+Figura 16.11: Gráfico de dispersión mostrando la relación entre tamaño y profundidad para los ostrácodos, así como el resumen estadístico respectivo.
+</p>
+</div>
+<p>La correlación de Spearman:</p>
+<ul>
+<li>No indica relación lineal.</li>
+<li>Simplemente indica que hay una relación (monotónica) entre las variables estudiadas.</li>
+<li>Es inusual que el resultado de un test estadístico para Pearson sea superior al de Spearman.</li>
+<li>En general se considera más robusto el coeficiente Spearman que el de Pearson, especialmente cuando hay valores atípicos.</li>
+</ul>
+</div>
+</div>
+<div id="bootstrap" class="section level2">
+<h2><span class="header-section-number">16.6</span> Bootstrap (remuestreo)</h2>
+<p>Es una técnica de remuestreo (con reemplazamiento) de datos que permite resolver problemas relacionados con la estimación de intervalos de confianza o pruebas de significación estadística. El muestreo con reemplazamiento consiste en tomar una muestra del mismo tamaño de la muestra original, pero permitiendo que las observaciones puedan escogerse más de una vez; un ejemplo se muestra en la Tabla <a href="estadística-no-paramétrica.html#tab:boot-ej">16.12</a>. Como esta técnica genera muestras aleatorias cada vez que se corre el análisis, es recomendado partir del mismo punto para cuestiones de reproducibilidad, por lo que se recomienda usar la función <code>set.seed</code> antes de cualquier remuestreo.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:boot-ej">Tabla 16.12: </span>Ejemplo de muestreo con reemplazamiento
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Muestra original
+</th>
+<th style="text-align:center;">
+Muestra 1
+</th>
+<th style="text-align:center;">
+Muestra 2
+</th>
+<th style="text-align:center;">
+Muestra 3
+</th>
+<th style="text-align:center;">
+Muestra 4
+</th>
+<th style="text-align:center;">
+Muestra 5
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+<p>Si se tiene una muestra representativa de una población en interés, se puede esperar que muestrear la muestra sería homólogo a muestrear la población. Al repetir este proceso un montón de veces (muestrear con reemplazamiento) se pueden construir distribuciones del estadístico de interés (estimación por medio de intervalos de confianza) o distribuciones asumiendo que <span class="math inline">\(H_0\)</span> es verdadera (pruebas de significación estadística). Esta técnica se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:infer-ci">16.12</a> para el caso de estimación por medio de intervalos de confianza.</p>
+<div class="figure" style="text-align: center"><span id="fig:infer-ci"></span>
+<img src="images/infer_ci.png" alt=" Proceso de bootstrap para estimar intervalos de confianza. Los nombres representan funciones del paquete *infer*, pero hacen referencia a los diferentes pasos en el proceso." width="70%" />
+<p class="caption">
+Figura 16.12:  Proceso de bootstrap para estimar intervalos de confianza. Los nombres representan funciones del paquete <em>infer</em>, pero hacen referencia a los diferentes pasos en el proceso.
+</p>
+</div>
+<p>Existen diferentes funciones y paquetes que permiten permiten utilizar esta técnica, dentro de ellos están: <em>boot</em> <span class="citation">(<span class="citeproc-not-found" data-reference-id="R-boot"><strong>???</strong></span>)</span>, <em>infer</em> <span class="citation">(Bray et al., <a href="#ref-R-infer">2019</a>)</span>, y <em>rsample</em> <span class="citation">(Kuhn et al., <a href="#ref-R-rsample">2019</a>)</span>. Los paquetes y funcionalidad de <em>boot</em> y <em>rsample</em> son más generales ya que permiten al usuario definir qué se quiere calcular (lo que permite mayor flexibilidad y control), mientras que <em>infer</em> ya viene con opciones predefinidas de las cuales escoger y simplemente aplicar (mayor facilidad para aplicar pero poco flexible). Los paquetes <em>infer</em> y <em>rsample</em> siguen la metodología del <em>tidyverse</em>, por lo que son más congruentes con la manera en que se han venido mostrando y aplicando los conceptos y análisis en este libro; de hecho ambos paquetes son parte del meta-paquete <em>tidymodels</em> <span class="citation">(Kuhn &amp; Wickham, <a href="#ref-R-tidymodels">2020</a>)</span> que permite aplicar técnicas de aprendizaje automático (machine learning) para diferentes problemas y con diferentes técnicas, de una manera uniforme y congruente.</p>
+<div id="infer" class="section level3">
+<h3><span class="header-section-number">16.6.1</span> <em>infer</em></h3>
+<p>En esta sección se introduce de manera general el funcionamiento del paquete <em>infer</em>; para un mejor entendimiento se recomienda revisar las viñetas del paquete, que cubren todos los posibles análisis que puede correr. Como se mencionó anteriormente este paquete viene con funciones y una metodología predeterminada, lo que lo hace amigable de aprender pero a la hora de querer tener más control no es posible.</p>
+<p>El flujo general se presentó en la Figura <a href="estadística-no-paramétrica.html#fig:infer-ci">16.12</a> y se resume a continuación:</p>
+<ul>
+<li><code>specifiy</code>: Se tiene que definir qué se quiere analizar, y dependiendo de ésto se especifica de diferentes formas.</li>
+<li><code>hypothesize</code>: Se define cuando se quiere simular la distribución que representa a <span class="math inline">\(H_0\)</span>, depende del tipo de prueba.</li>
+<li><code>generate</code>: Se generan la cantidad de replicas deseadas.</li>
+<li><code>calculate</code>: Se escoge el estadístico a calcular, donde las opciones son <code>c(&quot;mean&quot;, &quot;median&quot;, &quot;sum&quot;, &quot;sd&quot;, &quot;prop&quot;, &quot;count&quot;, &quot;diff in means&quot;,   &quot;diff in medians&quot;, &quot;diff in props&quot;, &quot;Chisq&quot;, &quot;F&quot;, &quot;slope&quot;, &quot;correlation&quot;, &quot;t&quot;, &quot;z&quot;)</code></li>
+<li><code>visualise</code>: Grafica el resultado, ya sea la distribución del estadístico para estimación o para prueba estadística.</li>
+</ul>
+<p>Existen otra serie de funciones que permiten obtener el intervalos de confianza, el valor-<em>p</em>, y agregar estos valores al gráfico resultante. En las siguientes secciones se presentan un par de casos reproduciendo ejemplos tratados en estimación y pruebas estadísticas, para poder comparar los resultados.</p>
+<div id="estimación" class="section level4">
+<h4><span class="header-section-number">16.6.1.1</span> Estimación</h4>
+<p>Para el caso de estimación se presenta el ejemplo de la longitud de los braquiópodos en las capas A y B, donde se quiere estimar si las medias se pueden considerar iguales.</p>
+<p>Los pasos son los siguientes:</p>
+<ul>
+<li><code>specifiy</code>: Se puede especificar de dos formas: por medio de fórmula (<code>response ~ explanatory</code>) como se ha trabajado en las diferentes pruebas presentadas, o definir las variables por separado. En este caso la variable respuesta (dependiente) es la longitud (values en el dataframe) y la variable explanatoria (independiente) es la variable agrupadora (ind en el dataframe).</li>
+<li><code>hypothesize</code>: No se usa por ser un problema de estimación.</li>
+<li><code>generate</code>: Se generan 1000 replicas.</li>
+<li><code>calculate</code>: Lo que se quiere estimar es la diferencia de medias (<code>'diff in means'</code>), y por ser éste el caso es necesario definir el orden (<code>order</code>) de la diferencia, donde se realiza <code>primero - segundo</code>.</li>
+</ul>
+<p>Este proceso genera el remuestreo con el estadístico (<code>stat</code>) deseado. A partir de estos datos se puede: obtener el intervalo de confianza (<code>get_ci</code>), visualizar la distribución del estadístico (diferencia de medias) y sobreponerle el intervalo de confianza (Figura <a href="estadística-no-paramétrica.html#fig:braq-dif">16.13</a>).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">101</span>)
+a =<span class="st"> </span><span class="fl">.05</span>
+
+boots =<span class="st"> </span>braq <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">specify</span>(<span class="dt">response =</span> values, <span class="dt">explanatory =</span> ind) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">generate</span>(<span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&#39;diff in means&#39;</span>, <span class="dt">order =</span> <span class="kw">c</span>(<span class="st">&#39;A&#39;</span>,<span class="st">&#39;B&#39;</span>))
+boots</code></pre>
+<pre><code>## # A tibble: 1,000 x 2
+##    replicate   stat
+##        &lt;int&gt;  &lt;dbl&gt;
+##  1         1 0.122 
+##  2         2 0.0556
+##  3         3 0.0892
+##  4         4 0.195 
+##  5         5 0.217 
+##  6         6 0.233 
+##  7         7 0.0167
+##  8         8 0.245 
+##  9         9 0.0500
+## 10        10 0.0889
+## # … with 990 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">boots <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_dif =</span> <span class="kw">mean</span>(stat))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   mean_dif
+##      &lt;dbl&gt;
+## 1    0.163</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">boots_ci =<span class="st"> </span>boots <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">get_ci</span>(<span class="dt">level =</span> <span class="dv">1</span><span class="op">-</span>a)
+boots_ci</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##     `2.5%` `97.5%`
+##      &lt;dbl&gt;   &lt;dbl&gt;
+## 1 -0.00312   0.348</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">boots <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">visualise</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">shade_ci</span>(<span class="dt">endpoints =</span> boots_ci)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:braq-dif"></span>
+<img src="geolonum_files/figure-html/braq-dif-1.png" alt="Distibución de diferencia de medias para la longitud de braquiópodos en dos capas diferentes." width="90%" />
+<p class="caption">
+Figura 16.13: Distibución de diferencia de medias para la longitud de braquiópodos en dos capas diferentes.
+</p>
+</div>
+<blockquote>
+<p>El resultado muestra que el intervalo de confianza incluye a 0 (por muy poco), por lo que es un valor probable para la diferencia de la longitud de los braquiópodos en las dos capas, pudiendo considerar semejantes. Este resultado no difiere mucho del obtenido por medio de la respectiva prueba estadística.</p>
+</blockquote>
+</div>
+<div id="prueba-estadística" class="section level4">
+<h4><span class="header-section-number">16.6.1.2</span> Prueba estadística</h4>
+<p>El poder realizar simulaciones para problemas donde no hay posibilidad de estimar intervalos de confianza es muy útil, ya que permite validar o suplantar el proceso de una prueba estadística y obtener resultados representativos.</p>
+<p>Para el caso de la prueba estadística se presenta el ejemplo del nivel de contaminación para pozos en diferentes localidades, donde se quiere estimar si el nivel de contaminación es similar (homogéneo) en la diferentes localidades.</p>
+<p>Los pasos son los siguientes:</p>
+<ul>
+<li><code>specifiy</code>: Se puede especificar de dos formas: por medio de fórmula (<code>response ~ explanatory</code>) como se ha trabajado en las diferentes pruebas presentadas, o definir las variables por separado. En este caso se usa la fórmula y la variable respuesta (dependiente) es el nivel e contaminación y la variable explanatoria (independiente) es la localidad.</li>
+<li><code>hypothesize</code>: Por ser una prueba de dos variables la hipótesis es que no hay efecto de la variable explanatoria sobre la respuesta, o que son independientes. Si se tratara de una variable, se tienen que definir otros argumentos dependiendo del tipo de prueba.</li>
+<li><code>generate</code>: Se generan 1000 replicas.</li>
+<li><code>calculate</code>: Lo que se quiere estimar es la distribución de <span class="math inline">\(\chi^2\)</span> (<code>'Chisq'</code>).</li>
+</ul>
+<p>Este proceso genera el remuestreo con el estadístico (<code>stat</code>) deseado. A partir de estos datos se puede: obtener el valor-<em>p</em> (<code>get_p_value</code>), visualizar la distribución del estadístico (<span class="math inline">\(\chi^2\)</span>) y sobreponerle el área de rechazo a partir del valor-<em>p</em> (Figura <a href="estadística-no-paramétrica.html#fig:pozos-chi">16.14</a>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">obs_chisq &lt;-<span class="st"> </span>pozos <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">specify</span>(Contaminado <span class="op">~</span><span class="st"> </span>Localidad) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;Chisq&quot;</span>)
+obs_chisq</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##    stat
+##   &lt;dbl&gt;
+## 1  5.25</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">101</span>)
+chisq_null &lt;-<span class="st"> </span>pozos <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">specify</span>(Contaminado <span class="op">~</span><span class="st"> </span>Localidad) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hypothesize</span>(<span class="dt">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">generate</span>(<span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;Chisq&quot;</span>)
+
+chisq_null <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">get_p_value</span>(<span class="dt">obs_stat =</span> obs_chisq, <span class="dt">direction =</span> <span class="st">&quot;greater&quot;</span>)</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   p_value
+##     &lt;dbl&gt;
+## 1   0.098</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">chisq_null <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">visualize</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">shade_p_value</span>(<span class="dt">obs_stat =</span> obs_chisq, <span class="dt">direction =</span> <span class="st">&quot;greater&quot;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:pozos-chi"></span>
+<img src="geolonum_files/figure-html/pozos-chi-1.png" alt="Distibución de $\chi^2$ para el nivel de contaminación por localidad." width="90%" />
+<p class="caption">
+Figura 16.14: Distibución de <span class="math inline">\(\chi^2\)</span> para el nivel de contaminación por localidad.
+</p>
+</div>
+<blockquote>
+<p>El resultado muestra que el valor-<em>p</em> está por encima del nivel de significancia, por lo que no se rechaza que el nivel de contaminación sea similar en las diferentes localidades. Este resultado no difiere mucho del obtenido por medio de la respectiva prueba estadística.</p>
+</blockquote>
+<p>De nuevo, aquí se presentaron un par de ejemplo para introducir el uso de este paquete y las opciones que permite, para otras pruebas o estimaciones se recomienda revisar la documentación del paquete.</p>
+</div>
+</div>
+<div id="rsample" class="section level3">
+<h3><span class="header-section-number">16.6.2</span> <em>rsample</em></h3>
+<p>En esta sección se introduce de manera general el funcionamiento del paquete <em>rsample</em>. La funcionalidad de este paquete es más general ya que el usuario tiene que definir el estadístico o valor a muestrear, lo que implica cierta complejidad pero a su vez mayor flexibilidad. Otra ventaja, sobre <code>infer</code>, es que permite realizar un muestreo estratificado, lo que mantiene la cantidad de observaciones presentes en los diferentes grupos, respetando las condiciones de muestreo original y controlando que no se generen muestreos desbalanceados.</p>
+<p>Los pasos generales son los siguientes:</p>
+<ol style="list-style-type: decimal">
+<li>Generar el remuestreo con <code>bootstraps</code>, donde se ocupa un dataframe, el número de replicas, y aquí se puede definir la variable estratificadora (<code>strata</code>) de ser necesario. Esto genera un <em>tibble</em> con las variables <code>splits</code> y <code>id</code>, donde <code>splits</code> contiene el dataframe remuestreado (datos para <code>analysis</code>), que es sobre el cual se quiere realizar el análisis, y además guarda las observaciones que no se muestrearon (datos para <code>assessment</code>).</li>
+<li>Definir una o varias funciones a aplicar sobre los <code>splits</code>. Aquí es donde el usuario tiene toda la flexibilidad y control sobre el análisis, y es lo que a su vez implica mayor complejidad por el hecho de tener que definir/crear funciones propias.</li>
+<li>Agregar variables (<code>mutate</code>) al <em>tibble</em> generado en el primer paso por medio de la iteración (usando funciones <code>map</code> del paquete <em>purrr</em> <span class="citation">(Henry &amp; Wickham, <a href="#ref-R-purrr">2019</a>)</span>) sobre los <code>splits</code> con la(s) función(es) definida(s) en el segundo paso. El tipo de variable puede ser cualquier tipo de objeto dada la flexibilidad de los <em>tibbles</em>.</li>
+<li>Con el <em>tibble</em> actualizado se puede(n) analizar la(s) variable(s) agregadas en el paso tres, ya sea por medio de estimación de intervalos de confianza, visualización de las distribuciones, o tareas más complejas dependiendo de la(s) variable(s) generada(s).</li>
+</ol>
+<div id="estimación-1" class="section level4">
+<h4><span class="header-section-number">16.6.2.1</span> Estimación</h4>
+<p>Como ejemplo para estimación se usa el ejemplo del contenido de cuarzo de una roca ígnea.</p>
+<ol style="list-style-type: decimal">
+<li>Se convierte el vector en un <em>tibble</em> y se especifican 1000 remuestreos.</li>
+<li>Se generan las funciones <code>avg</code> y <code>d</code> para calcular la media y el tamaño del efecto para cada remuestreo.</li>
+<li>Se agregan las variables <code>avg</code> y <code>d</code> al <em>tibble</em> original por medio de la función <code>map_dbl</code>, ya que el resultado de ambas funciones es un número con decimales.</li>
+</ol>
+<pre class="sourceCode r"><code class="sourceCode r">mu =<span class="st"> </span><span class="dv">20</span>
+a =<span class="st"> </span><span class="fl">.05</span>
+n =<span class="st"> </span><span class="kw">length</span>(cuarzo)
+
+<span class="kw">set.seed</span>(<span class="dv">101</span>)
+m =<span class="st"> </span><span class="kw">bootstraps</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(cuarzo), <span class="dt">times =</span> <span class="dv">1000</span>)
+
+avg =<span class="st"> </span><span class="cf">function</span>(split) {
+  split <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">analysis</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">pull</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mean</span>()
+}
+
+d =<span class="st"> </span><span class="cf">function</span>(split) {
+  vec =<span class="st"> </span>split <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">analysis</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">pull</span>(<span class="dv">1</span>)  
+  d =<span class="st"> </span>(<span class="kw">mean</span>(vec) <span class="op">-</span><span class="st"> </span>mu) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(vec)
+  <span class="kw">return</span>(d)
+}
+
+<span class="co"># avg2 = as_mapper(~ .x %&gt;% analysis %&gt;% pull(1) %&gt;% mean)</span>
+<span class="co"># avg3 = compose(mean, partial(pull, var=1), analysis)</span>
+
+m =<span class="st"> </span>m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">avg =</span> <span class="kw">map_dbl</span>(splits, <span class="op">~</span><span class="kw">avg</span>(.)),
+         <span class="dt">d =</span> <span class="kw">map_dbl</span>(splits, <span class="op">~</span><span class="kw">d</span>(.)),
+         )
+m</code></pre>
+<pre><code>## # A tibble: 1,000 x 4
+##    splits        id              avg      d
+##    &lt;list&gt;        &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;
+##  1 &lt;split [8/4]&gt; Bootstrap0001  21.5  0.655
+##  2 &lt;split [8/3]&gt; Bootstrap0002  23.3  1.22 
+##  3 &lt;split [8/2]&gt; Bootstrap0003  21.9  0.548
+##  4 &lt;split [8/2]&gt; Bootstrap0004  21.7  0.704
+##  5 &lt;split [8/3]&gt; Bootstrap0005  21.3  0.369
+##  6 &lt;split [8/4]&gt; Bootstrap0006  19.4 -0.234
+##  7 &lt;split [8/4]&gt; Bootstrap0007  22.5  1.16 
+##  8 &lt;split [8/4]&gt; Bootstrap0008  20.6  0.154
+##  9 &lt;split [8/2]&gt; Bootstrap0009  20.8  0.237
+## 10 &lt;split [8/2]&gt; Bootstrap0010  20.5  0.189
+## # … with 990 more rows</code></pre>
+<p>Una vez generado y actualizado el <em>tibble</em> se calculan estadísticas para las variables generadas (<code>q1</code> y <code>q3</code> representan los límites inferior y superior del intervalo de confianza), y se visualizan las mismas por medio de histogramas mostrando el intervalo de confianza (Figuras <a href="estadística-no-paramétrica.html#fig:Q-avg">16.15</a> y <a href="estadística-no-paramétrica.html#fig:Q-d">16.16</a>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">m.s =<span class="st"> </span>m <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise_if</span>(is.numeric,
+               <span class="dt">.funs =</span> <span class="kw">list</span>(<span class="op">~</span><span class="kw">mean</span>(.),
+                            <span class="op">~</span><span class="kw">sd</span>(.),
+                            <span class="dt">q1=</span><span class="op">~</span><span class="kw">quantile</span>(.,a<span class="op">/</span><span class="dv">2</span>),
+                            <span class="dt">q2=</span><span class="op">~</span><span class="kw">quantile</span>(.,.<span class="dv">5</span>),
+                            <span class="dt">q3=</span><span class="op">~</span><span class="kw">quantile</span>(.,<span class="dv">1</span><span class="op">-</span>a<span class="op">/</span><span class="dv">2</span>)))
+m.s <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">everything</span>(),
+               <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&#39;param&#39;</span>,<span class="st">&#39;stat&#39;</span>),
+               <span class="dt">names_sep =</span> <span class="st">&#39;_&#39;</span>,
+               <span class="dt">values_to =</span> <span class="st">&#39;value&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(param)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    param stat   value
+##    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;
+##  1 avg   mean  21.5  
+##  2 avg   sd     0.993
+##  3 avg   q1    19.4  
+##  4 avg   q2    21.4  
+##  5 avg   q3    23.3  
+##  6 d     mean   0.553
+##  7 d     sd     0.447
+##  8 d     q1    -0.209
+##  9 d     q2     0.498
+## 10 d     q3     1.53</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">myvar =<span class="st"> &#39;avg&#39;</span> <span class="co"># variable a graficar: avg, d</span>
+
+<span class="kw">ggplot</span>(m, <span class="kw">aes</span>(<span class="kw">get</span>(myvar))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">fill =</span> <span class="st">&#39;grey80&#39;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">unlist</span>(m.s <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="kw">str_glue</span>(<span class="st">&#39;{myvar}_q&#39;</span>)))), 
+             <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;Contenido de cuarzo (%)&#39;</span>,
+       <span class="dt">y =</span> <span class="st">&#39;&#39;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:Q-avg"></span>
+<img src="geolonum_files/figure-html/Q-avg-1.png" alt="Distibución de medias para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza." width="90%" />
+<p class="caption">
+Figura 16.15: Distibución de medias para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza.
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r">myvar =<span class="st"> &#39;d&#39;</span> <span class="co"># variable a graficar: avg, d</span>
+
+<span class="kw">ggplot</span>(m, <span class="kw">aes</span>(<span class="kw">get</span>(myvar))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">fill =</span> <span class="st">&#39;grey80&#39;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">unlist</span>(m.s <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="kw">str_glue</span>(<span class="st">&#39;{myvar}_q&#39;</span>)))), 
+             <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&#39;blue&#39;</span>,<span class="st">&#39;red&#39;</span>,<span class="st">&#39;blue&#39;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">TeX</span>(<span class="st">&#39;Tamaño del efecto (</span><span class="ch">\\</span><span class="st">mathit{Cohen d}) </span>
+<span class="st">               para el contenido de cuarzo&#39;</span>),
+       <span class="dt">y =</span> <span class="st">&#39;&#39;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:Q-d"></span>
+<img src="geolonum_files/figure-html/Q-d-1.png" alt="Distibución de tamaño del efecto ($d$) para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza." width="90%" />
+<p class="caption">
+Figura 16.16: Distibución de tamaño del efecto (<span class="math inline">\(d\)</span>) para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza.
+</p>
+</div>
+<blockquote>
+<p>Con los resultados se puede concluir que el contenido de cuarzo no difiere significativamente del valor propuesto, ya que se encuentra dentro del intervalo de confianza. El tamaño del efecto es mediano, pero con un rango muy amplio desde pequeño en la dirección opuesta hasta muy grande. Este resultado no difiere mucho del obtenido por medio de la respectiva prueba estadística.</p>
+</blockquote>
+<p>Aquí se introdujo muy brevemente la aplicabilidad del paquete <em>rsample</em> para usar la técnica de bootstrap. Este paquete, en conjunto con otros del <em>tidyverse</em>, son una herramienta muy potente para poder realizar diversidad de análisis desde simples hasta complejos.</p>
+
+</div>
+</div>
 </div>
 </div>
 <h3>Referencias</h3>
 <div id="refs" class="references">
+<div id="ref-agresti2007">
+<p>Agresti, A. (2007). <em>An Introduction to Categorical Data Analysis</em> (2.ª ed.). John Wiley &amp; Sons.</p>
+</div>
+<div id="ref-borradaile2003">
+<p>Borradaile, G. J. (2003). <em>Statistics of Earth Science Data: Their Distribution in Time, Space and Orientation</em>. Springer-Verlag Berlin Heidelberg.</p>
+</div>
+<div id="ref-R-infer">
+<p>Bray, A., Ismay, C., Chasnovski, E., Baumer, B., &amp; Cetinkaya-Rundel, M. (2019). <em>infer: Tidy Statistical Inference</em>. <a href="https://CRAN.R-project.org/package=infer">https://CRAN.R-project.org/package=infer</a></p>
+</div>
+<div id="ref-R-MOTE">
+<p>Buchanan, E. M., Gillenwaters, A. M., Scofield, J. E., &amp; Valentine, K. D. (2019). <em>MOTE: Effect Size and Confidence Interval Calculator</em>. <a href="https://CRAN.R-project.org/package=MOTE">https://CRAN.R-project.org/package=MOTE</a></p>
+</div>
+<div id="ref-cohen1988">
+<p>Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em> (2.ª ed.). Erlbaum.</p>
+</div>
+<div id="ref-field2012">
+<p>Field, A., Miles, J., &amp; Field, Z. (2012). <em>Discovering Statistics Using R</em>. SAGE Publications Ltd.</p>
+</div>
 <div id="ref-fritz2012joepg">
 <p>Fritz, C. O., Morris, P. E., &amp; Richler, J. J. (2012). Effect size estimates: Current use, calculations, and interpretation. <em>Journal of Experimental Psychology: General</em>, <em>141</em>(1), 2-18. <a href="https://doi.org/10.1037/a0024338">https://doi.org/10.1037/a0024338</a></p>
 </div>
+<div id="ref-R-purrr">
+<p>Henry, L., &amp; Wickham, H. (2019). <em>purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a></p>
+</div>
+<div id="ref-R-rstatix">
+<p>Kassambara, A. (2020). <em>rstatix: Pipe-Friendly Framework for Basic Statistical Tests</em>. <a href="https://CRAN.R-project.org/package=rstatix">https://CRAN.R-project.org/package=rstatix</a></p>
+</div>
+<div id="ref-R-rsample">
+<p>Kuhn, M., Chow, F., &amp; Wickham, H. (2019). <em>rsample: General Resampling Infrastructure</em>. <a href="https://CRAN.R-project.org/package=rsample">https://CRAN.R-project.org/package=rsample</a></p>
+</div>
+<div id="ref-R-tidymodels">
+<p>Kuhn, M., &amp; Wickham, H. (2020). <em>tidymodels: Easily Install and Load the ’Tidymodels’ Packages</em>. <a href="https://CRAN.R-project.org/package=tidymodels">https://CRAN.R-project.org/package=tidymodels</a></p>
+</div>
+<div id="ref-R-rcompanion">
+<p>Mangiafico, S. (2020). <em>rcompanion: Functions to Support Extension Education Program Evaluation</em>. <a href="https://CRAN.R-project.org/package=rcompanion">https://CRAN.R-project.org/package=rcompanion</a></p>
+</div>
+<div id="ref-mckillup2010">
+<p>McKillup, S., &amp; Darby Dyar, M. (2010). <em>Geostatistics Explained: An Introductory Guide for Earth Scientists</em>. Cambridge University Press. <a href="www.cambridge.org/9780521763226">www.cambridge.org/9780521763226</a></p>
+</div>
+<div id="ref-R-vcd">
+<p>Meyer, D., Zeileis, A., &amp; Hornik, K. (2017). <em>vcd: Visualizing Categorical Data</em>. <a href="https://CRAN.R-project.org/package=vcd">https://CRAN.R-project.org/package=vcd</a></p>
+</div>
+<div id="ref-nolan2014">
+<p>Nolan, S. A., &amp; Heinzen, T. E. (2014). <em>Statistics for the Behavioral Sciences</em> (3.ª ed.). Worth Publishers.</p>
+</div>
+<div id="ref-sheskin2011">
+<p>Sheskin, D. J. (2011). <em>Handbook of Parametric and Nonparametric Statistical Procedures</em> (5.ª ed.). CRC Press.</p>
+</div>
+<div id="ref-R-DescTools">
+<p>Signorell, A. (2020). <em>DescTools: Tools for Descriptive Statistics</em>. <a href="https://CRAN.R-project.org/package=DescTools">https://CRAN.R-project.org/package=DescTools</a></p>
+</div>
+<div id="ref-swan1995">
+<p>Swan, A., &amp; Sandilands, M. (1995). <em>Introduction to Geological Data Analysis</em>. Blackwell Science.</p>
+</div>
 <div id="ref-tomczak2014tss">
 <p>Tomczak, M., &amp; Tomczak, E. (2014). The need to report effect size estimates revisited. An overview of some recommended measures of effect size. <em>Trends in Sport Sciences</em>, <em>1</em>(21), 19-25.</p>
+</div>
+<div id="ref-walpole2012">
+<p>Walpole, R. E., Myers, R. H., &amp; Myers, S. L. (2012). <em>Probabilidad y Estadística Para Ingeniería y Ciencias</em>. Pearson.</p>
 </div>
 </div>
             </section>

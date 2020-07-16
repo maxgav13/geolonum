@@ -1,18 +1,22 @@
 # Estadística No Paramétrica
 
 ```{r noparam-setup, include=FALSE}
+library(papaja)
+library(latex2exp)
 library(DescTools) # para pruebas
-library(effsize) # para tamanho del efecto
 library(effectsize) # para tamanho del efecto
 library(MOTE) # para tamanho del efecto
-library(itns) # para tamanho del efecto
-library(multcomp) # comparaciones multiples
-library(ggmosaic) # mosaico en ggplot
 library(vcd) # variables categoricas
+library(boot)
+library(rcompanion)
+library(rstatix)
+library(ggstatsplot)
 library(kableExtra)
 library(summarytools)
 library(patchwork)
 library(janitor)
+library(rio)
+library(conflicted)
 library(tidymodels)
 library(tidyverse)
 
@@ -30,29 +34,82 @@ knitr::opts_chunk$set(
 )
 
 theme_set(theme_bw(base_size = 12))
-
+conflict_prefer('select','dplyr')
+conflict_prefer('filter','dplyr')
+conflict_prefer('chisq.test','janitor')
+conflict_prefer("TeX", "latex2exp")
+conflict_prefer("stack", "utils")
 ```
 
 ## Introducción
 
+En el capítulo anterior ([Pruebas Estadísticas]) se introdujeron las pruebas estadísticas paramétricas más comunes, donde la suposición principal era que la(s) variable(s) de interés se encuentra(s) aproximadamente normalmente distribuida(s). Esta suposición aplica más que todo cuando la(s) variable(s) es(son) cuantitativa(s) continua(s) y se tiene una muestra relativamente grande. En los casos donde la(s) variable(s) de interés es(son) nominal u ordinal, o no cumple(n) con otras suposiciones de las pruebas o técnicas de análisis, es más apropiado utilizar pruebas o técnicas no paramétricas. 
+
+Al igual que para las pruebas paramétricas, en los casos que corresponda se presentará el tamaño del efecto respectivo. Para algunas de las pruebas no paramétricas la metodología consiste en transformar los datos continuos a datos ordinales y realizar la prueba sobre estos datos transformados. Los pasos mencionados por @nolan2014 se pueden aplicar también para estas pruebas.
+
+De manera general lo expuesto en este capítulo se basa en @tomczak2014tss, @fritz2012joepg, @nolan2014, @borradaile2003, @walpole2012, @mckillup2010, @field2012 y @sheskin2011.
+
 ## Pruebas no-paramétricas {#pruebas-noparam}
 
-* Prueba-$\chi^2$ de bondad de ajuste (\@ref(prueba-chi-gof))
+Estas pruebas se pueden dividir en dos grupos: para *datos nominales* (pruebas $\chi^2$) y para *datos ordinales*. Los datos nominales, típicamente presentados como conteos, corresponden con observaciones en categorías excluyentes, queriendo decir que cada observación pertenece a una sola categoría, y tener  más observaciones de una categoría implica menos observaciones de la(s) otra(s). Estos datos se pueden presentar en **tablas de contingencia** (Tabla \@ref(tab:contingencia-ej)), donde se tabulan la cantidad de observaciones que pertenecen a cada una de las categorías.
+
+```{r contingencia-ej, echo=FALSE} 
+clastos = import('data/chi2 homogeneidad clastos.csv',setclass = 'tibble') %>% 
+  mutate(Clasto = fct_inorder(Clasto),
+         Capa = fct_inorder(as.factor(Capa)))
+
+clastos %>% tabyl(Clasto,Capa) %>% 
+  adorn_totals(where = c('row','col')) %>%
+  kable(caption = 'Ejemplo de tabla de contingencia.') %>% 
+  kable_styling(full_width = F) %>% 
+  add_header_above(c(' '=1,'Capa'=4,' '=1))
+```
+
+En este capítulo se presentan las siguientes pruebas:
+
+* Prueba $\chi^2$ de bondad de ajuste (\@ref(prueba-chi-gof))
   - $H_0:$ Datos siguen la distribución/proporción esperada
-* Prueba-$\chi^2$ de homogeneidad (\@ref(prueba-chi-hom))
-  - $H_0:$ Distribución homogenea entre las categorías de variables cualitativas
-* Prueba-$\chi^2$ de independencia/asociación (\@ref(prueba-chi-asoc))
-  - $H_0:$ No hay relación entre variables cualitativas o éstas son independientes entre si
+* Prueba $\chi^2$ de homogeneidad (\@ref(prueba-chi-hom))
+  - $H_0:$ Distribución homogénea entre las categorías de variables nominales
+* Prueba $\chi^2$ de independencia/asociación (\@ref(prueba-chi-asoc))
+  - $H_0:$ No hay relación entre variables nominales o éstas son independientes entre si
+* Prueba de rango con signo de Wilcoxon (\@ref(prueba-wilcoxon))
+  - $H_0:$ La mediana es igual a un valor dado
+* Prueba de la suma de rangos de Wilcoxon / Prueba U de Mann-Whitney (\@ref(prueba-mwu))
+  - $H_0:$ No hay diferencia entre las medianas de las dos muestras
+* Prueba de Kruskal-Wallis (\@ref(prueba-kruskal))
+  - $H_0:$ No hay diferencia entre las medianas de las muestras
+* Correlación de Spearman (\@ref(prueba-spearman))
+  - $H_0: r_s = 0$ No hay relación/asociación entre las variables ordinales
+* Bootstrap (remuestreo) (\@ref(bootstrap))
+  - Técnica que permita hacer inferencias por medio de pruebas estadísticas o intervalos de confianza, especialmente útil para casos donde no hay una solución analítica
 
 ## Tamaño del efecto {#ES-np}
 
+De manera similar a las pruebas paramétricas es importante además de presentar los resultados de pruebas de hipótesis, presentar tamaños de efecto para evaluar la significancia práctica del estudio. Para estas pruebas los tamaños del efecto corresponden principalmente con la familia $r$, de asociación/relación entre variables, los cuales se presentan en la Tabla \@ref(tab:ES-np).
+
 ```{r ES-np, echo=FALSE}
 tibble(Prueba = c('Correlación',
+                  'Rango de 1 y 2 muestras',
+                  'Rango de 2+ muestras',
+                  'Rango de 2+ muestras',
                   '$\\chi^2$',
                   '$\\chi^2$'),
        ES = c('\\begin{equation}
-              r_{s} = \\frac{d_s}{\\sqrt{d_s^2 + \\frac{(n_1 + n_2)^2}{n_1  n_2}}}
-              (\\#eq:r-pb)
+              r_{s} = 1 - \\frac{6\\sum_i^N[R(x_i)-R(y_i)]^2}{N(N^2-1)}
+              (\\#eq:r-spearman)
+              \\end{equation}',
+              '\\begin{equation}
+              r = \\frac{Z}{\\sqrt{N}}
+              (\\#eq:r-rangos)
+              \\end{equation}',
+              '\\begin{equation}
+              \\eta_H^2 = \\frac{H-k+1}{N-k}
+              (\\#eq:eta2-h)
+              \\end{equation}',
+              '\\begin{equation}
+              \\epsilon^2 = \\frac{H}{(N^2-1)/(N+1)}
+              (\\#eq:epsilon2)
               \\end{equation}',
               '\\begin{equation}
               \\phi = \\sqrt{\\frac{\\chi^2}{N}}
@@ -75,21 +132,1269 @@ tibble(Prueba = c('Correlación',
   footnote(general_title = 'Notas:',
            general = c('$N$ = total de observaciones',
                        '$r_{s}$ = coeficiente de correlación de Spearman',
+                       '$R(x_i)$ = Rangos de la variable x',
+                       '$R(y_i)$ = Rangos de la variable y',
+                       '$H$ = Estadístico de Kruskal-Wallis ($\\chi^2$)',
+                       '$k$ = Número de grupos',
                        '$v_{min}$ = grados de libertad mínimo de las filas o columnas de la tabla de contingencia'
                        ))
 ```
 
-El $\phi$ y Cramer $V$ comprenden el rango de 0 a 1 y se pueden interpretar similar a $r$, donde valores cercanos a 0 indican poca o nula asociación y valores cerca de 1 indican alta asociación [@fritz2012joepg; @tomczak2014tss].
+El $\phi$ y Cramer $V$ comprenden el rango de 0 a 1 y se pueden interpretar similar a $r$ y $r_s$, donde valores cercanos a 0 indican poca o nula asociación y valores cerca de 1 indican alta asociación. El $\phi$ aplica para tablas de $2 \times 2$ ($v=1$) o vectores, mientras que Cramer $V$ aplica para tablas de diferentes dimensiones( $r \times c$, $r = \text{rows/filas}$ y $c = \text{columnas}$) [@cohen1988; @fritz2012joepg; @tomczak2014tss]. Para clasificar el tamaño del efecto se pueden seguir las mismas guías que para $r$ (0.1, 0.3, 0.5). El $\eta_H^2$ y $\epsilon^2$ comprenden el rango de 0 a 1 y se interpreta igual a $R^2$ y $\eta^2$ presentados en los capítulos de [Estadística Descriptiva Bivariable] y [Pruebas Estadísticas].
 
-## Bondad de ajuste {#prueba-chi-gof}
+## Pruebas $\chi^2$ (nominales)
 
-## Homogeneidad {#prueba-chi-hom}
+Para la prueba $\chi^2$ el estadístico se calcula de acuerdo a la Ecuación \@ref(eq:chi2), donde $O_K$ es la frecuencia (conteo) observada y $E_K$ es la frecuencia (conteo) esperada para la categoría $K$. Esta prueba requiere que todas las frecuencias (conteos) esperados sean superiores a 5 y que se tengan por lo menos 50 observaciones. Esta prueba es siempre de una cola con la región de rechazo en la cola derecha.
 
-## Independencia / asociación {#prueba-chi-asoc}
+\begin{equation}
+  \chi^2 = \sum_{K=1}^K\frac{(O_K-E_K)^2}{E_K}
+  (\#eq:chi2)
+\end{equation}
+
+### Vector de datos
+
+#### Bondad de ajuste {#prueba-chi-gof}
+
+Esta prueba se realiza cuando se tiene 1 variable de interés y dicha variable es nominal, y ésta puede tener $2+$ categorías ($K$), y se quiere comparar el conteo de dichas categorías con unos valores esperados o predefinidos, de ahí el término "ajuste", donde se refiere a qué tanto se "ajusta" o parece lo observado a lo esperado. 
+De manera general la prueba $\chi^2$ se ajusta a la cantidad de categorías que tenga la variable, pero existen pruebas exactas donde si la variable tiene 2 categorías es una prueba binomial y si tiene 3 o más es una prueba multinomial. 
+
+El estadístico se calcula conforme la Ecuación \@ref(eq:chi2), donde los grados de libertad son el número de categorías menos uno ($v=K-1$).
+
+Para mostrar la prueba de bondad de ajuste se usa el ejemplo de @mckillup2010, donde se tiene una muestra de 20 foraminíferos, clasificados en enrollados a la derecha (16) o a la izquierda (4), y se quiere comparar con las proporciones de 0.9 y 0.1 respectivamente. Asuma $\alpha=0.05$. 
+
+1. Identificar la población, distribución, y la prueba apropiada:
+    - Población: foraminíferos enrollados a la derecha e izquierda
+    - Distribución: $\chi^2$
+    - Prueba: $\chi^2$ de bondad de ajuste, ya que se tiene una variable nominal (dirección en que se enrollan), en este caso con 2 niveles ($K=2$)
+2. Establecer las hipótesis nula y alterna:
+    - $H_0:$ Los foraminíferos que se contaron siguen las proporciones propuestas (0.9 derecha, 0.1 izquierda)
+    - $H_1:$ Los foraminíferos que se contaron siguen otras proporciones
+3. Determinar parámetros de la distribución a comparar ($H_0$):
+    - $v = K-1 = 2 - 1 = 1$
+4. Determinar valores críticos
+    - $\alpha = 0.05$
+    - $\chi^2_{\alpha,v} = \chi_{0.05,1}^2=3.84$
+5. Calcular el estadístico de prueba
+    - Para un $N=20$ la proporción de 0.9 equivale a 18 y la proporción de 0.1 equivale a 2, que serían las frecuencias esperadas (*Con estos valores, especialmente el de 2, se estaría violando el supuesto de tener 5 o más frecuencias esperadas*)
+    - $\chi^2 = \sum_{K=1}^K\frac{(O_K-E_K)^2}{E_K}$
+    - $\chi^2 = \frac{(16-18)^2}{18} + \frac{(4-2)^2}{2} = 2.22$
+6. Tomar una decisión
+    - El estadístico de prueba es menor al crítico, $\chi^2 < \chi_{\alpha,v}^2$
+    - El valor-*p* es mayor a $\alpha = 0.05$, $p = 0.136$
+    - *Decisión*: No se rechaza $H_0$
+
+En **R** existe la función `chisq.test` que realiza esta prueba, donde los argumentos principales son el vector de valores observados (variable nominal) y el vector de probabilidades para cada uno de los valores (categorías) de la variable observada.
+
+```{r warning=TRUE}
+a = 0.05
+N = 20
+chi.gof = chisq.test(c(16,4),p = c(.9,.1))
+chi.gof
+```
+
+Como se está violando el supuesto de frecuencias esperadas mínimas (la prueba arroja una advertencia), se puede realizar la prueba exacta binomial (ya que $K=2$, si se tuvieran más categorías se usa la prueba multinomial), que se demuestra aquí únicamente en **R**. Para ésto se usa la función `binom.test`, donde se requiere el valor observado para una de las categorías que se determina como el "éxito" (en este caso se escogió los enrollados a la derecha), el total de observaciones, la probabilidad de éxito (probabilidad de la categoría definida anteriormente), y el nivel de confianza.
+
+```{r}
+binom.test(x = 16,n = N,p = 0.9,conf.level = 1-a)
+```
+
+Esta prueba arroja la probabilidad de éxito de acuerdo a los datos, el valor-*p*, y el intervalo de confianza, donde se compararía con la probabilidad definida para la categoría denominada como éxito.
+
+```{r echo=FALSE}
+chi.gof.apa = apa_print(chi.gof,n=N)
+```
+
+El tamaño del efecto se calcula conforma la Ecuación \@ref(eq:phi).
+
+\begin{equation}
+  \phi = \sqrt{\frac{\chi^2}{N}} = \sqrt{\frac{2.22}{20}} = 0.33
+\end{equation}
+
+En **R** se puede calcular $\phi$ con la función `v.chi.sq` del paquete *MOTE* [@R-MOTE], donde es necesario indicar el estadístico $\chi^2$, el total de observaciones, el número de filas (para este caso es necesario usar 2 para que pueda funcionar), el número de columnas (categorías, $K$), y el nivel de significancia.
+
+```{r}
+chi.gof.phi = v.chi.sq(x2 = chi.gof$statistic,
+                       n = N,
+                       r = 2,
+                       c = 2,
+                       a = a)
+chi.gof.phi[1:3] %>% unlist()
+```
+
+> Conclusión: El conteo de foraminíferos enrollados a la derecha y a la izquierda no difiere de los valores esperados, `r chi.gof.apa$statistic %>% str_replace('n','N')`, `r chi.gof.phi$estimate  %>% str_replace('CI','IC')`. El efecto se puede considerar mediano, pero con un rango amplio de pequeño hasta muy grande.
+
+```{r echo=FALSE}
+chi.gof.stats = TeX(str_interp("$\\chi^2(${chi.gof$parameter},\\mathit{N}=${N}) = ${apa(chi.gof$statistic,2)}, \\mathit{p} ${printp(chi.gof$p.value,add_equals = T)}, \\mathit{V} = ${apa(chi.gof.phi$v,2,F)}, IC_{${(1-a)*100}%} \\[${apa(chi.gof.phi$vlow,2,F)}, ${apa(chi.gof.phi$vhigh,2,F)}\\]"))
+```
+
+```{r chi-gof-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de barra mostrando la proporción de la dirección de enroscamiento para los foraminíferos, así como el resumen estadístico respectivo.'}
+forams = tibble(foram = rep(c('Derecha','Izquierda'),
+                            c(16,4)))
+
+forams %>% 
+  ggplot(aes(y='A',fill=foram)) + 
+  geom_bar(position = 'fill',col='black') +
+  geom_label(aes(x=percent,label=paste0(percent*100,'%')),
+             forams %>% tabyl(foram),col='white',
+             position = position_fill(vjust = .5),show.legend = F) +
+  scale_x_continuous('',labels = label_percent(), 
+                     breaks = breaks_pretty(5)) + 
+  scale_y_discrete('',labels = NULL) + 
+  scale_fill_brewer('Dirección',palette = 'Dark2') +
+  labs(subtitle = chi.gof.stats) + 
+  theme(plot.subtitle = element_text(size = 10))
+```
+
+### Tablas de Contingencia {#tab-contingencia}
+
+En el caso de que se tienen dos variables nominales (o que se tratan como nominales), y por ende una tabla de contingencia, se pueden definir 2 tipos de muestreo, los cuales van a, de cierta forma, definir el tipo de pregunta (prueba) que se quiere responder (realizar). Estos tipos de muestreo se explican en @agresti2007, y se asocian a las pruebas respectivas en @sheskin2011 y @walpole2012, y serían los siguientes:
+
+* Multinomial independiente: Cuando se determina un total de observaciones a realizar por fila o columna, donde cada fila o columna se interpreta como una muestra multinomial independiente. Se plantea para determinar **homogeneidad**.
+* Multinomial conjunto: Cuando se determina el total de observaciones a realizar en general y se clasifican las observaciones de acuerdo a las categorías de las filas y columnas, donde cada celda es el conteo conjunto de las categorías que la representa. Se plantea para determinar **independencia/asociación**.
+
+Para el caso de dos variables nominales, donde se representan por medio de una tabla de contingencia, los grados de libertad son $v = (r-1)(c-1)$, correspondiendo a la multiplicación de los grados de libertad de las filas por los de las columnas.
+
+Las frecuencias esperadas para cada celda de la tabla se determinan mediante la Ecuación \@ref(eq:expected-tab), donde $f_E = \text{frecuencia esperada}$, $T_f = \text{total de la fila}$, $T_c = \text{total de la columna}$, y $N = \text{total de la tabla}$.
+
+\begin{equation}
+  f_E = \frac{T_f \cdot T_c}{N}
+  (\#eq:expected-tab)
+\end{equation}
+
+Por ejemplo, para los datos de la Tabla \@ref(tab:contingencia-ej), para la Capa 1 se tendrían las siguientes frecuencias esperadas (de hecho en este caso las frecuencias esperadas son las mismas para todas las celdas de una misma fila):
+
+\begin{equation}
+  f_{E(cuarzo,1)} = \frac{91 \cdot 50}{200} = 22.75\\
+  f_{E(pedernal,1)} = \frac{48 \cdot 50}{200} = 12\\
+  f_{E(basalto,1)} = \frac{61 \cdot 50}{200} = 15.25\\
+\end{equation}
+
+En caso de que se encuentre un resultado significativo (rechazar $H_0$), ya sea para la prueba de homogeneidad o de independencia, es importante explicar dónde o cuáles celdas (combinaciones de categorías) de la tabla de contingencia se desvían de los valores esperados. Para ésto se pueden analizar los residuales ajustados (un tipo de análisis posterior - post-hoc), con lo que cuando un residual ajustado es superior a $|1.96|$, para un $\alpha=0.05$, esta celda se considera se desvía significativamente de la hipótesis nula, mostrando dónde se dan estas diferencias entre los valores observados y esperados, pudiendo ayudar a explicar la relación entre las variables.
+
+#### Homogeneidad {#prueba-chi-hom}
+
+Para ejemplificar la prueba de homogeneidad se usa el ejemplo de @mckillup2010 (Tabla \@ref(tab:pozos)), donde se tienen 20 mediciones de pozos en 3 localidades diferentes, a los cuales se les determinó si se encontraban contaminados o no con nitratos. Asuma $\alpha=0.05$. 
+
+```{r pozos, echo=FALSE}
+pozos_tab = matrix(data = c(12,8,7,13,14,6), 
+                 ncol=3, 
+                 dimnames = list(Contaminado=c('Si','No'),
+                                 Localidad=c('Townsville','Bowen','Mackay'))) %>% 
+  as.table()
+
+pozos = pozos_tab %>% 
+  tidy() %>% 
+  uncount(n) %>% 
+  mutate(Contaminado = fct_inorder(Contaminado),
+         Localidad = fct_inorder(Localidad))
+N = nrow(pozos)
+
+pozos %>% 
+  tabyl(Contaminado,Localidad) %>% 
+  adorn_totals(c('row','col')) %>% 
+  kable(caption = 'Datos de pozos contaminados o no en diferentes localidades',
+        align = 'c',
+        col.names = c('','Townsville','Bowen','Mackay','Total')) %>% 
+  kable_styling(full_width = F) %>% 
+  add_header_above(c(' '=1,'Localidad'=3,' ' =1))
+```
+
+1. Identificar la población, distribución, y la prueba apropiada:
+    - Población: nivel de contaminación en las localidades
+    - Distribución: $\chi^2$
+    - Prueba: $chi^2$ de homogeneidad, ya que se tienen dos variables nominales, y se controló la cantidad de observaciones por una de ellas (en este caso localidad)
+2. Establecer las hipótesis nula y alterna:
+    - $H_0:$ La proporción de pozos contaminados o no *es la misma* para las diferentes localidades
+    - $H_1:$ La proporción de pozos contaminados o no *es diferente* para las diferentes localidades
+3. Determinar parámetros de la distribución a comparar ($H_0$):
+    - $v = (r-1)(c-1) = (2-1)(3-1) = 1 \cdot 2 = 2$
+4. Determinar valores críticos
+    - $\alpha = 0.05$
+    - $\chi^2_{\alpha,v} = \chi_{0.05,2}^2=5.99$
+5. Calcular el estadístico de prueba
+    - Usando la Ecuación \@ref(eq:expected-tab) se tiene que los valores esperados son 11 para los contaminados y 9 para los no contaminados
+    - $\chi^2 = \frac{(12-11)^2}{12} + \frac{(8-9)^2}{9} + \dots = 5.25$
+6. Tomar una decisión
+    - El estadístico de prueba es menor al crítico, $\chi^2 < \chi_{\alpha,v}^2$
+    - El valor-*p* es mayor a $\alpha = 0.05$, $p = 0.072$
+    - *Decisión*: No se rechaza $H_0$. El valor-*p* cercano al $\alpha$ indica evidencia marginal en favor de no rechazar $H_0$, por lo que sería bueno investigar más allá los resultados.
+
+Una forma de graficar tablas de contingencia es por medio de gráficos de mosaico, que es similar a un gráfico de barras donde todas las barras tienen la misma longitud y el área (relleno) representa la proporción de observaciones de la respectiva categoría, que a su vez representa las diferentes celdas de la tabla de contingencia. Para el caso del ejemplo se muestra en la Figura \@ref(fig:chi-hom-mosaico), donde se tiene la proporción de contaminación por localidad.
+
+```{r chi-hom-mosaico, echo=FALSE, fig.cap='Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad.'}
+ggplot(pozos, aes(Localidad,fill=Contaminado)) + 
+  geom_bar(position = 'fill') + 
+  scale_y_continuous(labels = NULL) + 
+  labs(y = '') +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_minimal()
+```
+
+En **R** se tiene la función `chisq.test` para realizar estas pruebas. Para el caso de tablas de contingencia el único argumento que se necesita es la tabla, sin importar qué variable está en las columnas y qué variable está en las filas.
+
+```{r}
+a = 0.05
+chi.h = chisq.test(pozos_tab)
+chi.h
+```
+
+```{r echo=FALSE}
+chi.h.apa = apa_print(chi.h,n=sum(pozos_tab))
+```
+
+La función `mosaic` del paquete *vcd* [@R-vcd] permite visualizar el gráfico de mosaico, mostrando el valor-*p* de la prueba, y rellenando las barras (celdas) con los residuales de Pearson. En caso de que haya diferencia significativa entre lo observado y lo esperado las celdas serán coloreadas respectivamente. El gráfico de mosaico de la prueba se muestra en la Figura \@ref(fig:chi-hom-mosaico2).
+
+```{r chi-hom-mosaico2, fig.cap='Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad, mostrando el valor-*p* y los residuales.'}
+vcd::mosaic(t(pozos_tab),
+            direction = 'v',
+            shade = T,
+            gp=shading_hcl,
+            spacing=spacing_equal(sp = unit(.5, "lines")),
+            labeling=labeling_border(gp_labels = gpar(fontsize = 10)))
+```
+
+Los residuales ajustados se pueden acceder a partir del objeto en que se guarda la prueba, como se muestra en el siguiente bloque. Estos residuales son los que realmente indican si hay una diferencia significativa entre lo observado y lo esperado ($> |1.96|$ para $\alpha=0.05$), que para el caso del ejemplo ocurre en la localidad de Bowen, donde hay menos valores observados para lo contaminado y más valores observados para lo no contaminado.
+
+```{r}
+chi.h$stdres
+```
+
+Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima o debajo del valor crítico de acuerdo al nivel de significancia $\alpha$.
+
+```{r echo=FALSE}
+chi.h$stdres %>% 
+  tidy() %>% 
+  mutate(n = round(n,3)) %>% 
+  mutate(n = cell_spec(n,"html", 
+                       color = case_when(n > qnorm(1-a/2) ~ 'blue',
+                                         n < qnorm(a/2) ~ 'red',
+                                         T ~ 'black'))) %>%
+  pivot_wider(names_from = Localidad,values_from = n) %>% 
+  kable(format = "html", escape = F) %>% 
+  add_header_above(c(' '=1,'Localidad'=3)) %>% 
+  kable_styling(full_width = F)
+```
+
+El tamaño del efecto se puede calcular de acuerdo a la Ecuación \@ref(eq:v) de la siguiente manera:
+
+\begin{equation}
+  V = \sqrt{\frac{\chi^2}{N \cdot v_{min}}}\\
+  V = \sqrt{\frac{5.25}{60 \cdot 1}} = 0.29
+\end{equation}
+
+En **R** se puede calcular por medio de las funciones `CramerV` del paquete *DescTools* [@R-DescTools], y `v.chi.sq` del paquete *MOTE*.
+
+```{r}
+CramerV(pozos_tab,
+        conf.level = 1-a,
+        method = 'ncchisqadj')
+```
+
+```{r}
+chi.h.v = v.chi.sq(x2 = chi.h$statistic, n = sum(pozos_tab),
+                   r = nrow(pozos_tab), c = ncol(pozos_tab),
+                   a = a)
+chi.h.v[1:3] %>% unlist()
+```
+
+> Conclusión: El nivel de contaminación no varía significativamente de acuerdo a la localidad, `r chi.h.apa$statistic %>% str_replace('n','N')`, `r chi.h.v$estimate  %>% str_replace('CI','IC')`. El efecto se puede considerar mediano, pero con un rango amplio de pequeño hasta grande. Aunque el resultado no fue estadísticamente significativo, el valor-*p* se encuentra cerca del nivel de significancia, y si se estudian los residuales ajustados se ve que la localidad de Bowen difiere de los valores esperados. 
+
+```{r echo=FALSE}
+chi.h.stats = TeX(str_interp("$\\chi^2(${chi.h$parameter},\\mathit{N}=${N}) = ${apa(chi.h$statistic,2)}, \\mathit{p} ${printp(chi.h$p.value,add_equals = T)}, \\mathit{V} = ${apa(chi.h.v$v,2,F)}, IC_{${(1-a)*100}%} \\[${apa(chi.h.v$vlow,2,F)}, ${apa(chi.h.v$vhigh,2,F)}\\]"))
+```
+
+```{r chi-h-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico mostrando la relación entre nivel de contaminación y localidad, el porcentaje de cada celda, así como el resumen estadístico respectivo.'}
+ggbarstats(pozos,Contaminado,Localidad,
+           results.subtitle = F,
+           subtitle = chi.h.stats,
+           proportion.test = F,
+           sample.size.label = F,
+           label.args = list(size=3,fill='white'))
+```
+
+```{r eval=FALSE, echo=FALSE}
+ggplot(pozos, aes(Localidad,fill=Contaminado)) + 
+  geom_bar(position = 'fill',col='black') +
+  geom_label(aes(x=Localidad,y=percent,label=paste0(percent*100,'%')),
+             pozos %>% 
+               count(Localidad,Contaminado) %>% 
+               group_by(Localidad) %>% 
+               mutate(percent = round(n/sum(n),2)),
+             position = position_fill(vjust = .5),
+             col='white',show.legend = F,size=3) +
+  scale_y_continuous('',labels = label_percent(), 
+                     breaks = breaks_pretty(5)) + 
+  scale_fill_brewer(palette = 'Dark2') + 
+  labs(x = 'Localidad',
+       subtitle = chi.h.stats) + 
+  theme(plot.subtitle = element_text(size = 10))
+```
+
+#### Independencia/asociación {#prueba-chi-asoc}
+
+Para ejemplificar la prueba de homogeneidad se usa el ejemplo de @borradaile2003 (Tabla \@ref(tab:dist-red)), donde se tienen 246 mediciones de clastos, los cuales se clasificaron de acuerdo a la redondez y la distancia de la fuente. Asuma $\alpha=0.05$. 
+
+```{r dist-red, echo=FALSE, fig.cap='Gráfico mostrando la relación entre las variables, el porcentaje de cada celda, así como el resumen estadístico respectivo.'}
+dist_red = import('data/chi2 independencia.csv') %>% 
+  mutate(Redondez = fct_inorder(Redondez),
+         Distancia = fct_inorder(Distancia))
+N = nrow(dist_red)
+
+dist_red_tab = matrix(data = c(28,23,5,0,
+                               21,23,8,2,
+                               11,14,12,8,
+                               1,8,14,12,
+                               0,9,18,29), 
+                      ncol=5, 
+                      dimnames = list(Redondez=c('Angular','Sub-angular',
+                                                 'Sub-redondeado','Redondeado'),
+                                      Distancia=c('0-5','5-10','10-20',
+                                                  '20-30','30-40'))) %>% 
+  as.table()
+
+dist_red %>% 
+  tabyl(Redondez,Distancia) %>% 
+  adorn_totals(c('row','col')) %>% 
+  kable(caption = 'Datos de redondez contra distancia para diferentes clastos',
+        align = 'c',
+        col.names = c('','0-5','5-10','10-20','20-30','30-40','Total')) %>% 
+  kable_styling(full_width = F) %>% 
+  add_header_above(c(' '=1,'Distancia (km)'=5,' ' =1))
+```
+
+1. Identificar la población, distribución, y la prueba apropiada:
+    - Población: redondez de clasto de acuerdo a distancia de la fuente
+    - Distribución: $\chi^2$
+    - Prueba: $chi^2$ de asociación, ya que se tienen dos variables nominales (se podrían tratar como ordinales), y se controló la cantidad total de observaciones
+2. Establecer las hipótesis nula y alterna:
+    - $H_0:$ No hay relación entre la redondez de los clastos y la distancia de la fuente, o la redondez de los clastos es independiente de la distancia de la fuente
+    - $H_1:$ La redondez de los clastos depende (está en relacionado) de (con) la distancia de la fuente
+3. Determinar parámetros de la distribución a comparar ($H_0$):
+    - $v = (r-1)(c-1) = (4-1)(5-1) = 3 \cdot 4 = 12$
+4. Determinar valores críticos
+    - $\alpha = 0.05$
+    - $\chi^2_{\alpha,v} = \chi_{0.05,12}^2=21.03$
+5. Calcular el estadístico de prueba
+    - Usando la Ecuación \@ref(eq:expected-tab) se tiene que los valores esperados son los que se muestran a continuación
+    
+```{r echo=FALSE}
+matrix(data = c(13.9,17.5,13,11.6,
+                13.4,16.9,12.5,11.2,
+                11.2,14.1,10.4,9.3,
+                8.7,11,8.1,7.3,
+                13.9,17.5,13,11.6), 
+       ncol=5, 
+       dimnames = list(Redondez=c('Angular','Sub-angular',
+                                  'Sub-redondeado','Redondeado'),
+                       Distancia=c('0-5','5-10','10-20',
+                                   '20-30','30-40'))) %>% 
+  as.table()
+```
+    - $\chi^2 = \frac{(28-13.9)^2}{13.9} + \frac{(23-17.5)^2}{17.5} + \frac{(13-5)^2}{5} + \frac{(0-11.6)^2}{11.6} + \dots = 109.7$
+    
+6. Tomar una decisión
+    - El estadístico de prueba es mayor al crítico, $\chi^2 > \chi_{\alpha,v}^2$
+    - El valor-*p* es menor a $\alpha = 0.05$, $p < .001$
+    - *Decisión*: Se rechaza $H_0$
+
+El gráfico de mosaico para el caso del ejemplo se muestra en la Figura \@ref(fig:chi-ind-mosaico), donde se tiene la proporción de redondez por distancia.
+
+```{r chi-ind-mosaico, echo=FALSE, fig.cap='Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos.'}
+ggplot(dist_red, aes(Distancia,fill=Redondez)) + 
+  geom_bar(position = 'fill') + 
+  scale_y_continuous(labels = NULL) + 
+  labs(y = '') +
+  scale_fill_brewer(palette = 'Dark2') +
+  theme_minimal()
+```
+
+En **R** se usa la función `chisq.test` para realizar estas pruebas, a como se mostró en la prueba de homogeneidad.
+
+```{r}
+a = 0.05
+chi.ind = chisq.test(dist_red_tab)
+chi.ind
+```
+
+```{r echo=FALSE}
+chi.ind.apa = apa_print(chi.ind,n=sum(dist_red_tab))
+```
+
+El gráfico de mosaico de la prueba se muestra en la Figura \@ref(fig:chi-ind-mosaico2), donde se muestra que hay predominancia de clastos angulares a distancias cortas y de clastos redondeados a distancias largas, y hay pocos clastos angulares a distancias largas y redondeados a distancias cortas, que es de esperar. Los colores azules indican valores observados por encima de los valores esperados, mientras que los colores rojos indican valores observados por debajo de los valores esperados. Esta relación se puede ver de igual manera observando los residuales ajustados.
+
+```{r chi-ind-mosaico2, fig.cap='Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos, mostrando el valor-*p* y los residuales.'}
+vcd::mosaic(t(dist_red_tab),
+            direction = 'v',
+            shade = T,
+            gp=shading_hcl,
+            spacing=spacing_equal(sp = unit(.5, "lines")),
+            labeling=labeling_border(gp_labels = gpar(fontsize = 10)))
+```
+
+```{r}
+chi.ind$stdres
+```
+
+Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima o debajo del valor crítico de acuerdo al nivel de significancia $\alpha$.
+
+```{r echo=FALSE}
+chi.ind$stdres %>% 
+  tidy() %>% 
+  mutate(n = round(n,3)) %>% 
+  mutate(n = cell_spec(n,"html", 
+                       color = case_when(n > qnorm(1-a/2) ~ 'blue',
+                                         n < qnorm(a/2) ~ 'red',
+                                         T ~ 'black'))) %>%
+  pivot_wider(names_from = Distancia,values_from = n) %>% 
+  kable(format = "html", escape = F) %>% 
+  add_header_above(c(' '=1,'Distancia (km)'=5)) %>% 
+  kable_styling(full_width = F)
+```
+
+El tamaño del efecto se puede calcular de acuerdo a la Ecuación \@ref(eq:v) de la siguiente manera:
+
+\begin{equation}
+  V = \sqrt{\frac{\chi^2}{N \cdot v_{min}}}\\
+  V = \sqrt{\frac{109.7}{264 \cdot 3}} = 0.38
+\end{equation}
+
+En **R** se puede calcular por medio de las funciones `CramerV` del paquete *DescTools*, y `v.chi.sq` del paquete *MOTE*.
+
+```{r}
+CramerV(dist_red_tab,
+        conf.level = 1-a,
+        method = 'ncchisqadj')
+```
+
+```{r}
+chi.ind.v = v.chi.sq(x2 = chi.ind$statistic, n = sum(dist_red_tab),
+                   r = nrow(dist_red_tab), c = ncol(dist_red_tab),
+                   a = a)
+chi.ind.v[1:3] %>% unlist()
+```
+
+> Conclusión: Hay una asociación entre la redondez del clasto y su distancia de la fuente, `r chi.ind.apa$statistic %>% str_replace('n','N')`, `r chi.ind.v$estimate  %>% str_replace('CI','IC')`. El efecto se puede considerar grande. 
+
+```{r echo=FALSE}
+chi.ind.stats = TeX(str_interp("$\\chi^2(${chi.ind$parameter},\\mathit{N}=${N}) = ${apa(chi.ind$statistic,2)}, \\mathit{p} ${printp(chi.ind$p.value,add_equals = T)}, \\mathit{V} = ${apa(chi.ind.v$v,2,F)}, IC_{${(1-a)*100}%} \\[${apa(chi.ind.v$vlow,2,F)}, ${apa(chi.ind.v$vhigh,2,F)}\\]"))
+```
+
+```{r chi-ind-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico mostrando la relación entre distancia de la fuente y redondez, el porcentaje de cada celda, así como el resumen estadístico respectivo.'}
+ggbarstats(dist_red,Redondez,Distancia,
+           xlab = 'Distancia (km)',
+           results.subtitle = F,
+           subtitle = chi.ind.stats,
+           proportion.test = F,
+           sample.size.label = F,
+           label.args = list(size=3,fill='white'))
+```
+
+```{r eval=FALSE, echo=FALSE}
+ggplot(dist_red, aes(Distancia,fill=Redondez)) + 
+  geom_bar(position = 'fill',col='black') + 
+  geom_label(aes(x=Distancia,y=percent,label=paste0(percent*100,'%')),
+             dist_red %>% 
+               count(Distancia,Redondez) %>% 
+               group_by(Distancia) %>% 
+               mutate(percent = round(n/sum(n),2)),
+             position = position_fill(vjust = .5),
+             col='white',show.legend = F,size=3) +
+  scale_y_continuous('',labels = label_percent(), breaks = breaks_pretty(5)) + 
+  scale_fill_brewer(palette = 'Dark2') + 
+  labs(x = 'Distancia (km)',
+       subtitle = chi.ind.stats) + 
+  theme(plot.subtitle = element_text(size = 10))
+```
+
+## Pruebas sobre rangos (ordinales)
+
+Cuando se tienen datos ordinales o cuantitativos continuos que no se distribuyen normalmente, éstos se convierten a rangos (valor más bajo es 1 y así sucesivamente, donde valores empatados se promedian), y los análisis se realizan sobre los datos ranqueados. Las pruebas sobre rangos son homólogas a las pruebas paramétricas que hacen inferencias sobre la medida de tendencia central (1 y 2 muestras) y de asociación/relación (entre 2 variables). En el caso de las pruebas no paramétricas la mediana es más utilizada y reportada como medida de tendencia central.
+
+### Rango con signo de Wilcoxon {#prueba-wilcoxon}
+
+Esta prueba se puede utilizar con 1 muestra o 2 muestras dependientes, ya que con esta última se trabaja con el vector de las diferencias. Las hipótesis serían las siguientes:
+
+- $H_0: Mdn = Mdn_0$ La mediana es igual a un valor dado, o $R+ = R-$,
+- $H_1: Mdn \neq Mdn_0$ La mediana es diferente al valor dado, o $R+ \neq R-$
+
+El procedimiento para la prueba sería el siguiente:
+
+1. Para el caso de 1 muestra se le resta a los valores el valor hipotético o con el cual se quiere comparar. Para el caso de 2 muestras dependientes se saca la diferencia entre las muestras.
+2. De haber alguna diferencia igual a cero (0) se descarta.
+3. Se ranquean las diferencia en valor absoluto.
+4. Se suman los rangos para las diferencias positivas ($R+$) y para las diferencias negativas ($R-$).
+5. Se escoge el menor $R$ como $T$.
+6. Se rechaza $H_0$ si el $T < T_{crit}$ o si $p < \alpha$.
+
+Para el tamaño del efecto (Ecuación \@ref(eq:r-rangos)) se necesita el estadístico $Z$, el cual se puede obtener a partir del valor-*p* que arroja la prueba (encontrando el cuantil de la distribución normal - `qnorm(p/2)`), o por medio de la aproximación a la distribución normal conforme las Ecuaciones \@ref(eq:mu-T), \@ref(eq:sigma-T), y \@ref(eq:z-T).
+
+\begin{equation}
+  \mu_T = \frac{N(N+1)}{4}
+  (\#eq:mu-T)
+\end{equation}
+
+\begin{equation}
+  \sigma_T = \sqrt{\frac{N(N+1)(2N+1)}{24}}
+  (\#eq:sigma-T)
+\end{equation}
+
+\begin{equation}
+  Z = \frac{T - \mu_T}{\sigma_T}
+  (\#eq:z-T)
+\end{equation}
+
+El uso de la prueba se demuestra con el ejemplo @swan1995, donde se tenía el contenido de cuarzo en secciones delgadas de una roca ígnea. Es posible que esta muestra provenga de una población con valor central de 20%? Asuma $\alpha = 0.05$.
+
+El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a los signos se muestra en las Tablas \@ref(tab:wilcoxon1) y \@ref(tab:wilcoxon2). De acuerdo con los resultados el estadístico sería $T=8.5$, y el valor crítico sería 4.
+
+```{r}
+loc0 = 20
+a = 0.05
+
+cuarzo = c(23.5, 16.6, 25.4, 19.1, 19.3, 22.4, 20.9, 24.9)
+
+Q = tibble(Q = cuarzo) %>% 
+  mutate(dif = Q-loc0, 
+         signo = factor(sign(dif),
+                        levels = c(-1,1),
+                        labels = c('Negativo','Positivo')), 
+         ranking = rank(abs(dif)))
+
+N = nrow(Q)
+```
+
+```{r wilcoxon1, echo=FALSE}
+Q %>% 
+  mutate(ranking = cell_spec(ranking,"html", 
+                             color = case_when(signo == 'Positivo' ~ 'blue',
+                                               T ~ 'red'))) %>% 
+  arrange(Q) %>% 
+  kable(format = "html", escape = F, align = 'c',
+        col.names = c('Q (%)','Diferencia',
+                      'Signo','Ranqueo'),
+        caption = 'Ranqueo con signo para el contenido de cuarzo') %>% 
+  kable_styling(full_width = F)
+```
+
+```{r wilcoxon2, echo=FALSE}
+Q %>% 
+  group_by(signo) %>% 
+  summarise(w = sum(ranking)) %>% 
+  kable(align = 'c',
+        col.names = c('Signo','T'),
+        caption = 'Estadístico T') %>% 
+  kable_styling(full_width = F)
+```
+
+En **R** se tiene la función `wilcox.test` que realiza la prueba, y se puede usar para el caso de una muestra o dos muestras dependientes (`paired = T`), donde hay que especificar el o los vectores, la medida de posición a comparar (`mu`), si se quiere un intervalo de confianza, y el nivel de confianza. _Nota: Esta función NO necesariamente reporta el W más bajo (creo que siempre presenta el positivo), pero ésto no afecta la interpretación del valor-*p* o el intervalo de confianza_.
+
+```{r}
+wilcox.res = wilcox.test(cuarzo, mu = loc0, 
+                         paired = F,
+                         conf.int = T, conf.level = 1-a)
+wilcox.res
+```
+
+*Decisión*: No se rechaza $H_0$
+
+```{r echo=FALSE}
+wilcox.apa = apa_print(wilcox.res)
+```
+
+Para el tamaño del efecto se pueden usar las Ecuaciones \@ref(eq:mu-T), \@ref(eq:sigma-T), \@ref(eq:z-T), y \@ref(eq:r-rangos).
+
+\begin{equation}
+  \mu_T = \frac{N(N+1)}{4} = \frac{8(8+1)}{4} = 18
+\end{equation}
+
+\begin{equation}
+  \sigma_T = \sqrt{\frac{N(N+1)(2N+1)}{24}} = \sqrt{\frac{8(8+1)(2 \cdot 8+1)}{24}} = 7.14
+\end{equation}
+
+\begin{equation}
+  Z = \frac{T - \mu_T}{\sigma_T} = \frac{8.5 - 18}{7.14} = -1.33
+\end{equation}
+
+\begin{equation}
+  r = \frac{Z}{\sqrt{N}} = \frac{-1.33}{\sqrt{8}} = -0.47
+\end{equation}
+
+En **R** la función `wilcox_effsize` del paquete *rstatix* [@R-rstatix] puede calcular este valor directamente, pero ocupa que los datos se encuentren en un dataframe en formato largo, definir la fórmula (`variable~1` para el caso de 1 muestra, o `variable~grupos` para el caso de 2 muestras), indicar si las muestras son dependientes (`paired = T`), y en el caso de 1 muestra el valor a comparar (`mu`).
+
+```{r}
+wilcox.r = wilcox_effsize(Q, Q~1, mu = loc0,
+                          paired = F)
+wilcox.r
+```
+
+Para este tamaño de efecto no está tan establecido el cómo obtener el intervalo de confianza, pero se puede aproximar por medio del intervalo de confianza para el coeficiente de correlación $r$, por medio de la función `CorCI` del paquete *DescTools*.
+
+```{r}
+wilcox.r.ci = CorCI(rho = wilcox.r$effsize[[1]], n = N, conf.level = 1-a)
+wilcox.r.ci
+```
+
+> Conclusión: El contenido de cuarzo de la roca ígnea no es significativamente diferente a la mediana de 20% , `r wilcox.apa$full_result %>% str_replace_all(c('CI'='IC','V'='T'))`, `r str_glue("$r = {apa(wilcox.r.ci[1],2,F)}$")`, `r (1-a)*100`% IC `r str_glue("$[{apa(wilcox.r.ci[2],2,F)}, {apa(wilcox.r.ci[3],2,F)}]$")`. El efecto se puede considerar mediano, pero con un rango amplio de mediano, en dirección opuesta, hasta muy grande.
+
+```{r echo=FALSE}
+wilcoxon.stats = TeX(str_interp("$\\mathit{T} = ${wilcox.res$statistic}, \\mathit{p} ${printp(wilcox.res$p.value,add_equals = T)}, \\mathit{r} = ${apa(wilcox.r.ci[[1]],2,F)}, IC_{${(1-a)*100}%} \\[${apa(wilcox.r.ci[[2]],2,F)}, ${apa(wilcox.r.ci[[3]],2,F)}\\]"))
+```
+
+```{r wilcoxon-stats, echo=FALSE, out.width='90%', fig.cap='Histograma del contenido de cuarzo, mostrando la media muestral (azul) y el valor a comparar (rojo), así como el resumen estadístico respectivo.'}
+gghistostats(Q,Q,type = 'np',
+             bf.message = F,
+             results.subtitle = F,
+             xlab = 'Contenido de cuarzo (%)',
+             test.value = loc0,test.value.line = T,
+             test.value.line.args = list(col='red',size=1),
+             test.value.label.args = list(col='red',size=3),
+             subtitle = wilcoxon.stats)
+```
+
+### Suma de rangos de Wilcoxon / U de Mann-Whitney {#prueba-mwu}
+
+Esta prueba se utiliza con 2 muestras independientes. Las hipótesis serían las siguientes:
+
+- $H_0: Mdn_1 = Mdn_2$ La mediana es la misma para las dos muestras, o $\bar{R}_1 = \bar{R}_2$,
+- $H_1: Mdn_1 \neq Mdn_2$ La mediana es diferente para las dos muestras, o $\bar{R}_1 \neq \bar{R}_2$
+
+El procedimiento para la prueba sería el siguiente:
+
+1. Se agrupan las dos muestras en una sola y se ranquea.
+1. Se suman los rangos para cada muestra ($R_{1}$, $R_{2}$).
+1. Se calcula el estadístico $U$ para cada muestra (Ecuación \@ref(eq:mwu-u)) y se escoge el menor.
+1. Se rechaza $H_0$ si el $U < U_{crit}$ o si $p < \alpha$.
+
+\begin{equation}
+  U_i = R_i - \frac{n_i(n_i+1)}{2}
+  (\#eq:mwu-u)
+\end{equation}
+
+Además se tienen las siguientes propiedades:
+
+\begin{equation}
+  R_1 + R_2 = \frac{(n_1+n_2)(n_1+n_2+1)}{2}
+  (\#eq:mwu-Ts)
+\end{equation}
+
+\begin{equation}
+  U_1 + U_2 = n_1 n_2
+  (\#eq:mwu-us)
+\end{equation}
+
+Para el tamaño del efecto (Ecuación \@ref(eq:r-rangos)) se necesita el estadístico $Z$, el cual se puede obtener a partir del valor-*p* que arroja la prueba (encontrando el cuantil de la distribución normal - `qnorm(p/2)`), o por medio de la aproximación a la distribución normal conforme las Ecuaciones \@ref(eq:mu-u), \@ref(eq:sigma-u), y \@ref(eq:z-u).
+
+\begin{equation}
+  \mu_u = \frac{n_1 n_2}{2}
+  (\#eq:mu-u)
+\end{equation}
+
+\begin{equation}
+  \sigma_u = \sqrt{\frac{(n_1 n_2)(n_1 + n_2 + 1)}{12}}
+  (\#eq:sigma-u)
+\end{equation}
+
+\begin{equation}
+  Z = \frac{U - \mu_u}{\sigma_u}
+  (\#eq:z-u)
+\end{equation}
+
+El uso de la prueba se demuestra con el ejemplo @swan1995, donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es posible que estas muestras provenga de una misma población? Asuma $\alpha = 0.05$.
+
+El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a las muestras se detalla en las Tablas \@ref(tab:u1) y \@ref(tab:u2). De acuerdo con los resultados el estadístico sería $U=23.5$, y el valor crítico sería 17.
+
+```{r}
+a = 0.05
+
+A = c(3.2, 3.1, 3.1, 3.3, 2.9, 2.9, 3.5, 3.0)
+B = c(3.1, 3.1, 2.8, 3.1, 3.0, 2.6, 3.0, 3.0, 3.1, 2.8)
+
+braq = stack(list(A=A,
+                  B=B)) %>% 
+  mutate(ranking = rank(values))
+
+N = nrow(braq)
+```
+
+```{r u1, echo=FALSE}
+braq %>% 
+  mutate(ranking = cell_spec(ranking,"html", 
+                             color = case_when(ind == 'A' ~ 'blue',
+                                               T ~ 'red'))) %>% 
+  arrange(values) %>% 
+  kable(format = "html", escape = F, align = 'c',
+        col.names = c('Longitud (cm)','Capa','Ranqueo'),
+        caption = 'Ranqueo para la longitud de los braquiópodos') %>% 
+  kable_styling(full_width = F)
+```
+
+```{r u2, echo=FALSE}
+braq %>% 
+  group_by(ind) %>% 
+  summarise(n = n(), 
+            rango_medio = mean(ranking), 
+            R = sum(ranking)) %>% 
+  mutate(u = R - (n*(n+1))/2) %>% 
+  kable(align = 'c',
+        col.names = c('Capa','n','Rango medio','R','U'),
+        caption = 'Estadístico U',digits = 2) %>% 
+  kable_styling(full_width = F)
+```
+
+\begin{equation}
+  U_1 = R_1 - \frac{n_1(n_1+1)}{2} = 92.5 - \frac{8(8+1)}{2} = 56.5\\
+  U_2 = R_2 - \frac{n_2(n_2+1)}{2} = 78.5 - \frac{10(10+1)}{2} = 23.5
+\end{equation}
+
+En **R** se tiene la función `wilcox.test` que realiza la prueba, donde hay que especificar los vectores o la fórmula, si se quiere un intervalo de confianza, y el nivel de confianza. _Nota: El orden de los grupos altera el estadístico reportado y el signo de la diferencia e intervalo de confianza pero no la significancia de la prueba_.
+
+Con $A$ primero.
+
+```{r}
+wilcox.test(A,B,conf.int = T, conf.level = 1-a)
+```
+
+Con $B$ primero.
+
+```{r}
+mwu.res = wilcox.test(B,A,
+                      conf.int = T, conf.level = 1-a)
+mwu.res
+```
+
+Con fórmula, que va a depender del orden de las categorías de la variable agrupadora.
+
+```{r}
+wilcox.test(values~ind,data = braq,conf.int = T, conf.level = 1-a)
+```
+
+*Decisión*: No se rechaza $H_0$
+
+```{r echo=FALSE}
+mwu.apa = apa_print(mwu.res)
+```
+
+Para el tamaño del efecto se pueden usar las Ecuaciones \@ref(eq:mu-u), \@ref(eq:sigma-u), \@ref(eq:z-u), y \@ref(eq:r-rangos).
+
+\begin{equation}
+  \mu_u = \frac{n_1 n_2}{2} = \frac{8 \cdot 10}{2} = 40
+\end{equation}
+
+\begin{equation}
+  \sigma_u = \sqrt{\frac{(n_1 n_2)(n_1 + n_2 + 1)}{12}} = \sqrt{\frac{(8 \cdot 10)(8 + 10 + 1)}{12}} = 11.25
+\end{equation}
+
+\begin{equation}
+  Z = \frac{U - \mu_u}{\sigma_u} = \frac{23.5 - 40}{11.25} = -1.47
+\end{equation}
+
+\begin{equation}
+  r = \frac{Z}{\sqrt{N}} = \frac{-1.46}{\sqrt{18}} = -0.35
+\end{equation}
+
+En **R** la función `wilcox_effsize` del paquete *rstatix* puede calcular este valor directamente, pero ocupa que los datos se encuentren en un dataframe en formato largo, y definir la fórmula (`variable~grupos`).
+
+```{r}
+mwu.r = wilcox_effsize(braq, values~ind)
+mwu.r
+```
+
+Para este tamaño de efecto no está tan establecido el cómo obtener el intervalo de confianza, pero se puede aproximar por medio del intervalo de confianza para el coeficiente de correlación $r$, por medio de la función `CorCI` del paquete *DescTools*.
+
+```{r}
+mwu.r.ci = CorCI(rho = mwu.r$effsize[[1]], n = N, conf.level = 1-a)
+mwu.r.ci
+```
+
+> Conclusión: La longitud de los braquiópodos no difiere significativamente entre las capas A y B, `r mwu.apa$full_result %>% str_replace_all(c('CI'='IC','W'='U'))`, `r str_glue("$r = {apa(mwu.r.ci[1],2,F)}$")`, `r (1-a)*100`% IC `r str_glue("$[{apa(mwu.r.ci[2],2,F)}, {apa(mwu.r.ci[3],2,F)}]$")`. El efecto se puede considerar mediano, pero con un rango amplio de pequeño, en dirección opuesta, hasta muy grande.
+
+```{r echo=FALSE}
+mwu.stats = TeX(str_interp("$\\mathit{U} = ${mwu.res$statistic}, \\mathit{p} ${printp(mwu.res$p.value,add_equals = T)}, \\mathit{r} = ${apa(mwu.r.ci[[1]],2,F)}, IC_{${(1-a)*100}%} \\[${apa(mwu.r.ci[[2]],2,F)}, ${apa(mwu.r.ci[[3]],2,F)}\\]"))
+```
+
+```{r mwu-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de caja mostrando el efecto de la capa sobre la longitud de los braquiópodos, así como el resumen estadístico respectivo.'}
+ggbetweenstats(braq,ind,values,
+               plot.type = 'box',
+               type = 'np',
+               pairwise.comparisons = T,
+               pairwise.display = 'all',
+               bf.message = F,
+               results.subtitle = F,
+               sample.size.label = F,
+               xlab = 'Capa',ylab = 'Longitud (cm)',
+               subtitle = mwu.stats)
+```
+
+### Kruskal-Wallis {#prueba-kruskal}
+
+Esta prueba se utiliza con $2+$ muestras independientes (homólogo de ANOVA). Las hipótesis serían las siguientes:
+
+- $H_0: Mdn_1 = Mdn_2 = Mdn_3 = \cdots = Mdn_k$ La mediana es la misma para todas las muestras, o $\bar{R}_1 = \bar{R}_2 = \bar{R}_3 = \cdots = \bar{R}_k$,
+- $H_1:$ Al menos 1 de las medianas es diferente. 
+
+El procedimiento para la prueba sería el siguiente:
+
+1. Se agrupan las muestras en una sola y se ranquea.
+1. Se suman los rangos para cada muestra ($r_{k}$).
+1. Se calcula el estadístico $H$ (Ecuación \@ref(eq:kw-h)), el cual sigue una distribución $\chi^2$, con grados de libertad $v=k-1$.
+1. Se rechaza $H_0$ si el $H > \chi^2_{crit}$ o si $p < \alpha$.
+
+\begin{equation}
+  H = \frac{12}{N(N+1)}\sum_{k=1}^k\frac{R_{k}^2}{n_k}-3(N+1)
+  (\#eq:kw-h)
+\end{equation}
+
+De manera similar al ANOVA, si se encuentra un resultado significativo es necesario explorar más por medio de análisis posteriores (*post-hoc*), donde los análisis más utilizados son las pruebas de Dunn y Nemenyi, que realizan comparaciones múltiples sobre los rangos, y ajusta el valor-*p* (de acuerdo a diferentes métodos) para una correcta interpretación.
+
+El uso de la prueba se demuestra con el ejemplo de @mckillup2010, donde se tiene el contenido de $MgO$ presente en cuatro turmalinas en tres sitios diferentes ($k=3$): Mount Mica, Sebago Batholith, Black Mountain. Asuma $\alpha = 0.05$.
+
+El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a las muestras se detalla en las Tablas \@ref(tab:kw1) y \@ref(tab:kw2). El estadístico crítico sería $\chi^2_{\alpha,v} = \chi^2_{0.05,2} = 5.99$.
+
+```{r}
+a = 0.05
+
+dat.kw = import('data/anova MgO.csv', setclass = 'tibble') %>% 
+  mutate(Location = as.factor(Location) %>% 
+           fct_reorder(MgO))
+
+N = nrow(dat.kw)
+```
+
+```{r kw1, echo=FALSE}
+dat.kw %>% 
+  mutate(ranking = rank(MgO),
+         ranking = cell_spec(ranking,"html", 
+                             color = case_when(Location == 'Black Mountain' ~ 'blue',
+                                               Location == 'Sebago Batholith' ~ 'red',
+                                               T ~ 'orange'))) %>% 
+  arrange(MgO) %>% 
+  kable(format = "html", escape = F, align = 'c',
+        col.names = c('Localidad','MgO (%)','Ranqueo'),
+        caption = 'Ranqueo para la el contenido de MgO') %>% 
+  kable_styling(full_width = F)
+```
+
+```{r kw2, echo=FALSE}
+dat.kw %>% 
+  mutate(ranking = rank(MgO)) %>% 
+  group_by(Location) %>% 
+  summarise(n = n(), 
+            rango_medio = mean(ranking), 
+            suma = sum(ranking)) %>% 
+  kable(align = 'c',
+        col.names = c('Localidad','n','Rango medio','R'),
+        caption = 'Rangos para las diferentes localidades',digits = 2) %>% 
+  kable_styling(full_width = F)
+```
+
+\begin{equation}
+  H = \frac{12}{N(N+1)}\sum_{k=1}^k\frac{R_{k}^2}{n_k}-3(N+1)\\
+  H = \frac{12}{12(12+1)}\left(\frac{12^2}{4}+\frac{26^2}{4}+\frac{40^2}{4}\right)-3(12+1) = 7.54
+\end{equation}
+
+En **R** se tiene la función `kruskal.test` que realiza la prueba.
+
+```{r}
+kw.res = kruskal.test(MgO ~ Location, dat.kw)
+kw.res
+```
+
+*Decisión*: Se rechaza $H_0$
+
+```{r echo=FALSE}
+kw.apa = apa_print(kw.res)
+```
+
+Para el tamaño del efecto se pueden usar las Ecuaciones \@ref(eq:eta2-h) o \@ref(eq:epsilon2).
+
+\begin{equation}
+  \eta_H^2 = \frac{H-k+1}{N-k} = \frac{7.54-3+1}{12-3} = 0.62
+\end{equation}
+
+\begin{equation}
+  \epsilon^2 = \frac{H}{(N^2-1)/(N+1)} = \frac{7.54}{(12^2-1)/(12+1)} = 0.69
+\end{equation}
+
+En **R** la función `kruskal_effsize` del paquete *rstatix* puede calcular $\eta_H^2$, y la función `epsilonSquared` del paquete *rcompanion* [@R-rcompanion] puede calcular $\epsilon^2$. Para estos tamaño de efecto no está establecido el cómo obtener el intervalo de confianza, pero se puede utilizar la técnica de bootstrap (\@ref(bootstrap)). Las funciones mencionadas utiliza este método, definiendo que se quiere el intervalo de confianza con `ci = T`. Como este método varía cada vez que se corre es recomendable definir el punto de partida para siempre obtener el mismo resultado, ésto se logra definiendo `set.seed` y escogiendo un número entero cualquiera.
+
+```{r}
+set.seed(101)
+kw.eta = kruskal_effsize(dat.kw, MgO ~ Location, ci = T, conf.level = 1-a)
+kw.eta
+with(dat.kw,epsilonSquared(x = MgO,g = Location,ci = T,conf = 1-a))
+```
+
+Como se encontró un resultado significativo, es necesario indicar dónde se encuentran esas diferencias. Se va a usar la prueba de Dunn para ajustar el error tipo-I para todas las comparaciones. Se pueden usar usas las funciones `dunn_test` del paquete *rstatix* o `DunnTest` del paquete *DescTools*, donde los argumentos necesarios los datos y la fórmula que describe la variable con respecto a los grupos. Aquí se puede interpretar el valor-*p* ajustado con respecto al nivel de significancia escogido. En los resultados se observa que la única diferencia significativa es la de *Mount Mica-Black Mountain*, ya que el valor-*p* está por debajo del $\alpha$.
+
+```{r}
+dunn = dunn_test(dat.kw, MgO ~ Location) # rstatix
+dunn
+DunnTest(MgO ~ Location,dat.kw) # DescTools
+```
+
+> Conclusión: El contenido de $MgO$ difiere significativamente entre las localidades, `r kw.apa$statistic`, $\eta^2_H = `r str_glue("{apa(kw.eta[[3]],2,F)}$")`, `r (1-a)*100`% IC `r str_glue("$[{apa(kw.eta[[4]],2,F)}, {apa(kw.eta[[5]],2,F)}]$")`. El efecto se puede considerar grande, pero con un rango amplio. Análisis posteriores con Dunn indican que hay una diferencia entre Mount Mica - Black Mountain ($p=`r str_glue("{apa(dunn$p.adj[2],3,F)}")`$), pero no así entre Mount Mica - Sebago Batholith ($p=`r str_glue("{apa(dunn$p.adj[3],3,F)}")`$), ni Sebago Batholith - Black Mountain ($p=`r str_glue("{apa(dunn$p.adj[1],3,F)}")`$).
+
+```{r echo=FALSE}
+kw.stats = TeX(str_interp("$\\chi^2(${kw.res$parameter},\\mathit{N}=${N}) = ${apa(kw.res$statistic,2)}, \\mathit{p} ${printp(kw.res$p.value,add_equals = T)}, \\eta^2_H = ${apa(kw.eta[[3]],2,F)}, IC_{${(1-a)*100}%} \\[${apa(kw.eta[[4]],2,F)}, ${apa(kw.eta[[5]],2,F)}\\]"))
+```
+
+```{r kw-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de caja mostrando el efecto de localidad sobre el contenido de MgO, la comparación significativa, así como el resumen estadístico respectivo.'}
+ggbetweenstats(dat.kw,Location,MgO,
+               plot.type = 'box',
+               type = 'np',
+               pairwise.comparisons = T,
+               # pairwise.display = 'all',
+               bf.message = F,
+               results.subtitle = F,
+               sample.size.label = F,
+               xlab = 'Localidad',ylab = 'Contenido de MgO (%)',
+               subtitle = kw.stats)
+```
+
+### Correlación de Spearman {#prueba-spearman}
+
+La correlación de Spearman es una modificación de la correlación de Pearson, donde el interés es la relación entre variables numéricas continuas. La correlación de Spearman tiene las ventajas sobre Pearson que se puede utilizar cuando la relación es **no** lineal, y no se ve tan afectada por valores extremos o atípicos. las hipótesis serían las siguientes:
+
+- $H_0: r_s = 0 \to$ No hay relación entre las variables,
+- $H_1: r_s \neq 0 \to$ Hay relación entre las variables.
+
+El procedimiento de la prueba sería el siguiente:
+
+1. Ranquear cada variable por separado.
+1. Sacar las diferencias al cuadrado entre las observaciones ranqueadas.
+1. Calcular el coeficiente por medio de la Ecuación \@ref(eq:r-spearman), o calcular el coeficiente de Pearson con los datos ranqueados.
+1. Se rechaza $H_0$ si el $r_s > \text{valor crítico}$ o si $p < \alpha$.
+
+El uso de la prueba de correlación de Spearman se realiza con un ejemplo de @swan1995, donde se el tamaño de ostrácodos con respecto a la profundidad (Tabla \@ref(tab:spearman-ej1)). Hay una relación entre el paso del tiempo (mayor profundidad) y el tamaño de los ostrácodos? Asuma $\alpha = 0.05$.
+
+```{r}
+a = 0.05
+ostracodos = tibble(prof = c(242,253,271,292,305,332,335,337,338,350,
+                             357,364,365,371,372,385,401,402,410,412,
+                             418,423,427,429,432,446,451,454,460,470,
+                             474,481,497),
+                    size = c(1.3,.9,.7,.8,.8,1.2,.9,1.1,1.6,1.6,1,
+                             1.2,1.3,1.4,1.1,.9,1.3,1.5,1.8,1.6,1.2,
+                             1.5,1.5,1.7,1.9,1.5,1.6,1.2,1.6,1.7,
+                             1.8,1.8,1.3),
+                    Rprof = rank(prof),
+                    Rsize = rank(size),
+                    Dif = (Rprof-Rsize)^2)
+```
+
+```{r spearman-ej1, echo=FALSE}
+ostracodos %>% 
+  kable(align = 'c',digits = 2,
+        col.names = c('Profundidad (x)','Tamaño (y)',
+                      '$R_{x}$',
+                      '$R_{y}$','$(R_{x}-R_{y})^2$'),
+        caption = 'Valores para la correlación de Spearman') %>% 
+  kable_styling(full_width = F)
+```
+
+La suma de las diferencias al cuadrado resulta en:
+
+```{r}
+ostracodos %>% 
+  summarise(Suma = sum(Dif))
+```
+
+\begin{equation}
+  r_{s} = 1 - \frac{6\sum_i^N[R(x_i)-R(y_i)]^2}{N(N^2-1)}\\
+  r_{s} = 1 - \frac{6 \cdot 1941.5}{33(33^2-1)} = 0.675
+\end{equation}
+
+En **R** se tiene la función `cor.test` que puede calcular diferentes coeficientes de correlación. El argumento `method` define cuál correlación calcular. Se puede calcular `spearman` sobre los datos originales, pero éste no arroja un intervalo de confianza, o se puede calcular `spearman` sobre los datos ranqueados; la inferencia no cambia.
+
+```{r}
+spearman.res = cor.test(~prof+size,ostracodos,method='spearman')
+spearman.res
+cor.test(~Rprof+Rsize,ostracodos,method='pearson')
+```
+
+*Decisión*: Se rechaza $H_0$
+
+```{r echo=FALSE}
+spearman.apa = apa_print(spearman.res)
+```
+
+La significancia de la correlación también puede aproximarse por medio de las Ecuaciones \@ref(eq:spearman-t) y \@ref(eq:spearman-z), donde la primera es similar a la utilizada para la correlación de Pearson (el valor de $t$ en la prueba de Pearson sobre los datos ranqueados, $v=N-2$), y la segunda es una aproximación a la distribución normal, especialmente cuando el tamaño de la muestra es grande.
+
+\begin{equation}
+  t = \frac{r_s \sqrt{v}}{\sqrt{1-r_s^2}}
+  (\#eq:spearman-t)
+\end{equation}
+
+\begin{equation}
+  t = \frac{r_s \sqrt{v}}{\sqrt{1-r_s^2}} = \frac{0.675 \sqrt{31}}{\sqrt{1-0.675^2}} = 5.09
+\end{equation}
+
+\begin{equation}
+  z = r_s\sqrt{N-1}
+  (\#eq:spearman-z)
+\end{equation}
+
+\begin{equation}
+  z = r_s\sqrt{N-1} = 0.675\sqrt{33-1} = 3.82
+\end{equation}
+
+Al ser $t$ mayor al valor crítico, $t_{0.05/2,31}=|2.04|$, y al ser $z$ mayor al valor crítico, $1.96$ para $\alpha=0.05$, se obtiene la misma decisión que con la prueba respectiva.
+
+El intervalo de confianza puede calcularse por medio de la prueba de Pearson sobre datos ranqueados (mostrada arriba), o por medio de las funciones `SpearmanRho` del paquete *DescTools*, o `spearmanRho` del paquete *rcompanion* (por medio de bootstrap).
+
+```{r}
+spearman.ci = with(ostracodos,SpearmanRho(prof,size,conf.level = 1-a))
+spearman.ci
+set.seed(101)
+spearmanRho(~prof+size,ostracodos,ci = T,conf = 1-a)
+```
+
+> Conclusión: La profundidad y el tamaño de los ostrácodos están significativa correlacionados, `r spearman.apa$estimate`, `r (1-a)*100`% IC `r str_glue("$[{apa(spearman.ci[[2]],2,F)}, {apa(spearman.ci[[3]],2,F)}]$")`, `r str_glue("$p {printp(spearman.res$p.value)}$")`. El tamaño del efecto es grande con un rango de medio hasta muy grande.
+
+```{r spearman-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de dispersión mostrando la relación entre tamaño y profundidad para los ostrácodos, así como el resumen estadístico respectivo.'}
+ostracodos %>% 
+  ggplot(aes(prof,size)) + 
+  geom_point(size=2,col='blue') + 
+  labs(x = 'Profundidad',
+       y = 'Tamaño',
+       subtitle = TeX(str_interp("$\\mathit{r_s} = ${apa(spearman.ci[[1]],2,F)}, IC_{${(1-a)*100}%} \\[${apa(spearman.ci[[2]],2,F)}, ${apa(spearman.ci[[3]],2,F)}\\], \\mathit{p} ${printp(spearman.res$p.value,add_equals = T)}"))) + 
+  theme(plot.subtitle = element_text(size = 10))
+```
+
+La correlación de Spearman:
+
+- No indica relación lineal.
+- Simplemente indica que hay una relación (monotónica) entre las variables estudiadas.
+- Es inusual que el resultado de un test estadístico para Pearson sea superior al de Spearman.
+- En general se considera más robusto el coeficiente Spearman que el de Pearson, especialmente cuando hay valores atípicos.
+
+## Bootstrap (remuestreo) {#bootstrap}
+
+Es una técnica de remuestreo (con reemplazamiento) de datos que permite resolver problemas relacionados con la estimación de intervalos de confianza o pruebas de significación estadística. El muestreo con reemplazamiento consiste en tomar una muestra del mismo tamaño de la muestra original, pero permitiendo que las observaciones puedan escogerse más de una vez; un ejemplo se muestra en la Tabla \@ref(tab:boot-ej). Como esta técnica genera muestras aleatorias cada vez que se corre el análisis, es recomendado partir del mismo punto para cuestiones de reproducibilidad, por lo que se recomienda usar la función `set.seed` antes de cualquier remuestreo.
+
+```{r boot-ej, echo=FALSE}
+set.seed(101)
+tibble(original = 1:6,
+       muestra1 = sample(original,6,T),
+       muestra2 = sample(original,6,T),
+       muestra3 = sample(original,6,T),
+       muestra4 = sample(original,6,T),
+       muestra5 = sample(original,6,T)) %>% 
+  kable(align = 'c',
+        caption = 'Ejemplo de muestreo con reemplazamiento',
+        col.names = c('Muestra original',
+                      'Muestra 1',
+                      'Muestra 2',
+                      'Muestra 3',
+                      'Muestra 4',
+                      'Muestra 5')) %>% 
+  kable_styling(full_width = F)
+```
+
+Si se tiene una muestra representativa de una población en interés, se puede esperar que muestrear la muestra sería homólogo a muestrear la población. Al repetir este proceso un montón de veces (muestrear con reemplazamiento) se pueden construir distribuciones del estadístico de interés (estimación por medio de intervalos de confianza) o distribuciones asumiendo que $H_0$ es verdadera (pruebas de significación estadística). Esta técnica se muestra en la Figura \@ref(fig:infer-ci) para el caso de estimación por medio de intervalos de confianza.
+
+```{r infer-ci, echo=FALSE, fig.cap=' Proceso de bootstrap para estimar intervalos de confianza. Los nombres representan funciones del paquete *infer*, pero hacen referencia a los diferentes pasos en el proceso.'}
+knitr::include_graphics('images/infer_ci.png')
+```
+
+Existen diferentes funciones y paquetes que permiten permiten utilizar esta técnica, dentro de ellos están: *boot* [@R-boot], *infer* [@R-infer], y *rsample* [@R-rsample]. Los paquetes y funcionalidad de *boot* y *rsample* son más generales ya que permiten al usuario definir qué se quiere calcular (lo que permite mayor flexibilidad y control), mientras que *infer* ya viene con opciones predefinidas de las cuales escoger y simplemente aplicar (mayor facilidad para aplicar pero poco flexible). Los paquetes *infer* y *rsample* siguen la metodología del *tidyverse*, por lo que son más congruentes con la manera en que se han venido mostrando y aplicando los conceptos y análisis en este libro; de hecho ambos paquetes son parte del meta-paquete *tidymodels* [@R-tidymodels] que permite aplicar técnicas de aprendizaje automático (machine learning) para diferentes problemas y con diferentes técnicas, de una manera uniforme y congruente.
+
+### *infer*
+
+En esta sección se introduce de manera general el funcionamiento del paquete *infer*; para un mejor entendimiento se recomienda revisar las viñetas del paquete, que cubren todos los posibles análisis que puede correr. Como se mencionó anteriormente este paquete viene con funciones y una metodología predeterminada, lo que lo hace amigable de aprender pero a la hora de querer tener más control no es posible.
+
+El flujo general se presentó en la Figura \@ref(fig:infer-ci) y se resume a continuación:
+
+- `specifiy`: Se tiene que definir qué se quiere analizar, y dependiendo de ésto se especifica de diferentes formas.
+- `hypothesize`: Se define cuando se quiere simular la distribución que representa a $H_0$, depende del tipo de prueba.
+- `generate`: Se generan la cantidad de replicas deseadas.
+- `calculate`: Se escoge el estadístico a calcular, donde las opciones son `c("mean", "median", "sum", "sd", "prop", "count", "diff in means",
+    "diff in medians", "diff in props", "Chisq", "F", "slope", "correlation", "t", "z")`
+- `visualise`: Grafica el resultado, ya sea la distribución del estadístico para estimación o para prueba estadística.
+
+Existen otra serie de funciones que permiten obtener el intervalos de confianza, el valor-*p*, y agregar estos valores al gráfico resultante. En las siguientes secciones se presentan un par de casos reproduciendo ejemplos tratados en estimación y pruebas estadísticas, para poder comparar los resultados.
+
+#### Estimación
+
+Para el caso de estimación se presenta el ejemplo de la longitud de los braquiópodos en las capas A y B, donde se quiere estimar si las medias se pueden considerar iguales. 
+
+Los pasos son los siguientes:
+
+- `specifiy`: Se puede especificar de dos formas: por medio de fórmula (`response ~ explanatory`) como se ha trabajado en las diferentes pruebas presentadas, o definir las variables por separado. En este caso la variable respuesta (dependiente) es la longitud (values en el dataframe) y la variable explanatoria (independiente) es la variable agrupadora (ind en el dataframe).
+- `hypothesize`: No se usa por ser un problema de estimación.
+- `generate`: Se generan 1000 replicas.
+- `calculate`: Lo que se quiere estimar es la diferencia de medias (`'diff in means'`), y por ser éste el caso es necesario definir el orden (`order`) de la diferencia, donde se realiza `primero - segundo`.
+
+Este proceso genera el remuestreo con el estadístico (`stat`) deseado. A partir de estos datos se puede: obtener el intervalo de confianza (`get_ci`), visualizar la distribución del estadístico (diferencia de medias) y sobreponerle el intervalo de confianza (Figura \@ref(fig:braq-dif)).
+
+```{r}
+set.seed(101)
+a = .05
+
+boots = braq %>% 
+  specify(response = values, explanatory = ind) %>% 
+  generate(reps = 1000) %>% 
+  calculate(stat = 'diff in means', order = c('A','B'))
+boots
+
+boots %>% 
+  summarise(mean_dif = mean(stat))
+
+boots_ci = boots %>% 
+  get_ci(level = 1-a)
+boots_ci
+```
+
+```{r braq-dif, out.width='90%', fig.cap='Distibución de diferencia de medias para la longitud de braquiópodos en dos capas diferentes.'}
+boots %>% 
+  visualise() +
+  shade_ci(endpoints = boots_ci)
+```
+
+> El resultado muestra que el intervalo de confianza incluye a 0 (por muy poco), por lo que es un valor probable para la diferencia de la longitud de los braquiópodos en las dos capas, pudiendo considerar semejantes. Este resultado no difiere mucho del obtenido por medio de la respectiva prueba estadística.
+
+#### Prueba estadística
+
+El poder realizar simulaciones para problemas donde no hay posibilidad de estimar intervalos de confianza es muy útil, ya que permite validar o suplantar el proceso de una prueba estadística y obtener resultados representativos.
+
+Para el caso de la prueba estadística se presenta el ejemplo del nivel de contaminación para pozos en diferentes localidades, donde se quiere estimar si el nivel de contaminación es similar (homogéneo) en la diferentes localidades. 
+
+Los pasos son los siguientes:
+
+- `specifiy`: Se puede especificar de dos formas: por medio de fórmula (`response ~ explanatory`) como se ha trabajado en las diferentes pruebas presentadas, o definir las variables por separado. En este caso se usa la fórmula y la variable respuesta (dependiente) es el nivel e contaminación y la variable explanatoria (independiente) es la localidad.
+- `hypothesize`: Por ser una prueba de dos variables la hipótesis es que no hay efecto de la variable explanatoria sobre la respuesta, o que son independientes. Si se tratara de una variable, se tienen que definir otros argumentos dependiendo del tipo de prueba.
+- `generate`: Se generan 1000 replicas.
+- `calculate`: Lo que se quiere estimar es la distribución de $\chi^2$ (`'Chisq'`).
+
+Este proceso genera el remuestreo con el estadístico (`stat`) deseado. A partir de estos datos se puede: obtener el valor-*p* (`get_p_value`), visualizar la distribución del estadístico ($\chi^2$) y sobreponerle el área de rechazo a partir del valor-*p* (Figura \@ref(fig:pozos-chi)).
+
+```{r}
+obs_chisq <- pozos %>%
+  specify(Contaminado ~ Localidad) %>%
+  calculate(stat = "Chisq")
+obs_chisq
+
+set.seed(101)
+chisq_null <- pozos %>%
+  specify(Contaminado ~ Localidad) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000) %>%
+  calculate(stat = "Chisq")
+
+chisq_null %>% 
+  get_p_value(obs_stat = obs_chisq, direction = "greater")
+```
+
+```{r pozos-chi, out.width='90%', fig.cap='Distibución de $\\chi^2$ para el nivel de contaminación por localidad.'}
+chisq_null %>% 
+  visualize() +
+  shade_p_value(obs_stat = obs_chisq, direction = "greater")
+```
+
+> El resultado muestra que el valor-*p* está por encima del nivel de significancia, por lo que no se rechaza que el nivel de contaminación sea similar en las diferentes localidades. Este resultado no difiere mucho del obtenido por medio de la respectiva prueba estadística.
+
+De nuevo, aquí se presentaron un par de ejemplo para introducir el uso de este paquete y las opciones que permite, para otras pruebas o estimaciones se recomienda revisar la documentación del paquete.
+
+### *rsample*
+
+En esta sección se introduce de manera general el funcionamiento del paquete *rsample*. La funcionalidad de este paquete es más general ya que el usuario tiene que definir el estadístico o valor a muestrear, lo que implica cierta complejidad pero a su vez mayor flexibilidad. Otra ventaja, sobre `infer`, es que permite realizar un muestreo estratificado, lo que mantiene la cantidad de observaciones presentes en los diferentes grupos, respetando las condiciones de muestreo original y controlando que no se generen muestreos desbalanceados.
+
+Los pasos generales son los siguientes:
+
+1. Generar el remuestreo con `bootstraps`, donde se ocupa un dataframe, el número de replicas, y aquí se puede definir la variable estratificadora (`strata`) de ser necesario. Esto genera un *tibble* con las variables `splits` y `id`, donde `splits` contiene el dataframe remuestreado (datos para `analysis`), que es sobre el cual se quiere realizar el análisis, y además guarda las observaciones que no se muestrearon (datos para `assessment`).
+2. Definir una o varias funciones a aplicar sobre los `splits`. Aquí es donde el usuario tiene toda la flexibilidad y control sobre el análisis, y es lo que a su vez implica mayor complejidad por el hecho de tener que definir/crear funciones propias.
+3. Agregar variables (`mutate`) al *tibble* generado en el primer paso por medio de la iteración (usando funciones `map` del paquete *purrr* [@R-purrr]) sobre los `splits` con la(s) función(es) definida(s) en el segundo paso. El tipo de variable puede ser cualquier tipo de objeto dada la flexibilidad de los *tibbles*.
+4. Con el *tibble* actualizado se puede(n) analizar la(s) variable(s) agregadas en el paso tres, ya sea por medio de estimación de intervalos de confianza, visualización de las distribuciones, o tareas más complejas dependiendo de la(s) variable(s) generada(s).
+
+#### Estimación
+
+Como ejemplo para estimación se usa el ejemplo del contenido de cuarzo de una roca ígnea. 
+
+1. Se convierte el vector en un *tibble* y se especifican 1000 remuestreos.
+2. Se generan las funciones `avg` y `d` para calcular la media y el tamaño del efecto para cada remuestreo.
+3. Se agregan las variables `avg` y `d` al *tibble* original por medio de la función `map_dbl`, ya que el resultado de ambas funciones es un número con decimales.
+
+```{r}
+mu = 20
+a = .05
+n = length(cuarzo)
+
+set.seed(101)
+m = bootstraps(data = tibble(cuarzo), times = 1000)
+
+avg = function(split) {
+  split %>% 
+    analysis() %>% 
+    pull(1) %>% 
+    mean()
+}
+
+d = function(split) {
+  vec = split %>% 
+    analysis() %>% 
+    pull(1)  
+  d = (mean(vec) - mu) / sd(vec)
+  return(d)
+}
+
+# avg2 = as_mapper(~ .x %>% analysis %>% pull(1) %>% mean)
+# avg3 = compose(mean, partial(pull, var=1), analysis)
+
+m = m %>% 
+  mutate(avg = map_dbl(splits, ~avg(.)),
+         d = map_dbl(splits, ~d(.)),
+         )
+m
+```
+
+Una vez generado y actualizado el *tibble* se calculan estadísticas para las variables generadas (`q1` y `q3` representan los límites inferior y superior del intervalo de confianza), y se visualizan las mismas por medio de histogramas mostrando el intervalo de confianza (Figuras \@ref(fig:Q-avg) y \@ref(fig:Q-d)).
+
+```{r}
+m.s = m %>% 
+  summarise_if(is.numeric,
+               .funs = list(~mean(.),
+                            ~sd(.),
+                            q1=~quantile(.,a/2),
+                            q2=~quantile(.,.5),
+                            q3=~quantile(.,1-a/2)))
+m.s %>% 
+  pivot_longer(cols = everything(),
+               names_to = c('param','stat'),
+               names_sep = '_',
+               values_to = 'value') %>% 
+  arrange(param)
+```
+
+```{r Q-avg, out.width='90%', fig.cap='Distibución de medias para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza.'}
+myvar = 'avg' # variable a graficar: avg, d
+
+ggplot(m, aes(get(myvar))) +
+  geom_histogram(bins = 20, col = 'black', fill = 'grey80') +
+  geom_vline(xintercept = unlist(m.s %>% select(starts_with(str_glue('{myvar}_q')))), 
+             col = c('blue','red','blue')) +
+  labs(x = 'Contenido de cuarzo (%)',
+       y = '')
+```
+
+```{r Q-d, out.width='90%', fig.cap='Distibución de tamaño del efecto ($d$) para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza.'}
+myvar = 'd' # variable a graficar: avg, d
+
+ggplot(m, aes(get(myvar))) +
+  geom_histogram(bins = 20, col = 'black', fill = 'grey80') +
+  geom_vline(xintercept = unlist(m.s %>% select(starts_with(str_glue('{myvar}_q')))), 
+             col = c('blue','red','blue')) +
+  labs(x = TeX('Tamaño del efecto (\\mathit{Cohen d}) 
+               para el contenido de cuarzo'),
+       y = '')
+```
+
+> Con los resultados se puede concluir que el contenido de cuarzo no difiere significativamente del valor propuesto, ya que se encuentra dentro del intervalo de confianza. El tamaño del efecto es mediano, pero con un rango muy amplio desde pequeño en la dirección opuesta hasta muy grande. Este resultado no difiere mucho del obtenido por medio de la respectiva prueba estadística.
+
+Aquí se introdujo muy brevemente la aplicabilidad del paquete *rsample* para usar la técnica de bootstrap. Este paquete, en conjunto con otros del *tidyverse*, son una herramienta muy potente para poder realizar diversidad de análisis desde simples hasta complejos.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'boot'
 ), 'packages.bib')
 ```

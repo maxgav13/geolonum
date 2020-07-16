@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-07-03" />
+<meta name="date" content="2020-07-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -435,11 +435,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#introducción-14"><i class="fa fa-check"></i><b>16.1</b> Introducción</a></li>
 <li class="chapter" data-level="16.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-noparam"><i class="fa fa-check"></i><b>16.2</b> Pruebas no-paramétricas</a></li>
 <li class="chapter" data-level="16.3" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#ES-np"><i class="fa fa-check"></i><b>16.3</b> Tamaño del efecto</a></li>
-<li class="chapter" data-level="16.4" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-chi-gof"><i class="fa fa-check"></i><b>16.4</b> Bondad de ajuste</a></li>
-<li class="chapter" data-level="16.5" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-chi-hom"><i class="fa fa-check"></i><b>16.5</b> Homogeneidad</a></li>
-<li class="chapter" data-level="16.6" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-chi-asoc"><i class="fa fa-check"></i><b>16.6</b> Independencia / asociación</a></li>
+<li class="chapter" data-level="16.4" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-chi2-nominales"><i class="fa fa-check"></i><b>16.4</b> Pruebas <span class="math inline">\(\chi^2\)</span> (nominales)</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#vector-de-datos"><i class="fa fa-check"></i><b>16.4.1</b> Vector de datos</a></li>
+<li class="chapter" data-level="16.4.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#tab-contingencia"><i class="fa fa-check"></i><b>16.4.2</b> Tablas de Contingencia</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="estadística-direccional.html"><a href="estadística-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadística Direccional</a></li>
+<li class="chapter" data-level="16.5" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-sobre-rangos-ordinales"><i class="fa fa-check"></i><b>16.5</b> Pruebas sobre rangos (ordinales)</a><ul>
+<li class="chapter" data-level="16.5.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-wilcoxon"><i class="fa fa-check"></i><b>16.5.1</b> Rango con signo de Wilcoxon</a></li>
+<li class="chapter" data-level="16.5.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-mwu"><i class="fa fa-check"></i><b>16.5.2</b> Suma de rangos de Wilcoxon / U de Mann-Whitney</a></li>
+<li class="chapter" data-level="16.5.3" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-kruskal"><i class="fa fa-check"></i><b>16.5.3</b> Kruskal-Wallis</a></li>
+<li class="chapter" data-level="16.5.4" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-spearman"><i class="fa fa-check"></i><b>16.5.4</b> Correlación de Spearman</a></li>
+</ul></li>
+<li class="chapter" data-level="16.6" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#bootstrap"><i class="fa fa-check"></i><b>16.6</b> Bootstrap (remuestreo)</a><ul>
+<li class="chapter" data-level="16.6.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#infer"><i class="fa fa-check"></i><b>16.6.1</b> <em>infer</em></a></li>
+<li class="chapter" data-level="16.6.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#rsample"><i class="fa fa-check"></i><b>16.6.2</b> <em>rsample</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="estadística-direccional.html"><a href="estadística-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadística Direccional</a><ul>
+<li class="chapter" data-level="17.1" data-path="estadística-direccional.html"><a href="estadística-direccional.html#introducción-15"><i class="fa fa-check"></i><b>17.1</b> Introducción</a></li>
+</ul></li>
 <li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a></li>
 <li class="chapter" data-level="19" data-path="geoestadística.html"><a href="geoestadística.html"><i class="fa fa-check"></i><b>19</b> Geoestadística</a></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
@@ -465,7 +478,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="estadística-direccional" class="section level1">
 <h1><span class="header-section-number">Capítulo 17</span> Estadística Direccional</h1>
+<div id="introducción-15" class="section level2">
+<h2><span class="header-section-number">17.1</span> Introducción</h2>
 
+</div>
 </div>
             </section>
 
