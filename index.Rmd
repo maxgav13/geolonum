@@ -39,6 +39,16 @@ El libro se divide en 2 partes principales:
 
 En la parte de análisis de datos se cubre lo básico de álgebra lineal, para luego caer en la parte gruesa del curso que es estadística. En esta parte se ve lo que es estadística descriptiva (univariable y bivariable), principios de probabilidad, distribuciones de probabilidad, estadística inferencial (pruebas de hipótesis, estimación), y estadística no paramétrica. La parte final del curso cubre temas relacionados con geociencias (datos direccionales, secuencias, y geoestadística), donde se aplican conceptos anteriormente adquiridos en la sección de estadística.
 
+```{block2 aporte, type='rmdnote'}
+Se consideran las siguientes como las principales contribuciones y novedades de este documento (en ningun orden respectivo):
+
+- En idioma español. La mayoría de recursos que presentan los temas abordados están en inglés, lo que dificulta el acceso a la información para quienes no manejan este idioma.
+- Temas y ejemplos con datos típicos de geociencias. No existen muchos textos, comparados con la cantidad que existen para otras ciencias, que traten temas específicos de geociencias, y mucho menos en español (punto anterior), por lo que se hace un enlace entre la teoría y la aplicación a temas pertinentes a esta área de las ciencias, esperando que el aporte resulte en una mayor cuantificación de esta ciencia que ha sido muy cualitativa.
+- Introducción a tamaños de efecto. En los capítulos de pruebas estadísticas (paramétricas y no-paramétricas) se introduce el concepto de tamaño de efecto, así como su interpretación, y su uso en el reporte de resultados de pruebas estadísticas. Esto último es una práctica que se sugiere y recomienda para que los resultados obtenidos sean más robustos, comparables, y reproducibles. En los recursos en español y de geociencias en inglés este tema no se presenta del todo, por lo que se considera un aporte significativo hacia una mejor práctica de análisis y reporte de resultados cuantitativos en geociencias.
+- Uso de software libre. No solo se presenta la teoría y cómo realizar los cálculos de forma manual, sino que además se introduce el software libre **R** (de manera exhaustiva en los primeros 6 capítulos) y se muestra cómo aplicar las diferentes técnicas y métodos descritos en el texto por medio de esta herramienta.
+- Libro "vivo", lo cual permite agregar y/o actualizar los contenidos de manera más eficiente y dinámica.
+```
+
 <a href="https://www.netlify.com"><img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg"/></a>
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Este obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">licencia de Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional</a>.

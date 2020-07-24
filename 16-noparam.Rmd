@@ -3,6 +3,7 @@
 ```{r noparam-setup, include=FALSE}
 library(papaja)
 library(latex2exp)
+library(XNomial)
 library(DescTools) # para pruebas
 library(effectsize) # para tamanho del efecto
 library(MOTE) # para tamanho del efecto
@@ -80,7 +81,7 @@ En este capítulo se presentan las siguientes pruebas:
 * Prueba de Kruskal-Wallis (\@ref(prueba-kruskal))
   - $H_0:$ No hay diferencia entre las medianas de las muestras
 * Correlación de Spearman (\@ref(prueba-spearman))
-  - $H_0: r_s = 0$ No hay relación/asociación entre las variables ordinales
+  - $H_0: \rho_s = 0$ No hay relación/asociación entre las variables ordinales
 * Bootstrap (remuestreo) (\@ref(bootstrap))
   - Técnica que permita hacer inferencias por medio de pruebas estadísticas o intervalos de confianza, especialmente útil para casos donde no hay una solución analítica
 
@@ -140,7 +141,7 @@ tibble(Prueba = c('Correlación',
                        ))
 ```
 
-El $\phi$ y Cramer $V$ comprenden el rango de 0 a 1 y se pueden interpretar similar a $r$ y $r_s$, donde valores cercanos a 0 indican poca o nula asociación y valores cerca de 1 indican alta asociación. El $\phi$ aplica para tablas de $2 \times 2$ ($v=1$) o vectores, mientras que Cramer $V$ aplica para tablas de diferentes dimensiones( $r \times c$, $r = \text{rows/filas}$ y $c = \text{columnas}$) [@cohen1988; @fritz2012joepg; @tomczak2014tss]. Para clasificar el tamaño del efecto se pueden seguir las mismas guías que para $r$ (0.1, 0.3, 0.5). El $\eta_H^2$ y $\epsilon^2$ comprenden el rango de 0 a 1 y se interpreta igual a $R^2$ y $\eta^2$ presentados en los capítulos de [Estadística Descriptiva Bivariable] y [Pruebas Estadísticas].
+El $\phi$ y Cramer $V$ comprenden el rango de 0 a 1 y se pueden interpretar similar a $r$ y $r_s$, donde valores cercanos a 0 indican poca o nula asociación y valores cerca de 1 indican alta asociación. El $\phi$ aplica para tablas de $2 \times 2$ ($v=1$) o vectores, mientras que Cramer $V$ aplica para tablas de diferentes dimensiones ($r \times c$, $r = \text{rows/filas}$ y $c = \text{columnas}$) [@cohen1988; @fritz2012joepg; @tomczak2014tss]. Para clasificar el tamaño del efecto se pueden seguir las mismas guías que para $r$ (.1, .3, .5). El $\eta_H^2$ y $\epsilon^2$ comprenden el rango de 0 a 1 y se interpreta igual a $R^2$ y $\eta^2$ presentados en los capítulos de [Estadística Descriptiva Bivariable] y [Pruebas Estadísticas]. Para el caso de Cramer $V$, cuando el $v_{min} > 1$, se deben ajustar los valores de las clases propuestas por medio de $\frac{\text{valor}}{\sqrt{v_{min}}}$. Por ejemplo para el tamaño grande de $.5$ y $v_{min}=3$ se tendría $\frac{.5}{\sqrt{3}}=.29$, con lo que ahora un tamaño de efecto grande sería cualquier valor mayor a $.29$ en vez de $.5$.
 
 ## Pruebas $\chi^2$ (nominales)
 
@@ -151,16 +152,18 @@ Para la prueba $\chi^2$ el estadístico se calcula de acuerdo a la Ecuación \@r
   (\#eq:chi2)
 \end{equation}
 
-### Vector de datos
+En caso de que se encuentre un resultado significativo (rechazar $H_0$), ya sea para la prueba de bondad de ajuste, de homogeneidad, o de independencia, es importante explicar dónde o cuáles categorías/celdas, del vector de categorías o combinaciones de categorías de la tabla de contingencia, se desvían de los valores esperados. Para ésto se pueden analizar los residuales ajustados (un tipo de análisis posterior - post-hoc), con lo que cuando un residual ajustado es superior a $|1.96|$, para un $\alpha=.05$, esta categoría/celda se considera se desvía significativamente de la hipótesis nula, mostrando dónde se dan estas diferencias entre los valores observados y esperados, pudiendo ayudar a explicar de manera más amplia los resultados.
 
-#### Bondad de ajuste {#prueba-chi-gof}
+### Bondad de ajuste {#prueba-chi-gof}
 
 Esta prueba se realiza cuando se tiene 1 variable de interés y dicha variable es nominal, y ésta puede tener $2+$ categorías ($K$), y se quiere comparar el conteo de dichas categorías con unos valores esperados o predefinidos, de ahí el término "ajuste", donde se refiere a qué tanto se "ajusta" o parece lo observado a lo esperado. 
 De manera general la prueba $\chi^2$ se ajusta a la cantidad de categorías que tenga la variable, pero existen pruebas exactas donde si la variable tiene 2 categorías es una prueba binomial y si tiene 3 o más es una prueba multinomial. 
 
 El estadístico se calcula conforme la Ecuación \@ref(eq:chi2), donde los grados de libertad son el número de categorías menos uno ($v=K-1$).
 
-Para mostrar la prueba de bondad de ajuste se usa el ejemplo de @mckillup2010, donde se tiene una muestra de 20 foraminíferos, clasificados en enrollados a la derecha (16) o a la izquierda (4), y se quiere comparar con las proporciones de 0.9 y 0.1 respectivamente. Asuma $\alpha=0.05$. 
+#### Binomial
+
+Para mostrar la prueba de bondad de ajuste binomial se usa el ejemplo de @mckillup2010, donde se tiene una muestra de 20 foraminíferos, clasificados en enrollados a la derecha (16) o a la izquierda (4), y se quiere comparar con las proporciones de .9 y .1 respectivamente. Asuma $\alpha=.05$. 
 
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: foraminíferos enrollados a la derecha e izquierda
@@ -172,15 +175,15 @@ Para mostrar la prueba de bondad de ajuste se usa el ejemplo de @mckillup2010, d
 3. Determinar parámetros de la distribución a comparar ($H_0$):
     - $v = K-1 = 2 - 1 = 1$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $\chi^2_{\alpha,v} = \chi_{0.05,1}^2=3.84$
+    - $\alpha = .05$
+    - $\chi^2_{\alpha,v} = \chi_{.05,1}^2=3.84$
 5. Calcular el estadístico de prueba
-    - Para un $N=20$ la proporción de 0.9 equivale a 18 y la proporción de 0.1 equivale a 2, que serían las frecuencias esperadas (*Con estos valores, especialmente el de 2, se estaría violando el supuesto de tener 5 o más frecuencias esperadas*)
+    - Para un $N=20$ la proporción de .9 equivale a 18 y la proporción de .1 equivale a 2, que serían las frecuencias esperadas (*Con estos valores, especialmente el de 2, se estaría violando el supuesto de tener 5 o más frecuencias esperadas*)
     - $\chi^2 = \sum_{K=1}^K\frac{(O_K-E_K)^2}{E_K}$
     - $\chi^2 = \frac{(16-18)^2}{18} + \frac{(4-2)^2}{2} = 2.22$
 6. Tomar una decisión
     - El estadístico de prueba es menor al crítico, $\chi^2 < \chi_{\alpha,v}^2$
-    - El valor-*p* es mayor a $\alpha = 0.05$, $p = 0.136$
+    - El valor-*p* es mayor a $\alpha = .05$, $p = .136$
     - *Decisión*: No se rechaza $H_0$
 
 En **R** existe la función `chisq.test` que realiza esta prueba, donde los argumentos principales son el vector de valores observados (variable nominal) y el vector de probabilidades para cada uno de los valores (categorías) de la variable observada.
@@ -192,7 +195,7 @@ chi.gof = chisq.test(c(16,4),p = c(.9,.1))
 chi.gof
 ```
 
-Como se está violando el supuesto de frecuencias esperadas mínimas (la prueba arroja una advertencia), se puede realizar la prueba exacta binomial (ya que $K=2$, si se tuvieran más categorías se usa la prueba multinomial), que se demuestra aquí únicamente en **R**. Para ésto se usa la función `binom.test`, donde se requiere el valor observado para una de las categorías que se determina como el "éxito" (en este caso se escogió los enrollados a la derecha), el total de observaciones, la probabilidad de éxito (probabilidad de la categoría definida anteriormente), y el nivel de confianza.
+Como se está violando el supuesto de frecuencias esperadas mínimas (la prueba arroja una advertencia), se puede realizar la prueba exacta binomial (ya que $K=2$), que se demuestra aquí únicamente en **R**. Para ésto se usa la función `binom.test`, donde se requiere el valor observado para una de las categorías que se determina como el "éxito" (en este caso se escogió los enrollados a la derecha), el total de observaciones, la probabilidad de éxito (probabilidad de la categoría definida anteriormente), y el nivel de confianza.
 
 ```{r}
 binom.test(x = 16,n = N,p = 0.9,conf.level = 1-a)
@@ -207,7 +210,7 @@ chi.gof.apa = apa_print(chi.gof,n=N)
 El tamaño del efecto se calcula conforma la Ecuación \@ref(eq:phi).
 
 \begin{equation}
-  \phi = \sqrt{\frac{\chi^2}{N}} = \sqrt{\frac{2.22}{20}} = 0.33
+  \phi = \sqrt{\frac{\chi^2}{N}} = \sqrt{\frac{2.22}{20}} = .33
 \end{equation}
 
 En **R** se puede calcular $\phi$ con la función `v.chi.sq` del paquete *MOTE* [@R-MOTE], donde es necesario indicar el estadístico $\chi^2$, el total de observaciones, el número de filas (para este caso es necesario usar 2 para que pueda funcionar), el número de columnas (categorías, $K$), y el nivel de significancia.
@@ -245,6 +248,143 @@ forams %>%
   theme(plot.subtitle = element_text(size = 10))
 ```
 
+#### Multinomial
+
+Para mostrar la prueba de bondad de ajuste multinomial se usa el ejemplo de @borradaile2003, donde se tiene el conteo de 98 minerales (cuarzo - 48, feldespato - 37, mica - 5, hornblenda - 2, magnetita - 6) en un sedimento proveniente de una roca fuente, y se quiere comparar con las proporciones de .384, .319, .156, .106, y .035 respectivamente. Asuma $\alpha=.05$. 
+
+1. Identificar la población, distribución, y la prueba apropiada:
+    - Población: minerales en sedimento de roca fuente
+    - Distribución: $\chi^2$
+    - Prueba: $\chi^2$ de bondad de ajuste, ya que se tiene una variable nominal (conteo de granos), en este caso con 5 niveles ($K=5$)
+2. Establecer las hipótesis nula y alterna:
+    - $H_0:$ La distribución de minerales sigue las proporciones esperadas para la fuente
+    - $H_1:$ La distribución de minerales no sigue las proporciones esperadas para la fuente
+3. Determinar parámetros de la distribución a comparar ($H_0$):
+    - $v = K-1 = 5 - 1 = 4$
+4. Determinar valores críticos
+    - $\alpha = .05$
+    - $\chi^2_{\alpha,v} = \chi_{.05,4}^2=9.49$
+5. Calcular el estadístico de prueba
+    - Para un $N=98$ y de acuerdo a las proporciones, los conteos esperados equivalen a 37.5, 31.3, 15.3, 10.4, y 3.5 (*Con estos valores, especialmente el de 3.5, se estaría violando el supuesto de tener 5 o más frecuencias esperadas*)
+    - $\chi^2 = \sum_{K=1}^K\frac{(O_K-E_K)^2}{E_K}$
+    - $\chi^2 = \frac{(48-37.5)^2}{37.5} + \frac{(37-31.3)^2}{31.3}  + \frac{(5-15.3)^2}{15.3} + \frac{(2-10.4)^2}{10.4} + \frac{(6-3.5)^2}{3.5} = 19.54$
+6. Tomar una decisión
+    - El estadístico de prueba es mayor al crítico, $\chi^2 > \chi_{\alpha,v}^2$
+    - El valor-*p* es menor a $\alpha = .05$, $p = .0006$
+    - *Decisión*: Se rechaza $H_0$
+
+En **R** existe la función `chisq.test` que realiza esta prueba, donde los argumentos principales son el vector de valores observados (variable nominal) y el vector de probabilidades para cada uno de los valores (categorías) de la variable observada.
+
+```{r warning=TRUE}
+minerales.nom = c('Cuarzo','Feldespato','Mica','Hornblenda','Magnetita')
+a = 0.05
+N = 98
+observados = c(48,37,5,2,6)
+esperados.p = c(.384, .319, .156, .106, .035)
+chi.gof.mult = chisq.test(observados, p = esperados.p)
+chi.gof.mult
+```
+
+Como se está violando el supuesto de frecuencias esperadas mínimas (la prueba arroja una advertencia), se puede realizar la prueba exacta multinomial (ya que $K=5$), que se demuestra aquí únicamente en **R**. Para ésto se usa la función `xmulti` del paquete *XNomial*, donde se requieren los vectores de valores observados y valores o proporciones esperadas, y definir el estadístico a usar.
+
+```{r}
+xmulti(obs = observados, expr = esperados.p, statName = 'Chisq')
+```
+
+Esta prueba arroja el valor-*p* para la comparación entre las categorías.
+
+Los residuales ajustados se pueden acceder a partir del objeto en que se guarda la prueba, como se muestra en el siguiente bloque. Estos residuales son los que realmente indican si hay una diferencia significativa entre lo observado y lo esperado ($> |1.96|$ para $\alpha=.05$), que para el caso del ejemplo ocurre en las categorías cuarzo ($O>E$), mica ($O<E$), y hornblenda ($O<E$).
+
+```{r}
+chi.gof.mult$stdres %>%
+  set_names(minerales.nom)
+```
+
+Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima (azul) o debajo (rojo) del valor crítico de acuerdo al nivel de significancia $\alpha$.
+
+```{r echo=FALSE}
+chi.gof.mult$stdres %>%
+  set_names(minerales.nom) %>%
+  enframe(name = 'Mineral','stdres') %>% 
+  mutate(stdres = round(stdres,2)) %>% 
+  mutate(stdres = cell_spec(stdres,"html", 
+                            color = case_when(stdres > qnorm(1-a/2) ~ 'blue',
+                                              stdres < qnorm(a/2) ~ 'red',
+                                              T ~ 'black'))) %>%
+  kable(format = "html", escape = F) %>% 
+  kable_styling(full_width = F)
+```
+
+La diferencia entre valores observados y esperados se puede visualizar a como se presenta en la Figura \@ref(fig:minerales.gof)
+
+```{r minerales.gof, echo=FALSE, fig.cap='Gráfico de barras mostrando los valores observados y esperados para cada uno de los minerales.'}
+tibble(Mineral = minerales.nom, 
+       Observados = observados/N, 
+       Esperados = esperados.p) %>%
+  pivot_longer(-Mineral, names_to = 'Valores', values_to = 'Proporcion') %>%
+  mutate(Valores = fct_rev(Valores),
+         Mineral = fct_inorder(Mineral)) %>% 
+  ggplot(aes(Mineral,Proporcion,fill=Valores)) + 
+  geom_col(position = 'dodge') + 
+  scale_fill_brewer(type = 'qual',palette = 2) +
+  scale_y_continuous('',labels = label_percent())
+```
+
+```{r echo=FALSE, eval=FALSE}
+MultinomCI(observados, method = 'wilson') %>% 
+  as_tibble() %>% 
+  mutate(esperado = esperados.p,
+         check = ifelse(esperado > lwr.ci & esperado < upr.ci,T,F),
+         mineral = minerales.nom) %>%
+  mutate_if(is.numeric,~round(.,4)) %>% 
+  relocate(mineral)
+```
+
+```{r echo=FALSE}
+chi.gof.mult.apa = apa_print(chi.gof.mult,n=N)
+```
+
+El tamaño del efecto se calcula conforma la Ecuación \@ref(eq:phi).
+
+\begin{equation}
+  \phi = \sqrt{\frac{\chi^2}{N}} = \sqrt{\frac{19.53}{98}} = .45
+\end{equation}
+
+En **R** se puede calcular $\phi$ con la función `v.chi.sq` del paquete *MOTE*, donde es necesario indicar el estadístico $\chi^2$, el total de observaciones, el número de filas (para este caso es necesario usar 2 para que pueda funcionar), el número de columnas (categorías, $K$), y el nivel de significancia.
+
+```{r}
+chi.gof.mult.phi = v.chi.sq(x2 = chi.gof.mult$statistic,
+                            n = N,
+                            r = 2,
+                            c = 5,
+                            a = a)
+chi.gof.mult.phi[1:3] %>% unlist()
+```
+
+> Conclusión: El conteo de minerales en el sedimento difiere de los valores esperados, `r chi.gof.mult.apa$statistic %>% str_replace('n','N')`, `r chi.gof.mult.phi$estimate  %>% str_replace('CI','IC')`. El efecto se puede considerar mediano, pero con un rango amplio de pequeño hasta muy grande.
+
+```{r echo=FALSE}
+chi.gof.mult.stats = TeX(str_interp("$\\chi^2(${chi.gof.mult$parameter},\\mathit{N}=${N}) = ${apa(chi.gof.mult$statistic,2)}, \\mathit{p} ${printp(chi.gof.mult$p.value,add_equals = T)}, \\mathit{V} = ${apa(chi.gof.mult.phi$v,2,F)}, IC_{${(1-a)*100}%} \\[${apa(chi.gof.mult.phi$vlow,2,F)}, ${apa(chi.gof.mult.phi$vhigh,2,F)}\\]"))
+```
+
+```{r chi-gof-mult-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de barra mostrando la proporción de los minerales, así como el resumen estadístico respectivo.'}
+minerales = tibble(mineral = rep(c('Cuarzo','Feldespato','Mica','Hornblenda','Magnetita'),
+                               c(48,37,5,2,6)))
+
+minerales %>% 
+  ggplot(aes(x='A',fill=mineral)) + 
+  geom_bar(position = 'fill',col='black') +
+  geom_label(aes(y=percent,label=paste0(round(percent*100,1),'%')),
+             minerales %>% tabyl(mineral),col='white',size=2,
+             position = position_fill(vjust = .5),show.legend = F) +
+  scale_y_continuous('',labels = label_percent(), 
+                     breaks = breaks_pretty(5)) + 
+  scale_x_discrete('',labels = NULL) + 
+  scale_fill_brewer('Mineral',palette = 'Dark2') +
+  labs(subtitle = chi.gof.mult.stats) + 
+  theme(plot.subtitle = element_text(size = 10))
+```
+
 ### Tablas de Contingencia {#tab-contingencia}
 
 En el caso de que se tienen dos variables nominales (o que se tratan como nominales), y por ende una tabla de contingencia, se pueden definir 2 tipos de muestreo, los cuales van a, de cierta forma, definir el tipo de pregunta (prueba) que se quiere responder (realizar). Estos tipos de muestreo se explican en @agresti2007, y se asocian a las pruebas respectivas en @sheskin2011 y @walpole2012, y serían los siguientes:
@@ -269,11 +409,9 @@ Por ejemplo, para los datos de la Tabla \@ref(tab:contingencia-ej), para la Capa
   f_{E(basalto,1)} = \frac{61 \cdot 50}{200} = 15.25\\
 \end{equation}
 
-En caso de que se encuentre un resultado significativo (rechazar $H_0$), ya sea para la prueba de homogeneidad o de independencia, es importante explicar dónde o cuáles celdas (combinaciones de categorías) de la tabla de contingencia se desvían de los valores esperados. Para ésto se pueden analizar los residuales ajustados (un tipo de análisis posterior - post-hoc), con lo que cuando un residual ajustado es superior a $|1.96|$, para un $\alpha=0.05$, esta celda se considera se desvía significativamente de la hipótesis nula, mostrando dónde se dan estas diferencias entre los valores observados y esperados, pudiendo ayudar a explicar la relación entre las variables.
-
 #### Homogeneidad {#prueba-chi-hom}
 
-Para ejemplificar la prueba de homogeneidad se usa el ejemplo de @mckillup2010 (Tabla \@ref(tab:pozos)), donde se tienen 20 mediciones de pozos en 3 localidades diferentes, a los cuales se les determinó si se encontraban contaminados o no con nitratos. Asuma $\alpha=0.05$. 
+Para ejemplificar la prueba de homogeneidad se usa el ejemplo de @mckillup2010 (Tabla \@ref(tab:pozos)), donde se tienen 20 mediciones de pozos en 3 localidades diferentes, a los cuales se les determinó si se encontraban contaminados o no con nitratos. Asuma $\alpha=.05$. 
 
 ```{r pozos, echo=FALSE}
 pozos_tab = matrix(data = c(12,8,7,13,14,6), 
@@ -309,14 +447,14 @@ pozos %>%
 3. Determinar parámetros de la distribución a comparar ($H_0$):
     - $v = (r-1)(c-1) = (2-1)(3-1) = 1 \cdot 2 = 2$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $\chi^2_{\alpha,v} = \chi_{0.05,2}^2=5.99$
+    - $\alpha = .05$
+    - $\chi^2_{\alpha,v} = \chi_{.05,2}^2=5.99$
 5. Calcular el estadístico de prueba
     - Usando la Ecuación \@ref(eq:expected-tab) se tiene que los valores esperados son 11 para los contaminados y 9 para los no contaminados
     - $\chi^2 = \frac{(12-11)^2}{12} + \frac{(8-9)^2}{9} + \dots = 5.25$
 6. Tomar una decisión
     - El estadístico de prueba es menor al crítico, $\chi^2 < \chi_{\alpha,v}^2$
-    - El valor-*p* es mayor a $\alpha = 0.05$, $p = 0.072$
+    - El valor-*p* es mayor a $\alpha = .05$, $p = .072$
     - *Decisión*: No se rechaza $H_0$. El valor-*p* cercano al $\alpha$ indica evidencia marginal en favor de no rechazar $H_0$, por lo que sería bueno investigar más allá los resultados.
 
 Una forma de graficar tablas de contingencia es por medio de gráficos de mosaico, que es similar a un gráfico de barras donde todas las barras tienen la misma longitud y el área (relleno) representa la proporción de observaciones de la respectiva categoría, que a su vez representa las diferentes celdas de la tabla de contingencia. Para el caso del ejemplo se muestra en la Figura \@ref(fig:chi-hom-mosaico), donde se tiene la proporción de contaminación por localidad.
@@ -353,13 +491,13 @@ vcd::mosaic(t(pozos_tab),
             labeling=labeling_border(gp_labels = gpar(fontsize = 10)))
 ```
 
-Los residuales ajustados se pueden acceder a partir del objeto en que se guarda la prueba, como se muestra en el siguiente bloque. Estos residuales son los que realmente indican si hay una diferencia significativa entre lo observado y lo esperado ($> |1.96|$ para $\alpha=0.05$), que para el caso del ejemplo ocurre en la localidad de Bowen, donde hay menos valores observados para lo contaminado y más valores observados para lo no contaminado.
+Los residuales ajustados se pueden acceder a partir del objeto en que se guarda la prueba, como se muestra en el siguiente bloque. Estos residuales son los que realmente indican si hay una diferencia significativa entre lo observado y lo esperado ($> |1.96|$ para $\alpha=.05$), que para el caso del ejemplo ocurre en la localidad de Bowen, donde hay menos valores observados para lo contaminado y más valores observados para lo no contaminado.
 
 ```{r}
 chi.h$stdres
 ```
 
-Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima o debajo del valor crítico de acuerdo al nivel de significancia $\alpha$.
+Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima (azul) o debajo (rojo) del valor crítico de acuerdo al nivel de significancia $\alpha$.
 
 ```{r echo=FALSE}
 chi.h$stdres %>% 
@@ -379,7 +517,7 @@ El tamaño del efecto se puede calcular de acuerdo a la Ecuación \@ref(eq:v) de
 
 \begin{equation}
   V = \sqrt{\frac{\chi^2}{N \cdot v_{min}}}\\
-  V = \sqrt{\frac{5.25}{60 \cdot 1}} = 0.29
+  V = \sqrt{\frac{5.25}{60 \cdot 1}} = .29
 \end{equation}
 
 En **R** se puede calcular por medio de las funciones `CramerV` del paquete *DescTools* [@R-DescTools], y `v.chi.sq` del paquete *MOTE*.
@@ -432,7 +570,7 @@ ggplot(pozos, aes(Localidad,fill=Contaminado)) +
 
 #### Independencia/asociación {#prueba-chi-asoc}
 
-Para ejemplificar la prueba de homogeneidad se usa el ejemplo de @borradaile2003 (Tabla \@ref(tab:dist-red)), donde se tienen 246 mediciones de clastos, los cuales se clasificaron de acuerdo a la redondez y la distancia de la fuente. Asuma $\alpha=0.05$. 
+Para ejemplificar la prueba de homogeneidad se usa el ejemplo de @borradaile2003 (Tabla \@ref(tab:dist-red)), donde se tienen 246 mediciones de clastos, los cuales se clasificaron de acuerdo a la redondez y la distancia de la fuente. Asuma $\alpha=.05$. 
 
 ```{r dist-red, echo=FALSE, fig.cap='Gráfico mostrando la relación entre las variables, el porcentaje de cada celda, así como el resumen estadístico respectivo.'}
 dist_red = import('data/chi2 independencia.csv') %>% 
@@ -472,8 +610,8 @@ dist_red %>%
 3. Determinar parámetros de la distribución a comparar ($H_0$):
     - $v = (r-1)(c-1) = (4-1)(5-1) = 3 \cdot 4 = 12$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $\chi^2_{\alpha,v} = \chi_{0.05,12}^2=21.03$
+    - $\alpha = .05$
+    - $\chi^2_{\alpha,v} = \chi_{.05,12}^2=21.03$
 5. Calcular el estadístico de prueba
     - Usando la Ecuación \@ref(eq:expected-tab) se tiene que los valores esperados son los que se muestran a continuación
     
@@ -494,7 +632,7 @@ matrix(data = c(13.9,17.5,13,11.6,
     
 6. Tomar una decisión
     - El estadístico de prueba es mayor al crítico, $\chi^2 > \chi_{\alpha,v}^2$
-    - El valor-*p* es menor a $\alpha = 0.05$, $p < .001$
+    - El valor-*p* es menor a $\alpha = .05$, $p < .001$
     - *Decisión*: Se rechaza $H_0$
 
 El gráfico de mosaico para el caso del ejemplo se muestra en la Figura \@ref(fig:chi-ind-mosaico), donde se tiene la proporción de redondez por distancia.
@@ -535,7 +673,7 @@ vcd::mosaic(t(dist_red_tab),
 chi.ind$stdres
 ```
 
-Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima o debajo del valor crítico de acuerdo al nivel de significancia $\alpha$.
+Estos valores se pueden visualizar mejor coloreados de acuerdo a si están por encima (azul) o debajo (rojo) del valor crítico de acuerdo al nivel de significancia $\alpha$.
 
 ```{r echo=FALSE}
 chi.ind$stdres %>% 
@@ -555,7 +693,7 @@ El tamaño del efecto se puede calcular de acuerdo a la Ecuación \@ref(eq:v) de
 
 \begin{equation}
   V = \sqrt{\frac{\chi^2}{N \cdot v_{min}}}\\
-  V = \sqrt{\frac{109.7}{264 \cdot 3}} = 0.38
+  V = \sqrt{\frac{109.7}{264 \cdot 3}} = .38
 \end{equation}
 
 En **R** se puede calcular por medio de las funciones `CramerV` del paquete *DescTools*, y `v.chi.sq` del paquete *MOTE*.
@@ -643,7 +781,7 @@ Para el tamaño del efecto (Ecuación \@ref(eq:r-rangos)) se necesita el estadí
   (\#eq:z-T)
 \end{equation}
 
-El uso de la prueba se demuestra con el ejemplo @swan1995, donde se tenía el contenido de cuarzo en secciones delgadas de una roca ígnea. Es posible que esta muestra provenga de una población con valor central de 20%? Asuma $\alpha = 0.05$.
+El uso de la prueba se demuestra con el ejemplo @swan1995, donde se tenía el contenido de cuarzo en secciones delgadas de una roca ígnea. Es posible que esta muestra provenga de una población con valor central de 20%? Asuma $\alpha = .05$.
 
 El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a los signos se muestra en las Tablas \@ref(tab:wilcoxon1) y \@ref(tab:wilcoxon2). De acuerdo con los resultados el estadístico sería $T=8.5$, y el valor crítico sería 4.
 
@@ -716,7 +854,7 @@ Para el tamaño del efecto se pueden usar las Ecuaciones \@ref(eq:mu-T), \@ref(e
 \end{equation}
 
 \begin{equation}
-  r = \frac{Z}{\sqrt{N}} = \frac{-1.33}{\sqrt{8}} = -0.47
+  r = \frac{Z}{\sqrt{N}} = \frac{-1.33}{\sqrt{8}} = -.47
 \end{equation}
 
 En **R** la función `wilcox_effsize` del paquete *rstatix* [@R-rstatix] puede calcular este valor directamente, pero ocupa que los datos se encuentren en un dataframe en formato largo, definir la fórmula (`variable~1` para el caso de 1 muestra, o `variable~grupos` para el caso de 2 muestras), indicar si las muestras son dependientes (`paired = T`), y en el caso de 1 muestra el valor a comparar (`mu`).
@@ -799,7 +937,7 @@ Para el tamaño del efecto (Ecuación \@ref(eq:r-rangos)) se necesita el estadí
   (\#eq:z-u)
 \end{equation}
 
-El uso de la prueba se demuestra con el ejemplo @swan1995, donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es posible que estas muestras provenga de una misma población? Asuma $\alpha = 0.05$.
+El uso de la prueba se demuestra con el ejemplo @swan1995, donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es posible que estas muestras provenga de una misma población? Asuma $\alpha = .05$.
 
 El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a las muestras se detalla en las Tablas \@ref(tab:u1) y \@ref(tab:u2). De acuerdo con los resultados el estadístico sería $U=23.5$, y el valor crítico sería 17.
 
@@ -889,7 +1027,7 @@ Para el tamaño del efecto se pueden usar las Ecuaciones \@ref(eq:mu-u), \@ref(e
 \end{equation}
 
 \begin{equation}
-  r = \frac{Z}{\sqrt{N}} = \frac{-1.46}{\sqrt{18}} = -0.35
+  r = \frac{Z}{\sqrt{N}} = \frac{-1.46}{\sqrt{18}} = -.35
 \end{equation}
 
 En **R** la función `wilcox_effsize` del paquete *rstatix* puede calcular este valor directamente, pero ocupa que los datos se encuentren en un dataframe en formato largo, y definir la fórmula (`variable~grupos`).
@@ -946,9 +1084,9 @@ El procedimiento para la prueba sería el siguiente:
 
 De manera similar al ANOVA, si se encuentra un resultado significativo es necesario explorar más por medio de análisis posteriores (*post-hoc*), donde los análisis más utilizados son las pruebas de Dunn y Nemenyi, que realizan comparaciones múltiples sobre los rangos, y ajusta el valor-*p* (de acuerdo a diferentes métodos) para una correcta interpretación.
 
-El uso de la prueba se demuestra con el ejemplo de @mckillup2010, donde se tiene el contenido de $MgO$ presente en cuatro turmalinas en tres sitios diferentes ($k=3$): Mount Mica, Sebago Batholith, Black Mountain. Asuma $\alpha = 0.05$.
+El uso de la prueba se demuestra con el ejemplo de @mckillup2010, donde se tiene el contenido de $MgO$ presente en cuatro turmalinas en tres sitios diferentes ($k=3$): Mount Mica, Sebago Batholith, Black Mountain. Asuma $\alpha = .05$.
 
-El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a las muestras se detalla en las Tablas \@ref(tab:kw1) y \@ref(tab:kw2). El estadístico crítico sería $\chi^2_{\alpha,v} = \chi^2_{0.05,2} = 5.99$.
+El resultado de realizar el ranqueo y la suma de los respectivos rangos de acuerdo a las muestras se detalla en las Tablas \@ref(tab:kw1) y \@ref(tab:kw2). El estadístico crítico sería $\chi^2_{\alpha,v} = \chi^2_{.05,2} = 5.99$.
 
 ```{r}
 a = 0.05
@@ -1008,11 +1146,11 @@ kw.apa = apa_print(kw.res)
 Para el tamaño del efecto se pueden usar las Ecuaciones \@ref(eq:eta2-h) o \@ref(eq:epsilon2).
 
 \begin{equation}
-  \eta_H^2 = \frac{H-k+1}{N-k} = \frac{7.54-3+1}{12-3} = 0.62
+  \eta_H^2 = \frac{H-k+1}{N-k} = \frac{7.54-3+1}{12-3} = .62
 \end{equation}
 
 \begin{equation}
-  \epsilon^2 = \frac{H}{(N^2-1)/(N+1)} = \frac{7.54}{(12^2-1)/(12+1)} = 0.69
+  \epsilon^2 = \frac{H}{(N^2-1)/(N+1)} = \frac{7.54}{(12^2-1)/(12+1)} = .69
 \end{equation}
 
 En **R** la función `kruskal_effsize` del paquete *rstatix* puede calcular $\eta_H^2$, y la función `epsilonSquared` del paquete *rcompanion* [@R-rcompanion] puede calcular $\epsilon^2$. Para estos tamaño de efecto no está establecido el cómo obtener el intervalo de confianza, pero se puede utilizar la técnica de bootstrap (\@ref(bootstrap)). Las funciones mencionadas utiliza este método, definiendo que se quiere el intervalo de confianza con `ci = T`. Como este método varía cada vez que se corre es recomendable definir el punto de partida para siempre obtener el mismo resultado, ésto se logra definiendo `set.seed` y escogiendo un número entero cualquiera.
@@ -1055,8 +1193,8 @@ ggbetweenstats(dat.kw,Location,MgO,
 
 La correlación de Spearman es una modificación de la correlación de Pearson, donde el interés es la relación entre variables numéricas continuas. La correlación de Spearman tiene las ventajas sobre Pearson que se puede utilizar cuando la relación es **no** lineal, y no se ve tan afectada por valores extremos o atípicos. las hipótesis serían las siguientes:
 
-- $H_0: r_s = 0 \to$ No hay relación entre las variables,
-- $H_1: r_s \neq 0 \to$ Hay relación entre las variables.
+- $H_0: \rho_s = 0 \to$ No hay relación entre las variables,
+- $H_1: \rho_s \neq 0 \to$ Hay relación entre las variables.
 
 El procedimiento de la prueba sería el siguiente:
 
@@ -1065,7 +1203,7 @@ El procedimiento de la prueba sería el siguiente:
 1. Calcular el coeficiente por medio de la Ecuación \@ref(eq:r-spearman), o calcular el coeficiente de Pearson con los datos ranqueados.
 1. Se rechaza $H_0$ si el $r_s > \text{valor crítico}$ o si $p < \alpha$.
 
-El uso de la prueba de correlación de Spearman se realiza con un ejemplo de @swan1995, donde se el tamaño de ostrácodos con respecto a la profundidad (Tabla \@ref(tab:spearman-ej1)). Hay una relación entre el paso del tiempo (mayor profundidad) y el tamaño de los ostrácodos? Asuma $\alpha = 0.05$.
+El uso de la prueba de correlación de Spearman se realiza con un ejemplo de @swan1995, donde se el tamaño de ostrácodos con respecto a la profundidad (Tabla \@ref(tab:spearman-ej1)). Hay una relación entre el paso del tiempo (mayor profundidad) y el tamaño de los ostrácodos? Asuma $\alpha = .05$.
 
 ```{r}
 a = 0.05
@@ -1101,7 +1239,7 @@ ostracodos %>%
 
 \begin{equation}
   r_{s} = 1 - \frac{6\sum_i^N[R(x_i)-R(y_i)]^2}{N(N^2-1)}\\
-  r_{s} = 1 - \frac{6 \cdot 1941.5}{33(33^2-1)} = 0.675
+  r_{s} = 1 - \frac{6 \cdot 1941.5}{33(33^2-1)} = .675
 \end{equation}
 
 En **R** se tiene la función `cor.test` que puede calcular diferentes coeficientes de correlación. El argumento `method` define cuál correlación calcular. Se puede calcular `spearman` sobre los datos originales, pero éste no arroja un intervalo de confianza, o se puede calcular `spearman` sobre los datos ranqueados; la inferencia no cambia.
@@ -1138,7 +1276,7 @@ La significancia de la correlación también puede aproximarse por medio de las 
   z = r_s\sqrt{N-1} = 0.675\sqrt{33-1} = 3.82
 \end{equation}
 
-Al ser $t$ mayor al valor crítico, $t_{0.05/2,31}=|2.04|$, y al ser $z$ mayor al valor crítico, $1.96$ para $\alpha=0.05$, se obtiene la misma decisión que con la prueba respectiva.
+Al ser $t$ mayor al valor crítico, $t_{.05/2,31}=|2.04|$, y al ser $z$ mayor al valor crítico, $1.96$ para $\alpha=.05$, se obtiene la misma decisión que con la prueba respectiva.
 
 El intervalo de confianza puede calcularse por medio de la prueba de Pearson sobre datos ranqueados (mostrada arriba), o por medio de las funciones `SpearmanRho` del paquete *DescTools*, o `spearmanRho` del paquete *rcompanion* (por medio de bootstrap).
 

@@ -79,7 +79,7 @@ U3 = function(m1,m2=0,s=1) {
 
 ## Introducción
 
-En la sección \@ref(hip) del capítulo anterior se introdujeron las bases teóricas de lo que son las pruebas de hipótesis, las partes o elementos que la componen, y cómo tomar una decisión una vez llevada a cabo la prueba. Este capítulo se centra en la parte práctica de cómo realizar una prueba estadística paramétrica (los pasos generales). Además se introduce el concepto de tamaño del efecto (effect size - ES - en inglés), y de cómo puede éste agregar información después de realizada la prueba, así como la importancia práctica que representa.
+En la sección \@ref(hip) se introdujeron las bases teóricas de lo que son las pruebas de hipótesis, las partes o elementos que la componen, y cómo tomar una decisión una vez llevada a cabo la prueba. Este capítulo se centra en la parte práctica de cómo realizar una prueba estadística paramétrica (los pasos generales). Además se introduce el concepto de tamaño del efecto (effect size - ES - en inglés), y de cómo puede éste agregar información después de realizada la prueba, así como la importancia práctica que representa.
 
 ## Pruebas paramétricas {#pruebas-param}
 
@@ -93,10 +93,12 @@ De manera general se van a cubrir las pruebas estadísticas homólogas con las e
   - $H_0: \mu_1 = \mu_2$
 * Prueba $t$ de 2 muestras dependientes (\@ref(prueba-t2-dep))
   - $H_0: \mu_D = 0$
-* Prueba $F$ para 2 o más muestras (\@ref(prueba-aov))
+* Prueba ANOVA 1-factor entre-sujetos (\@ref(prueba-aov))
   - $H_0: \mu_1 = \mu_2 = \mu_3 = \cdots = \mu_k$
-* Prueba $t$ de correlación (\@ref(prueba-t-cor))
-  - $H_0: r = 0$
+* Correlación de Pearson (\@ref(prueba-pearson))
+  - $H_0: \rho = 0$
+* Correlación de Pearson (\@ref(prueba-rpb))
+  - $H_0: \rho_{pb} = 0$
 * Prueba $\chi^2$ para 1 varianza (\@ref(prueba-chi))
   - $H_0: \sigma^2 = \sigma^2_0$
 * Prueba $F$ para 2 varianzas (\@ref(prueba-f))
@@ -104,7 +106,7 @@ De manera general se van a cubrir las pruebas estadísticas homólogas con las e
 
 ### Supuestos y Pasos {#supuestos-pasos}
 
-Las pruebas presentadas en este capítulo se conocen como pruebas paramétricas, que a diferencia de las pruebas no-parámetricas que se presentan en el próximo capítulo, hacen supuestos sobre los datos que se van a analizar, siendo el mayor supuesto de que los datos siguen una distribución aproximadamente normal (o se tiene una muestra grande, $n > 30$), y que las muestras son aleatorias independientes (excepto en el caso de datos apareados) [@nolan2014; @triola2004]; en algunos casos pueden haber otros supuestos (parámetros conocidos, varianzas iguales, etc.) pero en general éstos son los más importantes.
+Las pruebas presentadas en este capítulo se conocen como pruebas paramétricas, que a diferencia de las pruebas no-parámetricas que se presentan en el próximo capítulo, hacen supuestos sobre los datos que se van a analizar, siendo el mayor supuesto de que los datos siguen una distribución aproximadamente normal (o se tiene una muestra grande, $N > 30$), y que las muestras son aleatorias independientes (excepto en el caso de datos apareados) [@nolan2014; @triola2004]; en algunos casos pueden haber otros supuestos (parámetros conocidos, varianzas iguales, etc.) pero en general éstos son los más importantes.
 
 Para evaluar la "normalidad" de los datos se pueden generar gráficos como el de caja, histogramas, y QQ (Figura \@ref(fig:normalidad)). El gráfico de caja muestra la mediana y los cuartiles, mientras la mediana no se encuentre muy cerca de alguno de los extremos de la caja se puede considerar normalmente distribuida; en caso de haber valores atípicos (extremos) éstos aparecerían como puntos en los extremos. El gráfico QQ hace una comparación de los valores originales con los cuantiles teóricos, la idea es que si los puntos caen cerca de la línea se puede considerar normalmente distribuida; puede que en las colas haya cierta desviación pero eso es normal siempre y cuando no sea muy extrema. El histograma se puede comparar con una curva normal y ver asimetrías, similar al de caja, mientras las asimetría sea nula o mínima se puede considerar normalmente distribuida. Hay pruebas específicas para evaluar la normalidad (Shapiro-Wilk), pero éstas tienden a ser muy sensibles a desviaciones por lo que en general es más recomendado hacer una evaluación visual
 
@@ -146,9 +148,14 @@ Si se rechaza $H_0$ se dice que hay un resultado __*estadísticamente significat
 
 Cuando una prueba da un resultado estadísticamente significativo, quiere decir que se determinó que hay una diferencia o relación. Como se mencionó en el capítulo anterior, este resultado se va a ver afectado directamente por el tamaño de la muestra, por lo que en el caso de muestras grandes casi siempre se va a encontrar un resultado estadísticamente significativo, aun cuando la diferencia o relación real sea pequeña. El tamaño del efecto (ES) es lo que indica la magnitud real de esa diferencia o relación, no se ve afectada por el tamaño de la muestra, e indica la importancia práctica de un efecto, y debe ser el objetivo a la hora de realizar análisis estadísticos [@cohen1988; @cumming2012; @cumming2017; @nolan2014].
 
-El tamaño del efecto puede presentarse en las unidades originales o de forma estandarizada (más usadas) y se reconocen dos familias: diferencia entre medias (familia $d$ y sus variantes), asociación/relación entre variables (familia $r$ y similares como $R^2, \eta^2, V$), y dentro de lo posible es recomendable incluir intervalos de confianza [@cohen1988; @cumming2012; @cumming2017; @lakens2013fp; @nakagawa2007br]. Para los tamaños de efecto es complicado calcular de forma manual los intervalos de confianza, en la mayoría de los casos se usa la distribución $t$ no-central, por lo que se recomienda utilizar métodos computacionales [@cumming2012; @cumming2017].
-
 A parte de presentar los resultados de pruebas estadísticas, sea que se rechace o no la hipótesis nula, es necesario incluir el tamaño del efecto para brindar una mejor idea del resultado encontrado, así como para posibles usos en futuros estudios (meta-análisis, cálculos de tamaños de muestra, potencia, etc.), y generar una base de resultados reportados en un área específica del saber para determinar qué se puede considerar como un efecto pequeño, mediano o grande [American Psycological Association [APA] -@americanpsychologicalassociation2010; @cumming2012; @cumming2017; @nakagawa2007br; @thompson2007ps; @tomczak2014tss].
+
+### Familias de tamaño del efecto
+
+El tamaño del efecto puede presentarse en las unidades originales o de forma estandarizada (más usadas) y se reconocen dos familias: diferencia entre medias (familia $d$ y sus variantes), asociación/relación entre variables (familia $r$ y similares como $R^2, \eta^2, \omega^2, V$), y dentro de lo posible es recomendable incluir intervalos de confianza [@cohen1988; @cumming2012; @cumming2017; @lakens2013fp; @nakagawa2007br]. Para los tamaños de efecto es complicado calcular de forma manual los intervalos de confianza, en la mayoría de los casos se usa la distribución $t$ no-central, por lo que se recomienda utilizar métodos computacionales [@cumming2012; @cumming2017].
+
+
+#### Familia $d$
 
 La diferencia entre medias estandarizada se conoce como Cohen $d$ [@cohen1988], de manera general se presenta en la Ecuación \@ref(eq:cohen-d-pop), y se puede visualizar en la Figura \@ref(fig:cohen-d). Se interpreta de manera similar a $Z$, donde la diferencia entre medias está dada en función de una desviación estándar. La desviación estándar (denominador) es la que va a cambiar dependiendo de la prueba y condiciones de la misma (Tabla \@ref(tab:ES-p)).
 
@@ -200,7 +207,13 @@ pnorm(abs(d)/sqrt(2))*100 # PS, CL
 pnorm(abs(d))*100 # U3
 ```
 
-Muchos autores han trabajado en este tema, proponiendo mejoras a los tamaños de efecto inicialmente planteados y resumiendo los diferentes tamaños de efecto para las diferentes pruebas y condiciones [@cohen1988; @cumming2012; @cumming2017; @ellis2010; @grissom2005; @hedges1985; @lakens2013fp; @mcgrath2006pm; @mcgraw1992pb; @nakagawa2007br; @thompson2007ps; @tomczak2014tss; @zou2007pm; @fritz2012joepg]. Aquí se presenta un resumen de los diferentes tamaños de efecto (Tabla \@ref(tab:ES-p)) y se remite al lector a revisar las referencias aquí mencionadas y las que se incluyen en las mismas, en el caso de querer ahondar en alguno de los casos presentados.
+#### Familia $r$
+
+Los tamaños de efecto $r, \ r_{pb}$ y $R^2$ se interpretan como se presentó en las secciones \@ref(bivar-cor) y \@ref(bivar-reg-r2), respectivamente. $\eta^2$ y $\omega^2$ se interpretan igual a $R^2$, como el porcentaje de variación en la variable respuesta explicado por la variable predictora [@cohen1988; @lakens2013fp; @tomczak2014tss].
+
+### Ecuaciones para tamaños de efecto
+
+Muchos autores han trabajado en este tema, proponiendo mejoras a los tamaños de efecto inicialmente planteados y resumiendo los diferentes tamaños de efecto para las diferentes pruebas y condiciones [@cohen1988; @cumming2012; @cumming2017; @ellis2010; @grissom2005; @hedges1985; @lakens2013fp; @mcgrath2006pm; @mcgraw1992pb; @nakagawa2007br; @sheskin2011; @thompson2007ps; @tomczak2014tss; @zou2007pm; @fritz2012joepg]. Aquí se presenta un resumen de los diferentes tamaños de efecto (Tabla \@ref(tab:ES-p)) y se remite al lector a revisar las referencias aquí mencionadas y las que se incluyen en las mismas, en el caso de querer ahondar en alguno de los casos presentados.
 
 ```{r ES-p, echo=FALSE}
 ESp = tibble(
@@ -211,9 +224,11 @@ ESp = tibble(
              't de 2 muestras dependientes tomando en cuenta la correlación',
              't de 2 muestras dependientes usando el promedio de las desviaciones',
              't con corrección de Hedges',
-             'Correlación punto biserial a partir de $d_s$ para 2 muestras independientes',
+             'Correlación punto biserial',
              'Correlación',
              'Regresión',
+             'ANOVA',
+             'ANOVA',
              'ANOVA',
              'ANOVA'),
   ES = c('\\begin{equation}
@@ -229,27 +244,27 @@ ESp = tibble(
               (\\#eq:d-t2-d)
               \\end{equation}',
          '\\begin{equation}
-              d_z = \\frac{\\bar{x}_d}{s_d}
+              d_z = \\frac{\\bar{d}}{s_d}
               (\\#eq:d-t2-dep1)
               \\end{equation}',
          '\\begin{equation}
-              d_{rm} = \\frac{\\bar{x}_d}{\\sqrt{s_1^2 + s_2^2 - 2 \\cdot r \\cdot s_1 \\cdot s_2}}\\sqrt{2(1-r)}
+              d_{rm} = \\frac{\\bar{d}}{\\sqrt{s_1^2 + s_2^2 - 2 \\cdot r \\cdot s_1 \\cdot s_2}}\\sqrt{2(1-r)}
               (\\#eq:d-t2-dep2)
               \\end{equation}',
          '\\begin{equation}
-              d_{av} = \\frac{\\bar{x}_d}{\\sqrt{\\frac{s_1^2 + s_2^2}{2}}}
+              d_{av} = \\frac{\\bar{d}}{\\sqrt{\\frac{s_1^2 + s_2^2}{2}}}
               (\\#eq:d-t2-dep3)
               \\end{equation}',
          '\\begin{equation}
-              g = d \\cdot \\left( 1 - \\frac{3}{4v-1} \\right)
+              g = d \\cdot \\left( 1 - \\frac{3}{4v-1} \\right) = d \\cdot \\left( \\frac{N-3}{N-2.25} \\right)
               (\\#eq:d-g)
               \\end{equation}',
          '\\begin{equation}
-              r_{pb} = \\frac{d_s}{\\sqrt{d_s^2 + \\frac{(n_1 + n_2)^2}{n_1  n_2}}}
+              r_{pb} = \\frac{\\bar{y}_1-\\bar{y}_0}{s_y}\\sqrt{\\frac{n_1 n_0}{N(N-1)}}
               (\\#eq:r-pb)
               \\end{equation}',
          '\\begin{equation}
-              r
+              r = \\frac{\\sum Z_xZ_y}{N-1}
               (\\#eq:r)
               \\end{equation}',
          '\\begin{equation}
@@ -263,6 +278,14 @@ ESp = tibble(
          '\\begin{equation}
               \\eta_p^2 = \\frac{SC_{efecto}}{SC_{efecto}+SC_{error}}
               (\\#eq:eta2-2)
+              \\end{equation}',
+         '\\begin{equation}
+              \\omega^2 = \\frac{v_{efecto}(CM_{efecto}-CM_{error})}{SC_{total}+CM_{error}}
+              (\\#eq:omega2-1)
+              \\end{equation}',
+         '\\begin{equation}
+              \\omega_p^2 = \\frac{v_{efecto}(CM_{efecto}-CM_{error})}{v_{efecto}CM_{efecto} + (N - v_{efecto})CM_{error}}
+              (\\#eq:omega2-2)
               \\end{equation}')
 ) 
 
@@ -276,25 +299,99 @@ ESp %>%
   kable_styling(full_width = T) %>% 
   column_spec(1,width = '15em') %>% 
   column_spec(2,width = '25em') %>% 
+  collapse_rows(columns = 1, valign = "top") %>%
   footnote(general_title = 'Notas:',
            general = c('$\\mu_0$ = media poblacional',
                        '$\\sigma$ = desviación estándar poblacional',
-                       '$\\bar{x}_k$ = media muestral de $k$',
-                       '$s_k$ = desviación estándar muestral de $k$',
-                       '$s_k^2$ = varianza muestral de $k$',
-                       '$n_k$ = tamaño de muestra de $k$',
+                       '$\\bar{x}_1$ = media de muestra 1',
+                       '$\\bar{x}_2$ = media de muestra 2',
+                       '$s_1$ = desviación estándar de muestra 1',
+                       '$s_2$ = desviación estándar de muestra 2',
+                       '$s_1^2$ = varianza de muestra 1',
+                       '$s_2^2$ = varianza de muestra 2',
+                       '$n_1$ = tamaño de muestra 1',
+                       '$n_2$ = tamaño de muestra 2',
+                       '$N$ = total de observaciones',
                        '$v$ = grados de libertad',
-                       '$\\bar{x}_d$ = media de la diferencia entre muestras',
+                       '$\\bar{d}$ = media de la diferencia entre muestras',
                        '$s_d$ = desviación estándar de la diferencia entre muestras',
                        '$r$ = coeficiente de correlación de Pearson',
                        '$r_{pb}$ = coeficiente de correlación punto biserial',
-                       '$SC$ = suma de cuadrados en ANOVA'
+                       '$Z_x$ = variable x estandarizada',
+                       '$Z_y$ = variable y estandarizada',
+                       '$\\bar{y}_1$ = desviación estándar de la variable respuesta de grupo 1',
+                       '$\\bar{y}_2$ = desviación estándar de la variable respuesta de grupo 2',
+                       '$s_y$ = desviación estándar de la variable respuesta',
+                       '$SC$ = suma de cuadrados en ANOVA',
+                       '$CM$ = cuadrados medios en ANOVA'
                        ))
 ```
 
-La Tabla \@ref(tab:ES-p) presenta ambas familias de tamaños de efecto, donde $r$ y $R^2$ se interpretan como en las secciones \@ref(bivar-cor) y \@ref(bivar-reg-r2), respectivamente. $\eta^2$ se interpreta igual a $R^2$, como el porcentaje de variación en la variable respuesta explicado por la variable predictora [@cohen1988; @lakens2013fp; @tomczak2014tss].
+La corrección de Hedges ($g$) se usa ya que $d$ se considera un estimador sesgado (biased) especialmente para muestras pequeñas, conforme mayor sea el tamaño de muestra más similares $d$ y $g$ [@cumming2012; @cumming2017; @fritz2012joepg; @mcgrath2006pm]. De manera similar $\omega^2$ corresponde con un estimador insesgado o menos sesgado de $\eta^2$ [@fritz2012joepg; @lakens2013fp; @olejnik2000cep; @tomczak2014tss].
 
-Una pregunta que puede surgir es qué magnitud de los diferentes tamaños de efecto se puede considerar pequeña, mediana, o grande. @cohen1988 sugirió unos valores que se pueden usar como guías (Tabla \@ref(tab:ES-p-clas)), los cuales han surgido y fueron determinados como tales en las ciencias sociales. El mismo autor advierte sobre utilizar estos valores como definitivos y estrictos, y menciona que se debe aplicar criterio de experto en el área específica para determinar que califica como pequeño, mediano, o grande.
+Así como se puede calcular el tamaño del efecto a partir de los datos, en algunos casos se puede calcular el tamaño del efecto a partir de los resultados de pruebas estadísticas u otros tamaños de efecto. Esta relación se muestra en la Tabla \@ref(tab:ES-conv). En su mayoría estas relaciones son de utilidad cuando se revisan o quieren comparar estudios que reportan únicamente resultados de pruebas estadísticas pero no así el tamaño del efecto.
+
+```{r ES-conv, echo=FALSE}
+ESconv = tibble(
+  Prueba = c('t de 1 muestra',
+             't de 2 muestras independientes',
+             't de 2 muestras dependientes usando la desviación de las diferencias',
+             't de 2 muestras dependientes tomando en cuenta la correlación',
+             'Correlación punto biserial',
+             'ANOVA 1-factor con 2 grupos'
+             ),
+  ES = c('\\begin{equation}
+              d_s = \\frac{t}{\\sqrt{N}}
+              (\\#eq:d-t1-t)
+              \\end{equation}',
+         '\\begin{equation}
+              d_s = t\\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}} \\sim \\frac{2t}{\\sqrt{N}}
+              (\\#eq:d-t2-t)
+              \\end{equation}',
+         '\\begin{equation}
+              d_z = \\frac{t}{\\sqrt{N}}
+              (\\#eq:d-t2-dep-t-dz)
+              \\end{equation}',
+         '\\begin{equation}
+              d_{rm} = t\\sqrt{\\frac{2(1-r)}{N}}
+              (\\#eq:d-t2-dep-t-drm)
+              \\end{equation}',
+         '\\begin{equation}
+              r_{pb} = \\frac{d_s}{\\sqrt{d_s^2 + \\frac{N^2-2N}{n_1  n_2}}}
+              (\\#eq:r-pb-d)
+              \\end{equation}',
+         '\\begin{equation}
+              \\eta_p^2 = r_{pb}^2 = \\frac{t^2}{t^2+v}
+              (\\#eq:r-pb-eta2)
+              \\end{equation}'
+         )
+)
+
+ESconv %>% 
+  kable(col.names = c('Prueba',
+                      'Tamaño de efecto'
+                      ),
+        caption = 'Tamaños de efecto a partir de pruebas estadísticas u otros tamaños de efecto',
+        align = 'c',
+        escape = F) %>% 
+  kable_styling(full_width = T) %>% 
+  column_spec(1,width = '15em') %>% 
+  column_spec(2,width = '25em') %>% 
+  footnote(general_title = 'Notas:',
+           general = c('$t$ = estadístico de la prueba respectiva',
+                       '$n_1$ = tamaño de muestra 1',
+                       '$n_2$ = tamaño de muestra 2',
+                       '$N$ = total de observaciones',
+                       '$r$ = coeficiente de correlación de Pearson',
+                       '$r_{pb}$ = coeficiente de correlación punto biserial',
+                       '$d_s$ = Cohen d para 2 muestras independientes',
+                       '$v$ = grados de libertad'
+                       ))
+```
+
+### Clasificación de tamaños de efecto
+
+Una pregunta que puede surgir es qué magnitud de los diferentes tamaños de efecto se puede considerar pequeña, mediana, o grande. @cohen1988 sugirió unos valores que se pueden usar como guías (Tabla \@ref(tab:ES-p-clas)), los cuales han surgido y fueron determinados como tales en las ciencias sociales. El mismo autor advierte sobre utilizar estos valores como definitivos y estrictos, y menciona que se debe aplicar criterio de experto en el área específica para determinar qué califica como pequeño, mediano, o grande.
 
 ```{r ES-p-clas, echo=FALSE}
 ESpc = tibble(Prueba = c('Comparación de medias',
@@ -308,10 +405,10 @@ ESpc = tibble(Prueba = c('Comparación de medias',
                      '$R^2$',
                      '$r_{pb}$',
                      '$R^2$',
-                     '$\\eta^2$'),
-              peque = c(0.20,0.10,0.01,0.10,0.02,0.01),
-              mediana = c(0.50,0.30,0.09,0.24,0.13,0.06),
-              grande = c(0.80,0.50,0.25,0.37,0.26,0.14)
+                     '$\\eta^2$, $\\omega^2$'),
+              peque = c(apa(0.20,2,T), apa(0.10,2,F), apa(0.01,2,F), apa(0.1,2,F), apa(0.02,2,F), apa(0.01,2,F)),
+              mediana = c(apa(0.50,2,T), apa(0.30,2,F), apa(0.09,2,F), apa(0.24,2,F), apa(0.13,2,F), apa(0.06,2,F)),
+              grande = c(apa(0.80,2,T), apa(0.50,2,F), apa(0.25,2,F), apa(0.37,2,F), apa(0.26,2,F), apa(0.14,2,F))
               )
 
 ESpc %>% 
@@ -332,9 +429,27 @@ ESpc %>%
            footnote_as_chunk = T)
 ```
 
+### Importancia del tamaño del efecto
+
+La importancia de reporat y utilizar tamaños de efecto para comparar resultados en diferentes estudios se presenta con un ejemplo sencillo pero ilustrativo.
+
+Se tienen dos estudios (A y B) que analizaron el mismo fenómeno, por medio de una prueba $t$ de 2 muestras independientes. El estudio A reportó lo siguiente: $t(79)=2.21, p<.05$, mientras que el estudio B reportó lo siguiente: $t(18)=1.06, p>.3$. 
+
+A primera vista se podría concluir que los resultados de ambos estudios no coinciden y encontraron efectos diferentes. ¿Qué pasa con el tamaño del efecto? Si calculamos $d$ a aprtir de la Ecuación \@ref(eq:d-t2-t) para ambos estudios tenemos lo siguiente:
+
+\begin{equation}
+  d_s = \frac{2t}{\sqrt{N}}\\
+  d_{sA} = \frac{2t_A}{\sqrt{N_A}} = \frac{2 \cdot 2.21}{\sqrt{80}} = 0.49\\
+  d_{sB} = \frac{2t_B}{\sqrt{N_B}} = \frac{2 \cdot 1.06}{\sqrt{20}} = 0.47\\
+\end{equation}
+
+Al ver estos resultados se puede concluir que ambos estudios encontraron el mismo efecto (significancia práctica), la diferencia está simplemente en que el estudio B no tenía la sufuciente potencia (tamaño de muestra) para encontrar una significancia estadística. 
+
+Lo anterior deja claro que no se puede fiar únicamente en resultados de pruebas estadísticas (especialmente el valor-*p*) para comparar estudios, se necesita toda la información disponible y el tamaño del efecto.
+
 ## $z$ de 1 muestra {#prueba-z1}
 
-El uso de la prueba $z$ de 1 muestra se realiza con el ejemplo de la sección \@ref(estim-ic-z) [@walpole2012], donde se tenía una media muestral de $2.6 \ g/ml$ para una muestra de tamaño 36 y se asumía una desviación poblacional de $0.3 \ g/ml$. Es posible que esta muestra provenga de una población con media 2.8 ($\mu_0=2.8$)? Asuma $\alpha = 0.05$.
+El uso de la prueba $z$ de 1 muestra se realiza con el ejemplo de la sección \@ref(estim-ic-z) [@walpole2012], donde se tenía una media muestral de $2.6 \ g/ml$ para una muestra de tamaño 36 y se asumía una desviación poblacional de $0.3 \ g/ml$. Es posible que esta muestra provenga de una población con media 2.8 ($\mu_0=2.8$)? Asuma $\alpha = .05$.
 
 Usando los pasos mencionados anteriormente (\@ref(supuestos-pasos)) se tiene:
 
@@ -349,14 +464,14 @@ Usando los pasos mencionados anteriormente (\@ref(supuestos-pasos)) se tiene:
     - $\mu_0 = 2.8$
     - $\sigma_\bar{x} = \frac{\sigma}{\sqrt{n}} = \frac{0.3}{\sqrt{36}} = 0.05$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $z_{\alpha/2} = z_{0.05/2} = |1.96|$
+    - $\alpha = .05$
+    - $z_{\alpha/2} = z_{.05/2} = |1.96|$
 5. Calcular el estadístico de prueba
     - $Z = \frac{\bar{x} - \mu}{\sigma_\bar{x}} = \frac{2.6 - 2.8}{0.05} = -4$
     - $2.6 \pm 0.1 \to 95\% \ IC \ [2.50,2.70]$
 6. Tomar una decisión
     - El estadístico de prueba es mayor al crítico, $z > z_{\alpha/2}$
-    - El valor-*p* es menor a $\alpha = 0.05$, $p < .001$
+    - El valor-*p* es menor a $\alpha = .05$, $p < .001$
     - El valor hipotético del parámetro cae fuera del intervalo de confianza, $IC \ [2.50,2.70]$
     - *Decisión*: Se rechaza $H_0$
 
@@ -421,7 +536,7 @@ u.z1.2 = U3(dpop)
 
 ## $t$ de 1 muestra {#prueba-t1}
 
-El uso de la prueba $t$ de 1 muestra se realiza con el ejemplo de la sección \@ref(estim-ic-t) [@swan1995], donde se tenía el contenido de cuarzo en secciones delgadas de una roca ígnea. Es posible que esta muestra provenga de una población con media 20% ($\mu_0=20$)? Asuma $\alpha = 0.05$.
+El uso de la prueba $t$ de 1 muestra se realiza con el ejemplo de la sección \@ref(estim-ic-t) [@swan1995], donde se tenía el contenido de cuarzo en secciones delgadas de una roca ígnea. Es posible que esta muestra provenga de una población con media 20% ($\mu_0=20$)? Asuma $\alpha = .05$.
 
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: contenido de cuarzo en la roca ígnea
@@ -434,14 +549,14 @@ El uso de la prueba $t$ de 1 muestra se realiza con el ejemplo de la sección \@
     - $\mu_0 = 20$
     - $s_\bar{x} = \frac{s}{\sqrt{n}} = \frac{3.083}{\sqrt{8}} = 1.09$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $t_{\alpha/2,v} = t_{0.05/2,7} = |2.365|$
+    - $\alpha = .05$
+    - $t_{\alpha/2,v} = t_{.05/2,7} = |2.365|$
 5. Calcular el estadístico de prueba
     - $t = \frac{\bar{x} - \mu}{s_\bar{x}} = \frac{21.5 - 20}{1.09} = 1.37$
     - $21.512 \pm 2.578 \to 95\% \ IC \ [18.93, 24.09]$
 6. Tomar una decisión
     - El estadístico de prueba es menor al crítico, $t < t_{\alpha/2,v}$
-    - El valor-*p* es mayor a $\alpha = 0.05$, $p = 0.2079$
+    - El valor-*p* es mayor a $\alpha = .05$, $p = .2079$
     - El valor hipotético del parámetro cae dentro del intervalo de confianza, $IC \ [18.93, 24.09]$
     - *Decisión*: No se rechaza $H_0$
 
@@ -521,7 +636,7 @@ gghistostats(Q,Q,type = 'p',
 
 Para este caso es cuando, en teoría, se debiera cumplir no solo la normalidad de las muestras, sino también la igualdad de varianzas. Si se quiere relajar el supuesto de igualdad de varianzas se usa el estadístico Welch o Welch-Satterthwaite (\@ref(estim-ic-t2-ind) - varianzas diferentes). En general la diferencia entre asumir igualdad de varianzas o no va a ser pequeña, siempre y cuando éstas no sean muy diferentes y los tamaños de muestra no sean muy disparejos, y es recomendado indicar qué método se usó [@cumming2017].
 
-El uso de la prueba $t$ de 2 muestras independientes se realiza con el ejemplo de la sección \@ref(estim-ic-t2-ind) [@swan1995], el de varianzas iguales, donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es posible que estas muestras provenga de una misma población ($\mu_1=\mu_2$)? Asuma $\alpha = 0.05$.
+El uso de la prueba $t$ de 2 muestras independientes se realiza con el ejemplo de la sección \@ref(estim-ic-t2-ind) [@swan1995], el de varianzas iguales, donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es posible que estas muestras provenga de una misma población ($\mu_1=\mu_2$)? Asuma $\alpha = .05$.
 
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: braquiópodos en capas A y B
@@ -535,14 +650,14 @@ El uso de la prueba $t$ de 2 muestras independientes se realiza con el ejemplo d
     - $s_p = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}} = \sqrt{\frac{(8-1)0.042 + (10-1)0.029}{8 + 10 - 2}} = 0.1865$
     - $s_{\bar{x}_1-\bar{x}_2} = s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}} = 0.1865 \sqrt{\frac{1}{8} + \frac{1}{10}} = 0.0885$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $t_{\alpha/2,v} = t_{0.05/2,16} = |2.12|$
+    - $\alpha = .05$
+    - $t_{\alpha/2,v} = t_{.05/2,16} = |2.12|$
 5. Calcular el estadístico de prueba
     - $t = \frac{(\bar{x}_1-\bar{x}_2) - (\mu_1-\mu_2)}{s_{\bar{x}_1-\bar{x}_2}} = \frac{(3.125-2.96) - 0}{0.0885} = 1.86$
     - $0.165 \pm 0.1876 \to 95\% \ IC \ [-0.023,0.353]$
 6. Tomar una decisión
     - El estadístico de prueba es menor al crítico, $t < t_{\alpha/2,v}$
-    - El valor-*p* es mayor a $\alpha = 0.05$, $p = 0.081$
+    - El valor-*p* es mayor a $\alpha = .05$, $p = .081$
     - El valor de $0$ cae dentro del intervalo de confianza, $IC \ [-0.023,0.353]$
     - *Decisión*: No se rechaza $H_0$
 
@@ -553,6 +668,9 @@ a = 0.05
 
 A = c(3.2, 3.1, 3.1, 3.3, 2.9, 2.9, 3.5, 3.0)
 B = c(3.1, 3.1, 2.8, 3.1, 3.0, 2.6, 3.0, 3.0, 3.1, 2.8)
+
+braq = stack(list(A=A,
+                  B=B))
 
 t2.ind.res = t.test(x = A,
                     y = B,
@@ -580,8 +698,6 @@ El tamaño del efecto se puede calcular de acuerdo a las Ecuaciones \@ref(eq:d-t
   g_s = d_s \cdot \left( 1 - \frac{3}{4v-1} \right)\\
   g_s = 0.88 \cdot \left( 1 - \frac{3}{4(16)-1} \right) = 0.84
 \end{equation}
-
-La corrección de Hedges ($g_s$) se usa ya que $d_s$ se considera un estimador sesgado (biased) especialmente para muestras pequeñas, conforme mayor sea el tamaño de muestra más similares $d_s$ y $g_s$ [@cumming2012; @cumming2017; @fritz2012joepg; @mcgrath2006pm].
 
 En **R** se puede calcular $d_s$ con la función `d.ind.t` y $g_s$ con la función `g.ind.t` del paquete *MOTE*, donde es necesario indicar la media muestral de ambas muestras, desviación estándar muestral de ambas muestras, tamaño ambas muestras, y nivel de significancia. Adicionalmente existen las funciones `cohens_d` y `hedges_g` de *effectsize* [@R-effectsize], y `cohen.d` de *effsize* [@R-effsize].
 
@@ -649,14 +765,10 @@ u.ind2 = U3(d.t2.ind.res$d)
 > Conclusión: La longitud de los braquiópodos en la capa A no es significativamente diferente de la longitud de los braquiópodos en la capa B (`r t2.ind.apa$estimate %>% str_replace('CI','IC')`), `r t2.ind.apa$statistic`, `r d.t2.ind.res$estimate %>% str_sub(end = 12)` $`r d.t2.ind.res$estimate %>% str_sub(start = 23)`$. El efecto se puede considerar grande, pero con un rango de muy pequeño, en dirección opuesta, hasta muy grande. Hay una probabilidad de 73.4% (PS) que un elemento de la muestra A tenga una longitud mayor que un elemento de la muestra B; las dos curvas se traslapan en un 65.9% (OVL); el 81.8% ($U_3$) de la muestra A se encuentra por encima de la media de la muestra B.
 
 ```{r echo=FALSE}
-t2.ind.stats = TeX(str_interp("$\\mathit{t}(${t2.ind.res$parameter}) = ${apa(t2.ind.res$statistic,2)}, \\mathit{p} ${printp(t2.ind.res$p.value,add_equals = T)}, \\mathit{g} = ${apa(g.t2.ind.res[[1]],2)}, IC_{${(1-a)*100}%} \\[${apa(g.t2.ind.res[[2]],2)}, ${apa(g.t2.ind.res[[3]],2)}\\]"))
+t2.ind.stats = TeX(str_interp("$\\mathit{t}(${t2.ind.res$parameter}) = ${apa(t2.ind.res$statistic,2)}, \\mathit{p} ${printp(t2.ind.res$p.value,add_equals = T)}, \\mathit{d_s} = ${apa(d.t2.ind.res[[1]],2)}, IC_{${(1-a)*100}%} \\[${apa(d.t2.ind.res[[2]],2)}, ${apa(d.t2.ind.res[[3]],2)}\\]"))
 ```
 
 ```{r t2-ind-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de caja mostrando el efecto de la capa sobre la longitud de los braquiópodos, así como el resumen estadístico respectivo.'}
-braq = stack(list(A=A,
-                  B=B)) %>% 
-  mutate(ranking = rank(values))
-
 ggbetweenstats(braq,ind,values,
                type = 'p',
                plot.type = 'box',
@@ -674,7 +786,7 @@ ggbetweenstats(braq,ind,values,
 
 Estas muestras que miden la misma observación (objeto, sujeto) más de una vez también se conocen como *muestras pareadas* o *mediciones repetidas* (repeated measures - en inglés).
 
-El uso de la prueba $t$ de 2 muestras dependientes se realiza con el ejemplo de la sección \@ref(estim-ic-t2-dep) [@mckillup2010], donde se tenía el contenido de $FeO$ en porcentaje de peso para 10 granitos que fueron preparados a diferentes tamaños de grano: $< 25 \ \mu m$ y $< 125 \ \mu m$. Hay un efecto en el tratamiento, en este caso, cambio del tamaño de grano ($\mu_D=0$)? Asuma $\alpha = 0.05$.
+El uso de la prueba $t$ de 2 muestras dependientes se realiza con el ejemplo de la sección \@ref(estim-ic-t2-dep) [@mckillup2010], donde se tenía el contenido de $FeO$ en porcentaje de peso para 10 granitos que fueron preparados a diferentes tamaños de grano: $< 25 \ \mu m$ y $< 125 \ \mu m$. Hay un efecto en el tratamiento, en este caso, cambio del tamaño de grano ($\mu_D=0$)? Asuma $\alpha = .05$.
 
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: contenido de $FeO$ a diferentes tamaños de grano: $< 25 \ \mu m$ y $< 125 \ \mu m$
@@ -685,16 +797,16 @@ El uso de la prueba $t$ de 2 muestras dependientes se realiza con el ejemplo de 
     - $H_1: \mu_D \neq 0 \to$ El contenido de $FeO$ es *diferente* a los diferentes tamaños de grano
 3. Determinar parámetros de la distribución a comparar ($H_0$):
     - $\mu_D  = 0$
-    - $s_{\bar{x}_d} = \frac{s_d}{\sqrt{n}} = \frac{0.1247}{\sqrt{10}} = 0.0394$
+    - $s_{\bar{d}} = \frac{s_d}{\sqrt{n}} = \frac{0.1247}{\sqrt{10}} = 0.0394$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $t_{\alpha/2,v} = t_{0.05/2,9} = |2.262|$
+    - $\alpha = .05$
+    - $t_{\alpha/2,v} = t_{.05/2,9} = |2.262|$
 5. Calcular el estadístico de prueba
-    - $t = \frac{\bar{x}_d}{s_{\bar{x}_d}} = \frac{0.1}{0.0394} = 2.538$
+    - $t = \frac{\bar{d}}{s_{\bar{d}}} = \frac{0.1}{0.0394} = 2.538$
     - $0.1 \pm 0.0981 \to 95\% \ IC \ [0.0108,0.189]$
 6. Tomar una decisión
     - El estadístico de prueba es mayor al crítico, $t > t_{\alpha/2,v}$
-    - El valor-*p* es menor a $\alpha = 0.05$, $p = 0.032$
+    - El valor-*p* es menor a $\alpha = .05$, $p = .032$
     - El valor de $0$ no cae dentro del intervalo de confianza, $IC \ [0.0108,0.189]$
     - *Decisión*: Se rechaza $H_0$
 
@@ -723,21 +835,21 @@ NewStats_2samples(m2,m1,dep = T,ylab.diff = 'Diferencia') +
   scale_x_discrete(labels = c('< 125','< 25','Diferencia'))
 ```
 
-El tamaño del efecto se puede calcular de acuerdo a las Ecuaciones \@ref(eq:d-t2-dep1), \@ref(eq:d-t2-dep2) y \@ref(eq:d-t2-dep3), donde la diferencia es qué se usa como estandarizador. De nuevo es buena práctica reportar qué se usó como estandarizador para claridad en lo que se reporta [@cumming2017]. Si la correlación entre las muestras es $r \sim |0.5|$ no hay mucha diferencia entre los tamaños de efecto, pero conforme la correlación se acerque a $0$ o $1$ mayor será la diferencia entre $d_z$ con respecto a $d_{rm}$ y $d_{av}$ [@lakens2013fp]. Debido al punto anterior, y la típica relación entre muestras, @cumming2012, @cumming2017, y @lakens2013fp sugieren utilizar $d_{av}$ como el tamaño del efecto.
+El tamaño del efecto se puede calcular de acuerdo a las Ecuaciones \@ref(eq:d-t2-dep1), \@ref(eq:d-t2-dep2) y \@ref(eq:d-t2-dep3), donde la diferencia es qué se usa como estandarizador. De nuevo es buena práctica reportar qué se usó como estandarizador para claridad en lo que se reporta [@cumming2017]. Si la correlación entre las muestras es $r \sim |.5|$ no hay mucha diferencia entre los tamaños de efecto, pero conforme la correlación se acerque a $0$ o $1$ mayor será la diferencia entre $d_z$ con respecto a $d_{rm}$ y $d_{av}$ [@lakens2013fp]. Debido al punto anterior, y la típica relación entre muestras, @cumming2012, @cumming2017, y @lakens2013fp sugieren utilizar $d_{av}$ como el tamaño del efecto.
 
 \begin{equation}
-  d_z = \frac{\bar{x}_d}{s_d}\\
+  d_z = \frac{\bar{d}}{s_d}\\
   d_z = \frac{0.1}{0.1247} = 0.80
 \end{equation}
 
 \begin{equation}
-  d_{rm} = \frac{\bar{x}_d}{\sqrt{s_1^2 + s_2^2 - 2 \cdot r \cdot s_1 \cdot s_2}}\sqrt{2(1-r)}\\
-  d_{rm} = \frac{0.1}{\sqrt{7.33 + 6.79 - 2 \cdot 0.9996 \cdot 2.7 \cdot 2.6}}\sqrt{2(1-0.9996)} = 0.001\\
+  d_{rm} = \frac{\bar{d}}{\sqrt{s_1^2 + s_2^2 - 2 \cdot r \cdot s_1 \cdot s_2}}\sqrt{2(1-r)}\\
+  d_{rm} = \frac{0.1}{\sqrt{7.33 + 6.79 - 2 \cdot .9996 \cdot 2.7 \cdot 2.6}}\sqrt{2(1-.9996)} = 0.001\\
   \text{usando todos los decimales da } d_{rm} = 0.022)
 \end{equation}
 
 \begin{equation}
-  d_{av} = \frac{\bar{x}_d}{\sqrt{\frac{s_1^2 + s_2^2}{2}}}\\
+  d_{av} = \frac{\bar{d}}{\sqrt{\frac{s_1^2 + s_2^2}{2}}}\\
   d_{av} = \frac{0.1}{\sqrt{\frac{7.33 + 6.79}{2}}} = 0.038
 \end{equation}
 
@@ -775,7 +887,7 @@ d.t2.dep.res3 = d.dep.t.avg(m1 = mean(m2),
 d.t2.dep.res3[1:3] %>% unlist()
 ```
 
-La Tabla \@ref(tab:d-dep-comparacion) muestra la comparación entre los diferentes tamaños de efecto para el ejemplo de muestras dependientes. Los resultados muestran como $d_z$ sobrestima (y por mucho) a $d_{rm}$ y $d_{av}$, donde $d_{rm}$ es el más conservador de todos. [@lakens2013fp]. El hecho de que $d_z$ sobrestima el tamaño del efecto es debido a la alta correlación entre las muestras $r = `r round(cor(m1,m2),4)`$.
+La Tabla \@ref(tab:d-dep-comparacion) muestra la comparación entre los diferentes tamaños de efecto para el ejemplo de muestras dependientes. Los resultados muestran como $d_z$ sobrestima (y por mucho) a $d_{rm}$ y $d_{av}$, donde $d_{rm}$ es el más conservador de todos. [@lakens2013fp]. El hecho de que $d_z$ sobrestima el tamaño del efecto es debido a la alta correlación entre las muestras $r = `r apa(cor(m1,m2),4,F)`$.
 
 ```{r d-dep-comparacion, echo=FALSE}
 bind_rows(d.t2.dep.res1[1:3] %>% unlist(),
@@ -789,15 +901,16 @@ bind_rows(d.t2.dep.res1[1:3] %>% unlist(),
                       '$IC_{sup}$'),
         align = 'c',
         digits = 3,
-        caption = 'Comparación de tamaños de efecto para muestras dependientes')
+        caption = 'Comparación de tamaños de efecto para muestras dependientes') %>% 
+  kable_styling(full_width = F)
 ```
 
-Un panorama general del efecto de $r$ en el tamaño del efecto para muestras dependientes se muestra en la Tabla \@ref(tab:d-dep-comparacion2), donde se generaron tres juegos de datos, provenientes de poblaciones con $r=0.1$, $r=0.5$, y $r=0.9$, respectivamente. Se observa como a bajos valores de $r$ $d_z$ subestima el tamaño del efecto (con respecto a $d_{rm}$ y $d_{av}$), a valores intermedios todos son muy similares, y a altos valores de $r$ $d_z$ sobrestima el tamaño del efecto (con respecto a $d_{rm}$ y $d_{av}$), lo que muestra la sensibilidad y el efecto de $r$ en el uso de $d_z$, y por lo que se recomienda usar $d_{rm}$ o $d_{av}$.
+Un panorama general del efecto de $r$ en el tamaño del efecto para muestras dependientes se muestra en la Tabla \@ref(tab:d-dep-comparacion2), donde se generaron tres juegos de datos, provenientes de poblaciones con $r=.1$, $r=.5$, y $r=.9$, respectivamente. Se observa como a bajos valores de $r$ $d_z$ subestima el tamaño del efecto (con respecto a $d_{rm}$ y $d_{av}$), a valores intermedios todos son muy similares, y a altos valores de $r$ $d_z$ sobrestima el tamaño del efecto (con respecto a $d_{rm}$ y $d_{av}$), lo que muestra la sensibilidad y el efecto de $r$ en el uso de $d_z$, y por lo que se recomienda usar $d_{rm}$ o $d_{av}$.
 
 ```{r echo=FALSE}
 set.seed(123)
 
-correls = c('0.1'=.1,'0.5'=.5,'0.9'=.9) %>% 
+correls = c('.1'=.1,'.5'=.5,'.9'=.9) %>% 
   map_df(~MASS::mvrnorm(n = 20,mu = c(0.5,0),
                         Sigma = matrix(c(1,.x,.x,1),2)) %>% 
            as_tibble() %>% 
@@ -827,12 +940,15 @@ correls %>%
   unnest(c(d_z,d_rm,d_av)) %>% 
   ungroup() %>% 
   select(-data) %>%
+  mutate(r = apa(r,3,F)) %>% 
   kable(col.names = c('$\\rho$',
                       '$r$',
                       '$d_z$',
                       '$d_{rm}$',
                       '$d_{av}$'),
-        caption = 'Comparación de los diferentes $d$ para muestras dependientes')
+        align = 'c',
+        caption = 'Comparación de los diferentes $d$ para muestras dependientes') %>% 
+  kable_styling(full_width = F)
 ```
 
 Usando *itns*
@@ -882,7 +998,7 @@ u.dep2 = U3(d.t2.dep.res3$d)
   plot_annotation(tag_levels = 'A')
 ```
 
-> Conclusión: La concentración de $FeO$ es significativamente diferente para los diferentes tamaños (`r t2.dep.apa$estimate %>% str_replace('CI','IC')`), `r t2.dep.apa$statistic`, $N = `r n`$, $r = `r r`$, `r d.t2.dep.res3$estimate %>% str_sub(end = 15)` $`r d.t2.dep.res3$estimate %>% str_sub(start = -13)`$. El efecto se puede considerar muy pequeño, con un rango de mediano, en dirección opuesta, hasta mediano en la dirección del efecto. Hay una probabilidad de 51.1% (PS) que un elemento de la muestra de $< 125 \ \mu m$ tenga una concentración mayor que un elemento de la muestra de $< 25 \ \mu m$; las dos curvas se traslapan en un 98.5% (OVL); el 51.5% ($U_3$) de la muestra de $< 125 \ \mu m$ se encuentra por encima de la media de la muestra de $< 25 \ \mu m$.
+> Conclusión: La concentración de $FeO$ es significativamente diferente para los diferentes tamaños (`r t2.dep.apa$estimate %>% str_replace('CI','IC')`), `r t2.dep.apa$statistic`, $N = `r n`$, $r = `r apa(r,4,F)`$, `r d.t2.dep.res3$estimate %>% str_sub(end = 15)` $`r d.t2.dep.res3$estimate %>% str_sub(start = -13)`$. El efecto se puede considerar muy pequeño, con un rango de mediano, en dirección opuesta, hasta mediano en la dirección del efecto. Hay una probabilidad de 51.1% (PS) que un elemento de la muestra de $< 125 \ \mu m$ tenga una concentración mayor que un elemento de la muestra de $< 25 \ \mu m$; las dos curvas se traslapan en un 98.5% (OVL); el 51.5% ($U_3$) de la muestra de $< 125 \ \mu m$ se encuentra por encima de la media de la muestra de $< 25 \ \mu m$.
 
 ```{r echo=FALSE}
 t2.dep.stats = TeX(str_interp("$\\mathit{t}(${t2.dep.res$parameter}) = ${apa(t2.dep.res$statistic,2)}, \\mathit{p} ${printp(t2.dep.res$p.value,add_equals = T)}, \\mathit{d_{av}} = ${apa(d.t2.dep.res3[[1]],2)}, IC_{${(1-a)*100}%} \\[${apa(d.t2.dep.res3[[2]],2)}, ${apa(d.t2.dep.res3[[3]],2)}\\]"))
@@ -902,7 +1018,7 @@ ggwithinstats(FeO,ind,values,
   scale_x_discrete(labels = c('< 25','< 125'))
 ```
 
-## ANOVA de 1-factor entre-grupos {#prueba-aov}
+## ANOVA de 1-factor entre-sujetos {#prueba-aov}
 
 Hasta el momento solo se han analizado casos donde se tenían 1 o 2 muestras  y se desean hacer inferencias sobre la media, pero en muchos casos se pueden llegar a tener 3 o más muestras. 
 
@@ -910,7 +1026,7 @@ Se podría pensar en realizar diferentes pruebas $t$ de dos muestras, pero esto 
 
 La prueba del análisis de varianza (ANOVA - Analysis of Variance, en inglés), es una prueba que permite dilucidar la similitud entre muestras sin incurrir en los problemas antes mencionados, y la cual hace uso de la distribución y prueba $F$ para el análisis. La base teórica y procedimental que se va a exponer aquí se puede encontrar en [@borradaile2003; @davis2002; @mckillup2010; @nolan2014; @swan1995; @walpole2012]
 
-Una suposición de ANOVA es que las varianzas son iguales; esta prueba es relativamente robusta a esta suposición siempre y cuando la razón entre las varianzas mayor y menor no sea superior a 2. ANOVA es una técnica que permite diferentes diseños, pero en esta sección se presenta el caso más sencillo, el cual se conoce como ANOVA de 1 factor entre-grupos (between-groups ANOVA). Este diseño quiere decir que la variable de interés (numérica continua) está en función de una variable categórica (factor o tratamiento) con $2+$ grupos o clases. De hecho la prueba $t$ de 2 muestras independientes es un caso especial de ANOVA con 2 grupos, y se puede comprobar que $F=t^2$.
+Una suposición de ANOVA es que las varianzas son iguales; esta prueba es relativamente robusta a esta suposición siempre y cuando la razón entre las desviaciones estándar mayor y menor no sea superior a 2. De querer realizar pruebas para determinar esta similitud, se pueden usar las pruebas de Levene ($F$, media), Brown-Forsythe ($F$, mediana), o Bartlett ($\chi^2$, media). ANOVA es una técnica que permite diferentes diseños, pero en esta sección se presenta el caso más sencillo, el cual se conoce como ANOVA de 1 factor entre-sujetos (between-subjects ANOVA). Este diseño quiere decir que la variable de interés (numérica continua) está en función de una variable categórica (factor o tratamiento) con $2+$ grupos o clases. De hecho, la prueba $t$ de 2 muestras independientes es un caso especial de ANOVA con 2 grupos, y se puede comprobar que $F=t^2$.
 
 De manera general las hipótesis nula y alterna serían:
 
@@ -955,7 +1071,7 @@ tibble(variacion = c('Entre grupos', 'Dentro de grupos (error)'),
        CM = c('$s_1^2 = \\frac{\\sum(\\bar{x}_g-\\bar{x}_T)^2 \\cdot n_g}{k-1}$',
               '$s^2 = \\frac{\\sum\\sum(x_{ig}-\\bar{x}_g)^2}{N-k}$'),
        f = c('$\\frac{s_1^2}{s^2}$','')) %>% 
-  kable(col.names = c('Fuente de variación',
+  kable(col.names = c('',
                       'Suma de cuadrados',
                       'Grados de liberta',
                       'Cuadrados medios',
@@ -980,7 +1096,7 @@ Cuando el resultado de la prueba de ANOVA es significativo esto indica que al me
 - Si no se tiene idea o no se ha decidido con anterioridad de cuáles grupos se quieren comparar se pueden realizar análisis posteriores (post-hoc) comparando todos los grupos, donde se ajusta para el error tipo-I. El post-hoc más utilizado es TukeyHSD (Honestly Significant Difference), pero existen otros como Bonferroni, Holm, Scheffe, etc. La ventaja de Tukey es que brinda más información que los otros (diferencia entre grupos e intervalo de confianza para la diferencia).
 - Si se han decidido comparaciones (contrastes) *a priori* éstas son las que se analizan, pero debieron haberse especificado durante la planificación del estudio y antes de recolectar los datos. Estas tienen la ventaja de que se reducen el número de comparaciones, y por lo general se obtienen las mismas conclusiones.
 
-Para demostrar el ANOVA se usa un ejemplo de @mckillup2010, donde se tiene el contenido de $MgO$ presente en cuatro turmalinas en tres sitios diferentes: Mount Mica, Sebago Batholith, Black Mountain. Asuma $\alpha=0.05$.
+Para demostrar el ANOVA se usa un ejemplo de @mckillup2010, donde se tiene el contenido de $MgO$ presente en cuatro turmalinas en tres sitios diferentes: Mount Mica, Sebago Batholith, Black Mountain. Asuma $\alpha=.05$.
 
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: contenido de $MgO$ presente en turmalinas en Mount Mica, Sebago Batholith, Black Mountain
@@ -993,14 +1109,14 @@ Para demostrar el ANOVA se usa un ejemplo de @mckillup2010, donde se tiene el co
     - $v_1 = k-1 = 3-1=2$
     - $v_2 = N-k = 12-3 = 9$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $F_{\alpha,v_1,v_2} = F_{0.05,2,9} = 4.256$
+    - $\alpha = .05$
+    - $F_{\alpha,v_1,v_2} = F_{.05,2,9} = 4.256$
 5. Calcular el estadístico de prueba
     - $F = \frac{36}{3.3} = 10.8$
     - El procedimiento manual no se detalla aquí por ser más extenso y elaborado de lo normal, pero se recomienda al lector revisar las referencias mencionadas para detallarlo y entenderlo
 6. Tomar una decisión
     - El estadístico de prueba es mayor al crítico, $F > F_{\alpha,v_1,v_2}$
-    - El valor-*p* es menor a $\alpha = 0.05$, $p = 0.004$
+    - El valor-*p* es menor a $\alpha = .05$, $p = .004$
     - *Decisión*: Se rechaza $H_0$ y por lo menos uno de los contenidos de $MgO$ es diferente
 
 En **R** los datos tienen que estar en formato largo, lo que quiere decir una columna con los valores de la variable de interés, y otra columna con el grupo al que pertenece la medición. Otro punto importante es que la variable agrupadora es mejor que sea del tipo *factor*.
@@ -1013,6 +1129,7 @@ dat.aov = import('data/anova MgO.csv', setclass = 'tibble') %>%
   mutate(Location = as.factor(Location) %>% 
            fct_reorder(MgO))
 dat.aov
+N = nrow(dat.aov)
 ```
 
 Es recomendable hacer una inspección de los grupos, tanto numérica (Tabla \@ref(tab:mgo-resumen)) como gráfica, para darnos una idea de la media y desviaciones estándar. Aquí se observa que todos los grupos tienen la misma desviación estándar (algo poco común), por lo que el supuesto de la homogeneidad de varianzas se mantiene.
@@ -1062,7 +1179,7 @@ mgo.aov %>%
   tidy() %>% 
   kable(caption = 'Tabla de ANOVA para el ejemplo',
         digits = 4,
-        col.names = c('Variación',
+        col.names = c('',
                       'Grados libertad',
                       'Suma Cuadrados',
                       'Cuadrados Medios',
@@ -1072,13 +1189,19 @@ mgo.aov %>%
 
 El resultado es significativo, indicando que por lo menos uno de los contenidos de $MgO$ difiere del resto. 
 
-El tamaño del efecto $\eta^2$ se puede calcula usando las Ecuaciones \@ref(eq:eta2-1) o \@ref(eq:eta2-2), donde $SC_{total}$ es la suma de la columna *Suma de cuadrados (Sum Sq)*. Para este tipo de ANOVA (1-factor entre grupos) se cumple que $\eta^2 = \eta_p^2$, ya que hay solo 1 factor, pero para el resto de ocasiones donde haya más de un factor esta igualdad no se cumple y se recomienda incluir ambos tamaños de efecto.
+El tamaño del efecto $\eta^2$ se puede calcular usando las Ecuaciones \@ref(eq:eta2-1), \@ref(eq:eta2-2), y el tamaño del efecto $\omega^2$ se puede calcular usando las Ecuaciones \@ref(eq:omega2-1), \@ref(eq:omega2-2), donde $SC_{total}$ es la suma de la columna *Suma de cuadrados (Sum Sq)*. Para este tipo de ANOVA (1-factor entre grupos) se cumple que $\eta^2 = \eta_p^2$ y $\omega^2 = \omega_p^2$, ya que hay solo 1 factor, pero para el resto de ocasiones donde haya más de un factor esta igualdad no se cumple y se recomienda incluir ambos tamaños de efecto (global y parcial).
 
 \begin{equation}
-  \eta^2 = \frac{SC_{efecto}}{SC_{total}} = \frac{72}{72+30} = 0.706
+  \eta^2 = \frac{SC_{efecto}}{SC_{total}} = \frac{72}{72+30} = .706
 \end{equation}
 
-En **R** el tamaño del efecto así, como el intervalo de confianza, se puede obtener por medio de las funciones `eta.F` de *MOTE* y `eta_squared` de *effectsize*. Para `eta.F` es necesario indicar los grados de liberta, el valor de $F$, y el nivel de significancia $\alpha$. Para `eta_squared` lo que se necesita es el objeto de ANOVA y el nivel se confianza.
+\begin{equation}
+  \omega^2 = \frac{v_{efecto}(CM_{efecto}-CM_{error})}{SC_{total}+CM_{error}} = \frac{2 (36-3.33)}{102+3.33} = .62
+\end{equation}
+
+En **R** el tamaño del efecto, así como el intervalo de confianza, se puede obtener por medio de las funciones `eta.F` ($\eta^2$), `eta.partial.SS` ($\eta^2_p$), `omega.F` ($\omega^2$), `omega.partial.SS.bn` ($\omega^2_p$) de *MOTE*, y `eta_squared`, `omega_squared` de *effectsize*. Para `eta.F` y `omega.F` es necesario indicar los grados de libertad, el valor de $F$, y el nivel de significancia $\alpha$, mientras que para `eta.partial.SS` hay que indicar además las sumas de cuadrados y para `omega.partial.SS.bn` los cuadrados medios. Para `eta_squared` y `omega_squared` lo que se necesita es el objeto de ANOVA y el nivel se confianza, por defecto calcula el $\eta^2_p$ o $\omega^2_p$.
+
+Para $\eta^2$
 
 ```{r}
 aov.eta = eta.F(dfm = 2, dfe = 9, Fvalue = 10.8, a = a)
@@ -1086,7 +1209,32 @@ aov.eta[1:3] %>% unlist()
 ```
 
 ```{r}
-eta_squared(mgo.aov,ci = 1-a)
+aov.eta.p = eta.partial.SS(dfm = 2, dfe = 9, 
+                           ssm = 72, sse = 30,
+                           Fvalue = 10.8, a = a)
+aov.eta.p[1:3] %>% unlist()
+```
+
+```{r}
+eta_squared(mgo.aov,partial = T,ci = 1-a)
+```
+
+Para $\omega^2$
+
+```{r}
+aov.omega = omega.F(dfm = 2, dfe = 9, Fvalue = 10.8, n = N, a = a)
+aov.omega[1:3] %>% unlist()
+```
+
+```{r}
+aov.omega.p = omega.partial.SS.bn(dfm = 2, dfe = 9, 
+                                  msm = 36,mse = 3.33,
+                                  ssm = 72, n = N, a = a)
+aov.omega.p[1:3] %>% unlist()
+```
+
+```{r}
+omega_squared(mgo.aov,partial = T,ci = 1-a)
 ```
 
 Como se encontró un resultado significativo, es necesario indicar dónde se encuentran esas diferencias. Aquí no se definieron contrastes *a priori*, por lo que se usa Tukey para ajustar el error tipo-I para todas las comparaciones. Se usa la función `TukeyHSD` donde los argumentos necesarios son el objeto de ANOVA y el nivel de confianza. Aquí se puede interpretar el valor-*p* con respecto al nivel de significancia escogido, ya que es un valor-*p* ajustado, de igual manera se puede interpretar el intervalo de confianza. El resumen de la prueba de Tukey se presenta en la Tabla \@ref(tab:mgo-tukey-resumen) y la Figura \@ref(fig:mgo-tukey-ci). En los resultados se observa que la única diferencia significativa es la de *Mount Mica-Black Mountain*, ya que el valor-*p* está por debajo del $\alpha$ y el intervalo de confianza no incluye 0.
@@ -1166,11 +1314,37 @@ ggbetweenstats(dat.aov,Location,MgO,
                subtitle = aov.stats)
 ```
 
-## $t$ de correlación {#prueba-t-cor}
+### Relación entre la prueba $t$ de 2 muestras independientes y ANOVA de 1-factor entre-sujetos
+
+Como se mencionó en la introducción de ANOVA, la prueba $t$ de 2 muestras independientes es un caso especial de ANOVA con 2 grupos, y se mencionó que $F=t^2$. En esta pequeña sección se muestra la relación entre estas pruebas, tratando los datos usados en la prueba $t$ de 2 muestras independientes como un ANOVA.
+
+```{r}
+braq.aov = aov(values~ind,data = braq)
+anova(braq.aov)
+```
+
+El resultado de la prueba $t$ de 2 muestras independientes tenía $t = `r apa(t2.ind.res[['statistic']],2)`$, y $p = `r apa(t2.ind.res[['p.value']],3,F)`$. Si comparamos estos valores con el resultado de ANOVA se tiene que el valor-*p* es el mismo, y $t^2=F \to 1.86^2=3.46$, que efectivamente es el valor de $F$.
+
+Lo otro que se puede comparar son los tamaños de efecto. Para la prueba $t$ de 2 muestras independientes se tenía $d_s = `r apa(d.t2.ind.res[[1]],3)`$, y para el ANOVA de los mismos datos se tiene $\eta_p^2 = `r apa(EtaSq(braq.aov)[[2]],3,F)`$ (el lector puede hacer el cálculo para corroborar). 
+
+Para pasar de $d_s$ a $\eta_p^2$ se pueden usar las Ecuaciones \@ref(eq:r-pb-d) para obtener $r_{pb}$ y $\eta_p^2 = r_{pb}^2$, o \@ref(eq:r-pb-eta2) para obtener $\eta_p^2$ directamente, como se demuestra a continuación. 
+
+\begin{equation}
+  r_{pb} = \frac{d_s}{\sqrt{d_s^2 + \frac{N^2-2N}{n_1  n_2}}}\\
+  r_{pb} = \frac{0.883}{\sqrt{0.883^2 + \frac{18^2-2 \cdot 18}{8 \cdot 10}}} = .422\\
+  \eta_p^2 = r_{pb}^2 = .422^2 = .178\\
+  \eta_p^2 = \frac{t^2}{t^2+v} = \frac{1.86^2}{1.86^2+16} = .178
+\end{equation}
+
+Como se puede observar se obtiene el mismo valor de $\eta^2$ para ambas pruebas, demostrando de nuevo la relación entre las mismas.
+
+Este pequeño ejemplo demuestra la relación que hay entre las pruebas mencionadas, donde lo importante es que se obtiene la misma conclusión.
+
+## Correlación de Pearson {#prueba-pearson}
 
 En la sección de [Correlación] (\@ref(bivar-cor)) se introdujo el concepto de correlación, más específicamente la correlación de Pearson. Esta es una medida de asociación entre dos variables (en este caso numéricas) que indica la magnitud y dirección de dicha asociación. La idea de la prueba para la correlación es determinar si la correlación encontrada es significativa o no, o sea, si difiere de cero [@borradaile2003; @davis2002; @field2012; @nolan2014; @swan1995; @trauth2015].
 
-El uso de la prueba $t$ de correlación se realiza con un ejemplo de @davis2002, donde se tiene la longitud de los ejes de cantos en una playa (Tabla \@ref(tab:cantos-playa)). Se quiere determinar si la correlación entre los ejes $a$ y $b$ es significativa, asumiendo $\alpha = 0.1$.
+Para determinar la significancia de la correlación de Pearson se usa una prueba $t$. Esta prueba se realiza con un ejemplo de @davis2002, donde se tiene la longitud de los ejes de cantos en una playa (Tabla \@ref(tab:cantos-playa)). Se quiere determinar si la correlación entre los ejes $a$ y $b$ es significativa, asumiendo $\alpha = .1$.
 
 ```{r cantos-playa, echo=FALSE}
 tibble(Canto = 1:10,
@@ -1197,21 +1371,21 @@ tibble(Canto = 1:10,
     - $H_1: \rho \neq 0 \to$ Hay una relación entre los ejes
     - *Nota*: $\rho$ es el parámetro poblacional para la correlación
 3. Determinar parámetros de la distribución a comparar ($H_0$):
-    - $r_{a,b} = 0.597$
+    - $r_{a,b} = .597$
     - $v = N-2 = 10-2 = 8$
     - Aquí el único parámetro del que depende la prueba son los grados de libertad $v$, pero se muestra el valor de $r$ encontrado
 4. Determinar valores críticos
-    - $\alpha = 0.1$
-    - $t_{\alpha/2,v} = t_{0.1/2,8} = |1.860|$
+    - $\alpha = .1$
+    - $t_{\alpha/2,v} = t_{.1/2,8} = |1.860|$
 5. Calcular el estadístico de prueba
-    - $t = \frac{r \sqrt{v}}{\sqrt{1-r^2}} = \frac{0.597 \cdot \sqrt{8}}{\sqrt{1-0.597^2}} = 2.10$
-    - $90\% \ IC \ [0.066,0.864]$
+    - $t = \frac{r \sqrt{v}}{\sqrt{1-r^2}} = \frac{.597 \cdot \sqrt{8}}{\sqrt{1-.597^2}} = 2.10$
+    - $90\% \ IC \ [.066,.864]$
 6. Tomar una decisión
     - El estadístico de prueba es mayor al crítico, $t > t_{\alpha/2,v}$
-    - El valor-*p* es menor a $\alpha = 0.1$, $p = 0.068$
-    - El valor de $0$ no cae dentro del intervalo de confianza, $IC \ [0.0108,0.189]$
+    - El valor-*p* es menor a $\alpha = .1$, $p = .068$
+    - El valor de $0$ no cae dentro del intervalo de confianza, $IC \ [.066,.864]$
     - *Decisión*: Se rechaza $H_0$
-    - *Nota*: Tomar en cuenta que si se escogiera $\alpha=0.05$, no se rechazaría $H_0$
+    - *Nota*: Tomar en cuenta que si se escogiera $\alpha=.05$, no se rechazaría $H_0$
 
 En **R** así como está la función `cor` para calcular el coeficiente de correlación, se tiene la función `cor.test` para la prueba específica. Se pueden especificar el tipo de correlación (`method`) y el nivel de significancia. El coeficiente de correlación es ya un tamaño de efecto, por lo que no es necesario realizar ningún cálculo adicional.
 
@@ -1233,23 +1407,112 @@ r.res2 = r.correl(.597,10,a = a)
 r.apa = apa_print(r.res)
 ```
 
-> Conclusión: Los ejes $a$ y $b$ están correlacionados, `r r.apa$full_result %>% str_replace('CI','IC')`. El efecto se puede considerar grande, con un rango de pequeño,  hasta muy grande.
+> Conclusión: Los ejes $a$ y $b$ están correlacionados, `r r.apa$full_result %>% str_replace('CI','IC')`. El efecto se puede considerar grande, con un rango de pequeño, hasta muy grande.
 
 ```{r pearson-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de dispersión mostrando la relación entre longitud de 2 ejes de cantos de playa, así como el resumen estadístico respectivo.'}
 cantos %>% 
   ggplot(aes(a,b)) + 
   geom_point(size=2,col='blue') + 
-  labs(x = 'Longitud de eje a',
-       y = 'Longitud de eje b',
+  labs(x = 'Longitud de eje-a',
+       y = 'Longitud de eje-b',
        subtitle = TeX(str_interp("$\\mathit{r} = ${apa(r.res$estimate,2,F)}, IC_{${(1-a)*100}%} \\[${apa(r.res$conf.int[[1]],2,F)}, ${apa(r.res$conf.int[[2]],2,F)}\\], \\mathit{p} ${printp(r.res$p.value,add_equals = T)}"))) + 
   theme(plot.subtitle = element_text(size = 10))
+```
+
+## Correlación Punto Biserial {#prueba-rpb}
+
+La correlación punto biserial es una medida de asociación entre dos variables, donde una variable es cuantitativa continua y la otra es cualitativa con dos categorías (dicotómica). La idea de la correlación es determinar la asociación entre los niveles de la variable cualitativa con respecto a la variable continua. La prueba determina si hay una diferencia o relación significativa entre estas variables, o si hay un efecto de la variable cualitativa sobre la variable continua. Lo anterior es la misma idea tras la prueba $t$ de dos muestras independientes, por lo que la conclusión es la misma pero con un tamaño de efecto diferente, $r$ en vez de $d$ [@field2012; @sheskin2011].
+
+El procedimento para calcular esta correlación sería:
+
+1. Asignar una de las categorías como 1 y la otra como 0,
+1. Calcular la media de la variable continua para cada categoría ($\bar{y}_1, \ \bar{y}_0$),
+1. Calcular la desviación estándar de la variable continua ($s_y$),
+1. Calcular $r_{pb}$ usando la Ecuación \@ref(eq:r-pb).
+
+Lo anterior se demuestra a continuación con los datos del ejemplo usado en la prueba $t$ de 2 muestras independientes (\@ref(prueba-t2-ind)), para demostrar que son homólogas y se obtienen las mismas conclusiones. Para determinar la significancia de la correlación punto biserial se usa la misma prueba $t$ que se usó con la correlación de Pearson.
+
+```{r}
+braq = braq %>% 
+  mutate(ind.bin = ifelse(ind == 'A',1,0))
+braq
+N = nrow(braq)
+
+braq %>% 
+  group_by(ind.bin) %>% 
+  summarise(media = mean(values), 
+            n = n())
+
+braq %>% 
+  summarise(s_y = sd(values))
+```
+
+\begin{equation}
+  r_{pb} = \frac{\bar{y}_1-\bar{y}_0}{s_y}\sqrt{\frac{n_1 n_0}{N(N-1)}}\\
+  r_{pb} = \frac{3.125-2.96}{0.2}\sqrt{\frac{8 \cdot 10}{18(18-1)}} = .422
+\end{equation}
+
+La dirección del efecto está únicamente en función de cuál categoría se escoge como 1. Lo que indica el valor de $r_{pb} = .422$ es que hay una relación positiva hacia la capa A (los braquiópodos son más largos en la capa A), ya que ésta fue la que se codificó como 1.
+
+1. Identificar la población, distribución, y la prueba apropiada:
+    - Población: relación entre la longitud de braquiópodos y la capa a la que pertenecen
+    - Distribución: $t$
+    - Prueba: $t$ de correlación
+2. Establecer las hipótesis nula y alterna:
+    - $H_0: \rho_{pb} = 0 \to$ No hay relación entre la longitud de braquiópodos y la capa a la que pertenecen
+    - $H_1: \rho_{pb} \neq 0 \to$ Hay una relación entre la longitud de braquiópodos y la capa a la que pertenecen
+3. Determinar parámetros de la distribución a comparar ($H_0$):
+    - $r_{pb} = .422$
+    - $v = N-2 = 18-2 = 16$
+4. Determinar valores críticos
+    - $\alpha = .05$
+    - $t_{\alpha/2,v} = t_{.05/2,16} = |2.12|$
+5. Calcular el estadístico de prueba
+    - $t = \frac{r_{pb} \sqrt{v}}{\sqrt{1-r_{pb}^2}} = \frac{.422 \cdot \sqrt{16}}{\sqrt{1-.422^2}} = 1.86$
+    - $95\% \ IC \ [-.056,.742]$
+6. Tomar una decisión
+    - El estadístico de prueba es menor al crítico, $t < t_{\alpha/2,v}$
+    - El valor-*p* es mayor a $\alpha = .05$, $p = .081$
+    - El valor de $0$ cae dentro del intervalo de confianza, $IC \ [-.056,.742]$
+    - *Decisión*: No se rechaza $H_0$
+    - *Nota*: Tomar en cuenta que si se escogiera $\alpha=.1$, se rechazaría $H_0$
+
+En **R** se usa la función `cor.test` con las columnas de la variable continua y la variable dicotómica (1 y 0), usando el tipo de correlación (`method`) de `pearson`, e indicando el nivel de significancia. El coeficiente de correlación es ya un tamaño de efecto, por lo que no es necesario realizar ningún cálculo adicional.
+
+```{r}
+a = .05
+rpb.res = cor.test(~values+ind.bin,data = braq,
+                 method = 'pearson',
+                 conf.level = 1-a)
+rpb.res
+```
+
+```{r echo=FALSE}
+rpb.apa = apa_print(rpb.res)
+```
+
+Estos resultados muestran el mismo valor $t$ y mismo valor-*p* que la prueba $t$ de 2 muestras independientes, demostrando que ambas son homólogas.
+
+> Conclusión: La longitud de los braquiópos no está correlacionada con la capa a la cual pertenecen, `r rpb.apa$full_result %>% str_replace_all(c('CI'='IC','r'='r_{pb}'))`. El efecto se puede considerar mediano, con un rango amplio de muy pequeño, en la dirección opuesta, hasta muy grande.
+
+```{r rpb-stats, echo=FALSE, out.width='90%', fig.cap='Gráfico de dispersión mostrando la relación entre longitud de los braquiópodos de acuerdo a la capa que pertencen, así como el resumen estadístico respectivo.'}
+set.seed(101)
+braq %>% 
+  ggplot(aes(ind,values,col=ind)) + 
+  geom_jitter(size=2,width = .15) + 
+  labs(x = 'Capa',
+       y = 'Longitud (cm)',
+       subtitle = TeX(str_interp("$\\mathit{r_{pb}} = ${apa(rpb.res$estimate,2,F)}, IC_{${(1-a)*100}%} \\[${apa(rpb.res$conf.int[[1]],2,F)}, ${apa(rpb.res$conf.int[[2]],2,F)}\\], \\mathit{p} ${printp(rpb.res$p.value,add_equals = T)}"))) + 
+  scale_color_brewer(palette = 'Dark2') + 
+  theme(plot.subtitle = element_text(size = 10),
+        legend.position = 'none')
 ```
 
 ## $\chi^2$ para 1 varianza {#prueba-chi}
 
 Así como se pueden realizar pruebas estadísticas sobre la media poblacional ($\mu$), se pueden realizar pruebas estadísticas sobre la varianza poblacional ($\sigma^2$), aunque son menos comunes. Por esto último es que para estas pruebas no hay tamaños de efecto estandarizados, sino más bien se usan los datos en escala original.
 
-El uso de la prueba $\chi^2$ de 1 muestra se realiza con el ejemplo de la sección \@ref(estim-ic-chi) [@swan1995], donde se tenía el contenido de cuarzo en secciones delgadas de una roca ígnea. Es posible que esta muestra provenga de una población con varianza 12 ($\sigma^2_0=12$)? Asuma $\alpha = 0.05$.
+El uso de la prueba $\chi^2$ de 1 muestra se realiza con el ejemplo de la sección \@ref(estim-ic-chi) [@swan1995], donde se tenía el contenido de cuarzo en secciones delgadas de una roca ígnea. Es posible que esta muestra provenga de una población con varianza 12 ($\sigma^2_0=12$)? Asuma $\alpha = .05$.
 
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: variabilidad del contenido de cuarzo en la roca ígnea
@@ -1262,15 +1525,15 @@ El uso de la prueba $\chi^2$ de 1 muestra se realiza con el ejemplo de la secci�
     - $\sigma^2_0 = 20$
     - $v = N-1 = 8-1 = 7$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $\chi^2_{\alpha/2,v} = \chi^2_{0.05/2,7} = 12.83$
+    - $\alpha = .05$
+    - $\chi^2_{\alpha/2,v} = \chi^2_{.05/2,7} = 12.83$
     - $\chi^2_{1-\alpha/2,v} = \chi^2_{1-0.05/2,7} = 0.83$
 5. Calcular el estadístico de prueba
     - $\chi^2 = \frac{(n-1)s^2}{\sigma_0^2} = \frac{(8-1)9.507}{12} = 5.546$
     - $4.16 < \sigma^2 < 39.38 \to 95\% \ IC \ [4.16,39.38]$
 6. Tomar una decisión
     - El estadístico de prueba cae entre los valores críticos
-    - El valor-*p* es mayor a $\alpha = 0.05$, $p = 0.8127$
+    - El valor-*p* es mayor a $\alpha = .05$, $p = .8127$
     - El valor hipotético del parámetro cae dentro del intervalo de confianza, $IC \ [4.16, 39.38]$
     - *Decisión*: No se rechaza $H_0$
 
@@ -1299,7 +1562,7 @@ chi.apa = apa_print(chi.res,n=n)
 
 En algunas de las pruebas se hace la suposición de igualdad de varianzas. Lo anterior se puede evaluar empíricamente comparando la menor y mayor desviación estándar, donde la relación entre ellas no debiera ser mayor a 2 [@cumming2017]. Si se quiere realizar de manera formal se puede realizar la prueba aquí descrita.
 
-El uso de la prueba $F$ para 2 varianzas se realiza con el ejemplo de la sección \@ref(prueba-t2-ind) [@swan1995], donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es factible la suposición de igualdad de varianzas ($\sigma^2_1=\sigma^2_2$)? Asuma $\alpha = 0.05$.
+El uso de la prueba $F$ para 2 varianzas se realiza con el ejemplo de la sección \@ref(prueba-t2-ind) [@swan1995], donde se tenían braquiópodos en dos capas (A, B) y se les midió la longitud (cm). Es factible la suposición de igualdad de varianzas ($\sigma^2_1=\sigma^2_2$)? Asuma $\alpha = .05$.
 
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: variabilidad de la longitud de braquiópodos en las capas A y B
@@ -1312,15 +1575,15 @@ El uso de la prueba $F$ para 2 varianzas se realiza con el ejemplo de la secció
     - $v_1 = n_1-1 = 8-1 = 7$
     - $v_2 = n_2-1 = 10-1 = 9$
 4. Determinar valores críticos
-    - $\alpha = 0.05$
-    - $F_{\alpha/2,v_1,v_2} = F_{0.05/2,8,10} = 3.85$
+    - $\alpha = .05$
+    - $F_{\alpha/2,v_1,v_2} = F_{.05/2,8,10} = 3.85$
     - $F_{1-\alpha/2,v_1,v_2} = F_{1-0.05/2,8,10} = 0.23$
 5. Calcular el estadístico de prueba
     - $\frac{\sigma^2_1}{\sigma^2_2} = \frac{0.042}{0.029} = 1.45$
     - $0.345 < \frac{\sigma^2_1}{\sigma^2_2} < 6.985 \to 95\% \ IC \ [0.345,6.985]$
 6. Tomar una decisión
     - El estadístico de prueba cae entre los valores críticos
-    - El valor-*p* es mayor a $\alpha = 0.05$, $p = 0.599$
+    - El valor-*p* es mayor a $\alpha = .05$, $p = .599$
     - El valor hipotético del parámetro (1) cae dentro del intervalo de confianza, $IC \ [0.345, 6.985]$
     - *Decisión*: No se rechaza $H_0$
 
