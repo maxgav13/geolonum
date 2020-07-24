@@ -1,10 +1,14 @@
 # Secuencias de Datos
 
 ```{r secuencias-setup, include=FALSE}
+library(MOTE)
+library(papaja)
 library(DescTools)
-library(summarytools)
+library(kableExtra)
+library(rio)
 library(patchwork)
 library(janitor)
+library(conflicted)
 library(tidymodels)
 library(tidyverse)
 
@@ -22,7 +26,9 @@ knitr::opts_chunk$set(
 )
 
 theme_set(theme_bw(base_size = 12))
-
+conflict_prefer('select','dplyr')
+conflict_prefer('filter','dplyr')
+conflict_prefer("TeX", "latex2exp")
 ```
 
 

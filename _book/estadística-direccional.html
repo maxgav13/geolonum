@@ -536,12 +536,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li>Lineamientos regionales (no-direccionales)</li>
 </ul>
-<p>Tambén se tiene que hacer distinción entre datos circulares y esféricos, donde la diferencia es que circulares se refieren a datos en 2-dimensiones (solo dirección), mientras que esféricos se refierena a datos en 3-dimensiones (dirección e inclinacción). Una característica de los datos direccionales es la naturaleza del espacio en que se trabajan, que para direcciones va de 0° a 360° y para inclinaciones va de 0° a 90°. Esta particularidad hace que se tengan que tratar de manera especial, ajustando las técnicas convencionales a este tipo de datos.</p>
-<p>Cabe mencionar que hay softwares libres multi-plataforma que brindan mucha de la funcioanlidad que se va a presentar en este capítulo, y representan buenas opciones y herramientas a tener en cuenta. Dentro de estos softwares están: <a href="http://www.geo.cornell.edu/geology/faculty/RWA/programs/stereonet.html">Stereonet</a>, <a href="http://www.frederickvollmer.com/orient/">Orient</a>, y <a href="http://igc.usp.br/openstereo/">OpenStereo</a>.</p>
+<p>También se tiene que hacer distinción entre datos circulares y esféricos, donde la diferencia es que circulares se refieren a datos en 2-dimensiones (solo dirección), mientras que esféricos se refieren a datos en 3-dimensiones (dirección e inclinación). Una característica de los datos direccionales es la naturaleza del espacio en que se trabajan, que para direcciones va de 0° a 360° y para inclinaciones va de 0° a 90°. Esta particularidad hace que se tengan que tratar de manera especial, ajustando las técnicas convencionales a este tipo de datos.</p>
+<p>Cabe mencionar que hay programas libres multi-plataforma que brindan mucha de la funcionalidad que se va a presentar en este capítulo, y representan buenas opciones y herramientas a tener en cuenta. Dentro de estos programas están: <a href="http://www.geo.cornell.edu/geology/faculty/RWA/programs/stereonet.html">Stereonet</a>, <a href="http://www.frederickvollmer.com/orient/">Orient</a>, y <a href="http://igc.usp.br/openstereo/">OpenStereo</a>.</p>
 </div>
 <div id="representación-gráfica" class="section level2">
 <h2><span class="header-section-number">17.2</span> Representación gráfica</h2>
-<p>Así como para visualziar una variable se tiene el histograma, para datos direccionales se tiene el <em>diagrama de rosa</em>, que es simplemente un histograma e coordenadas polares, como se muestra en la Figura <a href="estadística-direccional.html#fig:rose-diags-circ">17.1</a>, donde la rosa para datos direccionales se denomina rosa asimétrica, y para datos no-direccionales se denomina rosa simétrica.</p>
+<p>Así como para visualizar una variable se tiene el histograma, para datos direccionales se tiene el <em>diagrama de rosa</em>, que es simplemente un histograma e coordenadas polares, como se muestra en la Figura <a href="estadística-direccional.html#fig:rose-diags-circ">17.1</a>, donde la rosa para datos direccionales se denomina rosa asimétrica, y para datos no-direccionales se denomina rosa simétrica.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:rose-diags-circ"></span>
 <img src="geolonum_files/figure-html/rose-diags-circ-1.png" alt="Diagramas de rosa para el caso de datos direccionales (A - rosa asimétrica) y no-direccionales (B - rosa simétrica)." width="80%" />
@@ -564,7 +564,7 @@ Figura 17.2: Figura de <span class="citation">Davis (<a href="#ref-davis2002">20
 <div id="estadística-descriptiva" class="section level3">
 <h3><span class="header-section-number">17.3.1</span> Estadística descriptiva</h3>
 <p>Cuando se tiene un conjunto de datos direccionales (<span class="math inline">\(\theta_1,\theta_2,\theta_3,\dots,\theta_N\)</span>), se pueden obtener estadísticas univariables que describen a la muestra.</p>
-<p>Para obtener la dirección media y la longitd de la resultante, es necesario calcular las componentes mostradas en las Ecuaciones <a href="estadística-direccional.html#eq:xr-circ">(17.1)</a> y <a href="estadística-direccional.html#eq:yr-circ">(17.2)</a>.</p>
+<p>Para obtener la dirección media y la longitud de la resultante, es necesario calcular las componentes mostradas en las Ecuaciones <a href="estadística-direccional.html#eq:xr-circ">(17.1)</a> y <a href="estadística-direccional.html#eq:yr-circ">(17.2)</a>.</p>
 <p><span class="math display" id="eq:xr-circ">\[\begin{equation}
   x_r = \sum_{i=1}^N \sin\theta_i
   \tag{17.1}
@@ -578,7 +578,7 @@ Figura 17.2: Figura de <span class="citation">Davis (<a href="#ref-davis2002">20
   \bar{\theta} = \tan^{-1}(x_r/y_r)
   \tag{17.3}
 \end{equation}\]</span></p>
-<p>Dada la naturaleza cíclica de los datos (0-360) el valor de la dirección media requiere de una correción que va a estar en función del signo de las componentes, y se detalla en la Tabla <a href="estadística-direccional.html#tab:dir-media-ajuste-circ">17.1</a>.</p>
+<p>Dada la naturaleza cíclica de los datos (0-360) el valor de la dirección media requiere de una corrección que va a estar en función del signo de las componentes, y se detalla en la Tabla <a href="estadística-direccional.html#tab:dir-media-ajuste-circ">17.1</a>.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:dir-media-ajuste-circ">Tabla 17.1: </span>Ajustes para la dirección media
@@ -721,7 +721,7 @@ meantrue</code></pre>
 </div>
 <div id="estadística-inferencial" class="section level3">
 <h3><span class="header-section-number">17.3.2</span> Estadística inferencial</h3>
-<p>Así como para datos convencionales (<span class="math inline">\(-∞,∞\)</span>) se tenía la distribuió normal (o <span class="math inline">\(t\)</span>) para hacer inferencias, se ocupa una distribución apropiada para datos circulares. Esta distribución es la <em>von Mises</em> (Figura <a href="estadística-direccional.html#fig:von-mises">17.4</a>) y depende de 2 parámetros: dirección media (<span class="math inline">\(\theta\)</span>) y el parámetro de concentración (<span class="math inline">\(\kappa\)</span>). Esta distribución es unimodal y semétrica alrededor de <span class="math inline">\(\theta\)</span>, y conforme <span class="math inline">\(\kappa\)</span> incrementa es más probable que los datos tengan una dirección preferencial cercana <span class="math inline">\(\theta\)</span>. De manera general se relaciona <span class="math inline">\(\kappa\)</span> con <span class="math inline">\(\bar{R}\)</span>.</p>
+<p>Así como para datos convencionales (<span class="math inline">\(-∞,∞\)</span>) se tenía la distribución normal (o <span class="math inline">\(t\)</span>) para hacer inferencias, se ocupa una distribución apropiada para datos circulares. Esta distribución es la <em>von Mises</em> (Figura <a href="estadística-direccional.html#fig:von-mises">17.4</a>) y depende de 2 parámetros: dirección media (<span class="math inline">\(\theta\)</span>) y el parámetro de concentración (<span class="math inline">\(\kappa\)</span>). Esta distribución es unimodal y simétrica alrededor de <span class="math inline">\(\theta\)</span>, y conforme <span class="math inline">\(\kappa\)</span> incrementa es más probable que los datos tengan una dirección preferencial cercana <span class="math inline">\(\theta\)</span>. De manera general se relaciona <span class="math inline">\(\kappa\)</span> con <span class="math inline">\(\bar{R}\)</span>.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:von-mises"></span>
 <img src="images/von-mises.png" alt="Distribución von Mises centrada en \(\theta=0\) y con diferentes parámetros de concentración \(\kappa\). Conforme incrementa \(\kappa\) más probabilidad de estar cerca de \(\theta\). \(\kappa=0\) es igual a una distribución uniforme. Tomado de Trauth (2015)." width="70%" />
@@ -736,7 +736,7 @@ Figura 17.4: Distribución <em>von Mises</em> centrada en <span class="math inli
 <li><span class="math inline">\(H_0: \kappa = 0 \to\)</span> No hay dirección preferencial</li>
 <li><span class="math inline">\(H_1: \kappa \neq 0 \to\)</span> Hay dirección preferencial</li>
 </ul>
-<p>Como se basa en la relación entre <span class="math inline">\(\kappa\)</span> y <span class="math inline">\(\bar{R}\)</span>, lo que se hace es determinar <span class="math inline">\(\bar{R}\)</span> y compararlo con valores críticos ya establecidos en función del tamaño de la muestra <span class="math inline">\(N\)</span>, y si <span class="math inline">\(\bar{R} &gt; \bar{R}_{crit}\)</span> entonces e rechazaría <span class="math inline">\(H_0\)</span>. Los valores críticos se encuentran en tablas en los diferentes textos. Para el caso de datos no-direccionales no es necesario realizar ninguna correción más que la inicial para encontrar <span class="math inline">\(\bar{R}\)</span>.</p>
+<p>Como se basa en la relación entre <span class="math inline">\(\kappa\)</span> y <span class="math inline">\(\bar{R}\)</span>, lo que se hace es determinar <span class="math inline">\(\bar{R}\)</span> y compararlo con valores críticos ya establecidos en función del tamaño de la muestra <span class="math inline">\(N\)</span>, y si <span class="math inline">\(\bar{R} &gt; \bar{R}_{crit}\)</span> entonces e rechazaría <span class="math inline">\(H_0\)</span>. Los valores críticos se encuentran en tablas en los diferentes textos. Para el caso de datos no-direccionales no es necesario realizar ninguna corrección más que la inicial para encontrar <span class="math inline">\(\bar{R}\)</span>.</p>
 <p>Para el caso del ejemplo que se venía trabajando en la parte descriptiva, se tiene <span class="math inline">\(\bar{R}_{crit}=\bar{R}_{40,.05}=.273\)</span> y se tenía que <span class="math inline">\(\bar{R}=.89\)</span>, con lo que <span class="math inline">\(\bar{R} &gt; \bar{R}_{crit}\)</span> y se rechaza la hipótesis nula de que no hay dirección preferencial, y en este caso corresponde con <span class="math inline">\(\bar{\theta}=223.22^{\circ}\)</span>.</p>
 <p>En <strong>R</strong> se tiene la función <code>dir_unif_test_2D</code> del paquete <em>GMisc</em> que arroja los valores <span class="math inline">\(\bar{R}\)</span> y <span class="math inline">\(\bar{R}_{crit}\)</span>, y una breve interpretación.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dir_unif_test_2D</span>(theta0, <span class="dt">dir =</span> <span class="dv">1</span>, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
@@ -769,7 +769,7 @@ Figura 17.4: Distribución <em>von Mises</em> centrada en <span class="math inli
 <li><span class="math inline">\(H_0: \bar{\theta} = \theta_0\)</span></li>
 <li><span class="math inline">\(H_1: \bar{\theta} \neq \theta_0\)</span></li>
 </ul>
-<p>El cono de confianza, Ecuación <a href="estadística-direccional.html#eq:cono-conf-circ">(17.9)</a>, se basa en el error estándar de la dirección media, Ecuación <a href="estadística-direccional.html#eq:se-theta-circ">(17.8)</a>, y por ende toma en cuenta el tamaño de la muestra y su dispersión. El error estándar resulta en <strong>radianes</strong>, por lo que hay que pasarlo a grados multplicando por 57.2956. El parámetro de concentración <span class="math inline">\(\kappa\)</span> se puede obtener conforme la Ecuación <a href="estadística-direccional.html#eq:kappa-circ">(17.7)</a>.</p>
+<p>El cono de confianza, Ecuación <a href="estadística-direccional.html#eq:cono-conf-circ">(17.9)</a>, se basa en el error estándar de la dirección media, Ecuación <a href="estadística-direccional.html#eq:se-theta-circ">(17.8)</a>, y por ende toma en cuenta el tamaño de la muestra y su dispersión. El error estándar resulta en <strong>radianes</strong>, por lo que hay que pasarlo a grados multiplicando por 57.2956. El parámetro de concentración <span class="math inline">\(\kappa\)</span> se puede obtener conforme la Ecuación <a href="estadística-direccional.html#eq:kappa-circ">(17.7)</a>.</p>
 <p><span class="math display" id="eq:kappa-circ">\[\begin{equation}
   \kappa = 
   \begin{cases}
@@ -857,7 +857,7 @@ cono_inf; meantrue; cono_sup</code></pre>
 ## $interpretation
 ## [1] &quot;Reject H0 and conclude that the two samples could not come from the same population with the same mean direction&quot;</code></pre>
 <blockquote>
-<p>Conclusión: Las muestras difieren singificativamente en su dirección, <span class="math inline">\(F(1,78) = 12.26\)</span>, <span class="math inline">\(p = .001\)</span></p>
+<p>Conclusión: Las muestras difieren significativamente en su dirección, <span class="math inline">\(F(1,78) = 12.26\)</span>, <span class="math inline">\(p = .001\)</span></p>
 </blockquote>
 <p>Otra forma de realizar la prueba sería obtener los conos de confianza para ambas muestras y ver si la dirección media de una cae dentro del cono de la otra.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dir_stats_2D</span>(theta0, <span class="dt">dir =</span> <span class="dv">1</span>, <span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
@@ -870,7 +870,7 @@ cono_inf; meantrue; cono_sup</code></pre>
 ##   Mean.Dir     R Circ.Var Conc.Param Cone.lower Cone.upper  Cone
 ##      &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
 ## 1     201. 0.881    0.119       4.52       192.       210.   8.9</code></pre>
-<p>Lo anterior se puede visualizar en una red esterográfica, que por tratarse de datos circulares (2D) se usa una inclinación de 0. La función <code>stereo_mean</code> de <em>GMisc</em> permite graficar la dirección media junto con el cono de confianza en la red esterográfica, donde la Figura <a href="estadística-direccional.html#fig:stereo-2-circ">17.5</a> muestra los datos del ejemplo.</p>
+<p>Lo anterior se puede visualizar en una red estereográfica, que por tratarse de datos circulares (2D) se usa una inclinación de 0. La función <code>stereo_mean</code> de <em>GMisc</em> permite graficar la dirección media junto con el cono de confianza en la red estereográfica, donde la Figura <a href="estadística-direccional.html#fig:stereo-2-circ">17.5</a> muestra los datos del ejemplo.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stereo_mean</span>(theta0,<span class="dv">0</span>)
 <span class="kw">stereo_mean</span>(theta1,<span class="dv">0</span>,<span class="dt">mean.col =</span> <span class="st">&#39;blue&#39;</span>,<span class="dt">add =</span> T)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:stereo-2-circ"></span>
@@ -892,7 +892,7 @@ Figura 17.5: Red estereográfica mostrando la dirección media y cono de confian
 <li>Ángulo de inclinación: <span class="math inline">\(\theta_1,\theta_2,\theta_3,\dots,\theta_N\)</span>,</li>
 <li>Dirección de inclinación: <span class="math inline">\(\phi_1,\phi_2,\phi_3,\dots,\phi_N\)</span></li>
 </ul>
-<p>Para obtener la dirección media y la longitd de la resultante, es necesario calcular las componentes mostradas en las Ecuaciones <a href="estadística-direccional.html#eq:xr-esf">(17.11)</a>, <a href="estadística-direccional.html#eq:yr-esf">(17.12)</a>, y <a href="estadística-direccional.html#eq:zr-esf">(17.13)</a>.</p>
+<p>Para obtener la dirección media y la longitud de la resultante, es necesario calcular las componentes mostradas en las Ecuaciones <a href="estadística-direccional.html#eq:xr-esf">(17.11)</a>, <a href="estadística-direccional.html#eq:yr-esf">(17.12)</a>, y <a href="estadística-direccional.html#eq:zr-esf">(17.13)</a>.</p>
 <p><span class="math display" id="eq:xr-esf">\[\begin{equation}
   x_r = \sum_{i=1}^N \cos\theta_i \cos\phi_i
   \tag{17.11}
@@ -1016,7 +1016,7 @@ inclinaciones =<span class="st"> </span><span class="kw">c</span>(<span class="d
 </div>
 <div id="estadística-inferencial-1" class="section level3">
 <h3><span class="header-section-number">17.4.2</span> Estadística inferencial</h3>
-<p>Similar a los datos circulares es necesaria una distribución para poder realizar inferencias, y para el caso de datos esféricos la más común es la Bingham. Esta distribución depende de tres parámetros: dirección media (<span class="math inline">\(\bar{\phi}\)</span>), inclinación media (<span class="math inline">\(\bar{\theta}\)</span>), y parámetro de concentración (<span class="math inline">\(\kappa\)</span>). El parámetro de concentración presenta el mismo efecto y comportamiento que el caso de dato circulares, digase que se relaciona con <span class="math inline">\(\bar{R}\)</span> y conforme incrementa es más probable que los datos tengan una dirección preferencial.</p>
+<p>Similar a los datos circulares es necesaria una distribución para poder realizar inferencias, y para el caso de datos esféricos la más común es la Bingham. Esta distribución depende de tres parámetros: dirección media (<span class="math inline">\(\bar{\phi}\)</span>), inclinación media (<span class="math inline">\(\bar{\theta}\)</span>), y parámetro de concentración (<span class="math inline">\(\kappa\)</span>). El parámetro de concentración presenta el mismo efecto y comportamiento que el caso de dato circulares, dígase que se relaciona con <span class="math inline">\(\bar{R}\)</span> y conforme incrementa es más probable que los datos tengan una dirección preferencial.</p>
 <div id="prueba-de-aleatoriedad-1" class="section level4">
 <h4><span class="header-section-number">17.4.2.1</span> Prueba de aleatoriedad</h4>
 <p>Esta prueba es similar a la de datos circulares, donde se usa la relación entre <span class="math inline">\(\kappa\)</span> y <span class="math inline">\(\bar{R}\)</span>, y donde las hipótesis nula y alterna serían las siguientes:</p>
@@ -1048,7 +1048,7 @@ inclinaciones =<span class="st"> </span><span class="kw">c</span>(<span class="d
 <li><span class="math inline">\(H_0: \bar{\phi} = \phi_0\)</span></li>
 <li><span class="math inline">\(H_1: \bar{\phi} \neq \phi_0\)</span></li>
 </ul>
-<p>El cono de confianza, Ecuación <a href="estadística-direccional.html#eq:cono-conf-esf">(17.20)</a>, está en función del error estándar, Ecuacuón <a href="estadística-direccional.html#eq:se-esf">(17.19)</a>, que se basa en la resultante y el nivel de significancia deseado. El resultado del error estándar está en <strong>radianes</strong>, por lo que hay que pasarlo a grados.</p>
+<p>El cono de confianza, Ecuación <a href="estadística-direccional.html#eq:cono-conf-esf">(17.20)</a>, está en función del error estándar, Ecuación <a href="estadística-direccional.html#eq:se-esf">(17.19)</a>, que se basa en la resultante y el nivel de significancia deseado. El resultado del error estándar está en <strong>radianes</strong>, por lo que hay que pasarlo a grados.</p>
 <p><span class="math display" id="eq:se-esf">\[\begin{equation}
   s_{1-\alpha} = \arccos \left( 1 - \frac{N-R}{R} \left[ \left( \frac{1}{\alpha} \right)^{\frac{1}{N-1}} - 1\right] \right)
   \tag{17.19}
@@ -1093,7 +1093,7 @@ inclinaciones =<span class="st"> </span><span class="kw">c</span>(<span class="d
   F_{10,10} = \frac{81.2}{2.01} = 40.4\\
   F_{crit} = 2.98
 \end{equation}\]</span></p>
-<p>Con este análisis se obtiene que las varianzas no son iguales, por lo que técnicamente no sería conveneinte realizar la prueba de igualdad de direcciones medias, pero se realiza para efectos demostrativos.</p>
+<p>Con este análisis se obtiene que las varianzas no son iguales, por lo que técnicamente no sería conveniente realizar la prueba de igualdad de direcciones medias, pero se realiza para efectos demostrativos.</p>
 <p>La función <code>dir_2sample_test_3D</code> de <em>GMisc</em> realiza esta prueba, brindando <span class="math inline">\(F\)</span>, <span class="math inline">\(F_{crit}\)</span>, valor-<em>p</em>, y una interpretación.</p>
 <pre class="sourceCode r"><code class="sourceCode r">d2 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">111.7</span>,<span class="fl">109.2</span>,<span class="fl">185.1</span>,<span class="fl">83.1</span>,<span class="fl">235.2</span>,<span class="fl">226.7</span>)
 i2 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">40.4</span>,<span class="fl">31.4</span>,<span class="fl">25.9</span>,<span class="fl">26.2</span>,<span class="dv">27</span>,<span class="fl">31.5</span>)
@@ -1110,10 +1110,10 @@ i2 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">40.4</sp
 ## $interpretation
 ## [1] &quot;Reject H0 and conclude that the two samples could not come from the same population with the same mean direction and mean dip angle&quot;</code></pre>
 <blockquote>
-<p>Conclusión: Las muestras presentan diferentes varianzas, <span class="math inline">\(F(10,10) = 40.4\)</span>, <span class="math inline">\(p &lt; .001\)</span>, y difieren singificativamente en su dirección, <span class="math inline">\(F(2,20) = 12.59\)</span>, <span class="math inline">\(p &lt; .001\)</span></p>
+<p>Conclusión: Las muestras presentan diferentes varianzas, <span class="math inline">\(F(10,10) = 40.4\)</span>, <span class="math inline">\(p &lt; .001\)</span>, y difieren significativamente en su dirección, <span class="math inline">\(F(2,20) = 12.59\)</span>, <span class="math inline">\(p &lt; .001\)</span></p>
 </blockquote>
 <p>Otra forma de realizar la prueba sería obtener los conos de confianza para ambas muestras y ver si la dirección media de una cae dentro del cono de la otra.</p>
-<p>Lo anterior es más fácil visualizarlo en una red esterográfica. La función <code>stereo_mean</code> de <em>GMisc</em> grafica la dirección media junto con el cono de confianza en la red esterográfica, donde la Figura <a href="estadística-direccional.html#fig:stereo-2-esf">17.6</a> muestra los datos del ejemplo.</p>
+<p>Lo anterior es más fácil visualizarlo en una red estereográfica. La función <code>stereo_mean</code> de <em>GMisc</em> grafica la dirección media junto con el cono de confianza en la red estereográfica, donde la Figura <a href="estadística-direccional.html#fig:stereo-2-esf">17.6</a> muestra los datos del ejemplo.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stereo_mean</span>(direcciones,inclinaciones)
 <span class="kw">stereo_mean</span>(d2,i2,<span class="dt">mean.col =</span> <span class="st">&#39;blue&#39;</span>,<span class="dt">add =</span> T)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:stereo-2-esf"></span>

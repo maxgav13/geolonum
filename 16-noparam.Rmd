@@ -315,9 +315,9 @@ chi.gof.mult$stdres %>%
   kable_styling(full_width = F)
 ```
 
-La diferencia entre valores observados y esperados se puede visualizar a como se presenta en la Figura \@ref(fig:minerales.gof)
+La diferencia entre valores observados y esperados se puede visualizar a como se presenta en la Figura \@ref(fig:minerales-gof)
 
-```{r minerales.gof, echo=FALSE, fig.cap='Gráfico de barras mostrando los valores observados y esperados para cada uno de los minerales.'}
+```{r minerales-gof, echo=FALSE, fig.cap='Gráfico de barras mostrando los valores observados y esperados para cada uno de los minerales.'}
 tibble(Mineral = minerales.nom, 
        Observados = observados/N, 
        Esperados = esperados.p) %>%
@@ -361,7 +361,7 @@ chi.gof.mult.phi = v.chi.sq(x2 = chi.gof.mult$statistic,
 chi.gof.mult.phi[1:3] %>% unlist()
 ```
 
-> Conclusión: El conteo de minerales en el sedimento difiere de los valores esperados, `r chi.gof.mult.apa$statistic %>% str_replace('n','N')`, `r chi.gof.mult.phi$estimate  %>% str_replace('CI','IC')`. El efecto se puede considerar mediano, pero con un rango amplio de pequeño hasta muy grande.
+> Conclusión: El conteo de minerales en el sedimento difiere de los valores esperados, `r chi.gof.mult.apa$statistic %>% str_replace('n','N')`, `r chi.gof.mult.phi$estimate %>% str_replace('CI','IC')`. El efecto se puede considerar mediano, pero con un rango amplio de pequeño hasta muy grande.
 
 ```{r echo=FALSE}
 chi.gof.mult.stats = TeX(str_interp("$\\chi^2(${chi.gof.mult$parameter},\\mathit{N}=${N}) = ${apa(chi.gof.mult$statistic,2)}, \\mathit{p} ${printp(chi.gof.mult$p.value,add_equals = T)}, \\mathit{V} = ${apa(chi.gof.mult.phi$v,2,F)}, IC_{${(1-a)*100}%} \\[${apa(chi.gof.mult.phi$vlow,2,F)}, ${apa(chi.gof.mult.phi$vhigh,2,F)}\\]"))

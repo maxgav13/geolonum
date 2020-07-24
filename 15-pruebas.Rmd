@@ -1294,7 +1294,7 @@ tukey %>%
   mutate_if(is.numeric,~round(.,3))
 ```
 
-> Conclusión: El contenido de $MgO$ varía significativamente entre las localidades, `r aov.eta$statistic`. El tamaño del efecto es grande, `r aov.eta$estimate %>% str_replace_all(c('CI'='IC','0.'='.'))`, pero con un rango muy amplio. Análisis posteriores con Tukey HSD indican que hay una diferencia entre Mount Mica - Black Mountain (`r tukey.apa$full_result$Mount_Mica___Black_Mountain`), pero no así entre Mount Mica - Sebago Batholith (`r tukey.apa$full_result$Mount_Mica___Sebago_Batholith`), ni Sebago Batholith - Black Mountain (`r tukey.apa$full_result$Sebago_Batholith___Black_Mountain`).
+> Conclusión: El contenido de $MgO$ varía significativamente entre las localidades, `r aov.eta$statistic`. El tamaño del efecto es grande, `r aov.eta$estimate %>% str_replace_all(c('CI'='IC','0.'='.'))`, pero con un rango muy amplio. Análisis posteriores con Tukey HSD indican que hay una diferencia entre Mount Mica - Black Mountain (`r tukey.apa$full_result$Mount_Mica___Black_Mountain %>% str_replace('CI','IC')`), pero no así entre Mount Mica - Sebago Batholith (`r tukey.apa$full_result$Mount_Mica___Sebago_Batholith %>% str_replace('CI','IC')`), ni Sebago Batholith - Black Mountain (`r tukey.apa$full_result$Sebago_Batholith___Black_Mountain %>% str_replace('CI','IC')`).
 
 ```{r echo=FALSE}
 aov.stats = TeX(str_interp("$\\mathit{F}(${aov.eta$dfm},${aov.eta$dfe}) = ${apa(aov.eta$F,2)}, \\mathit{p} ${printp(aov.eta$p,add_equals = T)}, \\eta^2 = ${apa(aov.eta[[1]],2,F)}, IC_{${(1-a)*100}%} \\[${apa(aov.eta[[2]],2,F)}, ${apa(aov.eta[[3]],2,F)}\\]"))

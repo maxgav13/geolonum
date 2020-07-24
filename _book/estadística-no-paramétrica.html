@@ -1002,11 +1002,11 @@ Magnetita
 </tr>
 </tbody>
 </table>
-<p>La diferencia entre valores observados y esperados se puede visualizar a como se presenta en la Figura @ref(fig:minerales.gof)</p>
-<div class="figure" style="text-align: center">
-<img src="geolonum_files/figure-html/minerales.gof-1.png" alt="Gráfico de barras mostrando los valores observados y esperados para cada uno de los minerales." width="70%" />
+<p>La diferencia entre valores observados y esperados se puede visualizar a como se presenta en la Figura <a href="estadística-no-paramétrica.html#fig:minerales-gof">16.2</a></p>
+<div class="figure" style="text-align: center"><span id="fig:minerales-gof"></span>
+<img src="geolonum_files/figure-html/minerales-gof-1.png" alt="Gráfico de barras mostrando los valores observados y esperados para cada uno de los minerales." width="70%" />
 <p class="caption">
-(#fig:minerales.gof)Gráfico de barras mostrando los valores observados y esperados para cada uno de los minerales.
+Figura 16.2: Gráfico de barras mostrando los valores observados y esperados para cada uno de los minerales.
 </p>
 </div>
 <p>El tamaño del efecto se calcula conforma la Ecuación <a href="estadística-no-paramétrica.html#eq:phi">(16.5)</a>.</p>
@@ -1028,7 +1028,7 @@ chi.gof.mult.phi[<span class="dv">1</span><span class="op">:</span><span class="
 <div class="figure" style="text-align: center"><span id="fig:chi-gof-mult-stats"></span>
 <img src="geolonum_files/figure-html/chi-gof-mult-stats-1.png" alt="Gráfico de barra mostrando la proporción de los minerales, así como el resumen estadístico respectivo." width="90%" />
 <p class="caption">
-Figura 16.2: Gráfico de barra mostrando la proporción de los minerales, así como el resumen estadístico respectivo.
+Figura 16.3: Gráfico de barra mostrando la proporción de los minerales, así como el resumen estadístico respectivo.
 </p>
 </div>
 </div>
@@ -1175,11 +1175,11 @@ Total
 <li><em>Decisión</em>: No se rechaza <span class="math inline">\(H_0\)</span>. El valor-<em>p</em> cercano al <span class="math inline">\(\alpha\)</span> indica evidencia marginal en favor de no rechazar <span class="math inline">\(H_0\)</span>, por lo que sería bueno investigar más allá los resultados.</li>
 </ul></li>
 </ol>
-<p>Una forma de graficar tablas de contingencia es por medio de gráficos de mosaico, que es similar a un gráfico de barras donde todas las barras tienen la misma longitud y el área (relleno) representa la proporción de observaciones de la respectiva categoría, que a su vez representa las diferentes celdas de la tabla de contingencia. Para el caso del ejemplo se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-hom-mosaico">16.3</a>, donde se tiene la proporción de contaminación por localidad.</p>
+<p>Una forma de graficar tablas de contingencia es por medio de gráficos de mosaico, que es similar a un gráfico de barras donde todas las barras tienen la misma longitud y el área (relleno) representa la proporción de observaciones de la respectiva categoría, que a su vez representa las diferentes celdas de la tabla de contingencia. Para el caso del ejemplo se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-hom-mosaico">16.4</a>, donde se tiene la proporción de contaminación por localidad.</p>
 <div class="figure" style="text-align: center"><span id="fig:chi-hom-mosaico"></span>
 <img src="geolonum_files/figure-html/chi-hom-mosaico-1.png" alt="Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad." width="70%" />
 <p class="caption">
-Figura 16.3: Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad.
+Figura 16.4: Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad.
 </p>
 </div>
 <p>En <strong>R</strong> se tiene la función <code>chisq.test</code> para realizar estas pruebas. Para el caso de tablas de contingencia el único argumento que se necesita es la tabla, sin importar qué variable está en las columnas y qué variable está en las filas.</p>
@@ -1191,7 +1191,7 @@ chi.h</code></pre>
 ## 
 ## data:  pozos_tab
 ## X-squared = 5.2525, df = 2, p-value = 0.07235</code></pre>
-<p>La función <code>mosaic</code> del paquete <em>vcd</em> <span class="citation">(Meyer et al., <a href="#ref-R-vcd">2017</a>)</span> permite visualizar el gráfico de mosaico, mostrando el valor-<em>p</em> de la prueba, y rellenando las barras (celdas) con los residuales de Pearson. En caso de que haya diferencia significativa entre lo observado y lo esperado las celdas serán coloreadas respectivamente. El gráfico de mosaico de la prueba se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-hom-mosaico2">16.4</a>.</p>
+<p>La función <code>mosaic</code> del paquete <em>vcd</em> <span class="citation">(Meyer et al., <a href="#ref-R-vcd">2017</a>)</span> permite visualizar el gráfico de mosaico, mostrando el valor-<em>p</em> de la prueba, y rellenando las barras (celdas) con los residuales de Pearson. En caso de que haya diferencia significativa entre lo observado y lo esperado las celdas serán coloreadas respectivamente. El gráfico de mosaico de la prueba se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-hom-mosaico2">16.5</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">vcd<span class="op">::</span><span class="kw">mosaic</span>(<span class="kw">t</span>(pozos_tab),
             <span class="dt">direction =</span> <span class="st">&#39;v&#39;</span>,
             <span class="dt">shade =</span> T,
@@ -1201,7 +1201,7 @@ chi.h</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:chi-hom-mosaico2"></span>
 <img src="geolonum_files/figure-html/chi-hom-mosaico2-1.png" alt="Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad, mostrando el valor-*p* y los residuales." width="70%" />
 <p class="caption">
-Figura 16.4: Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad, mostrando el valor-<em>p</em> y los residuales.
+Figura 16.5: Gráfico de mosaico para el ejemplo de nivel de contaminación por localidad, mostrando el valor-<em>p</em> y los residuales.
 </p>
 </div>
 <p>Los residuales ajustados se pueden acceder a partir del objeto en que se guarda la prueba, como se muestra en el siguiente bloque. Estos residuales son los que realmente indican si hay una diferencia significativa entre lo observado y lo esperado (<span class="math inline">\(&gt; |1.96|\)</span> para <span class="math inline">\(\alpha=.05\)</span>), que para el caso del ejemplo ocurre en la localidad de Bowen, donde hay menos valores observados para lo contaminado y más valores observados para lo no contaminado.</p>
@@ -1291,7 +1291,7 @@ chi.h.v[<span class="dv">1</span><span class="op">:</span><span class="dv">3</sp
 <div class="figure" style="text-align: center"><span id="fig:chi-h-stats"></span>
 <img src="geolonum_files/figure-html/chi-h-stats-1.png" alt="Gráfico mostrando la relación entre nivel de contaminación y localidad, el porcentaje de cada celda, así como el resumen estadístico respectivo." width="90%" />
 <p class="caption">
-Figura 16.5: Gráfico mostrando la relación entre nivel de contaminación y localidad, el porcentaje de cada celda, así como el resumen estadístico respectivo.
+Figura 16.6: Gráfico mostrando la relación entre nivel de contaminación y localidad, el porcentaje de cada celda, así como el resumen estadístico respectivo.
 </p>
 </div>
 </div>
@@ -1498,11 +1498,11 @@ Total
 <li><em>Decisión</em>: Se rechaza <span class="math inline">\(H_0\)</span></li>
 </ul></li>
 </ol>
-<p>El gráfico de mosaico para el caso del ejemplo se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-ind-mosaico">16.6</a>, donde se tiene la proporción de redondez por distancia.</p>
+<p>El gráfico de mosaico para el caso del ejemplo se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-ind-mosaico">16.7</a>, donde se tiene la proporción de redondez por distancia.</p>
 <div class="figure" style="text-align: center"><span id="fig:chi-ind-mosaico"></span>
 <img src="geolonum_files/figure-html/chi-ind-mosaico-1.png" alt="Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos." width="70%" />
 <p class="caption">
-Figura 16.6: Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos.
+Figura 16.7: Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos.
 </p>
 </div>
 <p>En <strong>R</strong> se usa la función <code>chisq.test</code> para realizar estas pruebas, a como se mostró en la prueba de homogeneidad.</p>
@@ -1514,7 +1514,7 @@ chi.ind</code></pre>
 ## 
 ## data:  dist_red_tab
 ## X-squared = 109.7, df = 12, p-value &lt; 2.2e-16</code></pre>
-<p>El gráfico de mosaico de la prueba se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-ind-mosaico2">16.7</a>, donde se muestra que hay predominancia de clastos angulares a distancias cortas y de clastos redondeados a distancias largas, y hay pocos clastos angulares a distancias largas y redondeados a distancias cortas, que es de esperar. Los colores azules indican valores observados por encima de los valores esperados, mientras que los colores rojos indican valores observados por debajo de los valores esperados. Esta relación se puede ver de igual manera observando los residuales ajustados.</p>
+<p>El gráfico de mosaico de la prueba se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:chi-ind-mosaico2">16.8</a>, donde se muestra que hay predominancia de clastos angulares a distancias cortas y de clastos redondeados a distancias largas, y hay pocos clastos angulares a distancias largas y redondeados a distancias cortas, que es de esperar. Los colores azules indican valores observados por encima de los valores esperados, mientras que los colores rojos indican valores observados por debajo de los valores esperados. Esta relación se puede ver de igual manera observando los residuales ajustados.</p>
 <pre class="sourceCode r"><code class="sourceCode r">vcd<span class="op">::</span><span class="kw">mosaic</span>(<span class="kw">t</span>(dist_red_tab),
             <span class="dt">direction =</span> <span class="st">&#39;v&#39;</span>,
             <span class="dt">shade =</span> T,
@@ -1524,7 +1524,7 @@ chi.ind</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:chi-ind-mosaico2"></span>
 <img src="geolonum_files/figure-html/chi-ind-mosaico2-1.png" alt="Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos, mostrando el valor-*p* y los residuales." width="70%" />
 <p class="caption">
-Figura 16.7: Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos, mostrando el valor-<em>p</em> y los residuales.
+Figura 16.8: Gráfico de mosaico para el ejemplo de redondez contra distancia para diferentes clastos, mostrando el valor-<em>p</em> y los residuales.
 </p>
 </div>
 <pre class="sourceCode r"><code class="sourceCode r">chi.ind<span class="op">$</span>stdres</code></pre>
@@ -1673,7 +1673,7 @@ chi.ind.v[<span class="dv">1</span><span class="op">:</span><span class="dv">3</
 <div class="figure" style="text-align: center"><span id="fig:chi-ind-stats"></span>
 <img src="geolonum_files/figure-html/chi-ind-stats-1.png" alt="Gráfico mostrando la relación entre distancia de la fuente y redondez, el porcentaje de cada celda, así como el resumen estadístico respectivo." width="90%" />
 <p class="caption">
-Figura 16.8: Gráfico mostrando la relación entre distancia de la fuente y redondez, el porcentaje de cada celda, así como el resumen estadístico respectivo.
+Figura 16.9: Gráfico mostrando la relación entre distancia de la fuente y redondez, el porcentaje de cada celda, así como el resumen estadístico respectivo.
 </p>
 </div>
 </div>
@@ -1943,7 +1943,7 @@ wilcox.r.ci</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:wilcoxon-stats"></span>
 <img src="geolonum_files/figure-html/wilcoxon-stats-1.png" alt="Histograma del contenido de cuarzo, mostrando la media muestral (azul) y el valor a comparar (rojo), así como el resumen estadístico respectivo." width="90%" />
 <p class="caption">
-Figura 16.9: Histograma del contenido de cuarzo, mostrando la media muestral (azul) y el valor a comparar (rojo), así como el resumen estadístico respectivo.
+Figura 16.10: Histograma del contenido de cuarzo, mostrando la media muestral (azul) y el valor a comparar (rojo), así como el resumen estadístico respectivo.
 </p>
 </div>
 </div>
@@ -2355,7 +2355,7 @@ mwu.r.ci</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:mwu-stats"></span>
 <img src="geolonum_files/figure-html/mwu-stats-1.png" alt="Gráfico de caja mostrando el efecto de la capa sobre la longitud de los braquiópodos, así como el resumen estadístico respectivo." width="90%" />
 <p class="caption">
-Figura 16.10: Gráfico de caja mostrando el efecto de la capa sobre la longitud de los braquiópodos, así como el resumen estadístico respectivo.
+Figura 16.11: Gráfico de caja mostrando el efecto de la capa sobre la longitud de los braquiópodos, así como el resumen estadístico respectivo.
 </p>
 </div>
 </div>
@@ -2662,7 +2662,7 @@ dunn</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:kw-stats"></span>
 <img src="geolonum_files/figure-html/kw-stats-1.png" alt="Gráfico de caja mostrando el efecto de localidad sobre el contenido de MgO, la comparación significativa, así como el resumen estadístico respectivo." width="90%" />
 <p class="caption">
-Figura 16.11: Gráfico de caja mostrando el efecto de localidad sobre el contenido de MgO, la comparación significativa, así como el resumen estadístico respectivo.
+Figura 16.12: Gráfico de caja mostrando el efecto de localidad sobre el contenido de MgO, la comparación significativa, así como el resumen estadístico respectivo.
 </p>
 </div>
 </div>
@@ -3349,7 +3349,7 @@ spearman.ci</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:spearman-stats"></span>
 <img src="geolonum_files/figure-html/spearman-stats-1.png" alt="Gráfico de dispersión mostrando la relación entre tamaño y profundidad para los ostrácodos, así como el resumen estadístico respectivo." width="90%" />
 <p class="caption">
-Figura 16.12: Gráfico de dispersión mostrando la relación entre tamaño y profundidad para los ostrácodos, así como el resumen estadístico respectivo.
+Figura 16.13: Gráfico de dispersión mostrando la relación entre tamaño y profundidad para los ostrácodos, así como el resumen estadístico respectivo.
 </p>
 </div>
 <p>La correlación de Spearman:</p>
@@ -3513,18 +3513,18 @@ Muestra 5
 </tr>
 </tbody>
 </table>
-<p>Si se tiene una muestra representativa de una población en interés, se puede esperar que muestrear la muestra sería homólogo a muestrear la población. Al repetir este proceso un montón de veces (muestrear con reemplazamiento) se pueden construir distribuciones del estadístico de interés (estimación por medio de intervalos de confianza) o distribuciones asumiendo que <span class="math inline">\(H_0\)</span> es verdadera (pruebas de significación estadística). Esta técnica se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:infer-ci">16.13</a> para el caso de estimación por medio de intervalos de confianza.</p>
+<p>Si se tiene una muestra representativa de una población en interés, se puede esperar que muestrear la muestra sería homólogo a muestrear la población. Al repetir este proceso un montón de veces (muestrear con reemplazamiento) se pueden construir distribuciones del estadístico de interés (estimación por medio de intervalos de confianza) o distribuciones asumiendo que <span class="math inline">\(H_0\)</span> es verdadera (pruebas de significación estadística). Esta técnica se muestra en la Figura <a href="estadística-no-paramétrica.html#fig:infer-ci">16.14</a> para el caso de estimación por medio de intervalos de confianza.</p>
 <div class="figure" style="text-align: center"><span id="fig:infer-ci"></span>
 <img src="images/infer_ci.png" alt=" Proceso de bootstrap para estimar intervalos de confianza. Los nombres representan funciones del paquete *infer*, pero hacen referencia a los diferentes pasos en el proceso." width="70%" />
 <p class="caption">
-Figura 16.13:  Proceso de bootstrap para estimar intervalos de confianza. Los nombres representan funciones del paquete <em>infer</em>, pero hacen referencia a los diferentes pasos en el proceso.
+Figura 16.14:  Proceso de bootstrap para estimar intervalos de confianza. Los nombres representan funciones del paquete <em>infer</em>, pero hacen referencia a los diferentes pasos en el proceso.
 </p>
 </div>
 <p>Existen diferentes funciones y paquetes que permiten permiten utilizar esta técnica, dentro de ellos están: <em>boot</em> <span class="citation">(Canty &amp; Ripley, <a href="#ref-R-boot">2019</a>)</span>, <em>infer</em> <span class="citation">(Bray et al., <a href="#ref-R-infer">2019</a>)</span>, y <em>rsample</em> <span class="citation">(Kuhn et al., <a href="#ref-R-rsample">2019</a>)</span>. Los paquetes y funcionalidad de <em>boot</em> y <em>rsample</em> son más generales ya que permiten al usuario definir qué se quiere calcular (lo que permite mayor flexibilidad y control), mientras que <em>infer</em> ya viene con opciones predefinidas de las cuales escoger y simplemente aplicar (mayor facilidad para aplicar pero poco flexible). Los paquetes <em>infer</em> y <em>rsample</em> siguen la metodología del <em>tidyverse</em>, por lo que son más congruentes con la manera en que se han venido mostrando y aplicando los conceptos y análisis en este libro; de hecho ambos paquetes son parte del meta-paquete <em>tidymodels</em> <span class="citation">(Kuhn &amp; Wickham, <a href="#ref-R-tidymodels">2020</a>)</span> que permite aplicar técnicas de aprendizaje automático (machine learning) para diferentes problemas y con diferentes técnicas, de una manera uniforme y congruente.</p>
 <div id="infer" class="section level3">
 <h3><span class="header-section-number">16.6.1</span> <em>infer</em></h3>
 <p>En esta sección se introduce de manera general el funcionamiento del paquete <em>infer</em>; para un mejor entendimiento se recomienda revisar las viñetas del paquete, que cubren todos los posibles análisis que puede correr. Como se mencionó anteriormente este paquete viene con funciones y una metodología predeterminada, lo que lo hace amigable de aprender pero a la hora de querer tener más control no es posible.</p>
-<p>El flujo general se presentó en la Figura <a href="estadística-no-paramétrica.html#fig:infer-ci">16.13</a> y se resume a continuación:</p>
+<p>El flujo general se presentó en la Figura <a href="estadística-no-paramétrica.html#fig:infer-ci">16.14</a> y se resume a continuación:</p>
 <ul>
 <li><code>specifiy</code>: Se tiene que definir qué se quiere analizar, y dependiendo de ésto se especifica de diferentes formas.</li>
 <li><code>hypothesize</code>: Se define cuando se quiere simular la distribución que representa a <span class="math inline">\(H_0\)</span>, depende del tipo de prueba.</li>
@@ -3543,7 +3543,7 @@ Figura 16.13:  Proceso de bootstrap para estimar intervalos de confianza. Los no
 <li><code>generate</code>: Se generan 1000 replicas.</li>
 <li><code>calculate</code>: Lo que se quiere estimar es la diferencia de medias (<code>'diff in means'</code>), y por ser éste el caso es necesario definir el orden (<code>order</code>) de la diferencia, donde se realiza <code>primero - segundo</code>.</li>
 </ul>
-<p>Este proceso genera el remuestreo con el estadístico (<code>stat</code>) deseado. A partir de estos datos se puede: obtener el intervalo de confianza (<code>get_ci</code>), visualizar la distribución del estadístico (diferencia de medias) y sobreponerle el intervalo de confianza (Figura <a href="estadística-no-paramétrica.html#fig:braq-dif">16.14</a>).</p>
+<p>Este proceso genera el remuestreo con el estadístico (<code>stat</code>) deseado. A partir de estos datos se puede: obtener el intervalo de confianza (<code>get_ci</code>), visualizar la distribución del estadístico (diferencia de medias) y sobreponerle el intervalo de confianza (Figura <a href="estadística-no-paramétrica.html#fig:braq-dif">16.15</a>).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">101</span>)
 a =<span class="st"> </span><span class="fl">.05</span>
 
@@ -3585,7 +3585,7 @@ boots_ci</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:braq-dif"></span>
 <img src="geolonum_files/figure-html/braq-dif-1.png" alt="Distibución de diferencia de medias para la longitud de braquiópodos en dos capas diferentes." width="90%" />
 <p class="caption">
-Figura 16.14: Distibución de diferencia de medias para la longitud de braquiópodos en dos capas diferentes.
+Figura 16.15: Distibución de diferencia de medias para la longitud de braquiópodos en dos capas diferentes.
 </p>
 </div>
 <blockquote>
@@ -3603,7 +3603,7 @@ Figura 16.14: Distibución de diferencia de medias para la longitud de braquióp
 <li><code>generate</code>: Se generan 1000 replicas.</li>
 <li><code>calculate</code>: Lo que se quiere estimar es la distribución de <span class="math inline">\(\chi^2\)</span> (<code>'Chisq'</code>).</li>
 </ul>
-<p>Este proceso genera el remuestreo con el estadístico (<code>stat</code>) deseado. A partir de estos datos se puede: obtener el valor-<em>p</em> (<code>get_p_value</code>), visualizar la distribución del estadístico (<span class="math inline">\(\chi^2\)</span>) y sobreponerle el área de rechazo a partir del valor-<em>p</em> (Figura <a href="estadística-no-paramétrica.html#fig:pozos-chi">16.15</a>).</p>
+<p>Este proceso genera el remuestreo con el estadístico (<code>stat</code>) deseado. A partir de estos datos se puede: obtener el valor-<em>p</em> (<code>get_p_value</code>), visualizar la distribución del estadístico (<span class="math inline">\(\chi^2\)</span>) y sobreponerle el área de rechazo a partir del valor-<em>p</em> (Figura <a href="estadística-no-paramétrica.html#fig:pozos-chi">16.16</a>).</p>
 <pre class="sourceCode r"><code class="sourceCode r">obs_chisq &lt;-<span class="st"> </span>pozos <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">specify</span>(Contaminado <span class="op">~</span><span class="st"> </span>Localidad) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;Chisq&quot;</span>)
@@ -3631,7 +3631,7 @@ chisq_null <span class="op">%&gt;%</span><span class="st"> </span>
 <div class="figure" style="text-align: center"><span id="fig:pozos-chi"></span>
 <img src="geolonum_files/figure-html/pozos-chi-1.png" alt="Distibución de $\chi^2$ para el nivel de contaminación por localidad." width="90%" />
 <p class="caption">
-Figura 16.15: Distibución de <span class="math inline">\(\chi^2\)</span> para el nivel de contaminación por localidad.
+Figura 16.16: Distibución de <span class="math inline">\(\chi^2\)</span> para el nivel de contaminación por localidad.
 </p>
 </div>
 <blockquote>
@@ -3702,7 +3702,7 @@ m</code></pre>
 ##  9 &lt;split [8/2]&gt; Bootstrap0009  20.8  0.237
 ## 10 &lt;split [8/2]&gt; Bootstrap0010  20.5  0.189
 ## # … with 990 more rows</code></pre>
-<p>Una vez generado y actualizado el <em>tibble</em> se calculan estadísticas para las variables generadas (<code>q1</code> y <code>q3</code> representan los límites inferior y superior del intervalo de confianza), y se visualizan las mismas por medio de histogramas mostrando el intervalo de confianza (Figuras <a href="estadística-no-paramétrica.html#fig:Q-avg">16.16</a> y <a href="estadística-no-paramétrica.html#fig:Q-d">16.17</a>).</p>
+<p>Una vez generado y actualizado el <em>tibble</em> se calculan estadísticas para las variables generadas (<code>q1</code> y <code>q3</code> representan los límites inferior y superior del intervalo de confianza), y se visualizan las mismas por medio de histogramas mostrando el intervalo de confianza (Figuras <a href="estadística-no-paramétrica.html#fig:Q-avg">16.17</a> y <a href="estadística-no-paramétrica.html#fig:Q-d">16.18</a>).</p>
 <pre class="sourceCode r"><code class="sourceCode r">m.s =<span class="st"> </span>m <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarise_if</span>(is.numeric,
                <span class="dt">.funs =</span> <span class="kw">list</span>(<span class="op">~</span><span class="kw">mean</span>(.),
@@ -3740,7 +3740,7 @@ m.s <span class="op">%&gt;%</span><span class="st"> </span>
 <div class="figure" style="text-align: center"><span id="fig:Q-avg"></span>
 <img src="geolonum_files/figure-html/Q-avg-1.png" alt="Distibución de medias para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza." width="90%" />
 <p class="caption">
-Figura 16.16: Distibución de medias para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza.
+Figura 16.17: Distibución de medias para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza.
 </p>
 </div>
 <pre class="sourceCode r"><code class="sourceCode r">myvar =<span class="st"> &#39;d&#39;</span> <span class="co"># variable a graficar: avg, d</span>
@@ -3755,7 +3755,7 @@ Figura 16.16: Distibución de medias para el contenido de cuarzo de una roca íg
 <div class="figure" style="text-align: center"><span id="fig:Q-d"></span>
 <img src="geolonum_files/figure-html/Q-d-1.png" alt="Distibución de tamaño del efecto ($d$) para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza." width="90%" />
 <p class="caption">
-Figura 16.17: Distibución de tamaño del efecto (<span class="math inline">\(d\)</span>) para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza.
+Figura 16.18: Distibución de tamaño del efecto (<span class="math inline">\(d\)</span>) para el contenido de cuarzo de una roca ígnea, mostrando la media y el intervalo de confianza.
 </p>
 </div>
 <blockquote>

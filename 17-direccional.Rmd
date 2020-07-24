@@ -71,13 +71,13 @@ Ejemplos de estos tipos de datos serían:
     * Pliegues
 - Lineamientos regionales (no-direccionales)
 
-Tambén se tiene que hacer distinción entre datos circulares y esféricos, donde la diferencia es que circulares se refieren a datos en 2-dimensiones (solo dirección), mientras que esféricos se refierena a datos en 3-dimensiones (dirección e inclinacción). Una característica de los datos direccionales es la naturaleza del espacio en que se trabajan, que para direcciones va de 0° a 360° y para inclinaciones va de 0° a 90°. Esta particularidad hace que se tengan que tratar de manera especial, ajustando las técnicas convencionales a este tipo de datos.
+También se tiene que hacer distinción entre datos circulares y esféricos, donde la diferencia es que circulares se refieren a datos en 2-dimensiones (solo dirección), mientras que esféricos se refieren a datos en 3-dimensiones (dirección e inclinación). Una característica de los datos direccionales es la naturaleza del espacio en que se trabajan, que para direcciones va de 0° a 360° y para inclinaciones va de 0° a 90°. Esta particularidad hace que se tengan que tratar de manera especial, ajustando las técnicas convencionales a este tipo de datos.
 
-Cabe mencionar que hay softwares libres multi-plataforma que brindan mucha de la funcioanlidad que se va a presentar en este capítulo, y representan buenas opciones y herramientas a tener en cuenta. Dentro de estos softwares están: [Stereonet](http://www.geo.cornell.edu/geology/faculty/RWA/programs/stereonet.html), [Orient](http://www.frederickvollmer.com/orient/), y [OpenStereo](http://igc.usp.br/openstereo/).
+Cabe mencionar que hay programas libres multi-plataforma que brindan mucha de la funcionalidad que se va a presentar en este capítulo, y representan buenas opciones y herramientas a tener en cuenta. Dentro de estos programas están: [Stereonet](http://www.geo.cornell.edu/geology/faculty/RWA/programs/stereonet.html), [Orient](http://www.frederickvollmer.com/orient/), y [OpenStereo](http://igc.usp.br/openstereo/).
 
 ## Representación gráfica
 
-Así como para visualziar una variable se tiene el histograma, para datos direccionales se tiene el *diagrama de rosa*, que es simplemente un histograma e coordenadas polares, como se muestra en la Figura \@ref(fig:rose-diags-circ), donde la rosa para datos direccionales se denomina rosa asimétrica, y para datos no-direccionales se denomina rosa simétrica.
+Así como para visualizar una variable se tiene el histograma, para datos direccionales se tiene el *diagrama de rosa*, que es simplemente un histograma e coordenadas polares, como se muestra en la Figura \@ref(fig:rose-diags-circ), donde la rosa para datos direccionales se denomina rosa asimétrica, y para datos no-direccionales se denomina rosa simétrica.
 
 (ref:rose-diags-circ) Diagramas de rosa para el caso de datos direccionales (**A** - rosa asimétrica) y no-direccionales (**B** - rosa simétrica).
 
@@ -104,7 +104,7 @@ Se describen métodos de análisis para datos circulares (2D), donde se tiene po
 
 Cuando se tiene un conjunto de datos direccionales ($\theta_1,\theta_2,\theta_3,\dots,\theta_N$), se pueden obtener estadísticas univariables que describen a la muestra.
 
-Para obtener la dirección media y la longitd de la resultante, es necesario calcular las componentes mostradas en las Ecuaciones \@ref(eq:xr-circ) y \@ref(eq:yr-circ).
+Para obtener la dirección media y la longitud de la resultante, es necesario calcular las componentes mostradas en las Ecuaciones \@ref(eq:xr-circ) y \@ref(eq:yr-circ).
 
 \begin{equation}
   x_r = \sum_{i=1}^N \sin\theta_i
@@ -123,7 +123,7 @@ La dirección media ($\bar{\theta}$) y longitud de la resultante ($R$) se obtien
   (\#eq:dir-media-circ)
 \end{equation}
 
-Dada la naturaleza cíclica de los datos (0-360) el valor de la dirección media requiere de una correción que va a estar en función del signo de las componentes, y se detalla en la Tabla \@ref(tab:dir-media-ajuste-circ).
+Dada la naturaleza cíclica de los datos (0-360) el valor de la dirección media requiere de una corrección que va a estar en función del signo de las componentes, y se detalla en la Tabla \@ref(tab:dir-media-ajuste-circ).
 
 ```{r dir-media-ajuste-circ, echo=FALSE}
 tibble(xr = c('Positivo','Negativo','Negativo'),
@@ -254,7 +254,7 @@ rose_diag_2D(carolina, width = 20, dir = 0, conf.level = 1-a)
 
 ### Estadística inferencial
 
-Así como para datos convencionales ($-∞,∞$) se tenía la distribuió normal (o $t$) para hacer inferencias, se ocupa una distribución apropiada para datos circulares. Esta distribución es la *von Mises* (Figura \@ref(fig:von-mises)) y depende de 2 parámetros: dirección media ($\theta$) y el parámetro de concentración ($\kappa$). Esta distribución es unimodal y semétrica alrededor de $\theta$, y conforme $\kappa$ incrementa es más probable que los datos tengan una dirección preferencial cercana $\theta$. De manera general se relaciona $\kappa$ con $\bar{R}$.
+Así como para datos convencionales ($-∞,∞$) se tenía la distribución normal (o $t$) para hacer inferencias, se ocupa una distribución apropiada para datos circulares. Esta distribución es la *von Mises* (Figura \@ref(fig:von-mises)) y depende de 2 parámetros: dirección media ($\theta$) y el parámetro de concentración ($\kappa$). Esta distribución es unimodal y simétrica alrededor de $\theta$, y conforme $\kappa$ incrementa es más probable que los datos tengan una dirección preferencial cercana $\theta$. De manera general se relaciona $\kappa$ con $\bar{R}$.
 
 (ref:von-mises) Distribución *von Mises* centrada en $\theta=0$ y con diferentes parámetros de concentración $\kappa$. Conforme incrementa $\kappa$ más probabilidad de estar cerca de $\theta$. $\kappa=0$ es igual a una distribución uniforme. Tomado de @trauth2015.
 
@@ -269,7 +269,7 @@ Esta prueba, conocida también como la prueba de Rayleigh, es para determinar si
 - $H_0: \kappa = 0 \to$ No hay dirección preferencial
 - $H_1: \kappa \neq 0 \to$ Hay dirección preferencial
 
-Como se basa en la relación entre $\kappa$ y $\bar{R}$, lo que se hace es determinar $\bar{R}$ y compararlo con valores críticos ya establecidos en función del tamaño de la muestra $N$, y si $\bar{R} > \bar{R}_{crit}$ entonces e rechazaría $H_0$. Los valores críticos se encuentran en tablas en los diferentes textos. Para el caso de datos no-direccionales no es necesario realizar ninguna correción más que la inicial para encontrar $\bar{R}$.
+Como se basa en la relación entre $\kappa$ y $\bar{R}$, lo que se hace es determinar $\bar{R}$ y compararlo con valores críticos ya establecidos en función del tamaño de la muestra $N$, y si $\bar{R} > \bar{R}_{crit}$ entonces e rechazaría $H_0$. Los valores críticos se encuentran en tablas en los diferentes textos. Para el caso de datos no-direccionales no es necesario realizar ninguna corrección más que la inicial para encontrar $\bar{R}$.
 
 Para el caso del ejemplo que se venía trabajando en la parte descriptiva, se tiene $\bar{R}_{crit}=\bar{R}_{40,.05}=.273$ y se tenía que $\bar{R}=.89$, con lo que $\bar{R} > \bar{R}_{crit}$ y se rechaza la hipótesis nula de que no hay dirección preferencial, y en este caso corresponde con $\bar{\theta}=223.22^{\circ}$.
 
@@ -294,7 +294,7 @@ Las hipótesis nula y alterna serían las siguientes:
 - $H_0: \bar{\theta} = \theta_0$
 - $H_1: \bar{\theta} \neq \theta_0$
 
-El cono de confianza, Ecuación \@ref(eq:cono-conf-circ), se basa en el error estándar de la dirección media, Ecuación \@ref(eq:se-theta-circ), y por ende toma en cuenta el tamaño de la muestra y su dispersión. El error estándar resulta en **radianes**, por lo que hay que pasarlo a grados multplicando por 57.2956. El parámetro de concentración $\kappa$ se puede obtener conforme la Ecuación \@ref(eq:kappa-circ).
+El cono de confianza, Ecuación \@ref(eq:cono-conf-circ), se basa en el error estándar de la dirección media, Ecuación \@ref(eq:se-theta-circ), y por ende toma en cuenta el tamaño de la muestra y su dispersión. El error estándar resulta en **radianes**, por lo que hay que pasarlo a grados multiplicando por 57.2956. El parámetro de concentración $\kappa$ se puede obtener conforme la Ecuación \@ref(eq:kappa-circ).
 
 \begin{equation}
   \kappa = 
@@ -387,7 +387,7 @@ dir_2sample_test_2D(theta0, theta1,
                     dir = 1, conf.level = 1-a)
 ```
 
-> Conclusión: Las muestras difieren singificativamente en su dirección, $F(1,78) = 12.26$, $p `r printp(.000768,add_equals = T)`$
+> Conclusión: Las muestras difieren significativamente en su dirección, $F(1,78) = 12.26$, $p `r printp(.000768,add_equals = T)`$
 
 Otra forma de realizar la prueba sería obtener los conos de confianza para ambas muestras y ver si la dirección media de una cae dentro del cono de la otra.
 
@@ -396,7 +396,7 @@ dir_stats_2D(theta0, dir = 1, conf.level = 1-a)
 dir_stats_2D(theta1, dir = 1, conf.level = 1-a)
 ```
 
-Lo anterior se puede visualizar en una red esterográfica, que por tratarse de datos circulares (2D) se usa una inclinación de 0. La función `stereo_mean` de *GMisc* permite graficar la dirección media junto con el cono de confianza en la red esterográfica, donde la Figura \@ref(fig:stereo-2-circ) muestra los datos del ejemplo.
+Lo anterior se puede visualizar en una red estereográfica, que por tratarse de datos circulares (2D) se usa una inclinación de 0. La función `stereo_mean` de *GMisc* permite graficar la dirección media junto con el cono de confianza en la red estereográfica, donde la Figura \@ref(fig:stereo-2-circ) muestra los datos del ejemplo.
 
 ```{r stereo-2-circ, out.width='100%', fig.cap='Red estereográfica mostrando la dirección media y cono de confianza para los datos del ejemplo de dos muestras de datos circulares. En rojo los datos de la muestra 1 y en azul los datos de la muestra 2.'}
 stereo_mean(theta0,0)
@@ -414,7 +414,7 @@ Para datos esféricos se van a tener dos vectores de datos:
 - Ángulo de inclinación: $\theta_1,\theta_2,\theta_3,\dots,\theta_N$, 
 - Dirección de inclinación: $\phi_1,\phi_2,\phi_3,\dots,\phi_N$
 
-Para obtener la dirección media y la longitd de la resultante, es necesario calcular las componentes mostradas en las Ecuaciones \@ref(eq:xr-esf), \@ref(eq:yr-esf), y \@ref(eq:zr-esf).
+Para obtener la dirección media y la longitud de la resultante, es necesario calcular las componentes mostradas en las Ecuaciones \@ref(eq:xr-esf), \@ref(eq:yr-esf), y \@ref(eq:zr-esf).
 
 \begin{equation}
   x_r = \sum_{i=1}^N \cos\theta_i \cos\phi_i
@@ -519,7 +519,7 @@ rose_diag_3D(az = direcciones, dip = inclinaciones,
 
 ### Estadística inferencial
 
-Similar a los datos circulares es necesaria una distribución para poder realizar inferencias, y para el caso de datos esféricos la más común es la Bingham. Esta distribución depende de tres parámetros: dirección media ($\bar{\phi}$), inclinación media ($\bar{\theta}$), y parámetro de concentración ($\kappa$). El parámetro de concentración presenta el mismo efecto y comportamiento que el caso de dato circulares, digase que se relaciona con $\bar{R}$ y conforme incrementa es más probable que los datos tengan una dirección preferencial.
+Similar a los datos circulares es necesaria una distribución para poder realizar inferencias, y para el caso de datos esféricos la más común es la Bingham. Esta distribución depende de tres parámetros: dirección media ($\bar{\phi}$), inclinación media ($\bar{\theta}$), y parámetro de concentración ($\kappa$). El parámetro de concentración presenta el mismo efecto y comportamiento que el caso de dato circulares, dígase que se relaciona con $\bar{R}$ y conforme incrementa es más probable que los datos tengan una dirección preferencial.
 
 #### Prueba de aleatoriedad
 
@@ -549,7 +549,7 @@ Las hipótesis nula y alterna serían las siguientes:
 - $H_0: \bar{\phi} = \phi_0$
 - $H_1: \bar{\phi} \neq \phi_0$
 
-El cono de confianza, Ecuación \@ref(eq:cono-conf-esf), está en función del error estándar, Ecuacuón \@ref(eq:se-esf), que se basa en la resultante y el nivel de significancia deseado. El resultado del error estándar está en **radianes**, por lo que hay que pasarlo a grados.
+El cono de confianza, Ecuación \@ref(eq:cono-conf-esf), está en función del error estándar, Ecuación \@ref(eq:se-esf), que se basa en la resultante y el nivel de significancia deseado. El resultado del error estándar está en **radianes**, por lo que hay que pasarlo a grados.
 
 \begin{equation}
   s_{1-\alpha} = \arccos \left( 1 - \frac{N-R}{R} \left[ \left( \frac{1}{\alpha} \right)^{\frac{1}{N-1}} - 1\right] \right)
@@ -603,7 +603,7 @@ Analizando la igualdad de varianzas se tiene:
   F_{crit} = 2.98
 \end{equation}
 
-Con este análisis se obtiene que las varianzas no son iguales, por lo que técnicamente no sería conveneinte realizar la prueba de igualdad de direcciones medias, pero se realiza para efectos demostrativos.
+Con este análisis se obtiene que las varianzas no son iguales, por lo que técnicamente no sería conveniente realizar la prueba de igualdad de direcciones medias, pero se realiza para efectos demostrativos.
 
 La función `dir_2sample_test_3D` de *GMisc* realiza esta prueba, brindando $F$, $F_{crit}$, valor-*p*, y una interpretación.
 
@@ -613,11 +613,11 @@ i2 = c(40.4,31.4,25.9,26.2,27,31.5)
 dir_2sample_test_3D(direcciones, inclinaciones, d2, i2, conf.level = 1-a)
 ```
 
-> Conclusión: Las muestras presentan diferentes varianzas, $F(10,10) = 40.4$, $p `r printp(9.5e-7,add_equals = T)`$, y difieren singificativamente en su dirección, $F(2,20) = 12.59$, $p `r printp(.000289,add_equals = T)`$
+> Conclusión: Las muestras presentan diferentes varianzas, $F(10,10) = 40.4$, $p `r printp(9.5e-7,add_equals = T)`$, y difieren significativamente en su dirección, $F(2,20) = 12.59$, $p `r printp(.000289,add_equals = T)`$
 
 Otra forma de realizar la prueba sería obtener los conos de confianza para ambas muestras y ver si la dirección media de una cae dentro del cono de la otra.
 
-Lo anterior es más fácil visualizarlo en una red esterográfica. La función `stereo_mean` de *GMisc* grafica la dirección media junto con el cono de confianza en la red esterográfica, donde la Figura \@ref(fig:stereo-2-esf) muestra los datos del ejemplo.
+Lo anterior es más fácil visualizarlo en una red estereográfica. La función `stereo_mean` de *GMisc* grafica la dirección media junto con el cono de confianza en la red estereográfica, donde la Figura \@ref(fig:stereo-2-esf) muestra los datos del ejemplo.
 
 ```{r stereo-2-esf, out.width='100%', fig.cap='Red estereográfica mostrando la dirección media y cono de confianza para los datos del ejemplo de dos muestras de datos esféricos. En rojo los datos de la muestra 1 y en azul los datos de la muestra 2.'}
 stereo_mean(direcciones,inclinaciones)
