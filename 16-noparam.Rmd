@@ -440,7 +440,7 @@ pozos %>%
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: nivel de contaminación en las localidades
     - Distribución: $\chi^2$
-    - Prueba: $chi^2$ de homogeneidad, ya que se tienen dos variables nominales, y se controló la cantidad de observaciones por una de ellas (en este caso localidad)
+    - Prueba: $\chi^2$ de homogeneidad, ya que se tienen dos variables nominales, y se controló la cantidad de observaciones por una de ellas (en este caso localidad)
 2. Establecer las hipótesis nula y alterna:
     - $H_0:$ La proporción de pozos contaminados o no *es la misma* para las diferentes localidades
     - $H_1:$ La proporción de pozos contaminados o no *es diferente* para las diferentes localidades
@@ -603,7 +603,7 @@ dist_red %>%
 1. Identificar la población, distribución, y la prueba apropiada:
     - Población: redondez de clasto de acuerdo a distancia de la fuente
     - Distribución: $\chi^2$
-    - Prueba: $chi^2$ de asociación, ya que se tienen dos variables nominales (se podrían tratar como ordinales), y se controló la cantidad total de observaciones
+    - Prueba: $\chi^2$ de asociación, ya que se tienen dos variables nominales (se podrían tratar como ordinales), y se controló la cantidad total de observaciones
 2. Establecer las hipótesis nula y alterna:
     - $H_0:$ No hay relación entre la redondez de los clastos y la distancia de la fuente, o la redondez de los clastos es independiente de la distancia de la fuente
     - $H_1:$ La redondez de los clastos depende (está en relacionado) de (con) la distancia de la fuente

@@ -24,7 +24,7 @@
 <meta name="author" content="Maximiliano Garnier Villarreal" />
 
 
-<meta name="date" content="2020-07-24" />
+<meta name="date" content="2020-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -470,7 +470,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.4.2" data-path="estadística-direccional.html"><a href="estadística-direccional.html#estadística-inferencial-1"><i class="fa fa-check"></i><b>17.4.2</b> Estadística inferencial</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a></li>
+<li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a><ul>
+<li class="chapter" data-level="18.1" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#secuencias-intro"><i class="fa fa-check"></i><b>18.1</b> Introducción</a></li>
+<li class="chapter" data-level="18.2" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#secuencias-eventos"><i class="fa fa-check"></i><b>18.2</b> Eventos</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#prueba-tend-int"><i class="fa fa-check"></i><b>18.2.1</b> Prueba de tendencia de intervalos</a></li>
+<li class="chapter" data-level="18.2.2" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#prueba-runs"><i class="fa fa-check"></i><b>18.2.2</b> Prueba de corridas (rachas)</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#secuencias-series"><i class="fa fa-check"></i><b>18.3</b> Series</a><ul>
+<li class="chapter" data-level="18.3.1" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#series-tratamiento"><i class="fa fa-check"></i><b>18.3.1</b> Tratamiento de datos</a></li>
+<li class="chapter" data-level="18.3.2" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#series-ac"><i class="fa fa-check"></i><b>18.3.2</b> Auto-correlación</a></li>
+<li class="chapter" data-level="18.3.3" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#series-cc"><i class="fa fa-check"></i><b>18.3.3</b> Correlación-cruzada</a></li>
+<li class="chapter" data-level="18.3.4" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#series-ts"><i class="fa fa-check"></i><b>18.3.4</b> Objetos de serie</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="19" data-path="geoestadística.html"><a href="geoestadística.html"><i class="fa fa-check"></i><b>19</b> Geoestadística</a></li>
 <li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
 <li class="divider"></li>
@@ -495,7 +507,894 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="secuencias-de-datos" class="section level1">
 <h1><span class="header-section-number">Capítulo 18</span> Secuencias de Datos</h1>
+<div id="secuencias-intro" class="section level2">
+<h2><span class="header-section-number">18.1</span> Introducción</h2>
+<p>En geología es común recolectar datos en función del tiempo o espacio (proxy para el tiempo), donde los datos pueden presentarse de forma continua (equidistantes, mediciones a intervalos definidos) o simplemente cuando se observa cierto fenómeno o evento. Estos datos, en cualquiera de las dos formas, se consideran como secuencias de datos, donde una variable es la posición (tiempo o espacio) y la otra variable (interés) es la observación en dicha posición. Ejemplos de estos datos sería: registro de una perforación, secuencia estratigráfica, temperatura, etc.</p>
+<p>Dentro de las preguntas que se pueden responder por medio del análisis de secuencias están (en función del tipo de secuencia):</p>
+<ul>
+<li>Los datos son aleatorios o presentan una tendencia o patrón?</li>
+<li>Si hay una tendencia, qué forma tiene?</li>
+<li>Hay periodicidad o ciclos en los datos? Se puede medir?</li>
+<li>Se pueden hacer estimaciones o predicciones a partir de los datos?</li>
+</ul>
+<p>Los métodos y técnicas de análisis que se van a presentar y explicar en este capítulo se basan en capítulos de <span class="citation">Davis (<a href="#ref-davis2002">2002</a>)</span>, <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span>, <span class="citation">Borradaile (<a href="#ref-borradaile2003">2003</a>)</span>, y <span class="citation">McKillup &amp; Darby Dyar (<a href="#ref-mckillup2010">2010</a>)</span>.</p>
+</div>
+<div id="secuencias-eventos" class="section level2">
+<h2><span class="header-section-number">18.2</span> Eventos</h2>
+<p>Una serie de eventos no es más que una secuencia de intervalos entre ocurrencias, o una longitud acumulada de tiempo (espacio) sobre el cual ocurren los eventos, se registra cuando/donde ocurre el evento. <strong>Se pueden considerar como observaciones discretas a lo largo de una secuencia</strong>. Estos eventos son distinguibles por cuándo ocurren en el tiempo, se consideran instantáneos, y son tan infrecuentes que dos eventos no ocurren en el mismo intervalo de tiempo.</p>
+<div id="prueba-tend-int" class="section level3">
+<h3><span class="header-section-number">18.2.1</span> Prueba de tendencia de intervalos</h3>
+<p>Esta prueba se usa cuando se desea cuantificar si los intervalos entre eventos (ocurrencia de los eventos) cambian a lo largo de la secuencia.</p>
+<p>Para esta prueba se usa la correlación de Spearman (<a href="estadística-no-paramétrica.html#prueba-spearman">16.5.4</a>), y las hipótesis serían las siguientes:</p>
+<ul>
+<li><span class="math inline">\(H_0: \rho_s = 0 \to\)</span> No hay tendencia en la longitud de los intervalos</li>
+<li><span class="math inline">\(H_1: \rho_s \neq 0 \to\)</span> Hay una tendencia en la longitud de los intervalos de acortarse o alargarse.</li>
+</ul>
+<p>La ecuación para la correlación de Spearman se modifica conforme la Ecuación <a href="secuencias-de-datos.html#eq:spearman-intervalos">(18.1)</a>, donde <span class="math inline">\(i\)</span> es el número de intervalo, <span class="math inline">\(h_i\)</span> es la longitud del intervalo, y <span class="math inline">\(N\)</span> es el total de intervalos o total de eventos menos 1.</p>
+<p><span class="math display" id="eq:spearman-intervalos">\[\begin{equation}
+  r_{s} = 1 - \frac{6\sum_i^N[i-R(h_i)]^2}{N(N^2-1)}
+  \tag{18.1}
+\end{equation}\]</span></p>
+<p>Esta prueba se demuestra con un ejemplo de <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span>, donde se tiene una secuencia de 45 m de carbonatos en la cual se observaron horizontes de toba a las siguientes distancias de la base: 0.5, 2.3, 3.2, 4.2, 4.9, 7, 11.4, 12.7, 14.6, 16, 21.5, 22.5, 25.8, 30.3, 31.9, 36.2, 42.8. Presenta la secuencia una tendencia? Los datos se muestran en la Tabla <a href="secuencias-de-datos.html#tab:toba-int">18.1</a>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">toba =<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">2.3</span>, <span class="fl">3.2</span>, <span class="fl">4.2</span>, <span class="fl">4.9</span>, <span class="dv">7</span>, <span class="fl">11.4</span>, <span class="fl">12.7</span>, <span class="fl">14.6</span>, 
+         <span class="dv">16</span>, <span class="fl">21.5</span>, <span class="fl">22.5</span>, <span class="fl">25.8</span>, <span class="fl">30.3</span>, <span class="fl">31.9</span>, <span class="fl">36.2</span>, <span class="fl">42.8</span>)
+Toba =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">length</span>(toba)<span class="op">-</span><span class="dv">1</span>),
+              <span class="dt">h =</span> <span class="kw">diff</span>(toba)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Rh =</span> <span class="kw">rank</span>(h), 
+         <span class="dt">Dif =</span> (i<span class="op">-</span>Rh)<span class="op">^</span><span class="dv">2</span>)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:toba-int">Tabla 18.1: </span>Intervalos de los horizontes de toba
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Número (i)
+</th>
+<th style="text-align:center;">
+Intervalo (h)
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(R(h_{i})\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\((i-R(h_{i}))^2\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+1.8
+</td>
+<td style="text-align:center;">
+8.0
+</td>
+<td style="text-align:center;">
+49.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+0.9
+</td>
+<td style="text-align:center;">
+2.0
+</td>
+<td style="text-align:center;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+<td style="text-align:center;">
+0.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+0.7
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+9.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2.1
+</td>
+<td style="text-align:center;">
+10.0
+</td>
+<td style="text-align:center;">
+25.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+4.4
+</td>
+<td style="text-align:center;">
+13.0
+</td>
+<td style="text-align:center;">
+49.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+7
+</td>
+<td style="text-align:center;">
+1.3
+</td>
+<td style="text-align:center;">
+5.0
+</td>
+<td style="text-align:center;">
+4.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+1.9
+</td>
+<td style="text-align:center;">
+9.0
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+1.4
+</td>
+<td style="text-align:center;">
+6.0
+</td>
+<td style="text-align:center;">
+9.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+5.5
+</td>
+<td style="text-align:center;">
+15.0
+</td>
+<td style="text-align:center;">
+25.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+1.0
+</td>
+<td style="text-align:center;">
+3.5
+</td>
+<td style="text-align:center;">
+56.25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+3.3
+</td>
+<td style="text-align:center;">
+11.0
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+13
+</td>
+<td style="text-align:center;">
+4.5
+</td>
+<td style="text-align:center;">
+14.0
+</td>
+<td style="text-align:center;">
+1.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+1.6
+</td>
+<td style="text-align:center;">
+7.0
+</td>
+<td style="text-align:center;">
+49.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+15
+</td>
+<td style="text-align:center;">
+4.3
+</td>
+<td style="text-align:center;">
+12.0
+</td>
+<td style="text-align:center;">
+9.00
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+6.6
+</td>
+<td style="text-align:center;">
+16.0
+</td>
+<td style="text-align:center;">
+0.00
+</td>
+</tr>
+</tbody>
+</table>
+<p>La suma de las diferencias al cuadrado resulta en:</p>
+<pre class="sourceCode r"><code class="sourceCode r">Toba <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Suma =</span> <span class="kw">sum</span>(Dif))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##    Suma
+##   &lt;dbl&gt;
+## 1  288.</code></pre>
+<p><span class="math display">\[\begin{equation}
+  r_{s} = 1 - \frac{6\sum_i^N[i-R(h_i)]^2}{N(N^2-1)}\\
+  r_{s} = 1 - \frac{6 \cdot 287.5}{16(16^2-1)} = .577
+\end{equation}\]</span></p>
+<p>En <strong>R</strong> se tiene la función <code>cor.test</code>, donde para obtener más información (prueba <span class="math inline">\(t\)</span>, intervalos de confianza) se puede realizar la correlación de Pearson sobre los datos ranqueados. Otra función que brinda el coeficiente de correlación y su intervalo de confianza es <code>SpearmanRho</code> del paquete <em>DescTools</em> <span class="citation">(Signorell, <a href="#ref-R-DescTools">2020</a>)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="fl">.05</span>
+tend.spearman =<span class="st"> </span><span class="kw">cor.test</span>(<span class="op">~</span>i<span class="op">+</span>Rh,Toba,<span class="dt">method=</span><span class="st">&#39;pearson&#39;</span>,<span class="dt">conf.level=</span><span class="dv">1</span><span class="op">-</span>a)
+tend.spearman</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  i and Rh
+## t = 2.6426, df = 14, p-value = 0.01931
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.1137061 0.8340788
+## sample estimates:
+##       cor 
+## 0.5768949</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(Toba,<span class="kw">SpearmanRho</span>(i,Rh,<span class="dt">conf.level =</span> <span class="dv">1</span><span class="op">-</span>a))</code></pre>
+<pre><code>##       rho    lwr.ci    upr.ci 
+## 0.5768949 0.1137061 0.8340788</code></pre>
+<p>La relación se puede visualizar por medio de un gráfico de dispersión, que para el caso del ejemplo se muestra en la Figura <a href="secuencias-de-datos.html#fig:toba-int-disp">18.1</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:toba-int-disp"></span>
+<img src="geolonum_files/figure-html/toba-int-disp-1.png" alt="Gráfico de dispersión mostrando la relación entre el número de intervalo y la longitud del mismo." width="70%" />
+<p class="caption">
+Figura 18.1: Gráfico de dispersión mostrando la relación entre el número de intervalo y la longitud del mismo.
+</p>
+</div>
+<blockquote>
+<p>Conclusión: Hay una relación entre la longitud del intervalo y el tiempo (distancia) donde los intervalos tienden a incrementar con el tiempo, <span class="math inline">\(r_s = .577\)</span>, 95% IC <span class="math inline">\([.11, .83]\)</span>, <span class="math inline">\(p = .019\)</span>. El tamaño del efecto es grande con un rango amplio de pequeño hasta muy grande.</p>
+</blockquote>
+</div>
+<div id="prueba-runs" class="section level3">
+<h3><span class="header-section-number">18.2.2</span> Prueba de corridas (rachas)</h3>
+<p>Esta prueba se usa cuando se quiere determinar la presencia o no de patrones en una secuencia. Para esta prueba se requiere que la secuencia consista en dos estados (categorías, niveles) mutuamente excluyentes (secuencia dicotómica). La secuencia puede haberse registrado en esta forma o se puede transformar de diferentes maneras.</p>
+<p>Para demostrar cómo se determinan las corridas o rachas se puede usar el ejemplo de lanzar una moneda 20 veces y se registra si cae ‘Escudo (E)’ o ‘Corona (C)’, donde se obtienen los siguientes resultados: CCCECECCCECECEECCEEE.</p>
+<p>Las corridas consisten en grupos de observaciones consecutivas del mismo estado o categoría. Para el caso del ejemplo se tendría: CCC E C E CCC E C E C EE CC EEE, dando como resultado 12 corridas, lo que se denomina como <span class="math inline">\(U\)</span>. La cantidad de observaciones de la primer y segunda categorías se denominan <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span> respectivamente.</p>
+<p>La idea de la prueba es comparar lo observado (<span class="math inline">\(U, \ n_1, \ n_2\)</span>) con una secuencia aleatoria que no tiene patrón, donde el número promedio de corridas esperado está dado por la Ecuación <a href="secuencias-de-datos.html#eq:runs-ubar">(18.2)</a>, la varianza esperada está dada por la Ecuación <a href="secuencias-de-datos.html#eq:runs-sigbar">(18.3)</a>, y la significancia se puede evaluar por medio de una aproximación a la distribución normal estándar conforme la Ecuación <a href="secuencias-de-datos.html#eq:runs-z">(18.4)</a>. <strong>Resultados significativos se obtendrían cuando se tiene ya sea una gran cantidad de corridas (cambios más frecuentes) o un número de corridas muy bajo</strong>.</p>
+<p>Las hipótesis para esta prueba serían las siguientes:</p>
+<ul>
+<li><span class="math inline">\(H_0: U = \bar{U} \to\)</span> La secuencia es aleatoria</li>
+<li><span class="math inline">\(H_1: U \neq \bar{U} \to\)</span> La secuencia no es aleatoria, hay un patrón</li>
+</ul>
+<p><span class="math display" id="eq:runs-ubar">\[\begin{equation}
+  \bar{U} = \frac{2n_1n_2}{n_1+n_2}+1
+  \tag{18.2}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:runs-sigbar">\[\begin{equation}
+  \sigma^2_{\bar{U}} = \frac{2n_1n_2(2n_1n_2-n_1-n_2)}{(n_1+n_2)^2(n_1+n_2-1)}
+  \tag{18.3}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:runs-z">\[\begin{equation}
+  Z = \frac{U-\bar{U}}{\sigma_{\bar{U}}}
+  \tag{18.4}
+\end{equation}\]</span></p>
+<p>Aplicando la prueba de corridas al ejemplo del lanzamiento de la moneda se tiene <span class="math inline">\(U=12\)</span>, <span class="math inline">\(n_1=11\)</span> y <span class="math inline">\(n_1=9\)</span>.</p>
+<p><span class="math display">\[\begin{equation}
+  \bar{U} = \frac{2n_1n_2}{n_1+n_2}+1\\
+  \bar{U} = \frac{2 \cdot 11 \cdot 9}{11+9}+1 = 10.9
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  \sigma^2_{\bar{U}} = \frac{2n_1n_2(2n_1n_2-n_1-n_2)}{(n_1+n_2)^2(n_1+n_2-1)}\\
+  \sigma^2_{\bar{U}} = \frac{2 \cdot 11 \cdot 9(2 \cdot 11 \cdot 9-11-9)}{(11+9)^2(11+9-1)}=4.6
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  Z = \frac{U-\bar{U}}{\sigma_{\bar{U}}}\\
+  Z = \frac{12-10.9}{2.1} = 0.52
+\end{equation}\]</span></p>
+<p>El estadístico encontrado es menor al valor crítico de <span class="math inline">\(z_{\alpha/2}\)</span> que para un <span class="math inline">\(\alpha=.05\)</span> es de <span class="math inline">\(\pm 1.96\)</span>, por lo que no se rechaza <span class="math inline">\(H_0\)</span> y se concluye que la secuencia podría ser aleatoria.</p>
+<p>En el caso de que se tuviera una secuencia de datos no dicotómicos, ya sea datos continuos u observaciones con más de dos categorías, es necesario dicomotizar la secuencia.</p>
+<p>Para el caso de datos continuos se pueden emplear dos estrategias:</p>
+<ol style="list-style-type: decimal">
+<li>Corridas arriba-abajo: En ésta lo que se hace es determinar cómo cambia una observación con respecto a la anterior (mayor o menor).</li>
+<li>Corridas con respecto a la mediana: Aquí lo que se hace es comparar todas las observaciones con respecto a la mediana, si son mayores o menores.</li>
+</ol>
+<p>En ambos casos cuando se presenta hay dos valores consecutivos iguales, la diferencia es 0, se asigna el 0 a la tendencia que traen las corridas. Por ejemplo, si se tiene <span class="math inline">\(+ + - 0 - + - - 0 +\)</span>, el primer cero se asigna como <span class="math inline">\(-\)</span> para mantener la corrida, mientras que el segundo cero no afecta si se asigna como <span class="math inline">\(-\)</span> o como <span class="math inline">\(+\)</span>, el número total de corridas quedaría <span class="math inline">\(U=5\)</span>, <span class="math inline">\(n_{1+}=4\)</span> y <span class="math inline">\(n_{2-}=6\)</span>.</p>
+<p>Como ejemplo de corridas arriba-abajo se tienen los datos de espesores de capas consecutivas de caliza en una secuencia del Jurásica Inferior <span class="citation">(Swan &amp; Sandilands, <a href="#ref-swan1995">1995</a>)</span>: 17, 14, 13, 17, 9, 15, 36, 13, 26, 10, 25, 13, 25, 8, 28, 15, 19, 34, 22.</p>
+<p>Se puede hacer el ejercicio de las corridas y contar el número de observaciones en las dos categorías a mano, pero se demuestra en <strong>R</strong> con la función <code>dichotomy</code> del paquete <em>GMisc</em> <span class="citation">(Garnier-Villarreal, <a href="#ref-R-GMisc">2020</a>)</span>, donde se brinda el vector de observaciones y se escoge el criterio de dicotomización. La función básica <code>table</code> hace el conteo de cada categoría.</p>
+<pre class="sourceCode r"><code class="sourceCode r">calizas =<span class="st"> </span><span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">14</span>, <span class="dv">13</span>, <span class="dv">17</span>, <span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">36</span>, <span class="dv">13</span>, <span class="dv">26</span>, 
+            <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">13</span>, <span class="dv">25</span>, <span class="dv">8</span>, <span class="dv">28</span>, <span class="dv">15</span>, <span class="dv">19</span>, <span class="dv">34</span>, <span class="dv">22</span>)
+(<span class="dt">calizas.di =</span> <span class="kw">dichotomy</span>(calizas, <span class="dt">criteria =</span> <span class="st">&#39;up-down&#39;</span>))</code></pre>
+<pre><code>##  [1] - - + - + + - + - + - + - + - + + -
+## Levels: - +</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(calizas.di)</code></pre>
+<pre><code>## calizas.di
+## - + 
+## 9 9</code></pre>
+<p>Con estos datos se tiene <span class="math inline">\(U=15\)</span>, <span class="math inline">\(n_1=9\)</span>, y <span class="math inline">\(n_2=9\)</span>.</p>
+<p><span class="math display">\[\begin{equation}
+  \bar{U} = \frac{2n_1n_2}{n_1+n_2}+1\\
+  \bar{U} = \frac{2 \cdot 9 \cdot 9}{9+9}+1 = 10
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  \sigma^2_{\bar{U}} = \frac{2n_1n_2(2n_1n_2-n_1-n_2)}{(n_1+n_2)^2(n_1+n_2-1)}\\
+  \sigma^2_{\bar{U}} = \frac{2 \cdot 9 \cdot 9(2 \cdot 9 \cdot 9-9-9)}{(9+9)^2(9+9-1)}=4.23
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+  Z = \frac{U-\bar{U}}{\sigma_{\bar{U}}}\\
+  Z = \frac{15-10}{2.06} = 2.43
+\end{equation}\]</span></p>
+<p>La función <code>RunsTest</code> de <em>DescTools</em> realiza la prueba sobre el vector de datos dicotómicos. Los argumentos <code>correct=F</code> y <code>exact=F</code> son necesarios para que los resultados coincidan con los cálculos manuales.</p>
+<pre class="sourceCode r"><code class="sourceCode r">calizas.runs =<span class="st"> </span><span class="kw">RunsTest</span>(calizas.di,<span class="dt">correct =</span> F,<span class="dt">exact =</span> F)
+calizas.runs</code></pre>
+<pre><code>## 
+##  Runs Test for Randomness
+## 
+## data:  calizas.di
+## z = 2.4296, runs = 15, m = 9, n = 9, p-value = 0.01512
+## alternative hypothesis: true number of runs is not equal the expected number</code></pre>
+<p>Los resultados se pueden graficar para visualizar el patrón (en caso de existir) con mayor facilidad.</p>
+<div class="figure" style="text-align: center"><span id="fig:calizas-runs"></span>
+<img src="geolonum_files/figure-html/calizas-runs-1.png" alt="Espesor de capas consecutivas de caliza." width="70%" />
+<p class="caption">
+Figura 18.2: Espesor de capas consecutivas de caliza.
+</p>
+</div>
+<blockquote>
+<p>Conclusión: El espesor de las calizas no es aleatorio, la gran cantidad de corridas indica una alternancia de capas gruesas y delgadas, <span class="math inline">\(U = 15, n_1 = 9, n_2 = 9\)</span>, <span class="math inline">\(Z = 2.43\)</span>, <span class="math inline">\(p = .015\)</span>.</p>
+</blockquote>
+</div>
+</div>
+<div id="secuencias-series" class="section level2">
+<h2><span class="header-section-number">18.3</span> Series</h2>
+<p>Secuencias de series temporales/espaciales son diferentes a las secuencias de eventos, ya que las series se caracterizan por tener <span class="math inline">\(N\)</span> observaciones espaciadas a un intervalo constante (<span class="math inline">\(\Delta\)</span>), y la longitud total de la secuencia (<span class="math inline">\(T\)</span>) se determina como <span class="math inline">\(T = \Delta(N-1)\)</span>.</p>
+<p>Estas series pueden analizarse para determinar si dentro de una serie hay ciclos, patrones o tendencias (auto-correlación, <a href="secuencias-de-datos.html#series-ac">18.3.2</a>), o si dos series presentan similitudes (correlación cruzada, <a href="secuencias-de-datos.html#series-cc">18.3.3</a>). Dependiendo de la calidad de las observaciones y/o presencia de tendencias, será necesario realizar tratamientos o preparación de los datos antes de los análisis.</p>
+<div id="series-tratamiento" class="section level3">
+<h3><span class="header-section-number">18.3.1</span> Tratamiento de datos</h3>
+<div id="interpolación" class="section level4">
+<h4><span class="header-section-number">18.3.1.1</span> Interpolación</h4>
+<p>En caso de que la serie no cuente con observaciones equidistantes se pueden remover o interpolar valores, haciendo la aclaración y justificación respectiva. De manera general se recomienda realizar interpolaciones entre observaciones cercanas, donde se puede asumir un comportamiento lineal entre ellas, minimizando cualquier artefacto de la interpolación.</p>
+</div>
+<div id="filtros" class="section level4">
+<h4><span class="header-section-number">18.3.1.2</span> Filtros</h4>
+<p>Este es probablemente uno de los pasos de pre-procesamiento más importantes y utilizados. La mayoría de los datos recolectados están compuestos por los datos crudos (“señal”) generados por el proceso geológico de interés, y “ruido” causado por interferencia. El filtrado intenta separar estos dos, resaltando la “señal” sobre el “ruido”. El “ruido” por lo general ocurre a frecuencias altas por lo que tiene efectos inconsistentes en observaciones adyacentes, y se puede reducir si se promedian unas pocas observaciones.</p>
+<p>El proceso de filtrado, de manera general, sería el siguiente:</p>
+<ul>
+<li>Se promedia en el punto su valor y valores adyacentes (ventana),</li>
+<li>Si se desea se pueden ponderar (dar pesos) los valores, con los más distantes teniendo menos influencia, a como se muestra de manera general en la Ecuación <a href="secuencias-de-datos.html#eq:filtro-pesos">(18.5)</a>,</li>
+<li>Se recomienda usar un número de observaciones impar, para ser simétrico alrededor del punto central (a valorar), donde la cantidad de observaciones a usar va a depender principalmente de la frecuencia de medición.</li>
+</ul>
+<p><span class="math display" id="eq:filtro-pesos">\[\begin{equation}
+  y_i&#39; = \frac{w_1y_{i-2}+w_2y_{i-1}+w_3y_{i}+w_2y_{i+1}+w_1y_{i+2}}{W}
+  \tag{18.5}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(w_i\)</span> corresponden con los diferentes pesos para las observaciones cercanas a la observación central, y <span class="math inline">\(W\)</span> es la suma de todos los pesos.</p>
+<p>Las funciones <code>moving_avg_filter</code> y <code>moving_wt_filter</code> de <em>GMisc</em> permiten filtrar una secuencia de datos usando un promedio aritmético o ponderado, respectivamente. Para graficar los resultados de estas funciones están las funciones <code>moving_filter_plot_f</code> y <code>moving_filter_plot_r</code>, del mismo paquete, que grafican los datos filtrados y los residuales, respectivamente; ambas funciones arrojan un gráfico estático (<em>ggplot2</em>, <span class="citation">(Wickham et al., <a href="#ref-R-ggplot2">2020</a>)</span>) y uno dinámico (<em>plotly</em>, <span class="citation">(Sievert et al., <a href="#ref-R-plotly">2020</a>)</span>).</p>
+<p>Para demostrar el filtrado se van a usar datos de <span class="citation">Swan &amp; Sandilands (<a href="#ref-swan1995">1995</a>)</span> que corresponden con la línea de crecimiento de un nautiloide. Las funciones de filtrado ocupan los vectores de posición (<code>x</code>) y los datos (<code>y</code>), así como la ventana de datos a usar en el promedio. Para el ejemplo se usan ventanas de 3, 5, y 9 datos, y se muestran los datos filtrados (Figuras <a href="secuencias-de-datos.html#fig:filtro1">18.3</a> y <a href="secuencias-de-datos.html#fig:filtro3">18.5</a>) y los residuales (Figuras <a href="secuencias-de-datos.html#fig:filtro2">18.4</a> y <a href="secuencias-de-datos.html#fig:filtro4">18.6</a>) en forma estática (<code>$GGPLOT</code>), para obtener el gráfico dinámico se acceder por medio de <code>$PLOTLY</code></p>
+<pre class="sourceCode r"><code class="sourceCode r">k =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">9</span>)
+filt =<span class="st"> </span><span class="kw">moving_avg_filter</span>(nautilus<span class="op">$</span>x, nautilus<span class="op">$</span>y, k)
+filt2 =<span class="st"> </span><span class="kw">moving_wt_filter</span>(nautilus<span class="op">$</span>x, nautilus<span class="op">$</span>y, k)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">moving_filter_plot_f</span>(filt)<span class="op">$</span>GGPLOT</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:filtro1"></span>
+<img src="geolonum_files/figure-html/filtro1-1.png" alt="Ejemplo de datos crudos y filtrados (sin pesos)" width="70%" />
+<p class="caption">
+Figura 18.3: Ejemplo de datos crudos y filtrados (sin pesos)
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">moving_filter_plot_r</span>(filt)<span class="op">$</span>GGPLOT</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:filtro2"></span>
+<img src="geolonum_files/figure-html/filtro2-1.png" alt="Ejemplo de residuales de datos filtrados (sin pesos)" width="70%" />
+<p class="caption">
+Figura 18.4: Ejemplo de residuales de datos filtrados (sin pesos)
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">moving_filter_plot_f</span>(filt2)<span class="op">$</span>GGPLOT</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:filtro3"></span>
+<img src="geolonum_files/figure-html/filtro3-1.png" alt="Ejemplo de datos crudos y filtrados (con pesos)" width="70%" />
+<p class="caption">
+Figura 18.5: Ejemplo de datos crudos y filtrados (con pesos)
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">moving_filter_plot_r</span>(filt2)<span class="op">$</span>GGPLOT</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:filtro4"></span>
+<img src="geolonum_files/figure-html/filtro4-1.png" alt="Ejemplo de residuales de datos filtrados (con pesos)" width="70%" />
+<p class="caption">
+Figura 18.6: Ejemplo de residuales de datos filtrados (con pesos)
+</p>
+</div>
+</div>
+<div id="tendencias" class="section level4">
+<h4><span class="header-section-number">18.3.1.3</span> Tendencias</h4>
+<p>Para las técnicas que se van a exponer en los siguientes apartados, la presencia de una tendencia en los datos puede ser perjudicial en la medida que puede oscurecer los ciclos o patrones presentes en los datos, por lo que es recomendado remover la tendencia y realizar el análisis sobre los datos sin tendencia.</p>
+<p>La tendencia más sencilla es la lineal y la forma de determinar si existe una tendencia o relación significativa entre la posición (o tiempo) y los datos es por medio de una regresión lineal simple (<a href="estadística-descriptiva-bivariable.html#bivar-reg">10.4</a>) o correlación de Pearson (<a href="estadística-descriptiva-bivariable.html#bivar-cor">10.3</a>, <a href="pruebas-estadísticas.html#prueba-pearson">15.9</a>).</p>
+<p>Para ejemplificar este concepto se van a usar los datos del nivel del agua en el lago Hurón, presentes en los juegos datos por defecto en <strong>R</strong> como <code>LakeHuron</code>. Éste es un objeto de tipo serie temporal (<em>ts</em>, <a href="secuencias-de-datos.html#series-ts">18.3.4</a>) por lo que tiene una estructura especial, pero en el fondo es simplemente una secuencia con posición (en este caso tiempo) y observaciones (nivel del agua). Para visualizarlo con <em>ggplot</em> se puede usar la función <code>autoplot</code> de <em>ggfortify</em> <span class="citation">(Horikoshi &amp; Tang, <a href="#ref-R-ggfortify">2020</a>)</span>, a como se muestra en la Figura <a href="secuencias-de-datos.html#fig:huron-ts">18.7</a>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">autoplot</span>(LakeHuron) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;Año&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Nivel del lago&#39;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:huron-ts"></span>
+<img src="geolonum_files/figure-html/huron-ts-1.png" alt="Visualización de la serie temporal del nivel del agua del lago Hurón." width="70%" />
+<p class="caption">
+Figura 18.7: Visualización de la serie temporal del nivel del agua del lago Hurón.
+</p>
+</div>
+<p>Para pasar un objeto <em>ts</em> a un formato tabla, más universal, se puede usar la función <code>tidy</code> de <em>broom</em> <span class="citation">(Robinson &amp; Hayes, <a href="#ref-R-broom">2020</a>)</span>, del metapaquete <em>tidymodels</em> <span class="citation">(Kuhn &amp; Wickham, <a href="#ref-R-tidymodels">2020</a>)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">LakeHuron</code></pre>
+<pre><code>## Time Series:
+## Start = 1875 
+## End = 1972 
+## Frequency = 1 
+##  [1] 580.38 581.86 580.97 580.80 579.79 580.39 580.42 580.82 581.40 581.32
+## [11] 581.44 581.68 581.17 580.53 580.01 579.91 579.14 579.16 579.55 579.67
+## [21] 578.44 578.24 579.10 579.09 579.35 578.82 579.32 579.01 579.00 579.80
+## [31] 579.83 579.72 579.89 580.01 579.37 578.69 578.19 578.67 579.55 578.92
+## [41] 578.09 579.37 580.13 580.14 579.51 579.24 578.66 578.86 578.05 577.79
+## [51] 576.75 576.75 577.82 578.64 580.58 579.48 577.38 576.90 576.94 576.24
+## [61] 576.84 576.85 576.90 577.79 578.18 577.51 577.23 578.42 579.61 579.05
+## [71] 579.26 579.22 579.38 579.10 577.95 578.12 579.75 580.85 580.41 579.96
+## [81] 579.61 578.76 578.18 577.21 577.13 579.10 578.25 577.91 576.89 575.96
+## [91] 576.80 577.68 578.38 578.52 579.74 579.31 579.89 579.96</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">Huron =<span class="st"> </span>LakeHuron <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()
+Huron</code></pre>
+<pre><code>## # A tibble: 98 x 2
+##    index value
+##    &lt;dbl&gt; &lt;dbl&gt;
+##  1  1875  580.
+##  2  1876  582.
+##  3  1877  581.
+##  4  1878  581.
+##  5  1879  580.
+##  6  1880  580.
+##  7  1881  580.
+##  8  1882  581.
+##  9  1883  581.
+## 10  1884  581.
+## # … with 88 more rows</code></pre>
+<p>Con los datos en formato tabla se puede realizar la regresión o correlación. Tal vez la forma más sencilla y directa de cuantificar la relación (tendencia) y ver si es significativa o no es por medio de la correlación de Pearson, como se expuso en la sección <a href="pruebas-estadísticas.html#prueba-pearson">15.9</a>, ya que como hay una relación entre correlación y regresión lineal simple, si una es significativa la otra lo va a ser también.</p>
+<pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="fl">.05</span>
+huron.cor =<span class="st"> </span>Huron <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">cor.test</span>(<span class="op">~</span>index<span class="op">+</span>value,
+           <span class="dt">data =</span> .,
+           <span class="dt">conf.level=</span><span class="dv">1</span><span class="op">-</span>a,
+           <span class="dt">method =</span> <span class="st">&#39;pearson&#39;</span>)
+huron.cor</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  index and value
+## t = -5.9962, df = 96, p-value = 3.545e-08
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.6527975 -0.3609537
+## sample estimates:
+##        cor 
+## -0.5219892</code></pre>
+<p>En este caso la correlación (tendencia) es significativa y negativa (<span class="math inline">\(r = -.52\)</span>, 95% IC <span class="math inline">\([-.65\)</span>, <span class="math inline">\(-.36]\)</span>, <span class="math inline">\(t(96) = -6.00\)</span>, <span class="math inline">\(p &lt; .001\)</span>), por lo que para cualquier análisis posterior es necesario remover dicha tendencia.</p>
+<p>Para demostrar que se obtiene la misma conclusión con la regresión lineal simple se muestra el procedimiento. Una regresión se realiza por medio de la función <code>lm</code> a como se había introducido en el capítulo <a href="estadística-descriptiva-bivariable.html#estadística-descriptiva-bivariable">Estadística Descriptiva Bivariable</a>, sección <a href="estadística-descriptiva-bivariable.html#bivar-reg">10.4</a>. Ahora se va a hacer énfasis en mostrar cómo determinar si la regresión (pendiente) es significativa.</p>
+<pre class="sourceCode r"><code class="sourceCode r">huron.reg =<span class="st"> </span><span class="kw">lm</span>(value <span class="op">~</span><span class="st"> </span>index, <span class="dt">data =</span> Huron)
+huron.reg <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">tidy</span>(<span class="dt">conf.int=</span>T,<span class="dt">conf.level=</span><span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<pre><code>## # A tibble: 2 x 7
+##   term        estimate std.error statistic  p.value conf.low conf.high
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept) 626.       7.76        80.6  5.81e-90 610.      641.    
+## 2 index        -0.0242   0.00404     -6.00 3.55e- 8  -0.0322   -0.0162</code></pre>
+<p>La significancia de la pendiente se puede determinar por medio del valor-<em>p</em> o el intervalo de confianza en el resumen de la regresión. A como se ha venido trabajando, si el valor-<em>p</em> está por debajo de un <span class="math inline">\(\alpha\)</span> escogido y si 0 cae fuera del intervalo de confianza, entonces el estadístico es significativo. Para el caso del ejemplo, la pendiente es significativa y negativa (<span class="math inline">\(b = -0.024\)</span>, 95% IC <span class="math inline">\([-0.032\)</span>, <span class="math inline">\(-0.016]\)</span>, <span class="math inline">\(t(96) = -6.00\)</span>, <span class="math inline">\(p &lt; .001\)</span>).</p>
+<p>Tanto la correlación como la regresión muestran una tendencia negativa, o sea el nivel del lago Hurón ha ido en descenso a lo largo del tiempo en que se tomaron los datos, y ésto se puede observar si se grafica la secuencia, a como se presentó en la Figura <a href="secuencias-de-datos.html#fig:huron-ts">18.7</a>.</p>
+<p>Para series de datos una manera de remover la tendencia es por medio de diferenciación, donde una tendencia lineal se remueve con una diferenciación de orden 1, una tendencia cuadrática se remueve con una diferenciación de orden 2, y así sucesivamente. Para ésto existe la función <code>diff</code>, a la cual se le puede pasar un vector de datos o el objeto de la serie, y el argumento <code>differences</code> se refiere al orden de la diferenciación.</p>
+<pre class="sourceCode r"><code class="sourceCode r">Huron.dif =<span class="st"> </span><span class="kw">diff</span>(LakeHuron,<span class="dt">differences =</span> <span class="dv">1</span>)
+Huron.dif</code></pre>
+<pre><code>## Time Series:
+## Start = 1876 
+## End = 1972 
+## Frequency = 1 
+##  [1]  1.48 -0.89 -0.17 -1.01  0.60  0.03  0.40  0.58 -0.08  0.12  0.24 -0.51
+## [13] -0.64 -0.52 -0.10 -0.77  0.02  0.39  0.12 -1.23 -0.20  0.86 -0.01  0.26
+## [25] -0.53  0.50 -0.31 -0.01  0.80  0.03 -0.11  0.17  0.12 -0.64 -0.68 -0.50
+## [37]  0.48  0.88 -0.63 -0.83  1.28  0.76  0.01 -0.63 -0.27 -0.58  0.20 -0.81
+## [49] -0.26 -1.04  0.00  1.07  0.82  1.94 -1.10 -2.10 -0.48  0.04 -0.70  0.60
+## [61]  0.01  0.05  0.89  0.39 -0.67 -0.28  1.19  1.19 -0.56  0.21 -0.04  0.16
+## [73] -0.28 -1.15  0.17  1.63  1.10 -0.44 -0.45 -0.35 -0.85 -0.58 -0.97 -0.08
+## [85]  1.97 -0.85 -0.34 -1.02 -0.93  0.84  0.88  0.70  0.14  1.22 -0.43  0.58
+## [97]  0.07</code></pre>
+<p>Otra forma de remover la tendencia es obteniendo los residuales a partir de la regresión. Lo anterior se puede obtener de forma sencilla aplicando la función <code>augment</code> de <em>broom</em> sobre el objeto de regresión. El objeto resultante va a tener los datos usados en la regresión así como otras columnas, incluida <code>.resid</code> que almacena los residuales.</p>
+<pre class="sourceCode r"><code class="sourceCode r">Huron.aug =<span class="st"> </span>huron.reg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">augment</span>()
+Huron.aug</code></pre>
+<pre><code>## # A tibble: 98 x 9
+##    value index .fitted .se.fit .resid   .hat .sigma  .cooksd .std.resid
+##    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+##  1  580.  1875    580.   0.227  0.202 0.0402   1.14 0.000698      0.183
+##  2  582.  1876    580.   0.223  1.71  0.0390   1.12 0.0481        1.54 
+##  3  581.  1877    580.   0.220  0.841 0.0378   1.13 0.0113        0.758
+##  4  581.  1878    580.   0.216  0.695 0.0366   1.13 0.00745       0.626
+##  5  580.  1879    580.   0.213 -0.291 0.0355   1.14 0.00126      -0.262
+##  6  580.  1880    580.   0.209  0.333 0.0343   1.14 0.00160       0.300
+##  7  580.  1881    580.   0.206  0.387 0.0332   1.14 0.00209       0.349
+##  8  581.  1882    580.   0.203  0.812 0.0322   1.13 0.00885       0.730
+##  9  581.  1883    580.   0.199  1.42  0.0311   1.13 0.0260        1.27 
+## 10  581.  1884    580.   0.196  1.36  0.0301   1.13 0.0232        1.22 
+## # … with 88 more rows</code></pre>
+<p>Una vez removida la tendencia se puede graficar de nuevo la serie, a como se muestra en la Figura <a href="secuencias-de-datos.html#fig:huron-ts-dif">18.8</a> para el caso de la diferenciación, y en la Figura <a href="secuencias-de-datos.html#fig:huron-ts-resid">18.9</a> para el caso de los residuales de la regresión.</p>
+<pre class="sourceCode r"><code class="sourceCode r">Huron.dif <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;Año&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Cambio en el nivel del lago&#39;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:huron-ts-dif"></span>
+<img src="geolonum_files/figure-html/huron-ts-dif-1.png" alt="Serie de diferencias del cambio en el nivel del agua en el lago Hurón." width="70%" />
+<p class="caption">
+Figura 18.8: Serie de diferencias del cambio en el nivel del agua en el lago Hurón.
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r">Huron.aug <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(index,.resid)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;Año&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Residuales del nivel del lago&#39;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:huron-ts-resid"></span>
+<img src="geolonum_files/figure-html/huron-ts-resid-1.png" alt="Serie de residuales del nivel del agua en el lago Hurón." width="70%" />
+<p class="caption">
+Figura 18.9: Serie de residuales del nivel del agua en el lago Hurón.
+</p>
+</div>
+<p>Estos datos sin tendencia serían los que se usan en análisis posteriores.</p>
+</div>
+</div>
+<div id="series-ac" class="section level3">
+<h3><span class="header-section-number">18.3.2</span> Auto-correlación</h3>
+<p>La auto-correlación es simplemente comparar una secuencia o serie con ella misma, a diferentes separaciones o lags (<span class="math inline">\(\tau\)</span>). La comparación se realiza por medio del coeficiente de correlación a los diferentes lags, donde cada vez que se desplaza la secuencia se calcula el coeficiente, por medio de la Ecuación <a href="secuencias-de-datos.html#eq:r-tau">(18.6)</a>.</p>
+<p><span class="math display" id="eq:r-tau">\[\begin{equation}
+  r_{\tau} = \frac{\sum_{i=1}^{N-\tau} Z_{yi}Z_{y(i+\tau)}}{N-\tau}
+  \tag{18.6}
+\end{equation}\]</span></p>
+<p>A un lag de 0 la correlación siempre va a ser <span class="math inline">\(r_{\tau}=1\)</span> y conforme se va desplazando va a tender a disminuir. El resultado de la auto-correlación se representa por medio del correlograma, el cual puede tomar diferentes formas dependiendo de los datos, y se muestran varios ejemplos en la Figura <a href="secuencias-de-datos.html#fig:autocor-ejs">18.10</a> <span class="citation">(Davis, <a href="#ref-davis2002">2002</a>)</span>. Si al incrementar el lag se vuelve a dar un alto coeficiente de correlación (<span class="math inline">\(r_{\tau}\)</span>), ésto puede indicar presencia de ciclos o patrones en los datos. Se recomienda, para un resultado más confiable, realizar este análisis sobre series de datos que tengan <span class="math inline">\(N&gt;50\)</span> y calcular la auto-correlación a no más de <span class="math inline">\(N/4\)</span>, ya que conforme más se desplace la secuencia menos datos se usan en el cálculo y menos confiable (más variable) el resultado.</p>
 
+<div class="figure" style="text-align: center"><span id="fig:autocor-ejs"></span>
+<img src="images/autocorrel-ejemplos.png" alt="Ejemplos de series de datos con su respectivo correlograma, tomada de Davis (2002). a Serie sinusoidal. b Serie aleatoria. c Serie con tendencia lineal. d Serie sinusoidal con componente aleatorio. e Serie sinusoidal con componente aleatorio y una tendencia." width="70%" />
+<p class="caption">
+Figura 18.10: Ejemplos de series de datos con su respectivo correlograma, tomada de <span class="citation">Davis (<a href="#ref-davis2002">2002</a>)</span>. <em>a</em> Serie sinusoidal. <em>b</em> Serie aleatoria. <em>c</em> Serie con tendencia lineal. <em>d</em> Serie sinusoidal con componente aleatorio. <em>e</em> Serie sinusoidal con componente aleatorio y una tendencia.
+</p>
+</div>
+<p>Para determinar si existe una auto-correlación significativa se puede realizar la prueba de significancia conforme la Ecuación <a href="secuencias-de-datos.html#eq:z-ac">(18.7)</a>, donde <span class="math inline">\(r_{\tau}\)</span> es el valor de auto-correlación a un lag (<span class="math inline">\(\tau\)</span>) específico (valor más alto después de un ciclo), y <span class="math inline">\(N\)</span> es la longitud de la serie.</p>
+<p><span class="math display" id="eq:z-ac">\[\begin{equation}
+  z_{\tau} = r_{\tau}\sqrt{N-\tau+3}
+  \tag{18.7}
+\end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(H_0: \rho_{\tau} = 0 \to\)</span> No hay patrón en la serie (aleatoria)</li>
+<li><span class="math inline">\(H_1: \rho_{\tau} \neq 0 \to\)</span> Hay un patrón en la serie</li>
+</ul>
+<p>En <strong>R</strong> se tiene la función <code>acf</code> que calcula la auto-correlación a diferentes lags, donde se ocupa un vector de datos o el objeto de serie, el resto de los argumentos son opcionales, <code>lag.max</code> es el lag hasta el cual calcular la auto-correlación, y <code>plot=F</code> es para suprimir que grafique el resultado, ya que se pasa el resultado a <code>autoplot</code> de <em>ggfortify</em> para poder visualizarlo con <em>ggplot2</em> (Figura @ref(fig: huron-acf)). La visualización muestra una líneas punteadas que corresponden con el intervalo de confianza, por lo que si un pico de auto-correlación sobrepasa esta línea es indicativo de una auto-correlación significativa al lag del pico.</p>
+<pre class="sourceCode r"><code class="sourceCode r">N =<span class="st"> </span><span class="kw">length</span>(Huron.dif)
+Huron.dif <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">acf</span>(<span class="dt">lag.max =</span> N<span class="op">/</span><span class="dv">4</span>, <span class="dt">plot =</span> F) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">autoplot</span>(<span class="dt">conf.int.value =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:huron-acf"></span>
+<img src="geolonum_files/figure-html/huron-acf-1.png" alt="Correlograma para el cambio del nivel de agua en el lago Hurón." width="70%" />
+<p class="caption">
+Figura 18.11: Correlograma para el cambio del nivel de agua en el lago Hurón.
+</p>
+</div>
+<p>No hay una forma directa de realizar la prueba de significancia de auto-correlación, por lo que desarrollé una serie de comandos para extraer la información necesaria (<span class="math inline">\(r_{\tau}, \tau\)</span>) y calcular el estadístico de la prueba (<strong>no es a prueba de errores, se recomienda inspeccionar el resultado</strong>).</p>
+<pre class="sourceCode r"><code class="sourceCode r">ac =<span class="st"> </span><span class="kw">acf</span>(Huron.dif,<span class="dt">plot =</span> F)
+ac =<span class="st"> </span><span class="kw">tidy</span>(ac)
+lagt =<span class="st"> </span>ac <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(acf <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(lag) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pull</span>()
+(<span class="dt">rtau =</span> ac <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">slice</span>((<span class="kw">which</span>(ac<span class="op">$</span>lag<span class="op">==</span>lagt)[<span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="kw">max</span>(acf)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">pull</span>()) <span class="co"># valor maximo de autocorrelacion</span></code></pre>
+<pre><code>## [1] 0.1999353</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">tau =</span> ac <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(acf <span class="op">==</span><span class="st"> </span>rtau) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(lag) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">pull</span>())<span class="co"># lag donde ocurre el valor maximo de autocorrelacion</span></code></pre>
+<pre><code>## [1] 9</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">z =</span> rtau <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(N <span class="op">-</span><span class="st"> </span>tau <span class="op">+</span><span class="st"> </span><span class="dv">3</span>)) <span class="co"># prueba de significancia de autocorrelacion</span></code></pre>
+<pre><code>## [1] 1.907261</code></pre>
+<p>De forma manual la significancia se estima de la siguiente manera:</p>
+<p><span class="math display">\[\begin{equation}
+  z_{\tau} = r_{\tau}\sqrt{N-\tau+3}\\
+  z_{\tau} = .2\sqrt{97-9+3} = 1.91
+\end{equation}\]</span></p>
+<p>Los resultados muestran que hay un pico importante a un lag de 9 (<span class="math inline">\(\tau=9\)</span>), donde <span class="math inline">\(r_{\tau}=.2\)</span>, y con ésto se obtiene un estadístico <span class="math inline">\(z=1.91\)</span>, que al comparar con el valor crítico de <span class="math inline">\(z_{\alpha/2}=1.96\)</span> (para <span class="math inline">\(\alpha=.05\)</span>) se tiene que es menor por lo que la auto-correlación no es significativa, aunque por muy poco, por lo que hay evidencia marginal de una posible auto-correlación.</p>
+</div>
+<div id="series-cc" class="section level3">
+<h3><span class="header-section-number">18.3.3</span> Correlación-cruzada</h3>
+<p>La correlación cruzada sirve para comparar dos series con el fin de determinar la magnitud de la relación y a qué lag se da la máxima relación. Difiere de la auto-correlación en el sentido de que no se posible establecer un cero lag, a menos que las dos series tengan un origen y escala común (por lo que el correlograma-cruzado tiene lags positivos y negativos), y las dos series pueden tener diferente longitud (número de observaciones).</p>
+<p>Se pueden usar las siguientes dos reglas para la interpretación:</p>
+<ul>
+<li>Cuando se tiene una correlación importante en los lags negativos, quiere decir que <strong><em>x</em> está por delante de <em>y</em></strong></li>
+<li>Cuando se tiene una correlación importante en los lags positivos, quiere decir que <strong><em>x</em> está atrasada con respecto a <em>y</em></strong></li>
+</ul>
+<p>Para determinar si existe una correlación-cruzada significativa se puede realizar la prueba de significancia conforme la Ecuación <a href="secuencias-de-datos.html#eq:t-cc">(18.8)</a>, donde <span class="math inline">\(r_{\tau}\)</span> es el valor de auto-correlación (valor más alto) a un lag (<span class="math inline">\(\tau\)</span>) específico, y <span class="math inline">\(N\)</span> es la longitud de la serie. Esta prueba sigue una distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(v=N-\tau-2\)</span> grados de libertad.</p>
+<p><span class="math display" id="eq:t-cc">\[\begin{equation}
+  t_{\tau} = r_{\tau}\sqrt{\frac{N-\tau-2}{1-r_{\tau}^2}}
+  \tag{18.8}
+\end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(H_0: \rho_{\tau} = 0 \to\)</span> No hay relación entre las series</li>
+<li><span class="math inline">\(H_1: \rho_{\tau} \neq 0 \to\)</span> Hay relación entre las series al lag <span class="math inline">\(\tau\)</span></li>
+</ul>
+<p>Para demostrar este análisis se usa un ejemplo de <span class="citation">Davis (<a href="#ref-davis2002">2002</a>)</span>, donde se tienen los datos de agua inyectada en un pozo y el número de sismos por mes, buscando si existe una relación entre el agua inyectada y los sismos, y si la hay con que frecuencia o desfase.</p>
+<pre class="sourceCode r"><code class="sourceCode r">arsenal =<span class="st"> </span><span class="kw">import</span>(<span class="st">&#39;data/ARSENAL.csv&#39;</span>,<span class="dt">setclass =</span> <span class="st">&#39;tbl&#39;</span>)
+arsenal</code></pre>
+<pre><code>## # A tibble: 40 x 4
+##    Date    WasteInjected Quakes SequentialMonth
+##    &lt;chr&gt;           &lt;dbl&gt;  &lt;int&gt;           &lt;int&gt;
+##  1 3/1/62            4.2      0               3
+##  2 4/1/62            7.2      2               4
+##  3 5/1/62            8.4     12               5
+##  4 6/1/62            8       35               6
+##  5 7/1/62            5.2     23               7
+##  6 8/1/62            6       29               8
+##  7 9/1/62            5       24               9
+##  8 10/1/62           5.6      8              10
+##  9 11/1/62           4        6              11
+## 10 12/1/62           3.6     20              12
+## # … with 30 more rows</code></pre>
+<p><strong>R</strong> tiene la función <code>ccf</code> que ocupa los dos vectores de datos u objetos de series. Es importante pensar en qué va en <em>x</em> y qué va en <em>y</em> de acuerdo a la interpretación que se quiera obtener o hipótesis que se tenga.</p>
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(arsenal,
+     <span class="kw">ccf</span>(<span class="dt">x =</span> Quakes, <span class="dt">y =</span> WasteInjected, <span class="dt">plot =</span> F)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">autoplot</span>(<span class="dt">ylab=</span><span class="st">&#39;CCF&#39;</span>, <span class="dt">conf.int.value =</span> <span class="dv">1</span><span class="op">-</span>a)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:arsenal-ccf"></span>
+<img src="geolonum_files/figure-html/arsenal-ccf-1.png" alt="Correlograma-cruzado entre inyección de agua sobre la presencia de sismos. Datos de Davis (2002)." width="70%" />
+<p class="caption">
+Figura 18.12: Correlograma-cruzado entre inyección de agua sobre la presencia de sismos. Datos de <span class="citation">Davis (<a href="#ref-davis2002">2002</a>)</span>.
+</p>
+</div>
+<p>La significancia se estima de la siguiente manera:</p>
+<p><span class="math display">\[\begin{equation}
+  t_{\tau} = r_{\tau}\sqrt{\frac{N-\tau-2}{1-r_{\tau}^2}}\\
+  t_{\tau} = .62\sqrt{\frac{40-1-2}{1-.62^2}} = 4.81\\
+  t_{\alpha/2,v} = t_{.05/2,37} = 2.03
+\end{equation}\]</span></p>
+<p>El correlograma-cruzado muestra la mayor relación a un lag de <span class="math inline">\(+1\)</span>, donde <span class="math inline">\(r_{\tau}=.62\)</span>, y este valor está por encima del intervalo de confianza (<span class="math inline">\(t_{\tau} &gt; t_{\alpha/2,v}\)</span>), por lo que es significativo. Este resultado indica que hay una relación entre la inyección de agua y los sismos registrados, con un desfase de 1 mes. Usando las reglas de interpretación mencionadas anteriormente se tiene una correlación importante en los lags positivos, por lo que <strong><em>x</em> está atrasada con respecto a <em>y</em></strong>, y en este caso, los sismos están atrasados con respecto a la inyección de agua por 1 mes.</p>
+
+<div class="rmdnote">
+<p>Hay que tener en cuenta que el correlograma y la prueba de significancia indican el lag al que ocurre la máxima correlación (auto, cruzada), pero para saber a qué unidades (tiempo o distancia) de la variable original corresponde es necesario conocer el intervalo de muestreo.</p>
+<p>Si <span class="math inline">\(\Delta = 1\)</span> entonces la distancia o tiempo al cual ocurre la correlación es igual a <span class="math inline">\(\tau\)</span>.</p>
+Si <span class="math inline">\(\Delta \neq 1\)</span>, por ejemplo <span class="math inline">\(\Delta = 0.5\)</span>, entonces la distancia o tiempo al cual ocurre la correlación es igual a <span class="math inline">\(\Delta \cdot \tau\)</span>.
+</div>
+
+</div>
+<div id="series-ts" class="section level3">
+<h3><span class="header-section-number">18.3.4</span> Objetos de serie</h3>
+<p>Esta sección hace una breve introducción a los objetos de serie temporal, principalmente cómo crearlos, y qué carácterísticas o atributos especiales tienen.</p>
+<p>Los objetos de serie temporal/espacial tienen atributos que definen el inicio (start), final (end), intervalo de medición (deltat), y frecuencia (frequency) de la serie.</p>
+<p>Para crear estos objetos se puede usar la función <code>ts</code> que trae <strong>R</strong>. Hay otros paquetes que se especializan en este tipo de objetos y su análisis, como <em>zoo</em> <span class="citation">(Zeileis et al., <a href="#ref-R-zoo">2020</a>)</span>, que trae la función <code>zoo</code> para crear este tipo de objetos.</p>
+<p>La función <code>ts</code> funciona especialmente para series temporales, ya que dentro de los argumentos que tiene para la creación del objeto están <code>start</code>, <code>end</code>, y <code>frequency</code> o <code>deltat</code>, donde todos éstos corresponden con unidades de tiempo.</p>
+<p>Usando los datos del ejemplo de correlación-cruzada sería como se muestra a continuación, donde <code>start</code> se define como un vector de dos entradas (año, mes), y se requiere definir solo uno de los otros argumentos, en este caso <code>frequency</code> equivale a la cantidad de mediciones por unidad de tiempo.</p>
+<pre class="sourceCode r"><code class="sourceCode r">arsenal.sismos.ts =<span class="st"> </span><span class="kw">ts</span>(<span class="dt">data =</span> arsenal<span class="op">$</span>Quakes,
+                       <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1962</span>,<span class="dv">3</span>),
+                       <span class="dt">frequency =</span> <span class="dv">12</span>)
+arsenal.sismos.ts</code></pre>
+<pre><code>##      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+## 1962           0   2  12  35  23  29  24   8   6  20
+## 1963  25  22  21  42  21   8   6  10  11  12   4   2
+## 1964   5   2   9   9   2   4   4   5   2  14   2   7
+## 1965   1  30   9  19  11  38</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">arsenal.sismos.ts <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;Año&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Cantidad de sismos&#39;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:sismos-ts"></span>
+<img src="geolonum_files/figure-html/sismos-ts-1.png" alt="Serie temporal de sismos usando `ts`" width="70%" />
+<p class="caption">
+Figura 18.13: Serie temporal de sismos usando <code>ts</code>
+</p>
+</div>
+<p>La función <code>zoo</code> requiere el argumento <code>order.by</code> que puede tomar cualquier tipo de dato (tiempo, distancia) y tiene la ventaja de que puede crear series con intervalos de muestreo irregular.</p>
+<p>Con los datos de arsenal es necesario modificar la columna de fechas a un formato de fecha. Posteriormente se usa esta columna para ordenar los datos.</p>
+<pre class="sourceCode r"><code class="sourceCode r">arsenal2 =<span class="st"> </span>arsenal <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Date =</span> <span class="kw">str_replace</span>(Date,<span class="st">&#39;/6&#39;</span>,<span class="st">&#39;/196&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>lubridate<span class="op">::</span><span class="kw">mdy</span>())</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">arsenal.sismos.zoo =<span class="st"> </span><span class="kw">zoo</span>(arsenal2<span class="op">$</span>Quakes, <span class="dt">order.by =</span> arsenal2<span class="op">$</span>Date)
+arsenal.sismos.zoo</code></pre>
+<pre><code>## 1962-03-01 1962-04-01 1962-05-01 1962-06-01 1962-07-01 1962-08-01 1962-09-01 
+##          0          2         12         35         23         29         24 
+## 1962-10-01 1962-11-01 1962-12-01 1963-01-01 1963-02-01 1963-03-01 1963-04-01 
+##          8          6         20         25         22         21         42 
+## 1963-05-01 1963-06-01 1963-07-01 1963-08-01 1963-09-01 1963-10-01 1963-11-01 
+##         21          8          6         10         11         12          4 
+## 1963-12-01 1964-01-01 1964-02-01 1964-03-01 1964-04-01 1964-05-01 1964-06-01 
+##          2          5          2          9          9          2          4 
+## 1964-07-01 1964-08-01 1964-09-01 1964-10-01 1964-11-01 1964-12-01 1965-01-01 
+##          4          5          2         14          2          7          1 
+## 1965-02-01 1965-03-01 1965-04-01 1965-05-01 1965-06-01 
+##         30          9         19         11         38</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">arsenal.sismos.zoo <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;Año&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Cantidad de sismos&#39;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:sismos-zoo"></span>
+<img src="geolonum_files/figure-html/sismos-zoo-1.png" alt="Serie temporal de sismos usando `zoo`" width="70%" />
+<p class="caption">
+Figura 18.14: Serie temporal de sismos usando <code>zoo</code>
+</p>
+</div>
+<p>Para ejemplificar una serie espacial y con intervalo irregular se usan los datos de un sondeo magnético.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mag =<span class="st"> </span><span class="kw">import</span>(<span class="st">&#39;data/magnetismo.xlsx&#39;</span>,<span class="dt">setclass =</span> <span class="st">&#39;tbl&#39;</span>)
+mag</code></pre>
+<pre><code>## # A tibble: 132 x 2
+##    Position Anomaly
+##       &lt;dbl&gt;   &lt;dbl&gt;
+##  1    0        128.
+##  2    0.667    130.
+##  3    1.33     132.
+##  4    2        134.
+##  5    2.67     137.
+##  6    3.33     140.
+##  7    4.00     143.
+##  8    4.67     145.
+##  9    5.33     147.
+## 10    6        149.
+## # … with 122 more rows</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mag.zoo =<span class="st"> </span><span class="kw">zoo</span>(mag<span class="op">$</span>Anomaly, <span class="dt">order.by =</span> mag<span class="op">$</span>Position)
+mag.zoo</code></pre>
+<pre><code>##        0   0.6667   1.3333        2   2.6667   3.3333        4   4.6667 
+## 127.9670 129.7269 131.7459 134.2928 137.1778 139.9677 142.5376 145.2026 
+##   5.3333        6   6.6667   7.3333        8   8.6667   9.3333       10 
+## 147.3325 149.3634 150.2964 151.2823 152.4763 153.1932 153.9201 154.6881 
+##  10.6667  11.3333       12  12.6667  13.3333       14  14.6667  15.3333 
+## 155.2840 155.0600 154.0229 152.2758 152.1948 153.4757 155.2887 163.1816 
+##       16  16.6667  17.3333       18  18.6667  19.3333       20  20.5882 
+## 167.5095 160.7085 157.7804 156.6403 155.1523 154.6102 154.6102 154.9571 
+##  21.1765  21.7647  22.3529  22.9412  23.5294  24.1176  24.7059  25.2941 
+## 155.7630 156.5350 156.5699 156.5889 157.3398 157.1807 156.4457 156.2956 
+##  25.8824  26.4706  27.0588  27.6471  28.2353  28.8235  29.4118       30 
+## 156.1926 155.8265 155.1464 154.7994 153.6693 152.7082 151.5122 150.6671 
+##  30.5882  31.1765  31.7647  32.3529  32.9412  33.5294  34.1176  34.7059 
+## 150.7911 151.1110 151.3379 150.8509 150.7348 150.4348 149.9967 149.2806 
+##  35.2941  35.8824  36.4706  37.0588  37.6471  38.2353  38.8235  39.4118 
+## 148.4066 147.7495 147.3705 147.3514 146.9793 146.7883 148.6342 152.6611 
+##       40  40.6061  41.2121  41.8182  42.4242  43.0303  43.6364  44.2424 
+## 155.4831 155.2910 154.2870 152.7459 151.5398 150.0868 149.5687 148.8137 
+##  44.8485  45.4545  46.0606  46.6667  47.2727  47.8788  48.4848  49.0909 
+## 147.4116 145.6475 144.4735 143.8444 143.2384 142.3933 141.3612 140.8662 
+##   49.697   50.303  50.9091  51.5152  52.1212  52.7273  53.3333  53.9394 
+## 139.1571 139.0240 139.0260 139.8949 140.3909 139.6298 139.5377 139.8267 
+##  54.5455  55.1515  55.7576  56.3636  56.9697  57.5758  58.1818  58.7879 
+## 139.9726 140.4866 141.8915 140.5654 138.0454 136.6463 135.7893 135.3002 
+##  59.3939       60  60.5882  61.1765  61.7647  62.3529  62.9412  63.5294 
+## 134.6781 134.2511 133.6890 133.5809 133.4179 132.5498 132.4578 132.1167 
+##  64.1176  64.7059  65.2941  65.8824  66.4706  67.0588  67.6471  68.2353 
+## 131.7946 130.4576 129.5175 129.3035 128.8224 128.4323 127.7803 127.7882 
+##  68.8235  69.4118       70  70.5882  71.1765  71.7647  72.3529  72.9412 
+## 126.8402 126.0071 126.3510 130.4600 141.9039 158.1178 164.8128 148.3687 
+##  73.5294  74.1176  74.7059  75.2941  75.8824  76.4706  77.0588  77.6471 
+## 134.2557 126.7166 123.1805 121.4425 120.1204 119.6494 118.6973 117.5382 
+##  78.2353  78.8235  79.4118       80 
+## 116.8952 116.4371 116.6631 116.3050</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mag.zoo <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;Distancia (m)&#39;</span>, <span class="dt">y=</span><span class="st">&#39;Anomalía magnética (mgal)&#39;</span>)</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:mag-zoo"></span>
+<img src="geolonum_files/figure-html/mag-zoo-1.png" alt="Serie espacial de sondeo mágnetico usando `zoo`" width="70%" />
+<p class="caption">
+Figura 18.15: Serie espacial de sondeo mágnetico usando <code>zoo</code>
+</p>
+</div>
+<p>Dentro de los métodos o funciones que se pueden aplicar sobre este tipo de objetos están:</p>
+<ul>
+<li><code>index</code>: Extrae vector de valores de la variable de tiempo o espacio.</li>
+<li><code>coredata</code>: Extrae vector de valores de la variable de interés.</li>
+<li><code>window</code>: Extrae una ventana o parte de la serie a partir de un inicio (start) y final (end).</li>
+<li><code>diff</code>: Crea vector u objeto de serie de las diferencias.</li>
+<li><code>tidy</code>: Transforma objeto a tabla (tibble).</li>
+<li><code>autoplot</code>: Visualizar la serie usando <em>ggplot2</em></li>
+</ul>
+
+</div>
+</div>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-borradaile2003">
+<p>Borradaile, G. J. (2003). <em>Statistics of Earth Science Data: Their Distribution in Time, Space and Orientation</em>. Springer-Verlag Berlin Heidelberg.</p>
+</div>
+<div id="ref-davis2002">
+<p>Davis, J. C. (2002). <em>Statistics and Data Analysis in Geology</em> (3.ª ed.). John Wiley &amp; Sons.</p>
+</div>
+<div id="ref-R-GMisc">
+<p>Garnier-Villarreal, M. (2020). <em>GMisc: Miscellaneous Functions for Geology (and its areas)</em>. <a href="http://github.com/maxgav13/GMisc">http://github.com/maxgav13/GMisc</a></p>
+</div>
+<div id="ref-R-ggfortify">
+<p>Horikoshi, M., &amp; Tang, Y. (2020). <em>ggfortify: Data Visualization Tools for Statistical Analysis Results</em>. <a href="https://CRAN.R-project.org/package=ggfortify">https://CRAN.R-project.org/package=ggfortify</a></p>
+</div>
+<div id="ref-R-tidymodels">
+<p>Kuhn, M., &amp; Wickham, H. (2020). <em>tidymodels: Easily Install and Load the ’Tidymodels’ Packages</em>. <a href="https://CRAN.R-project.org/package=tidymodels">https://CRAN.R-project.org/package=tidymodels</a></p>
+</div>
+<div id="ref-mckillup2010">
+<p>McKillup, S., &amp; Darby Dyar, M. (2010). <em>Geostatistics Explained: An Introductory Guide for Earth Scientists</em>. Cambridge University Press. <a href="www.cambridge.org/9780521763226">www.cambridge.org/9780521763226</a></p>
+</div>
+<div id="ref-R-broom">
+<p>Robinson, D., &amp; Hayes, A. (2020). <em>broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a></p>
+</div>
+<div id="ref-R-plotly">
+<p>Sievert, C., Parmer, C., Hocking, T., Chamberlain, S., Ram, K., Corvellec, M., &amp; Despouy, P. (2020). <em>plotly: Create Interactive Web Graphics via ’plotly.js’</em>. <a href="https://CRAN.R-project.org/package=plotly">https://CRAN.R-project.org/package=plotly</a></p>
+</div>
+<div id="ref-R-DescTools">
+<p>Signorell, A. (2020). <em>DescTools: Tools for Descriptive Statistics</em>. <a href="https://CRAN.R-project.org/package=DescTools">https://CRAN.R-project.org/package=DescTools</a></p>
+</div>
+<div id="ref-swan1995">
+<p>Swan, A., &amp; Sandilands, M. (1995). <em>Introduction to Geological Data Analysis</em>. Blackwell Science.</p>
+</div>
+<div id="ref-R-ggplot2">
+<p>Wickham, H., Chang, W., Henry, L., Pedersen, T. L., Takahashi, K., Wilke, C., Woo, K., Yutani, H., &amp; Dunnington, D. (2020). <em>ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a></p>
+</div>
+<div id="ref-R-zoo">
+<p>Zeileis, A., Grothendieck, G., &amp; Ryan, J. A. (2020). <em>zoo: S3 Infrastructure for Regular and Irregular Time Series (Z’s Ordered Observations)</em>. <a href="https://CRAN.R-project.org/package=zoo">https://CRAN.R-project.org/package=zoo</a></p>
+</div>
 </div>
             </section>
 
