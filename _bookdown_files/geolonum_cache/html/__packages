@@ -36,3 +36,12 @@ stringr
 forcats
 rayshader
 shiny
+gstat
+plotly
+DescTools
+MOTE
+papaja
+kableExtra
+patchwork
+janitor
+conflicted

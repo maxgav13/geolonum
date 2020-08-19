@@ -3,7 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">Geologia Numerica</a></li>
+        <li><a href="./">Geología Numérica</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
 #    download: ["pdf", "epub"]

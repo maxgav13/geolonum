@@ -79,7 +79,7 @@ U3 = function(m1,m2=0,s=1) {
 
 ## Introducción
 
-En la sección \@ref(hip) se introdujeron las bases teóricas de lo que son las pruebas de hipótesis, las partes o elementos que la componen, y cómo tomar una decisión una vez llevada a cabo la prueba. Este capítulo se centra en la parte práctica de cómo realizar una prueba estadística paramétrica (los pasos generales). Además se introduce el concepto de tamaño del efecto (effect size - ES - en inglés), y de cómo puede éste agregar información después de realizada la prueba, así como la importancia práctica que representa.
+En la sección \@ref(hip) se introdujeron las bases teóricas de lo que son las pruebas de hipótesis, las partes o elementos que la componen, y cómo tomar una decisión una vez llevada a cabo la prueba. Este capítulo se centra en la parte práctica de cómo realizar una prueba estadística paramétrica (los pasos generales). Además se introduce el concepto de tamaño del efecto (effect size - ES - en inglés), y de cómo puede éste agregar información después de realizada la prueba, así como la importancia práctica que representa. Se recomienda revisar los apéndices para saber cómo reportar estadísticas y resultados de pruebas estadísticas, y para tener una guía de cuál prueba escoger.
 
 ## Pruebas paramétricas {#pruebas-param}
 

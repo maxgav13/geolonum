@@ -1,10 +1,12 @@
 # Datos espaciales
 
 ```{r sp-setup, include=FALSE}
+# library(gstat)
 library(sp)
 library(sf)
 library(ggspatial)
 library(raster)
+library(terra)
 library(stars)
 library(viridis)
 library(rgeos)
@@ -43,6 +45,7 @@ library(sp)
 library(sf)
 library(ggspatial)
 library(raster)
+library(terra)
 library(stars)
 library(viridis)
 library(rgeos)
@@ -65,7 +68,7 @@ Dentro de los paquetes más usados están:
 
 * *sf* [@R-sf]: Para datos vectoriales dentro de la filosofía *tidyverse*
 * *sp* [@R-sp]: El predecesor de *sf* para datos vectoriales y en grilla (no exactamente raster)
-* *raster* [@R-raster]: Para datos raster
+* *terra* y *raster* [@R-terra; @R-raster]: Para datos raster
 * *stars* [@R-stars]: El candidato a suceder a *raster*
 * *rgeos* y *rgdal* [@R-rgeos; @R-rgdal]: Interfaces para librerías básicas de manipulación de datos espaciales
 * *ggplot2* y *tmap* [@R-tmap]: Creación de mapas estáticos (*tmap* puede crear mapas interactivos)

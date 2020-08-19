@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A Reportar estadísticas | Geología Numérica: Ciencia de Datos para Geociencias</title>
+  <meta name="description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="A Reportar estadísticas | Geología Numérica: Ciencia de Datos para Geociencias" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Reportar estadísticas | Geología Numérica: Ciencia de Datos para Geociencias" />
+  
+  <meta name="twitter:description" content="Este documento compila el funcionamiento básico del software estadístico y de programación R, así como rutinas y/o comandos específicos para resolver problemas de análisis de datos en geociencias." />
+  
+
+<meta name="author" content="Maximiliano Garnier Villarreal" />
+
+
+<meta name="date" content="2020-08-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="geoestadística.html">
+<link rel="next" href="apendice-pruebas.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.11/datatables.js"></script>
+<link href="libs/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+<script src="libs/proj4js-2.3.15/proj4.js"></script>
+<link href="libs/highcharts-7.0.1/css/motion.css" rel="stylesheet" />
+<link href="libs/highcharts-7.0.1/css/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highcharts-7.0.1/highcharts.js"></script>
+<script src="libs/highcharts-7.0.1/highcharts-3d.js"></script>
+<script src="libs/highcharts-7.0.1/highcharts-more.js"></script>
+<script src="libs/highcharts-7.0.1/modules/stock.js"></script>
+<script src="libs/highcharts-7.0.1/modules/map.js"></script>
+<script src="libs/highcharts-7.0.1/modules/annotations.js"></script>
+<script src="libs/highcharts-7.0.1/modules/boost.js"></script>
+<script src="libs/highcharts-7.0.1/modules/data.js"></script>
+<script src="libs/highcharts-7.0.1/modules/drag-panes.js"></script>
+<script src="libs/highcharts-7.0.1/modules/drilldown.js"></script>
+<script src="libs/highcharts-7.0.1/modules/item-series.js"></script>
+<script src="libs/highcharts-7.0.1/modules/offline-exporting.js"></script>
+<script src="libs/highcharts-7.0.1/modules/overlapping-datalabels.js"></script>
+<script src="libs/highcharts-7.0.1/modules/exporting.js"></script>
+<script src="libs/highcharts-7.0.1/modules/export-data.js"></script>
+<script src="libs/highcharts-7.0.1/modules/funnel.js"></script>
+<script src="libs/highcharts-7.0.1/modules/heatmap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/treemap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/sankey.js"></script>
+<script src="libs/highcharts-7.0.1/modules/solid-gauge.js"></script>
+<script src="libs/highcharts-7.0.1/modules/streamgraph.js"></script>
+<script src="libs/highcharts-7.0.1/modules/sunburst.js"></script>
+<script src="libs/highcharts-7.0.1/modules/vector.js"></script>
+<script src="libs/highcharts-7.0.1/modules/wordcloud.js"></script>
+<script src="libs/highcharts-7.0.1/modules/xrange.js"></script>
+<script src="libs/highcharts-7.0.1/modules/tilemap.js"></script>
+<script src="libs/highcharts-7.0.1/modules/venn.js"></script>
+<script src="libs/highcharts-7.0.1/modules/gantt.js"></script>
+<script src="libs/highcharts-7.0.1/modules/timeline.js"></script>
+<script src="libs/highcharts-7.0.1/modules/parallel-coordinates.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/motion.js"></script>
+<script src="libs/highcharts-7.0.1/plugins/multicolor_series.js"></script>
+<script src="libs/highcharts-7.0.1/custom/reset.js"></script>
+<script src="libs/highcharts-7.0.1/custom/symbols-extra.js"></script>
+<script src="libs/highcharts-7.0.1/custom/text-symbols.js"></script>
+<script src="libs/highchart-binding-0.7.0/highchart.js"></script>
+<script src="libs/highcharts-regression.js-7.0.1/highcharts-regression.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/PopupTable-0.0.1/popup.css" rel="stylesheet" />
+<script src="libs/pacifico-1/data_stars_pacificocdf13b.txt"></script>
+<script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Geología Numérica</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a></li>
+<li class="part"><span><b>R</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introducción</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#instalación-de-r-y-rstudio"><i class="fa fa-check"></i><b>1.1</b> Instalación de R y RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#paquetes"><i class="fa fa-check"></i><b>1.2</b> Paquetes</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#ayuda-en-r"><i class="fa fa-check"></i><b>1.3</b> Ayuda en R</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#rmarkdown"><i class="fa fa-check"></i><b>1.4</b> RMarkdown</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="intro.html"><a href="intro.html#tipos-de-resultados"><i class="fa fa-check"></i><b>1.4.1</b> Tipos de resultados</a></li>
+<li class="chapter" data-level="1.4.2" data-path="intro.html"><a href="intro.html#formulas"><i class="fa fa-check"></i><b>1.4.2</b> Formulas</a></li>
+<li class="chapter" data-level="1.4.3" data-path="intro.html"><a href="intro.html#importando-datos"><i class="fa fa-check"></i><b>1.4.3</b> Importando datos</a></li>
+<li class="chapter" data-level="1.4.4" data-path="intro.html"><a href="intro.html#cálculos-en-linea"><i class="fa fa-check"></i><b>1.4.4</b> Cálculos en linea</a></li>
+<li class="chapter" data-level="1.4.5" data-path="intro.html"><a href="intro.html#importando-figuras"><i class="fa fa-check"></i><b>1.4.5</b> Importando figuras</a></li>
+<li class="chapter" data-level="1.4.6" data-path="intro.html"><a href="intro.html#salvando-y-compartiendo"><i class="fa fa-check"></i><b>1.4.6</b> Salvando y compartiendo</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#recursos"><i class="fa fa-check"></i><b>1.5</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="basico.html"><a href="basico.html"><i class="fa fa-check"></i><b>2</b> Funcionamiento básico de R</a><ul>
+<li class="chapter" data-level="2.1" data-path="basico.html"><a href="basico.html#introducción"><i class="fa fa-check"></i><b>2.1</b> Introducción</a></li>
+<li class="chapter" data-level="2.2" data-path="basico.html"><a href="basico.html#operaciones-básicas"><i class="fa fa-check"></i><b>2.2</b> Operaciones básicas</a></li>
+<li class="chapter" data-level="2.3" data-path="basico.html"><a href="basico.html#crear-objetos"><i class="fa fa-check"></i><b>2.3</b> Crear objetos</a></li>
+<li class="chapter" data-level="2.4" data-path="basico.html"><a href="basico.html#vectores"><i class="fa fa-check"></i><b>2.4</b> Vectores</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="basico.html"><a href="basico.html#numéricos"><i class="fa fa-check"></i><b>2.4.1</b> Numéricos</a></li>
+<li class="chapter" data-level="2.4.2" data-path="basico.html"><a href="basico.html#texto-string-character"><i class="fa fa-check"></i><b>2.4.2</b> Texto (string, character)</a></li>
+<li class="chapter" data-level="2.4.3" data-path="basico.html"><a href="basico.html#categóricos-factores"><i class="fa fa-check"></i><b>2.4.3</b> Categóricos (factores)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="basico.html"><a href="basico.html#matrices"><i class="fa fa-check"></i><b>2.5</b> Matrices</a></li>
+<li class="chapter" data-level="2.6" data-path="basico.html"><a href="basico.html#dataframes-listas-y-tibbles"><i class="fa fa-check"></i><b>2.6</b> DataFrames, listas y tibbles</a></li>
+<li class="chapter" data-level="2.7" data-path="basico.html"><a href="basico.html#verificando-objetos"><i class="fa fa-check"></i><b>2.7</b> Verificando objetos</a></li>
+<li class="chapter" data-level="2.8" data-path="basico.html"><a href="basico.html#guardando-el-espacio-de-trabajo"><i class="fa fa-check"></i><b>2.8</b> Guardando el espacio de trabajo</a></li>
+<li class="chapter" data-level="2.9" data-path="basico.html"><a href="basico.html#importandocargando-datos"><i class="fa fa-check"></i><b>2.9</b> Importando/cargando datos</a></li>
+<li class="chapter" data-level="2.10" data-path="basico.html"><a href="basico.html#exportando-datos"><i class="fa fa-check"></i><b>2.10</b> Exportando datos</a></li>
+<li class="chapter" data-level="2.11" data-path="basico.html"><a href="basico.html#inspeccionando-los-datos"><i class="fa fa-check"></i><b>2.11</b> Inspeccionando los datos</a></li>
+<li class="chapter" data-level="2.12" data-path="basico.html"><a href="basico.html#descripciones-generales-globales"><i class="fa fa-check"></i><b>2.12</b> Descripciones generales (globales)</a></li>
+<li class="chapter" data-level="2.13" data-path="basico.html"><a href="basico.html#recursos-1"><i class="fa fa-check"></i><b>2.13</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="avanzado.html"><a href="avanzado.html"><i class="fa fa-check"></i><b>3</b> Funcionamiento avanzado de R</a><ul>
+<li class="chapter" data-level="3.1" data-path="avanzado.html"><a href="avanzado.html#introducción-1"><i class="fa fa-check"></i><b>3.1</b> Introducción</a></li>
+<li class="chapter" data-level="3.2" data-path="avanzado.html"><a href="avanzado.html#operadores-lógicos"><i class="fa fa-check"></i><b>3.2</b> Operadores lógicos</a></li>
+<li class="chapter" data-level="3.3" data-path="avanzado.html"><a href="avanzado.html#operador-de-secuencia-pipe-operator"><i class="fa fa-check"></i><b>3.3</b> Operador de secuencia (Pipe operator)</a></li>
+<li class="chapter" data-level="3.4" data-path="avanzado.html"><a href="avanzado.html#resumen-de-variables"><i class="fa fa-check"></i><b>3.4</b> Resumen de variables</a></li>
+<li class="chapter" data-level="3.5" data-path="avanzado.html"><a href="avanzado.html#selección-y-renombre-de-variables"><i class="fa fa-check"></i><b>3.5</b> Selección y renombre de variables</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="avanzado.html"><a href="avanzado.html#select-helpers"><i class="fa fa-check"></i><b>3.5.1</b> <code>select</code> helpers</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="avanzado.html"><a href="avanzado.html#filtrado-de-observaciones"><i class="fa fa-check"></i><b>3.6</b> Filtrado de observaciones</a></li>
+<li class="chapter" data-level="3.7" data-path="avanzado.html"><a href="avanzado.html#orden-de-acuerdo-a-variables"><i class="fa fa-check"></i><b>3.7</b> Orden de acuerdo a variables</a></li>
+<li class="chapter" data-level="3.8" data-path="avanzado.html"><a href="avanzado.html#creación-de-variables"><i class="fa fa-check"></i><b>3.8</b> Creación de variables</a></li>
+<li class="chapter" data-level="3.9" data-path="avanzado.html"><a href="avanzado.html#conteo-de-variables-cualitativas"><i class="fa fa-check"></i><b>3.9</b> Conteo de variables cualitativas</a></li>
+<li class="chapter" data-level="3.10" data-path="avanzado.html"><a href="avanzado.html#tabla-interactiva"><i class="fa fa-check"></i><b>3.10</b> Tabla interactiva</a></li>
+<li class="chapter" data-level="3.11" data-path="avanzado.html"><a href="avanzado.html#datos-relacionales"><i class="fa fa-check"></i><b>3.11</b> Datos relacionales</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="avanzado.html"><a href="avanzado.html#uniones-de-transformación"><i class="fa fa-check"></i><b>3.11.1</b> Uniones de transformación</a></li>
+<li class="chapter" data-level="3.11.2" data-path="avanzado.html"><a href="avanzado.html#uniones-de-filtro"><i class="fa fa-check"></i><b>3.11.2</b> Uniones de filtro</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="avanzado.html"><a href="avanzado.html#datos-ordenados-tidy-data"><i class="fa fa-check"></i><b>3.12</b> Datos ordenados (Tidy data)</a><ul>
+<li class="chapter" data-level="3.12.1" data-path="avanzado.html"><a href="avanzado.html#formatos-largo-y-ancho"><i class="fa fa-check"></i><b>3.12.1</b> Formatos largo y ancho</a></li>
+<li class="chapter" data-level="3.12.2" data-path="avanzado.html"><a href="avanzado.html#separar-y-unir"><i class="fa fa-check"></i><b>3.12.2</b> Separar y unir</a></li>
+</ul></li>
+<li class="chapter" data-level="3.13" data-path="avanzado.html"><a href="avanzado.html#nest"><i class="fa fa-check"></i><b>3.13</b> Datos anidados (Nesting)</a></li>
+<li class="chapter" data-level="3.14" data-path="avanzado.html"><a href="avanzado.html#recursos-2"><i class="fa fa-check"></i><b>3.14</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos-1.html"><a href="gráficos-1.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a><ul>
+<li class="chapter" data-level="4.1" data-path="gráficos-1.html"><a href="gráficos-1.html#introducción-2"><i class="fa fa-check"></i><b>4.1</b> Introducción</a></li>
+<li class="chapter" data-level="4.2" data-path="gráficos-1.html"><a href="gráficos-1.html#estáticos"><i class="fa fa-check"></i><b>4.2</b> Estáticos</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma"><i class="fa fa-check"></i><b>4.2.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras"><i class="fa fa-check"></i><b>4.2.2</b> Barras</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot"><i class="fa fa-check"></i><b>4.2.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión"><i class="fa fa-check"></i><b>4.2.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos-1.html"><a href="gráficos-1.html#líneas"><i class="fa fa-check"></i><b>4.2.5</b> líneas</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos-1.html"><a href="gráficos-1.html#gráficos-estadísticos"><i class="fa fa-check"></i><b>4.2.6</b> Gráficos estadísticos</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes"><i class="fa fa-check"></i><b>4.2.7</b> Transformación de ejes</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos-1.html"><a href="gráficos-1.html#limites-de-ejes-zoom"><i class="fa fa-check"></i><b>4.2.8</b> Limites de ejes (Zoom)</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos-1.html"><a href="gráficos-1.html#salvando-gráficos"><i class="fa fa-check"></i><b>4.2.9</b> Salvando gráficos</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos-1.html"><a href="gráficos-1.html#interactivos"><i class="fa fa-check"></i><b>4.3</b> Interactivos</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos-1.html"><a href="gráficos-1.html#histograma-1"><i class="fa fa-check"></i><b>4.3.1</b> Histograma</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos-1.html"><a href="gráficos-1.html#barras-1"><i class="fa fa-check"></i><b>4.3.2</b> Barras</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos-1.html"><a href="gráficos-1.html#boxplot-1"><i class="fa fa-check"></i><b>4.3.3</b> Boxplot</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos-1.html"><a href="gráficos-1.html#dispersión-1"><i class="fa fa-check"></i><b>4.3.4</b> Dispersión</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos-1.html"><a href="gráficos-1.html#líneas-1"><i class="fa fa-check"></i><b>4.3.5</b> líneas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos-1.html"><a href="gráficos-1.html#transformación-de-ejes-1"><i class="fa fa-check"></i><b>4.3.6</b> Transformación de ejes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="gráficos-1.html"><a href="gráficos-1.html#recursos-3"><i class="fa fa-check"></i><b>4.4</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iteración.html"><a href="iteración.html"><i class="fa fa-check"></i><b>5</b> Iteración</a><ul>
+<li class="chapter" data-level="5.1" data-path="iteración.html"><a href="iteración.html#introducción-3"><i class="fa fa-check"></i><b>5.1</b> Introducción</a></li>
+<li class="chapter" data-level="5.2" data-path="iteración.html"><a href="iteración.html#iterando-sobre-un-objeto"><i class="fa fa-check"></i><b>5.2</b> Iterando sobre un objeto</a></li>
+<li class="chapter" data-level="5.3" data-path="iteración.html"><a href="iteración.html#iterando-sobre-dos-objetos"><i class="fa fa-check"></i><b>5.3</b> Iterando sobre dos objetos</a></li>
+<li class="chapter" data-level="5.4" data-path="iteración.html"><a href="iteración.html#leyendo-archivos-y-combinándolos"><i class="fa fa-check"></i><b>5.4</b> Leyendo archivos y combinándolos</a></li>
+<li class="chapter" data-level="5.5" data-path="iteración.html"><a href="iteración.html#datos-anidados-caso-1"><i class="fa fa-check"></i><b>5.5</b> Datos anidados, caso 1</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="iteración.html"><a href="iteración.html#efectos-secundarios"><i class="fa fa-check"></i><b>5.5.1</b> Efectos secundarios</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="iteración.html"><a href="iteración.html#datos-anidados-caso-2"><i class="fa fa-check"></i><b>5.6</b> Datos anidados, caso 2</a></li>
+<li class="chapter" data-level="5.7" data-path="iteración.html"><a href="iteración.html#recursos-4"><i class="fa fa-check"></i><b>5.7</b> Recursos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="datos-espaciales.html"><a href="datos-espaciales.html"><i class="fa fa-check"></i><b>6</b> Datos espaciales</a><ul>
+<li class="chapter" data-level="6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#introducción-4"><i class="fa fa-check"></i><b>6.1</b> Introducción</a></li>
+<li class="chapter" data-level="6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#paquetes-para-datos-espaciales"><i class="fa fa-check"></i><b>6.2</b> Paquetes para datos espaciales</a></li>
+<li class="chapter" data-level="6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#sistemas-de-referencias-de-coordenadas-crs"><i class="fa fa-check"></i><b>6.3</b> Sistemas de Referencias de Coordenadas (CRS)</a></li>
+<li class="chapter" data-level="6.4" data-path="datos-espaciales.html"><a href="datos-espaciales.html#importar-datos"><i class="fa fa-check"></i><b>6.4</b> Importar datos</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-de-texto"><i class="fa fa-check"></i><b>6.4.1</b> Desde archivos de texto</a></li>
+<li class="chapter" data-level="6.4.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#desde-archivos-espaciales"><i class="fa fa-check"></i><b>6.4.2</b> Desde archivos espaciales</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="datos-espaciales.html"><a href="datos-espaciales.html#exportar-datos"><i class="fa fa-check"></i><b>6.5</b> Exportar datos</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#vectoriales"><i class="fa fa-check"></i><b>6.5.1</b> Vectoriales</a></li>
+<li class="chapter" data-level="6.5.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#raster-1"><i class="fa fa-check"></i><b>6.5.2</b> Raster</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="datos-espaciales.html"><a href="datos-espaciales.html#mapas"><i class="fa fa-check"></i><b>6.6</b> Mapas</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="datos-espaciales.html"><a href="datos-espaciales.html#estáticos-1"><i class="fa fa-check"></i><b>6.6.1</b> Estáticos</a></li>
+<li class="chapter" data-level="6.6.2" data-path="datos-espaciales.html"><a href="datos-espaciales.html#dinámicos"><i class="fa fa-check"></i><b>6.6.2</b> Dinámicos</a></li>
+<li class="chapter" data-level="6.6.3" data-path="datos-espaciales.html"><a href="datos-espaciales.html#modelos-de-sombras"><i class="fa fa-check"></i><b>6.6.3</b> Modelos de sombras</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="datos-espaciales.html"><a href="datos-espaciales.html#recursos-5"><i class="fa fa-check"></i><b>6.7</b> Recursos</a></li>
+</ul></li>
+<li class="part"><span><b>Análisis de datos</b></span></li>
+<li class="chapter" data-level="7" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html"><i class="fa fa-check"></i><b>7</b> Álgebra lineal</a><ul>
+<li class="chapter" data-level="7.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#introducción-5"><i class="fa fa-check"></i><b>7.1</b> Introducción</a></li>
+<li class="chapter" data-level="7.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#tensores"><i class="fa fa-check"></i><b>7.2</b> Tensores</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#vectores-1"><i class="fa fa-check"></i><b>7.2.1</b> Vectores</a></li>
+<li class="chapter" data-level="7.2.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#matrices-1"><i class="fa fa-check"></i><b>7.2.2</b> Matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#eigenvectors-y-eigenvalues"><i class="fa fa-check"></i><b>7.3</b> Eigenvectors y Eigenvalues</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#definición"><i class="fa fa-check"></i><b>7.3.1</b> Definición</a></li>
+<li class="chapter" data-level="7.3.2" data-path="álgebra-lineal.html"><a href="álgebra-lineal.html#cálculo"><i class="fa fa-check"></i><b>7.3.2</b> Cálculo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html"><i class="fa fa-check"></i><b>8</b> Introducción a estadística</a><ul>
+<li class="chapter" data-level="8.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#introducción-6"><i class="fa fa-check"></i><b>8.1</b> Introducción</a></li>
+<li class="chapter" data-level="8.2" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#tipos"><i class="fa fa-check"></i><b>8.2</b> Tipos</a></li>
+<li class="chapter" data-level="8.3" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#modelos"><i class="fa fa-check"></i><b>8.3</b> Modelos</a></li>
+<li class="chapter" data-level="8.4" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#nomenclatura"><i class="fa fa-check"></i><b>8.4</b> Nomenclatura</a></li>
+<li class="chapter" data-level="8.5" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#variables"><i class="fa fa-check"></i><b>8.5</b> Variables</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#cualitativa"><i class="fa fa-check"></i><b>8.5.1</b> Cualitativa</a></li>
+<li class="chapter" data-level="8.5.2" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#cuantitativa"><i class="fa fa-check"></i><b>8.5.2</b> Cuantitativa</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#métodos-de-análisis"><i class="fa fa-check"></i><b>8.6</b> Métodos de análisis</a></li>
+<li class="chapter" data-level="8.7" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#muestreo"><i class="fa fa-check"></i><b>8.7</b> Muestreo</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#tipos-1"><i class="fa fa-check"></i><b>8.7.1</b> Tipos</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="introducción-a-estadística.html"><a href="introducción-a-estadística.html#incertidumbre"><i class="fa fa-check"></i><b>8.8</b> Incertidumbre</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html"><i class="fa fa-check"></i><b>9</b> Estadística Descriptiva Univariable</a><ul>
+<li class="chapter" data-level="9.1" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#introducción-7"><i class="fa fa-check"></i><b>9.1</b> Introducción</a></li>
+<li class="chapter" data-level="9.2" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#tablas-de-frecuencias"><i class="fa fa-check"></i><b>9.2</b> Tablas de frecuencias</a></li>
+<li class="chapter" data-level="9.3" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#gráficas"><i class="fa fa-check"></i><b>9.3</b> Gráficas</a></li>
+<li class="chapter" data-level="9.4" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#resúmenes-numéricos"><i class="fa fa-check"></i><b>9.4</b> Resúmenes numéricos</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-tendencia-central"><i class="fa fa-check"></i><b>9.4.1</b> Medidas de tendencia central</a></li>
+<li class="chapter" data-level="9.4.2" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-dispersión"><i class="fa fa-check"></i><b>9.4.2</b> Medidas de dispersión</a></li>
+<li class="chapter" data-level="9.4.3" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-posición"><i class="fa fa-check"></i><b>9.4.3</b> Medidas de posición</a></li>
+<li class="chapter" data-level="9.4.4" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#medidas-de-forma"><i class="fa fa-check"></i><b>9.4.4</b> Medidas de forma</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="estadística-descriptiva-univariable.html"><a href="estadística-descriptiva-univariable.html#resumen-general"><i class="fa fa-check"></i><b>9.5</b> Resumen general</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html"><i class="fa fa-check"></i><b>10</b> Estadística Descriptiva Bivariable</a><ul>
+<li class="chapter" data-level="10.1" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#introducción-8"><i class="fa fa-check"></i><b>10.1</b> Introducción</a></li>
+<li class="chapter" data-level="10.2" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#covarianza"><i class="fa fa-check"></i><b>10.2</b> Covarianza</a></li>
+<li class="chapter" data-level="10.3" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#bivar-cor"><i class="fa fa-check"></i><b>10.3</b> Correlación</a></li>
+<li class="chapter" data-level="10.4" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#bivar-reg"><i class="fa fa-check"></i><b>10.4</b> Regresión</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#nomenclatura-1"><i class="fa fa-check"></i><b>10.4.1</b> Nomenclatura</a></li>
+<li class="chapter" data-level="10.4.2" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#supuestos"><i class="fa fa-check"></i><b>10.4.2</b> Supuestos</a></li>
+<li class="chapter" data-level="10.4.3" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#tipos-2"><i class="fa fa-check"></i><b>10.4.3</b> Tipos</a></li>
+<li class="chapter" data-level="10.4.4" data-path="estadística-descriptiva-bivariable.html"><a href="estadística-descriptiva-bivariable.html#medidas-de-ajuste-y-error"><i class="fa fa-check"></i><b>10.4.4</b> Medidas de ajuste y error</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="probabilidad.html"><a href="probabilidad.html"><i class="fa fa-check"></i><b>11</b> Probabilidad</a><ul>
+<li class="chapter" data-level="11.1" data-path="probabilidad.html"><a href="probabilidad.html#introducción-9"><i class="fa fa-check"></i><b>11.1</b> Introducción</a></li>
+<li class="chapter" data-level="11.2" data-path="probabilidad.html"><a href="probabilidad.html#axiomas-y-nomenclatura"><i class="fa fa-check"></i><b>11.2</b> Axiomas y Nomenclatura</a></li>
+<li class="chapter" data-level="11.3" data-path="probabilidad.html"><a href="probabilidad.html#reglas-de-probabilidad"><i class="fa fa-check"></i><b>11.3</b> Reglas de probabilidad</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-suma"><i class="fa fa-check"></i><b>11.3.1</b> Regla de la suma</a></li>
+<li class="chapter" data-level="11.3.2" data-path="probabilidad.html"><a href="probabilidad.html#regla-de-la-multiplicación"><i class="fa fa-check"></i><b>11.3.2</b> Regla de la multiplicación</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="probabilidad.html"><a href="probabilidad.html#variables-aleatorias"><i class="fa fa-check"></i><b>11.4</b> Variables aleatorias</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html"><i class="fa fa-check"></i><b>12</b> Distribuciones de Probabilidad</a><ul>
+<li class="chapter" data-level="12.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#introducción-10"><i class="fa fa-check"></i><b>12.1</b> Introducción</a></li>
+<li class="chapter" data-level="12.2" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-binomial"><i class="fa fa-check"></i><b>12.2</b> Distribución Binomial</a></li>
+<li class="chapter" data-level="12.3" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-de-poisson"><i class="fa fa-check"></i><b>12.3</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.4" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-o-gaussiana"><i class="fa fa-check"></i><b>12.4</b> Distribución Normal o Gaussiana</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribución-normal-estándar-z"><i class="fa fa-check"></i><b>12.4.1</b> Distribución Normal Estándar (Z)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="distribuciones-de-probabilidad.html"><a href="distribuciones-de-probabilidad.html#distribuciones-de-probabilidad-en-r"><i class="fa fa-check"></i><b>12.5</b> Distribuciones de probabilidad en <strong>R</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html"><i class="fa fa-check"></i><b>13</b> Introducción a Estadística Inferencial</a><ul>
+<li class="chapter" data-level="13.1" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#introducción-11"><i class="fa fa-check"></i><b>13.1</b> Introducción</a></li>
+<li class="chapter" data-level="13.2" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#distribuciones-muestrales"><i class="fa fa-check"></i><b>13.2</b> Distribuciones muestrales</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-x"><i class="fa fa-check"></i><b>13.2.1</b> Media <span class="math inline">\((\bar{x})\)</span></a></li>
+<li class="chapter" data-level="13.2.2" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-x2"><i class="fa fa-check"></i><b>13.2.2</b> Diferencia de medias <span class="math inline">\((\bar{x}_1-\bar{x}_2)\)</span></a></li>
+<li class="chapter" data-level="13.2.3" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-chi"><i class="fa fa-check"></i><b>13.2.3</b> Varianza <span class="math inline">\((s^2)\)</span></a></li>
+<li class="chapter" data-level="13.2.4" data-path="introducción-a-estadística-inferencial.html"><a href="introducción-a-estadística-inferencial.html#infer-f"><i class="fa fa-check"></i><b>13.2.4</b> Dos varianzas <span class="math inline">\(\left( \frac{s_1^2}{s_2^2} \right)\)</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html"><i class="fa fa-check"></i><b>14</b> Estimación e Hipótesis</a><ul>
+<li class="chapter" data-level="14.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#introducción-12"><i class="fa fa-check"></i><b>14.1</b> Introducción</a></li>
+<li class="chapter" data-level="14.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim"><i class="fa fa-check"></i><b>14.2</b> Estimación</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#media-1"><i class="fa fa-check"></i><b>14.2.1</b> Media</a></li>
+<li class="chapter" data-level="14.2.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-diff-medias"><i class="fa fa-check"></i><b>14.2.2</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="14.2.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-ic-chi"><i class="fa fa-check"></i><b>14.2.3</b> Varianza</a></li>
+<li class="chapter" data-level="14.2.4" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estim-ic-f"><i class="fa fa-check"></i><b>14.2.4</b> Dos varianzas</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#hip"><i class="fa fa-check"></i><b>14.3</b> Hipótesis</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#nula-h_0-y-alterna-h_1"><i class="fa fa-check"></i><b>14.3.1</b> Nula (<span class="math inline">\(H_0\)</span>) y Alterna (<span class="math inline">\(H_1\)</span>)</a></li>
+<li class="chapter" data-level="14.3.2" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#resultados-y-errores"><i class="fa fa-check"></i><b>14.3.2</b> Resultados y Errores</a></li>
+<li class="chapter" data-level="14.3.3" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#estadístico-de-prueba-y-crítico"><i class="fa fa-check"></i><b>14.3.3</b> Estadístico de prueba y crítico</a></li>
+<li class="chapter" data-level="14.3.4" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#contrastes-y-valor-p"><i class="fa fa-check"></i><b>14.3.4</b> Contrastes y valor-<em>p</em></a></li>
+<li class="chapter" data-level="14.3.5" data-path="estimación-e-hipótesis.html"><a href="estimación-e-hipótesis.html#decisión"><i class="fa fa-check"></i><b>14.3.5</b> Decisión</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html"><i class="fa fa-check"></i><b>15</b> Pruebas Estadísticas</a><ul>
+<li class="chapter" data-level="15.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#introducción-13"><i class="fa fa-check"></i><b>15.1</b> Introducción</a></li>
+<li class="chapter" data-level="15.2" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#pruebas-param"><i class="fa fa-check"></i><b>15.2</b> Pruebas paramétricas</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#supuestos-pasos"><i class="fa fa-check"></i><b>15.2.1</b> Supuestos y Pasos</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#ES-p"><i class="fa fa-check"></i><b>15.3</b> Tamaño del Efecto</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#familias-de-tamaño-del-efecto"><i class="fa fa-check"></i><b>15.3.1</b> Familias de tamaño del efecto</a></li>
+<li class="chapter" data-level="15.3.2" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#ecuaciones-para-tamaños-de-efecto"><i class="fa fa-check"></i><b>15.3.2</b> Ecuaciones para tamaños de efecto</a></li>
+<li class="chapter" data-level="15.3.3" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#clasificación-de-tamaños-de-efecto"><i class="fa fa-check"></i><b>15.3.3</b> Clasificación de tamaños de efecto</a></li>
+<li class="chapter" data-level="15.3.4" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#importancia-del-tamaño-del-efecto"><i class="fa fa-check"></i><b>15.3.4</b> Importancia del tamaño del efecto</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-z1"><i class="fa fa-check"></i><b>15.4</b> <span class="math inline">\(z\)</span> de 1 muestra</a></li>
+<li class="chapter" data-level="15.5" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-t1"><i class="fa fa-check"></i><b>15.5</b> <span class="math inline">\(t\)</span> de 1 muestra</a></li>
+<li class="chapter" data-level="15.6" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-t2-ind"><i class="fa fa-check"></i><b>15.6</b> <span class="math inline">\(t\)</span> de 2 muestras independientes</a></li>
+<li class="chapter" data-level="15.7" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-t2-dep"><i class="fa fa-check"></i><b>15.7</b> <span class="math inline">\(t\)</span> de 2 muestras dependientes</a></li>
+<li class="chapter" data-level="15.8" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-aov"><i class="fa fa-check"></i><b>15.8</b> ANOVA de 1-factor entre-sujetos</a><ul>
+<li class="chapter" data-level="15.8.1" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#relación-entre-la-prueba-t-de-2-muestras-independientes-y-anova-de-1-factor-entre-sujetos"><i class="fa fa-check"></i><b>15.8.1</b> Relación entre la prueba <span class="math inline">\(t\)</span> de 2 muestras independientes y ANOVA de 1-factor entre-sujetos</a></li>
+</ul></li>
+<li class="chapter" data-level="15.9" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-pearson"><i class="fa fa-check"></i><b>15.9</b> Correlación de Pearson</a></li>
+<li class="chapter" data-level="15.10" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-rpb"><i class="fa fa-check"></i><b>15.10</b> Correlación Punto Biserial</a></li>
+<li class="chapter" data-level="15.11" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-chi"><i class="fa fa-check"></i><b>15.11</b> <span class="math inline">\(\chi^2\)</span> para 1 varianza</a></li>
+<li class="chapter" data-level="15.12" data-path="pruebas-estadísticas.html"><a href="pruebas-estadísticas.html#prueba-f"><i class="fa fa-check"></i><b>15.12</b> <span class="math inline">\(F\)</span> para 2 varianzas</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html"><i class="fa fa-check"></i><b>16</b> Estadística No Paramétrica</a><ul>
+<li class="chapter" data-level="16.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#introducción-14"><i class="fa fa-check"></i><b>16.1</b> Introducción</a></li>
+<li class="chapter" data-level="16.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-noparam"><i class="fa fa-check"></i><b>16.2</b> Pruebas no-paramétricas</a></li>
+<li class="chapter" data-level="16.3" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#ES-np"><i class="fa fa-check"></i><b>16.3</b> Tamaño del efecto</a></li>
+<li class="chapter" data-level="16.4" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-chi2-nominales"><i class="fa fa-check"></i><b>16.4</b> Pruebas <span class="math inline">\(\chi^2\)</span> (nominales)</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-chi-gof"><i class="fa fa-check"></i><b>16.4.1</b> Bondad de ajuste</a></li>
+<li class="chapter" data-level="16.4.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#tab-contingencia"><i class="fa fa-check"></i><b>16.4.2</b> Tablas de Contingencia</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#pruebas-sobre-rangos-ordinales"><i class="fa fa-check"></i><b>16.5</b> Pruebas sobre rangos (ordinales)</a><ul>
+<li class="chapter" data-level="16.5.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-wilcoxon"><i class="fa fa-check"></i><b>16.5.1</b> Rango con signo de Wilcoxon</a></li>
+<li class="chapter" data-level="16.5.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-mwu"><i class="fa fa-check"></i><b>16.5.2</b> Suma de rangos de Wilcoxon / U de Mann-Whitney</a></li>
+<li class="chapter" data-level="16.5.3" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-kruskal"><i class="fa fa-check"></i><b>16.5.3</b> Kruskal-Wallis</a></li>
+<li class="chapter" data-level="16.5.4" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#prueba-spearman"><i class="fa fa-check"></i><b>16.5.4</b> Correlación de Spearman</a></li>
+</ul></li>
+<li class="chapter" data-level="16.6" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#bootstrap"><i class="fa fa-check"></i><b>16.6</b> Bootstrap (remuestreo)</a><ul>
+<li class="chapter" data-level="16.6.1" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#infer"><i class="fa fa-check"></i><b>16.6.1</b> <em>infer</em></a></li>
+<li class="chapter" data-level="16.6.2" data-path="estadística-no-paramétrica.html"><a href="estadística-no-paramétrica.html#rsample"><i class="fa fa-check"></i><b>16.6.2</b> <em>rsample</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="estadística-direccional.html"><a href="estadística-direccional.html"><i class="fa fa-check"></i><b>17</b> Estadística Direccional</a><ul>
+<li class="chapter" data-level="17.1" data-path="estadística-direccional.html"><a href="estadística-direccional.html#introducción-15"><i class="fa fa-check"></i><b>17.1</b> Introducción</a></li>
+<li class="chapter" data-level="17.2" data-path="estadística-direccional.html"><a href="estadística-direccional.html#representación-gráfica"><i class="fa fa-check"></i><b>17.2</b> Representación gráfica</a></li>
+<li class="chapter" data-level="17.3" data-path="estadística-direccional.html"><a href="estadística-direccional.html#datos-circulares"><i class="fa fa-check"></i><b>17.3</b> Datos circulares</a><ul>
+<li class="chapter" data-level="17.3.1" data-path="estadística-direccional.html"><a href="estadística-direccional.html#estadística-descriptiva"><i class="fa fa-check"></i><b>17.3.1</b> Estadística descriptiva</a></li>
+<li class="chapter" data-level="17.3.2" data-path="estadística-direccional.html"><a href="estadística-direccional.html#estadística-inferencial"><i class="fa fa-check"></i><b>17.3.2</b> Estadística inferencial</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="estadística-direccional.html"><a href="estadística-direccional.html#datos-esféricos"><i class="fa fa-check"></i><b>17.4</b> Datos esféricos</a><ul>
+<li class="chapter" data-level="17.4.1" data-path="estadística-direccional.html"><a href="estadística-direccional.html#estadística-descriptiva-1"><i class="fa fa-check"></i><b>17.4.1</b> Estadística descriptiva</a></li>
+<li class="chapter" data-level="17.4.2" data-path="estadística-direccional.html"><a href="estadística-direccional.html#estadística-inferencial-1"><i class="fa fa-check"></i><b>17.4.2</b> Estadística inferencial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html"><i class="fa fa-check"></i><b>18</b> Secuencias de Datos</a><ul>
+<li class="chapter" data-level="18.1" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#secuencias-intro"><i class="fa fa-check"></i><b>18.1</b> Introducción</a></li>
+<li class="chapter" data-level="18.2" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#secuencias-eventos"><i class="fa fa-check"></i><b>18.2</b> Eventos</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#prueba-tend-int"><i class="fa fa-check"></i><b>18.2.1</b> Prueba de tendencia de intervalos</a></li>
+<li class="chapter" data-level="18.2.2" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#prueba-runs"><i class="fa fa-check"></i><b>18.2.2</b> Prueba de corridas (rachas)</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#secuencias-series"><i class="fa fa-check"></i><b>18.3</b> Series</a><ul>
+<li class="chapter" data-level="18.3.1" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#series-tratamiento"><i class="fa fa-check"></i><b>18.3.1</b> Tratamiento de datos</a></li>
+<li class="chapter" data-level="18.3.2" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#series-ac"><i class="fa fa-check"></i><b>18.3.2</b> Auto-correlación</a></li>
+<li class="chapter" data-level="18.3.3" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#series-cc"><i class="fa fa-check"></i><b>18.3.3</b> Correlación-cruzada</a></li>
+<li class="chapter" data-level="18.3.4" data-path="secuencias-de-datos.html"><a href="secuencias-de-datos.html#series-ts"><i class="fa fa-check"></i><b>18.3.4</b> Objetos de serie</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="geoestadística.html"><a href="geoestadística.html"><i class="fa fa-check"></i><b>19</b> Geoestadística</a><ul>
+<li class="chapter" data-level="19.1" data-path="geoestadística.html"><a href="geoestadística.html#geostats-intro"><i class="fa fa-check"></i><b>19.1</b> Introducción</a></li>
+<li class="chapter" data-level="19.2" data-path="geoestadística.html"><a href="geoestadística.html#geostats-met-interp"><i class="fa fa-check"></i><b>19.2</b> Métodos de interpolación</a></li>
+<li class="chapter" data-level="19.3" data-path="geoestadística.html"><a href="geoestadística.html#geostats-conceptos"><i class="fa fa-check"></i><b>19.3</b> Conceptos de geoestadística</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="geoestadística.html"><a href="geoestadística.html#variable-regionalizada"><i class="fa fa-check"></i><b>19.3.1</b> Variable regionalizada</a></li>
+<li class="chapter" data-level="19.3.2" data-path="geoestadística.html"><a href="geoestadística.html#correlación-espacial"><i class="fa fa-check"></i><b>19.3.2</b> Correlación espacial</a></li>
+<li class="chapter" data-level="19.3.3" data-path="geoestadística.html"><a href="geoestadística.html#diagrama-de-dispersión-h-h-scatterplot"><i class="fa fa-check"></i><b>19.3.3</b> Diagrama de dispersión-<span class="math inline">\(h\)</span> (<span class="math inline">\(h\)</span>-scatterplot)</a></li>
+<li class="chapter" data-level="19.3.4" data-path="geoestadística.html"><a href="geoestadística.html#semivarianza"><i class="fa fa-check"></i><b>19.3.4</b> Semivarianza</a></li>
+<li class="chapter" data-level="19.3.5" data-path="geoestadística.html"><a href="geoestadística.html#variograma-experimental"><i class="fa fa-check"></i><b>19.3.5</b> Variograma experimental</a></li>
+<li class="chapter" data-level="19.3.6" data-path="geoestadística.html"><a href="geoestadística.html#modelo-de-variograma"><i class="fa fa-check"></i><b>19.3.6</b> Modelo de variograma</a></li>
+<li class="chapter" data-level="19.3.7" data-path="geoestadística.html"><a href="geoestadística.html#anisotropía"><i class="fa fa-check"></i><b>19.3.7</b> Anisotropía</a></li>
+<li class="chapter" data-level="19.3.8" data-path="geoestadística.html"><a href="geoestadística.html#validación-cruzada"><i class="fa fa-check"></i><b>19.3.8</b> Validación cruzada</a></li>
+<li class="chapter" data-level="19.3.9" data-path="geoestadística.html"><a href="geoestadística.html#kriging"><i class="fa fa-check"></i><b>19.3.9</b> Kriging</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="geoestadística.html"><a href="geoestadística.html#geostats-analisis"><i class="fa fa-check"></i><b>19.4</b> Análisis geoestadístico</a><ul>
+<li class="chapter" data-level="19.4.1" data-path="geoestadística.html"><a href="geoestadística.html#análisis-exploratorio-de-datos"><i class="fa fa-check"></i><b>19.4.1</b> Análisis Exploratorio de Datos</a></li>
+<li class="chapter" data-level="19.4.2" data-path="geoestadística.html"><a href="geoestadística.html#modelado-geoestadístico"><i class="fa fa-check"></i><b>19.4.2</b> Modelado geoestadístico</a></li>
+<li class="chapter" data-level="19.4.3" data-path="geoestadística.html"><a href="geoestadística.html#interpolación-kriging"><i class="fa fa-check"></i><b>19.4.3</b> Interpolación (Kriging)</a></li>
+</ul></li>
+</ul></li>
+<li class="appendix"><span><b>Apéndices</b></span></li>
+<li class="chapter" data-level="A" data-path="apendice-repote.html"><a href="apendice-repote.html"><i class="fa fa-check"></i><b>A</b> Reportar estadísticas</a></li>
+<li class="chapter" data-level="B" data-path="apendice-pruebas.html"><a href="apendice-pruebas.html"><i class="fa fa-check"></i><b>B</b> Escoger prueba estadística</a></li>
+<li class="chapter" data-level="" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i>Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Creado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geología Numérica: Ciencia de Datos para Geociencias</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="apendice-repote" class="section level1">
+<h1><span class="header-section-number">A</span> Reportar estadísticas</h1>
+<p>El Manual de APA <span class="citation">(<a href="#ref-americanpsychologicalassociation2010">2010</a>)</span> presenta guías de cómo reportar estadísticas. Estas guías han sido utilizadas a lo largo de este documento y se resumen aquí los aspectos más importantes.</p>
+<ul>
+<li>Fracciones decimales</li>
+</ul>
+<p>Para los números que no puedan ser mayor que 1 no se usará cero antes del punto decimal. Ejemplos de este caso son las probabilidades (<span class="math inline">\(p\)</span>), medidas de asociación (<span class="math inline">\(r,\ r_s,\ R^2,\ \eta^2,\ V\)</span>), y niveles de significancia (<span class="math inline">\(\alpha\)</span>). En el caso del valor-<span class="math inline">\(p\)</span> se debe reportar el valor exacto a menos de que sea menor a <span class="math inline">\(.001\)</span>.</p>
+<p>Por ejemplo: <span class="math inline">\(r=.56\)</span>, <span class="math inline">\(\eta^2=.15\)</span>, <span class="math inline">\(\alpha=.05\)</span>, <span class="math inline">\(p=.21\)</span>, <span class="math inline">\(p &lt; .001\)</span>.</p>
+<p>Se usarán generalmente dos decimales al reportar resultados, ésto para facilitar la comprensión. En caso de que el resultado presente más decimales se puede realizar una conversión de unidades para reportar únicamente dos decimales (ejemplo: metros a milimetros)</p>
+<ul>
+<li>Estadísticas</li>
+</ul>
+<p>Para reportar estadísticas se escribirán éstas con su abreviatura o símbolo matemático respectivo en itálica, y se seguirá la recomendación en el uso de decimales mencionada anteriormente.</p>
+<p>Por ejemplo: <span class="math inline">\(M=30.53\)</span> o <span class="math inline">\(\bar{X}=30.53\)</span>.</p>
+<p>La Tabla <a href="apendice-repote.html#tab:simbologia">A.1</a> muestra algunas de la estadísticas más usadas y las formas aceptadas de reportarlas.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:simbologia">Tabla A.1: </span>Abreviaturas y símbolos estadísticos
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Abreviatura / Símbolo
+</th>
+<th style="text-align:center;">
+Definición
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;width: 10em; ">
+IC (CI)
+</td>
+<td style="text-align:center;width: 30em; ">
+Intervalo de confianza
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(d\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Medida de Cohen para comparación de medias
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+TE (ES)
+</td>
+<td style="text-align:center;width: 30em; ">
+Tamaño del efecto
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(RMSE\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Error cuadrático medio
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(F(v_1,v_2)\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Estadístico <span class="math inline">\(F\)</span> con grados de libertad <span class="math inline">\(v_1,v_2\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(g\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Medida de Hedges para comparación de medias, corregida para tamaño de muestra pequeño
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(M (\bar{X})\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Media muestral
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(Mdn\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Mediana muestral
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(n\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Número de observaciones en un grupo/muestra específico
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(N\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Número de observaciones total
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+ns
+</td>
+<td style="text-align:center;width: 30em; ">
+Sin significancia estadística
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(r\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Correlación de Pearson
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(r_s\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Correlación de Spearman
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(R^2\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Coeficiente de determinación
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(s\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Desviación estándar muestral
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+DE (SD)
+</td>
+<td style="text-align:center;width: 30em; ">
+Desviación estándar
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(t\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Estadístico/distribución <span class="math inline">\(t\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(z\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Valor estandarizado
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(\alpha\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Nivel de significancia
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(\eta^2\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Medida de asociación (eta cuadrada)
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(\mu\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Media poblacional
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(v\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Grados de libertad
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+<span class="math inline">\(\chi^2\)</span>
+</td>
+<td style="text-align:center;width: 30em; ">
+Estadístico/distribución chi-cuadrada
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Nota:</span> <sup></sup> Conforme APA <span class="citation">(<a href="#ref-americanpsychologicalassociation2010">2010</a>)</span>
+</td>
+</tr>
+</tfoot>
+</table>
+<ul>
+<li>Resultados de pruebas estadísticas</li>
+</ul>
+<p>A como se mencionó en los capítulos <a href="pruebas-estadísticas.html#pruebas-estadísticas">Pruebas Estadísticas</a> y <a href="estadística-no-paramétrica.html#estadística-no-paramétrica">Estadística No Paramétrica</a>, y por recomendaciones de APA <span class="citation">(<a href="#ref-americanpsychologicalassociation2010">2010</a>)</span>, se deberá reportar el resultado de la prueba estadística así como el tamaño de efecto respectivos (y de ser posible su intervalo de confianza).</p>
+<p>En los siguientes formatos <code>prueba</code> se refiere a la prueba realizada (<span class="math inline">\(z,\ t,\ F\)</span>), <code>parámetro</code> se refiere a los grados de libertas (<span class="math inline">\(v\)</span>), <code>estadístico</code> se refiere al valor obtenido en la prueba, <code>significancia</code> se refiere al valor-<em>p</em> de la prueba, <code>tamaño del efecto</code> se refiere al valor del tamaño del efecto respectivo, <span class="math inline">\(\alpha\)</span> se refiere al nivel de significancia escogido (por lo general <span class="math inline">\(\alpha=.05\)</span>), e <code>IC [intervalo de confianza]</code> se refiere al intervalo de confianza del tamaño del efecto.</p>
+<p>El número de sujetos total se reporta como <span class="math inline">\(N\)</span> y de un subconjunto, grupo, o muestra como <span class="math inline">\(n\)</span>.</p>
+<p>Para reportar resultados de pruebas estadísticas inferenciales <em>paramétricas</em> se deberá seguir el formato:
+<br>
+<span class="math display" id="eq:formto-param">\[\begin{equation}
+  \text{prueba}(\text{parámetro}) = \text{estadístico},\ p = \text{significancia},\\
+  d = \text{tamaño del efecto}, \ (1-\alpha)*100\% \ IC \ [\text{intervalo de confianza}]
+  \tag{A.1}
+\end{equation}\]</span>
+<br>
+Para una prueba <span class="math inline">\(t\)</span> de 1 muestra se tendría: <span class="math inline">\(t(7) = 1.39, p = .208, d = 0.49, \ 95\% \ IC \ [-0.26,\ 1.21]\)</span>.</p>
+<p>Para una prueba <span class="math inline">\(F\)</span> o de ANOVA se tendría: <span class="math inline">\(F(2,9) = 10.80, p = .004, \eta^2 = .71, \ 95\% \ IC \ [.16,\ .89]\)</span>.</p>
+<p>Para reportar resultados de pruebas estadísticas inferenciales <em>no-paramétricas</em> <span class="math inline">\(\chi^2\)</span> se deberá seguir el formato:
+<br>
+<span class="math display" id="eq:formto-chi2">\[\begin{equation}
+  \chi^2(\text{parámetro}, N) = \text{estadístico},\ p = \text{significancia},\\
+  V = \text{tamaño del efecto}, \ (1-\alpha)*100\% \ IC \ [\text{intervalo de confianza}]
+  \tag{A.2}
+\end{equation}\]</span>
+<br>
+Por ejemplo, <span class="math inline">\(\chi^2(12, N = 246) = 109.70, p &lt; .001, V = .39, \ 95\% \ IC \ [.32,\ .46]\)</span></p>
+<p>Para reportar resultados de pruebas estadísticas inferenciales <em>no-paramétricas</em> sobre rangos se deberá seguir el formato:
+<br>
+<span class="math display" id="eq:formto-noparam">\[\begin{equation}
+  \text{prueba} = \text{estadístico},\ p = \text{significancia},\\
+  r = \text{tamaño del efecto}, \ (1-\alpha)*100\% \ IC \ [\text{intervalo de confianza}]
+  \tag{A.3}
+\end{equation}\]</span>
+<br>
+Por ejemplo, <span class="math inline">\(T = 27.50, p = .207, r = .47, \ 95\% \ IC \ [-.35,\ .88]\)</span></p>
+</div>
+<h3>Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-americanpsychologicalassociation2010">
+<p>American Psychological Association. (2010). <em>Publication Manual of the American Psychological Association</em> (6.ª ed.).</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="geoestadística.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="apendice-pruebas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

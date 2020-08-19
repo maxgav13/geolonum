@@ -5,6 +5,8 @@ library(DescTools)
 library(summarytools)
 library(patchwork)
 library(janitor)
+library(parameters)
+library(performance)
 library(tidymodels)
 library(tidyverse)
 
@@ -22,7 +24,10 @@ knitr::opts_chunk$set(
 )
 
 theme_set(theme_bw())
-
+library(conflicted)
+conflict_prefer("parameters", "parameters")
+conflict_prefer('select','dplyr')
+conflict_prefer('filter','dplyr')
 ```
 
 ## Introducción
@@ -259,6 +264,13 @@ Se muestra el ajuste de la temperatura en función de la velocidad del viento, d
 
 Por el momento en la tabla de resultados que se muestra únicamente es de interés el coeficiente (`term`) y su valor (`estimate`), más adelante se explicará el resto de las columnas. La función `tidy` del paquete *broom* [@R-broom] y del metapaquete *tidymodels* [@R-tidymodels] es una función que ordena el resultado del ajuste en una tabla para mayor facilidad de interpretación y manipulación.
 
+La función `parameters` del paquete *parameters* [@R-parameters] extrae un resumen similar al de la función `tidy`.
+
+```{r}
+fit_lin %>% 
+  parameters()
+```
+
 ### Medidas de ajuste y error
 
 Una vez ajustado un modelo es importante saber la calidad del ajuste, ya que se pueden generar varios modelos y se quisiera saber cuál modelo se ajusta mejor o representa mejor los datos. Para este fin se pueden usar varias métricas.
@@ -276,13 +288,16 @@ El Root Mean Square Error (RMSE en inglés) o error cuadrático medio (Ecuación
 
 El coeficiente de determinación ($R^2$) es una métrica de ajuste **estandarizada**, ya que varia entre 0 y 1, donde mientras más cercano a 1 mejor el ajuste. Esta métrica se puede interpretar como *el porcentaje de variación en la variable respuesta que puede ser explicado por la variable predictora*. Para el caso de la regresión lineal simple (únicamente) se puede relacionar el coeficiente de determinación con el coeficiente de correlación de la siguiente manera: $R^2 = r^2$, o lo que es lo mismo $r = \sqrt{R^2}$.
 
-En **R** hay diferentes funciones para obtener diferentes métricas de ajuste. La función `glance` del paquete *broom* extrae del modelo varias medidas de ajuste, entre ellas el $R^2$. La función `RMSE` del paquete *DescTools* extrae el valor de esta métrica.
+En **R** hay diferentes funciones para obtener diferentes métricas de ajuste. La función `glance` del paquete *broom* extrae del modelo varias medidas de ajuste, entre ellas el $R^2$. La función `RMSE` del paquete *DescTools* extrae el valor de esta métrica. La función `performance` del paquete *performance* [@R-performance] extrae el $R^2$ y $RMSE$, entre otras medidas de ajuste.
 
 ```{r}
 fit_lin %>% 
   glance()
 
 RMSE(fit_lin)
+
+fit_lin %>% 
+  performance()
 ```
 
 Con este valor de $R^2$ se puede estimar y corroborar el coeficiente de correlación. Tener en cuenta el signo de la pendiente, en este caso negativo, ya que el $R^2$ siempre es positivo y la raíz siempre va a ser positiva, por lo que hay que asignarle el signo de la pendiente.

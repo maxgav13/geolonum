@@ -6,7 +6,8 @@ rmd_files: ["index.Rmd", "01-intro.Rmd", "02-basico.Rmd",
 "09-univariable.Rmd", "10-bivariable.Rmd", "11-probabilidad.Rmd", 
 "12-distribuciones.Rmd", "13-inferencial.Rmd", "14-estimacion.Rmd", 
 "15-pruebas.Rmd", "16-noparam.Rmd", "17-direccional.Rmd", 
-"18-secuencias.Rmd", "19-geoestadistica.Rmd", "20-referencias.Rmd"]
+"18-secuencias.Rmd", "19-geoestadistica.Rmd", "20-apendice.Rmd",
+"21-referencias.Rmd"]
 delete_merged_file: true
 language:
   label:
